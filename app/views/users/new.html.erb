@@ -5,8 +5,14 @@
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @user, local: true) do |f| %>
       <%= render 'shared/error_messages' %>
+      
+       <%= f.label :Guardian_name, class: "label-signup" %>
+      <%= f.text_field :name, class: "form-control" %>
 
-      <%= f.label :name, class: "label-signup" %>
+      <%= f.label :Student_name, class: "label-signup" %>
+      <%= f.text_field :name, class: "form-control" %>
+      
+       <%= f.label :Phone_number, class: "label-signup" %>
       <%= f.text_field :name, class: "form-control" %>
 
       <%= f.label :email, class: "label-signup" %>
