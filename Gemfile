@@ -1,10 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails',        '~> 5.1.6'
-gem 'bcrypt'
-gem 'bootstrap3-datetimepicker-rails'
-gem 'momentjs-rails', '>= 2.9.0'
-gem 'bootstrap-sass'
 gem 'rails-i18n'
 gem 'bcrypt'
 gem 'faker'
@@ -34,7 +30,10 @@ end
 group :production do
   gem 'pg', '0.20.0'
 end
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin
 
 # Windows環境ではtzinfo-dataというgemを含める必要があります
 # Mac環境でもこのままでOKです
