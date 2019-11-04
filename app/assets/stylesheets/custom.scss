@@ -52,6 +52,16 @@ p {
 
 /* header */
 
+// ヘッダーの背景色
+.navbar-inverse{
+  background-color: #FF9933;
+  border-color: #FF9933;
+  .navbar-nav > li > a{
+    color: #fff;
+  }
+}
+
+
 #logo {
   float: left;
   margin-right: 10px;
