@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191108000102) do
+ActiveRecord::Schema.define(version: 20191108002211) do
 
   create_table "users", force: :cascade do |t|
     t.string "guardian"
@@ -18,6 +18,15 @@ ActiveRecord::Schema.define(version: 20191108000102) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
+    t.string "student"
+    t.boolean "real", default: false
+    t.boolean "zoom", default: false
+    t.string "sex"
+    t.string "school"
+    t.integer "school_year"
+    t.boolean "admin", default: false
+    t.datetime "attendance_time"
+    t.datetime "leave_time"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
