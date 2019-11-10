@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191108002211) do
+ActiveRecord::Schema.define(version: 20191108074435) do
 
   create_table "users", force: :cascade do |t|
     t.string "guardian"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20191108002211) do
     t.boolean "admin", default: false
     t.datetime "attendance_time"
     t.datetime "leave_time"
+    t.string "fix_day"
+    t.datetime "fix_time"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -1,30 +1,66 @@
 <% provide(:title, 'Sign up') %>
-<h1>ユーザー登録</h1>
+<h1>生徒登録</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @user, local: true) do |f| %>
       <%= render 'shared/error_messages' %>
       
-       <%= f.label :Guardian_name, class: "label-signup" %>
-      <%= f.text_field :name, class: "form-control" %>
+      <%= f.label :guardian, class: "label-signup" %>
+      <%= f.text_field :guardian, class: "form-control" %>
 
-      <%= f.label :Student_name, class: "label-signup" %>
-      <%= f.text_field :name, class: "form-control" %>
-      
-       <%= f.label :Phone_number, class: "label-signup" %>
-      <%= f.text_field :name, class: "form-control" %>
+      <%= f.label :student, class: "label-signup" %>
+      <%= f.text_field :student, class: "form-control" %>
 
       <%= f.label :email, class: "label-signup" %>
       <%= f.email_field :email, class: "form-control" %>
+      
+      <%= f.label :sex, class: "label-signup" %>
+      <%= f.select :sex, ["男", "女"], {include_blank: true}, class: "form-control" %>
+      
+      <%= f.label :school, class: "label-signup" %>
+      <%= f.text_field :school, class: "form-control" %>
+      
+      <%= f.label :school_year, class: "label-signup" %>
+      <%= f.number_field :school_year, class: "form-control" %>
+      <div class="class-choice">
+        受講方法選択 : 
+        <%= f.label :zoom, class: "label-signup zoom-choice" %>
+        <%= f.check_box :zoom, {}, "true", "false" %>
+        
+        <%= f.label :real, class: "label-signup real-choice" %>
+        <%= f.check_box :real, {}, "true", "false" %>
+      </div>
+      <%= f.label :fix_day, class: "label-signup" %>
+      <%= f.select :fix_day, ["月", "火", "水", "木", "金", "土", "日"], {include_blank: true}, class: "form-control" %>
+      
+      <%= f.label :fix_time, class: "label-signup" %>
+      <%= f.time_field :fix_time, class: "form-control" %>
+      
+      <div class="userslist">
+        <a data-toggle="collapse" href="#collapse">+ 固定曜日と時間を追加</a>
+        <div class="collapse" id="collapse">
+          <div class="panel-body">
+            test
+          </div>
+        </div>
+      </div>
+      <div class="userslist">
+        <a data-toggle="collapse" href="#collapse">+ 生徒追加</a>
+        <div class="collapse" id="collapse">
+          <div class="panel-body">
+            test
+          </div>
+        </div>
+      </div>
 
       <%= f.label :password, class: "label-signup" %>
-      <%= f.password_field :password, class: "form-control" %>
+      <%= f.password_field :password, {class: "form-control"} %>
 
       <%= f.label :password_confirmation, "Confirmation", class: "label-signup" %>
       <%= f.password_field :password_confirmation, class: "form-control" %>
 
-      <%= f.submit "新規作成", class: "btn btn-primary btn-block btn-signup" %>
+      <%= f.submit "登録", class: "btn btn-primary btn-block btn-signup" %>
     <% end %>
   </div>
 </div>
