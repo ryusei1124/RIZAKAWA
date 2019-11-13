@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  default_scope -> { order(student: :asc) }
   before_save { self.email = email.downcase }
 
   validates :guardian,  presence: true, length: { maximum: 50 }
@@ -14,4 +15,5 @@ class User < ApplicationRecord
   validates :school_year, presence: true
   validates :fix_day, presence: true
   validates :fix_time, presence: true
+  
 end
