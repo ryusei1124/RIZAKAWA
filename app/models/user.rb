@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :notices
   # 生徒一覧の名前順
   default_scope -> { order(student: :asc) }
   
