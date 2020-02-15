@@ -1,6 +1,8 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+$letter-type: serif;
+
 /* universal */
 
 body {
@@ -54,18 +56,20 @@ p {
 
 /* header */
 
-// ヘッダーの背景色
+// ヘッダーメニュー
 .navbar-inverse{
   background-color: #FF9933;
   border-color: #FF9933;
   .navbar-nav > li > a{
     color: #fff;
+    font-family: $letter-type;
   }
 }
 
 
 #logo {
   float: left;
+  font-family: $letter-type;
   margin-right: 10px;
   font-size: 1.7em;
   color: #fff;

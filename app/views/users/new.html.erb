@@ -15,9 +15,6 @@
       <%= f.label :email, class: "label-signup" %>
       <%= f.email_field :email, class: "form-control" %>
       
-      <%= f.label :sex, class: "label-signup" %>
-      <%= f.select :sex, ["男", "女"], {include_blank: true}, class: "form-control" %>
-      
       <%= f.label :school, class: "label-signup" %>
       <%= f.text_field :school, class: "form-control" %>
       
@@ -32,7 +29,7 @@
         <%= f.check_box :real, {}, "true", "false" %>
       </div>
       <%= f.label :fix_day, class: "label-signup" %>
-      <%= f.select :fix_day, ["月", "火", "水", "木", "金", "土", "日"], {include_blank: true}, class: "form-control" %>
+      <%= f.select :fix_day, [["月", 1], ["火", 2], ["水", 3], ["木", 4], ["金", 5], ["土", 6], ["日", 7]], {include_blank: true}, class: "form-control" %>
       
       <%= f.label :fix_time, class: "label-signup" %>
       <%= f.time_field :fix_time, class: "form-control" %>
