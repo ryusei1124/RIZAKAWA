@@ -2,6 +2,7 @@
 @import "bootstrap";
 
 $letter-type: serif;
+$header-color: #FF9933;
 
 /* universal */
 
@@ -58,12 +59,16 @@ p {
 
 // ヘッダーメニュー
 .navbar-inverse{
-  background-color: #FF9933;
-  border-color: #FF9933;
+  background-color: $header-color;
+  border-color: $header-color;
   .navbar-nav > li > a{
     color: #fff;
     font-family: $letter-type;
   }
+}
+
+.navbar-nav > .dropdown.open > a.dropdown-toggle {
+  background-color: $header-color;
 }
 
 
