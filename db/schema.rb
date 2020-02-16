@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200214133649) do
+ActiveRecord::Schema.define(version: 20200215121131) do
+
+  create_table "notices", force: :cascade do |t|
+    t.string "notice_title"
+    t.text "notice_content"
+    t.boolean "all_destinate"
+    t.boolean "part_of_destinate"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notices_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "guardian"
@@ -30,6 +41,7 @@ ActiveRecord::Schema.define(version: 20200214133649) do
     t.string "fix_day"
     t.datetime "fix_time"
     t.date "birthday"
+    t.date "withdrawal"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
