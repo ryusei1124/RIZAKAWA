@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'notices/index'
+
   get 'sessions/new'
 
   root 'static_pages#top'
@@ -8,4 +10,5 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   
   resources :users
+  resources :notices
 end
