@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200215121131) do
+ActiveRecord::Schema.define(version: 20200216085211) do
+
+  create_table "lessons", force: :cascade do |t|
+    t.date "meeting_on", null: false
+    t.time "started_at", null: false
+    t.time "finished_at", null: false
+    t.text "note"
+    t.string "target"
+    t.integer "seats_zoom"
+    t.integer "seats_real"
+    t.boolean "off_day", default: false, null: false
+    t.boolean "rescheduled", default: false, null: false
+    t.boolean "regular", default: true, null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_lessons_on_user_id"
+  end
 
   create_table "notices", force: :cascade do |t|
     t.string "notice_title"
@@ -21,6 +38,18 @@ ActiveRecord::Schema.define(version: 20200215121131) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_notices_on_user_id"
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.boolean "attendance", default: true, null: false
+    t.boolean "zoom", default: false, null: false
+    t.string "note"
+    t.integer "user_id"
+    t.integer "lesson_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lesson_id"], name: "index_reservations_on_lesson_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
