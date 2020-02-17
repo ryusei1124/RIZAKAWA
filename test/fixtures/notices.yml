@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  notice_title: MyString
+  notice_content: MyText
+  all_destinate: false
+  part_of_destinate: false
+  user: one
+
+two:
+  notice_title: MyString
+  notice_content: MyText
+  all_destinate: false
+  part_of_destinate: false
+  user: two
