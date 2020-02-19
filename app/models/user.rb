@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  has_many :notices
   # 生徒一覧の名前順
   default_scope -> { order(student: :asc) }
   
@@ -18,5 +17,6 @@ class User < ApplicationRecord
   validates :school_year, presence: true
   validates :fix_day, presence: true
   validates :fix_time, presence: true
+  validates :birthday, presence: true
   
 end

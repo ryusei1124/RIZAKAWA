@@ -1,3 +1,4 @@
 class Notice < ApplicationRecord
-  belongs_to :user
+    validates :notice_title,  presence: true
+    validates :notice_content, presence: true
 end
