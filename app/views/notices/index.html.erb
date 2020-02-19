@@ -6,15 +6,19 @@
   <thead>
     <tr>
       <th colspan="1" class="col-md-3">送信日</th>
-      <th colspan="5">内容</th>
+      <th colspan="5">タイトル</th>
     </tr>
   </thead>
   <thead>
   <% @notices.each do |notice| %>
     <tr>
-      <th colspan="1" class="col-md-3"><%= notice.updated_at %></td>
-      <th colspan="5"><%= notice.notice_content %></td>
+      <td colspan="1" class="col-md-3"><%= notice.updated_at %></td>
+      <td colspan="5"><%= notice.notice_title %></td>
     </tr>
   <% end %>
   </thead>
 </table>
+
+<div class="add-notice-information-btn">
+  <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
+</div>
