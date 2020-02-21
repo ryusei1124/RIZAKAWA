@@ -1,2 +1,10 @@
 <% provide(:title, @user.student) %>
-<h1><%= @user.student %>, <%= @user.email %></h1>
+<ul>
+  <li>保護者名:<%= @user.guardian %></li>
+  <li>生徒名:<%= @user.student %></li>
+  <li>メールアドレス:<%= @user.email %></li>
+  <li>学校名:<%= @user.school %></li>
+  <li>生年月日:<%= @user.birthday %></li>
+  <li>固定曜日:<%= @user.fix_day %></li>
+  <li>固定時間:<%= @user.fix_time %></li>
+</ul>

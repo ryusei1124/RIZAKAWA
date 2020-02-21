@@ -13,6 +13,7 @@ ja:
           sex: 性別
           school: 学校名
           school_year: 学年
+          birthday: 生年月日
           attendance_time: 入室時間
           leave_time: 退室時間
           fix_day: 固定曜日
