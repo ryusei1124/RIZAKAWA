@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  meeting_on: 2020-02-16
+  started_at: 2020-02-16 08:46:35
+  finished_at: 2020-02-16 08:46:35
+  note: MyText
+  target: MyString
+  seats_zoom: 1
+  seats_real: 1
+  off_day: false
+  rescheduled: false
+  regular: false
+
+two:
+  meeting_on: 2020-02-16
+  started_at: 2020-02-16 08:46:35
+  finished_at: 2020-02-16 08:46:35
+  note: MyText
+  target: MyString
+  seats_zoom: 1
+  seats_real: 1
+  off_day: false
+  rescheduled: false
+  regular: false

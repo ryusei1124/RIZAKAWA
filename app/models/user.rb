@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
   has_many :notices
+  
   # 生徒一覧の名前順
   default_scope -> { order(student: :asc) }
   
@@ -19,6 +20,7 @@ class User < ApplicationRecord
   validates :birthday, presence: true
   validates :fix_day, presence: true
   validates :fix_time, presence: true
+  validates :birthday, presence: true
   
   # パスワード再設定の属性を設定する
   def create_reset_digest
