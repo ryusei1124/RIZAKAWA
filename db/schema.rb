@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(version: 20200217114039) do
     t.datetime "fix_time"
     t.date "birthday"
     t.date "withdrawal"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
