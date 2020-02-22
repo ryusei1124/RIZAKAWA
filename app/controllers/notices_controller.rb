@@ -1,6 +1,7 @@
 class NoticesController < ApplicationController
   def index
     @notices = Notice.all
+    @notices = Notice.paginate(page: params[:page], per_page: 5)
   end
   
   def new
