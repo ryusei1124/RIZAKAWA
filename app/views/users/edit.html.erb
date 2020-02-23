@@ -1,0 +1,58 @@
+<% provide(:title, "編集") %>
+<h1>編集</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @user, local: true) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <!--保護者名-->
+      ・<%= f.label :guardian, class: "label-user--edit" %>
+      <%= f.text_field :guardian, class: "form-control new-form" %>
+
+       <!--生徒名-->
+      ・<%= f.label :student, class: "label-user--edit" %>
+      <%= f.text_field :student, class: "form-control new-form" %>
+      
+      <!--メールアドレス-->
+      ・<%= f.label :email, class: "label-user--edit" %>
+      <%= f.email_field :email, class: "form-control new-form" %>
+      
+      <!--学校名-->
+      ・<%= f.label :school, class: "label-user--edit" %> 
+      <%= f.text_field :school, class: "form-control new-form" %>
+      
+      <!--生年月日-->
+      ・<%= f.label :birthday, class: "label-user--edit" %> 
+      <div class="new-form"><%= raw sprintf(f.date_select(:birthday, :include_blank => true, use_month_numbers: true, start_year: 1930, end_year: Time.now.year, date_separator: '%s'), '年 ', '月 ') + '日' %></div>
+      
+      <!--受講方法選択-->
+      <div class="class-choice">
+        ・<label style="margin-bottom:0px;">受講方法選択</label><br>
+        <%= f.label :zoom, class: "label-user--edit zoom-choice" %>
+        <%= f.check_box :zoom, {}, "true", "false" %>
+        
+        <%= f.label :real, class: "label-user--edit real-choice" %>
+        <%= f.check_box :real, {}, "true", "false" %>
+      </div>
+      
+      <!--固定曜日-->
+      ・<%= f.label :fix_day, class: "label-user--edit" %> 
+      <%= f.select :fix_day, [["月", "月"], ["火", "火"], ["水", "水"], ["木", "木"], ["金", "金"], ["土", "土"], ["日", "日"]], {}, class: "form-control new-form" %>
+      
+      <!--固定時間-->
+      ・<%= f.label :fix_time, class: "label-user--edit" %> 
+      <%= f.time_field :fix_time, class: "form-control new-form" %>
+      
+      <!--パスワード-->
+      ・<%= f.label :password, class: "label-user--edit" %> 
+      <%= f.password_field :password, {class: "form-control new-form"} %>
+      
+      <!--パスワード再入力-->
+      ・<%= f.label :password_confirmation, class: "label-user--edit" %> 
+      <%= f.password_field :password_confirmation, class: "form-control new-form" %>
+
+      <%= f.submit "更新", class: "btn btn-primary btn-block btn-user--edit" %>
+    <% end %>
+  </div>
+</div>

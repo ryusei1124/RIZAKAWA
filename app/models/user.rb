@@ -22,6 +22,8 @@ class User < ApplicationRecord
   validates :fix_time, presence: true
   validates :birthday, presence: true
   
+  validate :class_hoice
+  
   # パスワード再設定の属性を設定する
   def create_reset_digest
     self.reset_token = User.new_token
@@ -32,6 +34,10 @@ class User < ApplicationRecord
   # パスワード再設定のメールを送信する
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
+  end
+  
+  def class_hoice
+    errors.add(:class_choice, "はどちらか一つ選択してください") if zoom.present? && real.present?
   end
   
 end
