@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: %i(destroy)
   
   def index
-    @users = User.all
     @users = User.paginate(page: params[:page], per_page: 20)
   end
   
@@ -21,6 +21,12 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+  
+  def destroy
+    @user.destroy
+    flash[:success] = "#{@user.student}のデータを削除しました。"
+    redirect_to users_url
   end
   
   def login_page

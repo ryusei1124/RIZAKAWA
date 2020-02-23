@@ -1,7 +1,8 @@
 class NoticesController < ApplicationController
+  before_action :set_notice, only: %i(show destroy)
+  
   def index
-    @notices = Notice.all
-    @notices = Notice.paginate(page: params[:page], per_page: 5)
+    @notices = Notice.paginate(page: params[:page], per_page: 10)
   end
   
   def new
@@ -11,11 +12,20 @@ class NoticesController < ApplicationController
   def create
     @notice = Notice.new(notice_params)
     if @notice.save
-      flash[:success] = "お知らせ情報を作成しました。"
+      flash[:success] = "タイトル名「#{@notice.notice_title}」を作成しました。"
       redirect_to notices_url
     else
       render :new
     end
+  end
+  
+  def show
+  end
+  
+  def destroy
+    @notice.destroy
+    flash[:success] = "タイトル名「#{@notice.notice_title}」のデータを削除しました。"
+    redirect_to notices_url
   end
   
   private
