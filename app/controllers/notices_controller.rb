@@ -1,5 +1,5 @@
 class NoticesController < ApplicationController
-  before_action :set_notice, only: %i(show destroy)
+  before_action :set_notice, only: %i(edit show update destroy)
   
   def index
     @notices = Notice.paginate(page: params[:page], per_page: 10)
@@ -7,6 +7,9 @@ class NoticesController < ApplicationController
   
   def new
     @notice = Notice.new
+  end
+  
+  def edit
   end
   
   def create
@@ -20,6 +23,15 @@ class NoticesController < ApplicationController
   end
   
   def show
+  end
+  
+  def update
+    if @notice.update_attributes(notice_params)
+      flash[:success] = "お知らせ情報を更新しました。"
+      redirect_to notices_url
+    else
+      render :edit
+    end
   end
   
   def destroy
