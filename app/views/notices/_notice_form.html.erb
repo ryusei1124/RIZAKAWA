@@ -4,6 +4,11 @@
   <%= f.label :notice_title, "投稿タイトル", class: "label-#{yield(:class_text)}" %>
   <%= f.text_field :notice_title, class: "form-control" %>
   
+  <%= f.label :remember_me, class: "checkbox inline checkbox-login", for: "remember-me" do %>
+    <%= f.check_box :remember_me, id: "remember-me" %>
+    <span>生徒全員に送信</span>
+  <% end %>
+  
   <%= f.label :notice_content, "投稿内容", class: "label-#{yield(:class_text)}" %>
   <%= f.text_area :notice_content, class: "form-control", rows: 10 %>
   
