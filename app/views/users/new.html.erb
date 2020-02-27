@@ -9,22 +9,22 @@
       <!--保護者名-->
       ・<%= f.label :guardian, class: "label-signup" %>
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.text_field :guardian, class: "form-control new-form" %>
+      <%= f.text_field :guardian, required: true, class: "form-control new-form" %>
 
        <!--生徒名-->
       ・<%= f.label :student, class: "label-signup" %>
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.text_field :student, class: "form-control new-form" %>
+      <%= f.text_field :student, required: true, class: "form-control new-form" %>
       
       <!--メールアドレス-->
       ・<%= f.label :email, class: "label-signup" %>
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.email_field :email, class: "form-control new-form" %>
+      <%= f.email_field :email, required: true, class: "form-control new-form" %>
       
       <!--学校名-->
       ・<%= f.label :school, class: "label-signup" %> 
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.text_field :school, class: "form-control new-form" %>
+      <%= f.text_field :school, required: true, class: "form-control new-form" %>
       
       <!--生年月日を追加したからいらない？-->
       <%#= f.label :school_year, class: "label-signup" %>
@@ -33,8 +33,8 @@
       <!--生年月日-->
       ・<%= f.label :birthday, class: "label-signup" %> 
       <span class="label label-danger label-user-division">必須</span><br>
-      <div class="new-form"><%= raw sprintf(f.date_select(:birthday, :include_blank => true, use_month_numbers: true, start_year: 1930, end_year: Time.now.year, date_separator: '%s'), '年 ', '月 ') + '日' %></div>
-      
+      <%= f.date_field :birthday, required: true, class: "form-control new-form" %>
+                            
       <div class="class-choice">
         ・<label style="margin-bottom:0px;">受講方法選択</label><br>
         <%= f.label :zoom, class: "label-signup zoom-choice" %>
@@ -47,12 +47,12 @@
       <!--固定曜日-->
       ・<%= f.label :fix_day, class: "label-signup" %> 
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.select :fix_day, [["月", "月"], ["火", "火"], ["水", "水"], ["木", "木"], ["金", "金"], ["土", "土"], ["日", "日"]], {include_blank: true}, class: "form-control new-form" %>
+      <%= f.select :fix_day, [["月", "月"], ["火", "火"], ["水", "水"], ["木", "木"], ["金", "金"], ["土", "土"], ["日", "日"]], {include_blank: true}, required: true, class: "form-control new-form" %>
       
       <!--固定時間-->
       ・<%= f.label :fix_time, class: "label-signup" %> 
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.time_field :fix_time, class: "form-control new-form" %>
+      <%= f.time_field :fix_time, required: true, class: "form-control new-form" %>
       
       <!--保留-->
       <!--<div class="userslist">-->
@@ -83,12 +83,12 @@
       <!--パスワード-->
       ・<%= f.label :password, class: "label-signup" %> 
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.password_field :password, {class: "form-control new-form"} %>
+      <%= f.password_field :password, required: true, class: "form-control new-form" %>
       
       <!--パスワード再入力-->
       ・<%= f.label :password_confirmation, class: "label-signup" %> 
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.password_field :password_confirmation, class: "form-control new-form" %>
+      <%= f.password_field :password_confirmation, required: true, class: "form-control new-form" %>
 
       <%= f.submit "登録", class: "btn btn-primary btn-block btn-signup" %>
     <% end %>
