@@ -35,6 +35,7 @@ class UsersController < ApplicationController
     else
       render :edit      
     end
+    @user = User.find(params[:id])
   end
   
   def login_page
