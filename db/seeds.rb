@@ -13,7 +13,7 @@ User.create!(guardian: "sample",
              birthday: "2000/02/02",
              password: "password",
              password_confirmation: "password",
-             admin: "true")
+             admin: true)
 
 60.times do |n|
   guardian = Faker::Name.name

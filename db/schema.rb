@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200216085211) do
+ActiveRecord::Schema.define(version: 20200217114039) do
 
   create_table "lessons", force: :cascade do |t|
     t.date "meeting_on", null: false
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(version: 20200216085211) do
     t.datetime "fix_time"
     t.date "birthday"
     t.date "withdrawal"
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
