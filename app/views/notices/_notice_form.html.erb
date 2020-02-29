@@ -6,7 +6,7 @@
   
   <%= f.label :notice_content, "投稿内容", class: "label-#{yield(:class_text)}" %>
   <%= f.text_area :notice_content, class: "form-control", rows: 10 %>
-  <% if current_user.admin? %>
-   <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
-  <% end %>
+  
+  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+  
 <% end %>

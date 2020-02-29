@@ -19,13 +19,15 @@
     <thead>
     <% @notices.each do |notice| %>
       <tr>
-        <td colspan="1" class="col-md-3"><%= l(notice.updated_at, format: :short) %></td>
+        <td colspan="1" class="col-md-3"><%= l(notice.updated_at, format: :day) %></td>
         <td colspan="5">
-          <%= link_to notice.notice_title, notice %>
           <% if current_user.admin? %>
-            <%= link_to "削除", notice, method: :delete,
+           <%= link_to notice.notice_title, edit_notice_path(@user) %>
+           <%= link_to "削除", notice, method: :delete,
             data: { confirm: "削除してよろしいですか？" },
             class: "btn btn-danger btn-sm pull-right" %>
+          <% else %>
+           <%= link_to notice.notice_title, notice %>
           <% end %>
         </td>
       </tr>
