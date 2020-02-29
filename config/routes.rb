@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'lessons/weeklyschedule'
+  post 'lessons/create', to: 'lessons#create'
+
   get 'notices/index'
 
   get 'sessions/new'
