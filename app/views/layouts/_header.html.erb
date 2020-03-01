@@ -6,6 +6,7 @@
         <% if logged_in? %>
           <% if current_user.admin? %>
             <li><%= link_to "生徒一覧", users_path %></li>
+            <li><%= link_to "予定表", lessons_weeklyschedule_path %></li>
           <% end %>
           <li><%= link_to "お知らせ", notices_path %></li>
           <li class="dropdown">
