@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       end
   end
   
-  # システム管理権限所有か判定.
+   # システム管理権限所有か判定.
   def admin_user
     redirect_to root_url unless current_user.admin?
   end
