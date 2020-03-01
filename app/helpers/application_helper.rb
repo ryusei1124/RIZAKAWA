@@ -40,4 +40,10 @@ module ApplicationHelper
     end
     timese
   end
+  
+  # お知らせ詳細ページ「内容」の改行適用
+  def nl2br(str)
+    h(str).gsub(/\R/, "<br>")
+  end
+  
 end

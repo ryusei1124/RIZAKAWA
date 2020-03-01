@@ -1,22 +1,31 @@
 <% provide(:title, 'お知らせ詳細') %>
-<% provide(:class_text, 'signup') %>
+
 <h1>お知らせ詳細</h1>
-<div class="col-md-10 col-md-offset-1">
-  <table class="table-bordered table-condensed" id="notices-info-title-details">
-      <thead>
-        <tr>
-          <td colspan="1" class="col-md-3"><%= @notice.notice_title %></td>
-        </tr>
-      </thead>
-  </table>
-</div>
 
 <div class="col-md-10 col-md-offset-1">
-  <table class="table-bordered table-condensed" id="notices-info-content-details">
-      <thead>
-        <tr>
-          <td colspan="5"><%= @notice.notice_content %></td>
-        </tr>
-      </thead>
+  <div class="add-notice-information-btn">
+    <% if current_user.admin? %>
+      <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <table class="table-bordered table-condensed" id="notices-info">
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">送信日時</th>
+        <td colspan="4"><%= l(@notice.updated_at, format: :default) %></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">タイトル</th>
+        <td colspan="4"><%= @notice.notice_title %></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">内容</th>
+        <td colspan="4"><%= raw(nl2br(@notice.notice_content)) %></td>
+      </tr>
+    </thead>
   </table>
 </div>
