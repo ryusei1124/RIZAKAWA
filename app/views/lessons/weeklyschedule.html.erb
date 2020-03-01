@@ -1,0 +1,147 @@
+<script>
+  $(function() {
+    $('.js-modal-open').each(function() {
+      $(this).on('click', function() {
+        var target = $(this).data('target');
+        var modal = document.getElementById(target);
+        $(modal).fadeIn();
+        return false;
+      });
+    });
+    $('.js-modal-close').on('click', function() {
+      $('.js-modal').fadeOut();
+      return false;
+    });
+  });
+</script>
+<% first_day=@today.to_date %>
+<% last_day=first_day+6 %>
+<% first_time="2000-01-01 10:00".to_time %>
+<% last_time="2000-01-01 23:00".to_time %>
+<h1>週間予定表(<%=first_day %>〜<%=last_day %>) </h1>
+<table border: 0px solid;" align="center">
+  <th>
+    <td">
+      <table border="2" class="table" vertical-align:top;" align="center">
+        <% if current_user.admin==true %>
+        <tr>
+          <td>登録</td>
+        </tr>
+        <% end %>
+        <tr>
+          <td style="border-bottom: 1px solid;">　</td>
+        </tr>
+        <% time = first_time %>
+        <% while time <= last_time do %>
+        <tr style="height:30px;">
+          <td style="vertical-align:top;">
+            <%= timedisplay(time) %><br>
+            <%  time = time + 1800 %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+
+      <% (first_day..last_day).each do |day| %>
+  <th>
+  <td>
+    <table border="2" class="table" style="width:105px; vertical-align:top;">
+      <% if current_user.admin==true %>
+      <tr>
+        <td align="center">
+          <a class="js-modal-open" href="" data-target=con<%=day %>>＋</a></td>
+      </tr>
+      <div id=con<%=day %> class="modal js-modal">
+        <div class="modal__bg js-modal-close"></div>
+        <div class="modal__content">
+          <div id="contents">
+            <h2><%= day %>　(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
+            <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
+            <div class="msr_pulldown_05">
+              対象<br>
+              <label>
+                <%= f.select:target,@target, :selected=>"小学生" %>
+              </label>
+            </div>
+            <%= f.hidden_field :meeting_on,value:day  %>
+            <div class="msr_pulldown_05">
+              開始時間<br>
+              <label>
+                <%= f.select:starttime,@hourselect, :selected=>"10:00" %>
+              </label>
+            </div>
+            <div class="msr_pulldown_05">
+              終了時間<br>
+              <label>
+                <%= f.select:finishtime,@hourselect, :selected=>"11:30" %>
+              </label>
+            </div>
+            <div class="msr_pulldown_05">
+              リアル定員<br>
+              <label>
+                <%= f.select:seats_real,@capacity, :selected=>10 %>
+              </label>
+            </div>
+            <div class="msr_pulldown_05">
+              ZOOM定員<br>
+              <label>
+                <%= f.select:seats_zoom,@capacity, :selected=>5 %>
+              </label>
+            </div>
+            <div class="msr_pulldown_05">
+              形式<br>
+              <label>
+                <%= f.select:regularkanji,@regular, :selected=>"定例" %>
+              </label>
+            </div>
+            <div class="form-group">
+              備考<br>
+              <%= f.text_field :note, class: "form-control",style:"width:400px;" %>
+            </div>
+            <div style=" display: inline-block; ">
+              <%= f.submit "登録", class: "btn btn-primary" %>
+            </div>&nbsp;
+            <div style=" display: inline-block; ">
+              <a class="btn btn-primary" href="">閉じる</a>
+            </div>
+            <% end %>
+          </div>
+          <% end %>
+          <tr>
+            <td align="center" bgcolor="#f2f2f2" style="border-bottom: 1px solid;"><%=day.day %>日(<%=weekdate(day) %>)</td>
+          </tr>
+          <% time = first_time %>
+          <% coursecount=0 %>
+          <% while time <= last_time do %>
+          <tr style="height:30px;">
+            <% times=("2000-01-01"+" "+time.to_s).to_time %>
+            <% timesfinish=times+54000 %>
+            <% lesson=Lesson.where(meeting_on:day) %>
+            <% lesson=lesson.find_by(started_at:times) %>
+            <% if lesson.present?  %>
+            <td bgcolor="#c0ffc0"><%= lesson.target %>
+              <% coursecount=((lesson.finished_at.to_time-lesson.started_at.to_time)/1800) %>
+              <% lesson_id=lesson.id %>
+              <%  elsif coursecount>1 %>
+            <td bgcolor="#c0ffc0" style="padding-left:2px;"><%coursecount=coursecount.to_i-1 %>
+              <% if coursecount==2 %>
+              <%= timedisplay(Lesson.find(lesson_id).started_at-32400) %>-<%= timedisplay(Lesson.find(lesson_id).finished_at-32400) %>
+              <% else %>
+              &nbsp;
+              <% end %>
+              <% else %>
+              <%if day.wday==0 || day.wday==6 %>
+            <td bgcolor="#ffede6">
+              <% else %>
+            <td>
+              <% end %>
+              &nbsp;
+              <% end %></td>
+            <%  time = time + 1800 %>
+          </tr>
+          <% end %>
+    </table>
+  </td>
+  </th>
+  <% end %>
+</table>
