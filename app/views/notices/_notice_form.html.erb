@@ -1,11 +1,12 @@
 <%= form_with(model: @notice, local: true) do |f| %>
   <%= render 'shared/error_messages_notice' %>
 
-  <%= f.label :notice_title, "お知らせタイトル", class: "label-#{yield(:class_text)}" %>
+  <%= f.label :notice_title, "投稿タイトル", class: "label-#{yield(:class_text)}" %>
   <%= f.text_field :notice_title, class: "form-control" %>
   
-  <%= f.label :notice_content, "お知らせ内容", class: "label-#{yield(:class_text)}" %>
+  <%= f.label :notice_content, "投稿内容", class: "label-#{yield(:class_text)}" %>
   <%= f.text_area :notice_content, class: "form-control", rows: 10 %>
   
   <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
+  
 <% end %>

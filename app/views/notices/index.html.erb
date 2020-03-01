@@ -2,23 +2,38 @@
 
 <h1>お知らせ一覧</h1>
 
-<table class="table-bordered table-condensed" id="notices-info">
-  <thead>
-    <tr>
-      <th colspan="1" class="col-md-3">送信日</th>
-      <th colspan="5">タイトル</th>
-    </tr>
-  </thead>
-  <thead>
-  <% @notices.each do |notice| %>
-    <tr>
-      <td colspan="1" class="col-md-3"><%= notice.updated_at %></td>
-      <td colspan="5"><%= notice.notice_title %></td>
-    </tr>
-  <% end %>
-  </thead>
-</table>
-
-<div class="add-notice-information-btn">
-  <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
+<div class="col-md-10 col-md-offset-1">
+  <div class="add-notice-information-btn">
+    <% if current_user.admin? %>
+      <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <%= will_paginate %>
+  <table class="table-bordered table-condensed" id="notices-info">
+    <thead>
+      <tr>
+        <th colspan="1" class="col-md-3">送信日時</th>
+        <th colspan="5">タイトル</th>
+      </tr>
+    </thead>
+    <thead>
+    <% @notices.each do |notice| %>
+      <tr>
+        <td colspan="1" class="col-md-3"><%= l(notice.updated_at, format: :day) %></td>
+        <td colspan="5">
+          <% if current_user.admin? %>
+           <%= link_to notice.notice_title, edit_notice_path(@user) %>
+           <%= link_to "削除", notice, method: :delete,
+            data: { confirm: "削除してよろしいですか？" },
+            class: "btn btn-danger btn-sm pull-right" %>
+          <% else %>
+           <%= link_to notice.notice_title, notice %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </thead>
+  </table>
+  <%= will_paginate %>
 </div>
+  

@@ -1,0 +1,22 @@
+<% provide(:title, 'お知らせ詳細') %>
+<% provide(:class_text, 'signup') %>
+<h1>お知らせ詳細</h1>
+<div class="col-md-10 col-md-offset-1">
+  <table class="table-bordered table-condensed" id="notices-info-title-details">
+      <thead>
+        <tr>
+          <td colspan="1" class="col-md-3"><%= @notice.notice_title %></td>
+        </tr>
+      </thead>
+  </table>
+</div>
+
+<div class="col-md-10 col-md-offset-1">
+  <table class="table-bordered table-condensed" id="notices-info-content-details">
+      <thead>
+        <tr>
+          <td colspan="5"><%= @notice.notice_content %></td>
+        </tr>
+      </thead>
+  </table>
+</div>

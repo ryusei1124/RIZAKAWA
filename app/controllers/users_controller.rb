@@ -5,7 +5,6 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy]
   
   def index
-    @users = User.all
     @users = User.paginate(page: params[:page], per_page: 20)
   end
   
@@ -25,7 +24,12 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
+  def destroy
+    @user.destroy
+    flash[:success] = "#{@user.student}のデータを削除しました。"
+    redirect_to users_url
+
   def edit
   end
   
@@ -37,6 +41,7 @@ class UsersController < ApplicationController
       render :edit      
     end
     @user = User.find(params[:id])
+
   end
   
   def destroy
@@ -74,9 +79,5 @@ class UsersController < ApplicationController
     def correct_user
       redirect_to(root_url) unless current_user?(@user)
     end
-    
-     # システム管理権限所有かどうか判定します。
-    def admin_user
-      redirect_to root_url unless current_user.admin?
-    end
+
 end

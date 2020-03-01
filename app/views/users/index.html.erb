@@ -1,4 +1,4 @@
-"<% provide(:title, 'All users') %>
+<% provide(:title, 'All users') %>
 
 <h1>生徒一覧</h1>
 
@@ -22,12 +22,10 @@
           <% end %>
         </td>
         <td>
-          
           <%= link_to "削除", user, method: :delete,
               data:  { confirm: "本当に削除してよろしいですか？"},
               class: "btn btn-danger btn-sm pull-right" %>
           <%= link_to "編集", "#" , class: "btn btn-success btn-sm pull-right" %>
-        
         </td>
       </tr>
     <% end %>

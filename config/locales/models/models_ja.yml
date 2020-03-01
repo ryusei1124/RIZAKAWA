@@ -23,6 +23,9 @@ ja:
           password_confirmation: パスワード再入力
           created_at: 作成日
           updated_at: 更新日
+        notice:
+          notice_title: 投稿タイトル
+          notice_content: 投稿内容
   static_pages:
     top:
       email: メールアドレス
