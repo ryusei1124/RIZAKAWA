@@ -40,6 +40,7 @@ module ApplicationHelper
     end
     timese
   end
+<<<<<<< HEAD
   def school_grade(bornday,nowday)
     bornday=bornday.to_date
     nowday=nowday.to_date
@@ -75,4 +76,12 @@ module ApplicationHelper
     end
       jhdate=(jhyear.to_s+"/04/01").to_date
   end
+=======
+  
+  # お知らせ詳細ページ「内容」の改行適用
+  def nl2br(str)
+    h(str).gsub(/\R/, "<br>")
+  end
+  
+>>>>>>> d06ee3f8ce0690709d2335c713049dd06bc63f06
 end
