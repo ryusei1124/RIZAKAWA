@@ -14,7 +14,6 @@ User.create!(guardian: "sample",
              password: "password",
              password_confirmation: "password",
              admin: true)
-             
 User.create!(guardian: "山田太郎",
              student: "山田次郎",
              email: "test-1@email.com",
@@ -193,7 +192,8 @@ User.create!(guardian: "立花太郎",
              birthday: "2010/10/02",
              password: "password",
              password_confirmation: "password",
-             admin: false)
+             admin: false)             
+
              
 60.times do |n|
   guardian = Faker::Name.name
@@ -221,4 +221,13 @@ User.create!(guardian: "立花太郎",
                birthday: birthday,
                password: password,
                password_confirmation: password)
+end
+             
+61.times do |n|
+  notice_title = "sample-#{n+1}タイトル"
+  notice_content = "sample-#{n+1}内容"
+  Notice.create!(notice_title: notice_title,
+                 notice_content: notice_content,user_id:1
+                 )
+             
 end
