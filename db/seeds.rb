@@ -222,12 +222,3 @@ User.create!(guardian: "立花太郎",
                password: password,
                password_confirmation: password)
 end
-             
-61.times do |n|
-  notice_title = "sample-#{n+1}タイトル"
-  notice_content = "sample-#{n+1}内容"
-  Notice.create!(notice_title: notice_title,
-                 notice_content: notice_content,
-                 )
-             
-end
