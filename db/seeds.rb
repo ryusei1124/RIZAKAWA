@@ -15,42 +15,6 @@ User.create!(guardian: "sample",
              password_confirmation: "password",
              admin: true)
              
-60.times do |n|
-  guardian = Faker::Name.name
-  student  = Faker::Name.name
-  email = "sample-#{n+1}@email.com"
-  sex = "男"
-  school = "sample-#{n+1}"
-  school_year = "1"
-  zoom = 'false'
-  real = 'false'
-  fix_day = "月"
-  fix_time = "23:00"
-  birthday = "2000/02/02"
-  password = "password"
-  User.create!(guardian: guardian,
-               student: student,
-               email: email,
-               sex: sex,
-               school: school,
-               school_year: school_year,
-               zoom: zoom,
-               real: real,
-               fix_day: fix_day,
-               fix_time: fix_time,
-               birthday: birthday,
-               password: password,
-               password_confirmation: password)
-end
-             
-61.times do |n|
-  notice_title = "sample-#{n+1}タイトル"
-  notice_content = "sample-#{n+1}内容"
-  Notice.create!(notice_title: notice_title,
-                 notice_content: notice_content,
-                 )
-             
-end
 User.create!(guardian: "山田太郎",
              student: "山田次郎",
              email: "test-1@email.com",
@@ -230,3 +194,40 @@ User.create!(guardian: "立花太郎",
              password: "password",
              password_confirmation: "password",
              admin: false)
+             
+60.times do |n|
+  guardian = Faker::Name.name
+  student  = Faker::Name.name
+  email = "sample-#{n+1}@email.com"
+  sex = "男"
+  school = "sample-#{n+1}"
+  school_year = "1"
+  zoom = 'false'
+  real = 'false'
+  fix_day = "月"
+  fix_time = "23:00"
+  birthday = "2000/02/02"
+  password = "password"
+  User.create!(guardian: guardian,
+               student: student,
+               email: email,
+               sex: sex,
+               school: school,
+               school_year: school_year,
+               zoom: zoom,
+               real: real,
+               fix_day: fix_day,
+               fix_time: fix_time,
+               birthday: birthday,
+               password: password,
+               password_confirmation: password)
+end
+             
+61.times do |n|
+  notice_title = "sample-#{n+1}タイトル"
+  notice_content = "sample-#{n+1}内容"
+  Notice.create!(notice_title: notice_title,
+                 notice_content: notice_content,
+                 )
+             
+end
