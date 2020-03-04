@@ -122,6 +122,7 @@
       <% times=("2000-01-01"+" "+time.to_s).to_time %>
       <% timesfinish=times+54000 %>
       <% lesson=Lesson.where(meeting_on:day) %>
+      <% times=times-32400 %>
       <% lesson=lesson.find_by(started_at:times) %>
       <% if lesson.present?  %>
       <td bgcolor="#c0ffc0">
@@ -136,7 +137,7 @@
         <%  elsif coursecount>1 %>
         <td bgcolor="#c0ffc0" style="padding-left:2px;"><%coursecount=coursecount.to_i-1 %>
         <% if (max-coursecount)==1 %>
-          <%= (Lesson.find(lesson_id).started_at-32400).strftime("%H:%M") %>-<%= (Lesson.find(lesson_id).finished_at-32400).strftime("%H:%M") %>
+          <%= (Lesson.find(lesson_id).started_at).strftime("%H:%M") %>-<%= (Lesson.find(lesson_id).finished_at).strftime("%H:%M") %>
         <% else %>
           &nbsp;
         <% end %>

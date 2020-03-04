@@ -11,7 +11,7 @@ class LessonsController < ApplicationController
     end
     @lesson=Lesson.new
     @lessons=Lesson.all
-    @hourselect=timeselect(10,23)
+    @hourselect=timeselect(10,22)
     @capacity=[*0..30]
     @regular=["定例","臨時"]
     @target=["小学生","中学生","小中学生"]
@@ -22,8 +22,8 @@ class LessonsController < ApplicationController
     lesson.user_id=current_user.id
     starttime=lesson_params[:starttime].to_time
     finishtime=lesson_params[:finishtime].to_time
-    lesson.started_at=starttime
-    lesson.finished_at=finishtime
+    lesson.started_at=starttime+54000
+    lesson.finished_at=finishtime+54000
     lesson.regular=false if lesson_params[:regularkanji]=="臨時"
     if lesson.save
       flash[:success]="登録に成功しました"
@@ -35,8 +35,13 @@ class LessonsController < ApplicationController
         else
           rev=User.where(fix_day=weekdate(lesson.meeting_on))
         end
-        rev.each do |revtion|
-        Reservation.create(user_id:revtion.id,lesson_id:lesson.id)
+          rev.each do |revtion|
+          reservation=Reservation.new(user_id:revtion.id,lesson_id:lesson.id,zoom:revtion.zoom)
+          if reservation.save
+            flash[:warning]="該当受講生の予約登録に成功しました。"
+          else
+            flash[:warning]="該当受講生の予約登録に失敗しました。"
+          end
         end
       end
     else
