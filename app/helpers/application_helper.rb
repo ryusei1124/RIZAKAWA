@@ -41,6 +41,16 @@ module ApplicationHelper
     timese
   end
   
+  def jrhigh(nowday)
+    nowday=nowday.to_date
+    if nowday.month.to_i<=3
+      jhyear=nowday.year.to_i-14
+    else 
+      jhyear=nowday.year.to_i-13
+    end
+      jhdate=(jhyear.to_s+"/04/02").to_date
+  end
+  
   # お知らせ詳細ページ「内容」の改行適用
   def nl2br(str)
     h(str).gsub(/\R/, "<br>")
