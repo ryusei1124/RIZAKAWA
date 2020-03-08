@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200308003931) do
+ActiveRecord::Schema.define(version: 20200308155716) do
 
   create_table "lessons", force: :cascade do |t|
     t.date "meeting_on", null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20200308003931) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "student_id"
+    t.boolean "hold", default: true
     t.index ["lesson_id"], name: "index_reservations_on_lesson_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
