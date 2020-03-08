@@ -1,6 +1,6 @@
 class NoticesController < ApplicationController
   before_action :set_notice, only: %i(edit show update destroy)
-  
+  before_action :set_student
   def index
     @notices = Notice.paginate(page: params[:page], per_page: 10)
   end
@@ -14,6 +14,7 @@ class NoticesController < ApplicationController
   
   def create
     @notice = Notice.new(notice_params)
+    @notice.user_id=current_user.id
     if @notice.save
       flash[:success] = "タイトル名「#{@notice.notice_title}」を作成しました。"
       redirect_to notices_url
