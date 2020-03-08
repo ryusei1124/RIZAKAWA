@@ -32,4 +32,3 @@ Student.create!(student_name:"太田沙",studentkana:"オオタサち",real:true
 Student.create!(student_name:"太田仁",studentkana:"オオタジン",real:true,zoom:false,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:10)
 Student.create!(student_name:"古川那奈",studentkana:"フルカワサチ",real:false,zoom:true,birthday:"2005/12/24",fix_day:"火",fix_time:"19:36",user_id:11)
 Student.create!(student_name:"古川一花",studentkana:"フルカワイチカ",real:false,zoom:true,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:11)
-
