@@ -22,4 +22,14 @@ class ApplicationController < ActionController::Base
     @user = User.find(params[:id])
   end
   
+  #保護者でログインした時に子供情報を取得
+  def set_student
+    @students=Student.where(user_id:current_user)
+    if @student.blank?
+      @student=@students.first
+    else
+      @student=Student.find_by(id:@student_id)
+    end
+  end
+  
 end

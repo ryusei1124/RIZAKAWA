@@ -1,13 +1,21 @@
 class LessonsController < ApplicationController
   before_action :schoolgrade
+  before_action:set_student
   require 'date'
   include ApplicationHelper
   
   def weeklyschedule
     if params[:cation]=="1"
       @today=params[:changeday].to_date
+      studentid=params[:student]
+      @student=Student.find_by(id:studentid)
     else
       @today = Date.today
+    end
+    if params[:cation]=="2"
+      studentid=params[:changestudent]
+      @student=Student.find_by(id:studentid)
+      flash[:warning]="#{ @student.student_name}に切替成功しました。"
     end
     @lesson=Lesson.new
     @lessons=Lesson.all
@@ -29,18 +37,20 @@ class LessonsController < ApplicationController
       flash[:success]="登録に成功しました"
       if lesson.regular?
         if lesson_params[:target]=="中学生"
-          rev=User.where("fix_day =? AND birthday < ?", weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date)
+          rev=Student.where("fix_day =? AND birthday < ?" ,weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date)
         elsif lesson_params[:target]=="小学生"
-          rev=User.where("fix_day =? AND birthday >= ?", weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date)
+          rev=Student.where("fix_day =? AND birthday >= ?", weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date)
         else
-          rev=User.where(fix_day=weekdate(lesson.meeting_on))
+          rev=Student.where("fix_day =? AND leave_time= ?", weekdate(lesson.meeting_on))
         end
-          rev.each do |revtion|
-          reservation=Reservation.new(user_id:revtion.id,lesson_id:lesson.id,zoom:revtion.zoom)
-          if reservation.save
-            flash[:warning]="該当受講生の予約登録に成功しました。"
-          else
-            flash[:warning]="該当受講生の予約登録に失敗しました。"
+        rev.each do |revtion|
+          if revtion.leave_time.blank?
+            reservation=Reservation.new(student_id:revtion.id,lesson_id:lesson.id,zoom:revtion.zoom,user_id:revtion.user_id)
+            if reservation.save
+              flash[:warning]="該当受講生の予約登録に成功しました。"
+            else
+              flash[:warning]="該当受講生の予約登録に失敗しました。"
+            end
           end
         end
       end

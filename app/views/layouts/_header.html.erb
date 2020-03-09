@@ -4,6 +4,7 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
+          
           <% if current_user.admin? %>
             <li><%= link_to "生徒一覧", users_path %></li>
           <% end %>
