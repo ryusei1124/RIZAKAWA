@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/attendances/lesson_detail/:lesson_id' ,to: 'attendances#lesson_detail'
   get 'lessons/weeklyschedule'
   post 'lessons/create', to: 'lessons#create'
 

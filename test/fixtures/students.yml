@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  real: false
+  zoom: false
+  school: MyString
+  school_year: 1
+  attendance_time: 2020-03-06 14:38:40
+  leave_time: 2020-03-06 14:38:40
+  birthday: 2020-03-06 14:38:40
+  leave_time: 
+  user_id: 1
+
+two:
+  real: false
+  zoom: false
+  school: MyString
+  school_year: 1
+  attendance_time: 2020-03-06 14:38:40
+  leave_time: 2020-03-06 14:38:40
+  birthday: 2020-03-06 14:38:40
+  leave_time: 
+  user_id: 1

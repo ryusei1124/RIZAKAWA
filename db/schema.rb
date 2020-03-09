@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200217114039) do
+ActiveRecord::Schema.define(version: 20200308155716) do
 
   create_table "lessons", force: :cascade do |t|
     t.date "meeting_on", null: false
@@ -48,8 +48,27 @@ ActiveRecord::Schema.define(version: 20200217114039) do
     t.integer "lesson_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "student_id"
+    t.boolean "hold", default: true
     t.index ["lesson_id"], name: "index_reservations_on_lesson_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string "student_name"
+    t.boolean "real", default: false
+    t.boolean "zoom", default: false
+    t.string "school"
+    t.integer "school_year"
+    t.time "attendance_time"
+    t.datetime "leave_time"
+    t.datetime "birthday"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "fix_day"
+    t.time "fix_time"
+    t.string "studentkana"
   end
 
   create_table "users", force: :cascade do |t|
@@ -73,6 +92,7 @@ ActiveRecord::Schema.define(version: 20200217114039) do
     t.date "withdrawal"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "guardiankana"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

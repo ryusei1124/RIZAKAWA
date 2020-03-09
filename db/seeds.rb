@@ -1,53 +1,34 @@
 # coding: utf-8
 
-User.create!(guardian: "sample",
-             student: "sample_student",
-             email: "sample@email.com",
-             sex: "男",
-             school: "sample",
-             school_year: "1",
-             zoom: 'false',
-             real: 'false',
-             fix_day: "月",
-             fix_time: "23:00",
-             birthday: "2000/02/02",
-             password: "password",
-             password_confirmation: "password",
-             admin: true)
+User.create!(guardian: "sample",guardiankana:"サンプル",email: "sample@email.com",password: "password",password_confirmation: "password",admin: true)
+User.create!(guardian:"山田太郎",guardiankana:"ヤマダタロウ",email:"sample-1@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"木村喜朗",guardiankana:"キムラヨシロウ",email:"sample-2@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"高田史郎",guardiankana:"タカダシロウ",email:"sample-3@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"佐藤武雄",guardiankana:"サトウタケオ",email:"sample-4@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"杉村紀子",guardiankana:"スギムラノリコ",email:"sample-5@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"伊藤七海",guardiankana:"イトウナナミ",email:"sample-6@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"工藤幸子",guardiankana:"クドウサチコ",email:"sample-7@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"斎藤雅美",guardiankana:"サイトウマサミ",email:"sample-8@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"太田祐樹",guardiankana:"オオタユウタ",email:"sample-9@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"古川真由美",guardiankana:"フルカワマユミ",email:"sample-10@email.com",password:"password",password_confirmation:"password")
 
-60.times do |n|
-  guardian = Faker::Name.name
-  student  = Faker::Name.name
-  email = "sample-#{n+1}@email.com"
-  sex = "男"
-  school = "sample-#{n+1}"
-  school_year = "1"
-  zoom = 'false'
-  real = 'false'
-  fix_day = "月"
-  fix_time = "23:00"
-  birthday = "2000/02/02"
-  password = "password"
-  User.create!(guardian: guardian,
-               student: student,
-               email: email,
-               sex: sex,
-               school: school,
-               school_year: school_year,
-               zoom: zoom,
-               real: real,
-               fix_day: fix_day,
-               fix_time: fix_time,
-               birthday: birthday,
-               password: password,
-               password_confirmation: password)
-end
-             
-61.times do |n|
-  notice_title = "sample-#{n+1}タイトル"
-  notice_content = "sample-#{n+1}内容"
-  Notice.create!(notice_title: notice_title,
-                 notice_content: notice_content,
-                 )
-             
-end
+Student.create!(student_name:"山田良子",studentkana:"ヤマダヨシコ",real:true,zoom:false,birthday:"2004/4/10",fix_day:"月",fix_time:"19:10",user_id:2)
+Student.create!(student_name:"山田太郎",studentkana:"ヤマダタロウ",real:true,zoom:false,birthday:"2010/4/10",fix_day:"火",fix_time:"16:10",user_id:2)
+Student.create!(student_name:"山田次郎",studentkana:"ヤマダジロウ",real:true,zoom:false,birthday:"2011/4/10",fix_day:"月",fix_time:"16:10",user_id:2)
+Student.create!(student_name:"木村花",studentkana:"キムラハナ",real:true,zoom:false,birthday:"2006/10/24",fix_day:"火",fix_time:"19:20",user_id:3)
+Student.create!(student_name:"高田義男",studentkana:"タカダヨシオ",real:true,zoom:false,birthday:"2009/11/24",fix_day:"月",fix_time:"16:25",user_id:4)
+Student.create!(student_name:"高田真由",studentkana:"タカダマユ",real:true,zoom:false,birthday:"2010/12/24",fix_day:"金",fix_time:"16:30",user_id:4)
+Student.create!(student_name:"佐藤良子",studentkana:"サトウヨシコ",real:true,zoom:false,birthday:"2004/4/10",fix_day:"月",fix_time:"19:30",user_id:5)
+Student.create!(student_name:"佐藤太郎",studentkana:"ヤマダタロウ",real:true,zoom:false,birthday:"2010/4/10",fix_day:"金",fix_time:"16:45",user_id:5)
+Student.create!(student_name:"杉村都和",studentkana:"スギムラトワ",real:true,zoom:false,birthday:"2011/4/10",fix_day:"火",fix_time:"16:10",user_id:6)
+Student.create!(student_name:"伊藤千佳",studentkana:"イトウチカ",real:false,zoom:true,birthday:"2004/10/24",fix_day:"水",fix_time:"19:05",user_id:7)
+Student.create!(student_name:"伊藤裕",studentkana:"イトウヒロシ",real:false,zoom:true,birthday:"2009/11/24",fix_day:"火",fix_time:"16:25",user_id:7)
+Student.create!(student_name:"工藤奈々",studentkana:"クドウナナ",real:true,zoom:false,birthday:"2010/12/24",fix_day:"土",fix_time:"10:30",user_id:8)
+Student.create!(student_name:"工藤勉",studentkana:"クドウベン",real:true,zoom:false,birthday:"2010/12/24",fix_day:"日",fix_time:"10:30",user_id:8)
+Student.create!(student_name:"工藤奈々",studentkana:"クドウナナ",real:true,zoom:false,birthday:"2010/12/24",fix_day:"土",fix_time:"10:30",user_id:8)
+Student.create!(student_name:"斎藤元気",studentkana:"サイトウゲンキ",real:true,zoom:false,birthday:"2005/12/24",fix_day:"日",fix_time:"13:36",user_id:9)
+Student.create!(student_name:"斎藤裕子",studentkana:"サイトウユウコ",real:true,zoom:false,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:9)
+Student.create!(student_name:"太田沙",studentkana:"オオタサち",real:true,zoom:false,birthday:"2005/12/24",fix_day:"月",fix_time:"19:36",user_id:10)
+Student.create!(student_name:"太田仁",studentkana:"オオタジン",real:true,zoom:false,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:10)
+Student.create!(student_name:"古川那奈",studentkana:"フルカワサチ",real:false,zoom:true,birthday:"2005/12/24",fix_day:"火",fix_time:"19:36",user_id:11)
+Student.create!(student_name:"古川一花",studentkana:"フルカワイチカ",real:false,zoom:true,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:11)

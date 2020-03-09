@@ -1,5 +1,9 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
+  has_many :notices
+  has_many :lessons
+  has_many :reservations
+  has_many :students, dependent: :destroy
   
   # 生徒一覧の名前順
   default_scope -> { order(student: :asc) }
