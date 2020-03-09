@@ -2,7 +2,6 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <% if !logged_in? %> 
       <h1>ログイン</h1>
       <%= form_with(scope: :session, url: login_path, local:true) do |f| %>
       
@@ -20,6 +19,5 @@
         
         <%= f.submit "ログイン", class: "btn btn-primary btn-block btn-login" %>
       <% end %>
-    <% end %>
   </div>
 </div>

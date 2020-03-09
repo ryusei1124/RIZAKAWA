@@ -2,8 +2,6 @@ Rails.application.routes.draw do
   get 'lessons/weeklyschedule'
   post 'lessons/create', to: 'lessons#create'
 
-  get 'notices/index'
-
   get 'sessions/new'
 
   root 'static_pages#top'
@@ -12,7 +10,13 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
-  resources :users
+  resources :users do
+    member do
+      get 'reservations/reservations_log'
+    end
+  end
+  
   resources :notices
   resources :password_resets,     only: [:new, :create, :edit, :update]
+  resources :reservations
 end
