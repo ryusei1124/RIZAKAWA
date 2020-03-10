@@ -81,4 +81,3 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user?(@user)
     end
   end
-end
