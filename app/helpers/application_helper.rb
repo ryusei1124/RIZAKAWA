@@ -26,6 +26,11 @@ module ApplicationHelper
   def timedisplay(datetime)
     hourdisplay(datetime).to_s+":"+mindisplay(datetime).to_s
   end
+  def daydis(d)
+    dis=d.month+"月"+d.day+"日"
+    dis
+  end
+  
   def weekdate(d)
     if d.present?
       youbi = %w[日 月 火 水 木 金 土]
@@ -49,6 +54,15 @@ module ApplicationHelper
       jhyear=nowday.year.to_i-13
     end
       jhdate=(jhyear.to_s+"/04/02").to_date
+  end
+  
+  def tob(text)
+    if text=="true"
+      textreturn=true
+    elsif text=="false"
+       textreturn=false
+    end
+    textreturn
   end
   
   # お知らせ詳細ページ「内容」の改行適用

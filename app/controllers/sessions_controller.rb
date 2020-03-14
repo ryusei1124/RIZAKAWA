@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
   
   def destroy
     log_out
+    session[:student_id]= nil if session[:student_id].present?
     flash[:success] = "ログアウトしました"
     redirect_to root_url
   end

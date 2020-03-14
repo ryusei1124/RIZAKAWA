@@ -7,15 +7,21 @@ class LessonsController < ApplicationController
   def weeklyschedule
     if params[:cation]=="1"
       @today=params[:changeday].to_date
-      studentid=params[:student]
-      @student=Student.find_by(id:studentid)
     else
       @today = Date.today
     end
     if params[:cation]=="2"
       studentid=params[:changestudent]
-      @student=Student.find_by(id:studentid)
+      session[:student_id]=Student.find_by(id:studentid).id if studentid.present?
+      @student=Student.find(session[:student_id])
       flash[:warning]="#{ @student.student_name}に切替成功しました。"
+    end
+    @students=Student.where(user_id:current_user)
+    if @students.blank?
+      session[:student_id]= nil
+    elsif session[:student_id].blank?
+      @student=@students.first
+      session[:student_id]=Student.find(@student.id).id
     end
     @lesson=Lesson.new
     @lessons=Lesson.all
