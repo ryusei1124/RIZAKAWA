@@ -21,14 +21,20 @@ class ApplicationController < ActionController::Base
   def set_user
     @user = User.find(params[:id])
   end
+   # ログインしてかどうか判定してなければログイン画面に推移
+  def unless_login
+    redirect_to "/login" if current_user.blank?
+  end
   
   #保護者でログインした時に子供情報を取得
   def set_student
     @students=Student.where(user_id:current_user)
-    if @student.blank?
+    if session[:student_id].blank? && @students.present?
       @student=@students.first
-    else
-      @student=Student.find_by(id:@student_id)
+      session[:student_id]=@student.id
+    #else
+      #@student=Student.find_by(id:@student_id)
+      #session[:student]=@student
     end
   end
   

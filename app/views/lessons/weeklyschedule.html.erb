@@ -4,7 +4,7 @@
 <% last_day=first_day+6 %>
 <% first_time="2000-01-01 10:00".to_time %>
 <% last_time="2000-01-01 22:30".to_time %>
-
+<% @student=Student.find(session[:student_id]) if session[:student_id].present? %>
 <% if @students.count>=2 %>
 <div style="padding-left:100px;"></div>
 <% @students.each do |student| %>
@@ -14,19 +14,18 @@
   &nbsp;</div>
 <% end %>
 <% end %>
-<% studentid=@student.id if @student.present? %>
 <div style="text-align:center">
-  <div style="display: inline-block;"><%= button_to"←", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:datedown,cation:"1",student:studentid}} %></div>
+  <div style="display: inline-block;"><%= button_to"←", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:datedown,cation:"1"}} %></div>
   <div style="display: inline-block;">
-    <h2>&nbsp;<b><%=@student.student_name if @students.present? %>&nbsp;週間予定表(<%=first_day %>〜<%=last_day %>) </b>&nbsp;</h2>
+    <h2>&nbsp;<b>&nbsp;<%=@student.student_name if @student.present? %>週間予定表(<%=first_day %>〜<%=last_day %>) </b>&nbsp;</h2>
   </div>
-  <div style="display: inline-block;"><%= button_to"→", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:dateup,cation:"1",student:studentid}} %></div>
+  <div style="display: inline-block;"><%= button_to"→", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:dateup,cation:"1"}} %></div>
 </div>
 <table border: 0px solid;" align="center">
   <th>
     <td">
       <table border="2" class="table" vertical-align:top;" align="center">
-        <% if current_user.admin==true %>
+        <% if current_user.admin? %>
         <tr>
           <td>登録</td>
         </tr>
@@ -52,14 +51,16 @@
       <% if current_user.admin==true %>
       <tr>
         <td align="center">
-          <a href="" data-toggle="modal" data-target=#<%=day%>>＋</a>
+        <% modaltype="newsc" %>
+          <a href="" data-toggle="modal" data-target=#<%=day%><%=modaltype %>>＋</a>
       </tr>
-      <div class="modal fade" id=<%= day %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <!--授業新規モーダル -->
+      <div class="modal fade" id=<%= day%><%=modaltype %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body" style="background-color: #C8D7E6;">
               <div>
-                <h2><%= day %>　(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
+              <h2><%= day %>　(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
                 <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
                 <div class="form-group">
                   <label for="select1a">対象:</label>
@@ -83,7 +84,7 @@
 
                 <div class="form-group">
                   <label for="select1a">Zoom定員:</label>
-                  <%= f.select:seats_real,@capacity, {selected:5},class: "form-control new-form" %>
+                  <%= f.select:seats_zoom,@capacity, {selected:5},class: "form-control new-form" %>
                 </div>
                 <div class="form-group">
                   <label for="select1a">区分:</label>
@@ -107,7 +108,7 @@
           </div>
         </div>
       </div>
-
+      <!--授業新規モーダルここまで -->
       <% end %>
       <tr>
         <td align="center" bgcolor="#f2f2f2" style="border-bottom: 1px solid;"><%=day.day %>日(<%=weekdate(day) %>)</td>
@@ -124,9 +125,11 @@
         <% if lesson.present?  %>
         <td bgcolor="#c0ffc0">
           <% if current_user.admin? %>
-          <%= link_to lesson.target, "/attendances/lesson_detail/#{lesson.id}" %>
+            <%= link_to lesson.target, "/attendances/lesson_detail/#{lesson.id}" %>
+          <% elsif Reservation.where("lesson_id =?  and student_id=?" ,lesson.id,@student.id).present? %>
+            <%= link_to lesson.target, {controller: 'reservations', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% else %>
-          <%= lesson.target %>
+            <%= lesson.target %>
           <% end %>
           <% max=((lesson.finished_at.to_time-lesson.started_at.to_time)/1800) %>
           <% coursecount=max %>

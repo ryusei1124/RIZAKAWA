@@ -1,0 +1,34 @@
+<h2 class="lead">授業予約詳細・変更登録</h2>
+<div class="row">
+  <% zoom=@reservation.zoom %>
+  <% @beforesite=request.referrer if @beforesite.blank? %>
+  <div class="col-md-6 col-md-offset-3 lead">
+    
+    <table border="2" class="table" style="border : 2px solid midnightblue ;">
+    <tr ><td style="width:150px;">コース</td><td><%= @lesson.target %>コース</td></tr>  
+    <tr style="border-top: solid  midnightblue;"><td style="width:150px;">名前</td><td><%= @student.student_name %></td></tr>
+    <tr style="border-top:  solid midnightblue;"><td>予約日時</td><td><%= @lesson.meeting_on %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %></td></tr>
+    <tr style="border-top:  solid midnightblue;"><td>固定時間</td><td><%=timedisplay(@student.fix_time) %></td>
+    <tr style="border-top: solid midnightblue;"><td>授業方法</td>
+    <td>
+    <%= form_with(url:reservations_userupdate_path,local: true) do |f| %> 
+    <%= f.hidden_field :reservation_id,value:@reservation.id %>
+    <%= f.hidden_field :student_id,value:@student.id %>
+    <%= f.hidden_field :beforesite,value:@beforesite %>
+    <%= f.hidden_field :day,value:@lesson.meeting_on %>
+    <% zoomseat=@lesson.seats_zoom %>
+    <% realseat=@lesson.seats_real %>
+    <% if zoom==true %>
+      <%= f.radio_button :zoom, :false %> リアル(<%=@realnumber %>/<%=realseat %>)
+      <%= f.radio_button :zoom, :true  ,{:checked => true} %>Zoom
+    <% else %>
+      <%= f.radio_button :zoom, :false  ,{:checked => true} %> リアル
+      <%= f.radio_button :zoom, :true %> Zoom(<%=@zoomnumber %>/<%=zoomseat %>)
+    <% end %>
+    <br>
+    </table>
+    <p　style="padding-left:10000px;"><%= f.submit "授業方法変更登録", class: "btn btn-primary" %>&nbsp;
+    <p　style="padding-left:10000px;"><%= f.submit "キャンセル登録", class: "btn btn-primary" %>&nbsp;
+    <%= link_to "前のページに戻る" ,@beforesite %></p>
+    <% end %>
+  </div>
