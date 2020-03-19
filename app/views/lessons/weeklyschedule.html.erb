@@ -63,10 +63,13 @@
               <h2><%= day %>　(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
                 <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
                 <div class="form-group">
-                  <label for="select1a">対象:</label>
+                  <label for="select1a">学校対象:</label>
                   <%= f.select :target, @grade, {}, required: true, class: "form-control new-form" %>
                 </div>
-
+                <div class="form-group">
+                  <label for="select1a">受験生区分:</label>
+                  <%= f.select :examinee, [["受験生"],["一般"]], {}, required: true, class: "form-control new-form" %>
+                </div>
                 <div class="form-group">
                   <label for="select1a">開始時間:</label>
                   <%= f.select :starttime, @hourselect, {}, required: true, class: "form-control new-form" %>
@@ -130,6 +133,9 @@
             <%= link_to lesson.target, {controller: 'reservations', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% else %>
             <%= lesson.target %>
+          <% end %>
+          <% if lesson.examinee==true %> 
+            <span class="label label-primary label-user-division">受</span>
           <% end %>
           <% max=((lesson.finished_at.to_time-lesson.started_at.to_time)/1800) %>
           <% coursecount=max %>
