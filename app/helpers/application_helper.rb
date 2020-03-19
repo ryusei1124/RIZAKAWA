@@ -70,4 +70,12 @@ module ApplicationHelper
     h(str).gsub(/\R/, "<br>")
   end
   
+  class Listcollection
+  attr_accessor :id,:dateweek
+    def initialize(id,content)
+      @id=id
+      @content=content
+    end
+  end
+  
 end

@@ -36,10 +36,30 @@ class LessonsController < ApplicationController
     lesson.user_id=current_user.id
     starttime=lesson_params[:starttime].to_time
     finishtime=lesson_params[:finishtime].to_time
+    openday=lesson_params[:meeting_on]
     lesson.started_at=starttime+54000
     lesson.finished_at=finishtime+54000
     lesson.regular=false if lesson_params[:regularkanji]=="臨時"
-    if lesson.save
+    #30分毎重複チェック
+    starttimec=lesson.started_at
+    finishtimec=lesson.finished_at
+    reservecounttotal=0
+    count=1
+    while starttimec<=finishtimec
+      reservecount=Lesson.where("started_at =? AND meeting_on = ?" ,starttimec, openday).count
+      #一回目のスタートタイムが前の授業の終わりと一緒でも登録必要にてそのまま通す
+      if count==1
+        count=2
+      else
+        reservecount=Lesson.where("finished_at =? AND meeting_on = ?" ,starttimec, openday).count
+      end  
+      starttimec=starttimec+1800
+      reservecounttotal=reservecounttotal+reservecount
+    end
+     #重複があれば処理を中止し週間予定表に戻る
+    if reservecounttotal>=1
+      flash[:danger]="重複登録があります。処理を中止しました。"
+    elsif lesson.save
       flash[:success]="登録に成功しました"
       if lesson.regular?
         if lesson_params[:target]=="中学生"
@@ -55,7 +75,7 @@ class LessonsController < ApplicationController
             if reservation.save
               flash[:warning]="該当受講生の予約登録に成功しました。"
             else
-              flash[:warning]="該当受講生の予約登録に失敗しました。"
+              flash[:danger]="該当受講生の予約登録に失敗しました。"
             end
           end
         end
