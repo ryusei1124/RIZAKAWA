@@ -39,7 +39,12 @@ class LessonsController < ApplicationController
     openday=lesson_params[:meeting_on]
     lesson.started_at=starttime+54000
     lesson.finished_at=finishtime+54000
-    lesson.examinee=true if lesson_params[:examineekanji]=="受験生"
+    if lesson_params[:examineekanji]=="受験生"
+      lesson.examinee=true
+    elsif lesson_params[:examineekanji]=="全"
+      lesson.examinee=nil
+    end
+    
     lesson.regular=false if lesson_params[:regularkanji]=="臨時"
     #30分毎重複チェック
     starttimec=lesson.started_at
@@ -67,10 +72,14 @@ class LessonsController < ApplicationController
           rev=Student.where("fix_day =? AND birthday < ? and examinee=?" ,weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date,true)
         elsif lesson_params[:target]=="中学生" && lesson.examinee==false #中学生で受験生以外を自動登録
           rev=Student.where("fix_day =? AND birthday < ? and examinee=?" ,weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date,false)
+        elsif lesson_params[:target]=="中学生" && lesson.examinee.nil? #中学生を自動登録
+          rev=Student.where("fix_day =? AND birthday < ? " ,weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date)  
         elsif lesson_params[:target]=="小学生" and lesson.examinee==true #小学生で受験生を自動登録
           rev=Student.where("fix_day =? AND birthday >= ? and examinee=?", weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date,true)
         elsif lesson_params[:target]=="小学生" and lesson.examinee==false #小学生で受験生以外を自動登録
           rev=Student.where("fix_day =? AND birthday >= ? and examinee=?", weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date,false)
+        elsif lesson_params[:target]=="小学生" and lesson.examinee.nil? #小学生を自動登録
+          rev=Student.where("fix_day =? AND birthday >= ?", weekdate(lesson.meeting_on), jrhigh(lesson.meeting_on).to_date)  
         else
           rev=Student.where("fix_day =? AND leave_time= ?", weekdate(lesson.meeting_on))
         end
