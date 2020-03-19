@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200308155716) do
+ActiveRecord::Schema.define(version: 20200319045919) do
 
   create_table "lessons", force: :cascade do |t|
     t.date "meeting_on", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20200308155716) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "examinee", default: false
     t.index ["user_id"], name: "index_lessons_on_user_id"
   end
 
@@ -50,6 +51,12 @@ ActiveRecord::Schema.define(version: 20200308155716) do
     t.datetime "updated_at", null: false
     t.integer "student_id"
     t.boolean "hold", default: true
+    t.boolean "waiting", default: false
+    t.time "attendance_time"
+    t.time "leave_time"
+    t.boolean "absence", default: false
+    t.boolean "transfer", default: false
+    t.time "fix_time"
     t.index ["lesson_id"], name: "index_reservations_on_lesson_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
@@ -69,6 +76,12 @@ ActiveRecord::Schema.define(version: 20200308155716) do
     t.string "fix_day"
     t.time "fix_time"
     t.string "studentkana"
+    t.date "withdrawal"
+    t.string "fix_day2"
+    t.time "fix_time2"
+    t.string "fix_day3"
+    t.time "fix_time3"
+    t.boolean "examinee", default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -78,17 +91,8 @@ ActiveRecord::Schema.define(version: 20200308155716) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "student"
-    t.boolean "real", default: false
     t.boolean "zoom", default: false
-    t.string "sex"
-    t.string "school"
-    t.integer "school_year"
     t.boolean "admin", default: false
-    t.datetime "attendance_time"
-    t.datetime "leave_time"
-    t.string "fix_day"
-    t.datetime "fix_time"
-    t.date "birthday"
     t.date "withdrawal"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
