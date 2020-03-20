@@ -1,6 +1,5 @@
-Hi <%= @user.guardian %>
+<%= @user.student %>さん、
 
-Welcome to the Sample App! Click on the link below to active your account:
+この度は入塾ありがとございます！
 
-・メールアドレス
-<%= @user.email %>
+<%= link_to "こちらからサイトにお入りください", @user %>

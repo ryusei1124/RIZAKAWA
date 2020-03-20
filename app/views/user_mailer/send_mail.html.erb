@@ -1,10 +1,7 @@
-<h1>Sample App</h1>
-
-<p>Hi <%= @user.guardian %></p>,
+<p><%= @user.student %>さん、</p>
 
 <p>
-  Welcome to the Sample App! Click on the link below to activate your account:
+  この度は入塾ありがとございます！
 </p>
 
-<p>この度は入塾ありがとうございます！</p>
-<p><%= @user.email %></p>
+<p><%= link_to "こちらからサイトにお入りください", @user %></p>
