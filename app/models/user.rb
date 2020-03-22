@@ -44,4 +44,9 @@ class User < ApplicationRecord
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
   
+  # 生徒登録メールを送信する
+  def send_activation_email
+    UserMailer.send_mail(self).deliver_now
+  end
+  
 end
