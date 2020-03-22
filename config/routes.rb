@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'reservations/useredit', to: 'reservations#useredit'
   get 'reservations/useredit', to: 'reservations#useredit'
   post 'reservations/userupdate', to: 'reservations#userupdate'
+  post 'reservations/reservation_change_user', to: 'reservations#reservation_change_user'
   get 'sessions/new'
 
   root 'static_pages#top'

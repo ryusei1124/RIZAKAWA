@@ -7,23 +7,30 @@
     <table border="2" class="table" style="border : 2px solid midnightblue ;">
     <tr ><td style="width:150px;">コース</td><td><%= @lesson.target %>コース</td></tr>  
     <tr style="border-top: solid  midnightblue;"><td style="width:150px;">名前</td><td><%= @student.student_name %></td></tr>
-    <tr style="border-top:  solid midnightblue;"><td>予約日時</td><td><%= @lesson.meeting_on %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %></td></tr>
-    <tr style="border-top:  solid midnightblue;"><td>固定時間</td><td><%=timedisplay(@student.fix_time) %></td>
+    <tr style="border-top:  solid midnightblue;"><td>予約日時</td>
+    <td>
+    <%= @lesson.meeting_on %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
+    <% if @reservation.transfer? %>
+     振替
+    <% end %>
+    </td></tr>
+    <tr style="border-top:  solid midnightblue;"><td>固定時間</td><td><%=timedisplay(@reservation.fix_time) if @reservation.fix_time.present? %></td>
     <tr style="border-top: solid midnightblue;"><td>授業方法</td>
     <td>
     <%= form_with(url:reservations_userupdate_path,local: true) do |f| %> 
-    <%= f.hidden_field :reservation_id,value:@reservation.id %>
-    <%= f.hidden_field :student_id,value:@student.id %>
-    <%= f.hidden_field :beforesite,value:@beforesite %>
-    <%= f.hidden_field :day,value:@lesson.meeting_on %>
-    <% zoomseat=@lesson.seats_zoom %>
-    <% realseat=@lesson.seats_real %>
+      <%= f.hidden_field :reservation_id,value:@reservation.id %>
+      <%= f.hidden_field :student_id,value:@student.id %>
+      <%= f.hidden_field :beforesite,value:@beforesite %>
+      <%= f.hidden_field :day,value:@lesson.meeting_on %>
+      <% zoomseat=@lesson.seats_zoom %>
+      <% realseat=@lesson.seats_real %>
     <% if zoom==true %>
       Zoom
     <% else %>
      リアル
     <% end %>
     <br>
+    <tr style="border-top: solid midnightblue;"><td>備考</td><td><%=@reservation.note %></td>
     </table>
     <% modaltype1="chengesc" %><% modaltype="newsc" %>
     <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-primary">授業方法変更登録</a>&nbsp;
@@ -51,49 +58,49 @@
       </div></div>
       <div class="modal-footer">
         <%= form_with(url:reservations_userupdate_path,local: true) do |f| %> 
-                <%= f.hidden_field :reservation_id,value:@reservation.id %>
-                <%= f.hidden_field :student_id,value:@student.id %>
-                <%= f.hidden_field :beforesite,value:@beforesite %>
-                <%= f.hidden_field :day,value:@lesson.meeting_on %>
-                
-          
-                <% if zoom==true %>
-                  <div style=" display: inline-block; ">
-                  <%= f.submit "リアルに変更する", class: "btn btn-primary" %>
-                  </div>
-                  
-                <% else %>
-                <div style=" display: inline-block; ">
-                  <%= f.submit "Zoomに変更する", class: "btn btn-primary" %>
-                </div>
-                <% end %>
-                <div style=" display: inline-block; ">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                </div>
-              <% end %>
-      </div><!-- /.modal-footer -->
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal --
+          <%= f.hidden_field :reservation_id,value:@reservation.id %>
+          <%= f.hidden_field :student_id,value:@student.id %>
+          <%= f.hidden_field :beforesite,value:@beforesite %>
+          <%= f.hidden_field :day,value:@lesson.meeting_on %>
+          <% if zoom==true %>
+            <div style=" display: inline-block; ">
+            <%= f.submit "リアルに変更する", class: "btn btn-primary" %>
+            </div>
+          <% else %>
+            <div style=" display: inline-block; ">
+            <%= f.submit "Zoomに変更する", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+          <div style=" display: inline-block; ">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
      
-<!--授業授業新規モーダル -->
+<!--授業振替モーダル -->
       <div class="modal fade" id=<%=modaltype %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-body" style="background-color: #C8D7E6;">
+            <div class="modal-body" style="background-color: #C8D7E6; margin:auto;">
               <div>
               <h3 class="lead" style="text-align:center;">振替授業を選択して下さい</h3>
-              <table>
-              <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
-              <tr><td class="lead"><div class="form-group">
-                  <label for="select1a">振替授業:</label>
-                  <%#= f.select :meeting_on, @reservation2, {}, required: true, class: "form-control new-form" %>
-                  <%#= f.select :meeting_on,@reservation %>
-                  <%#= f.collection_select :user_services_service_id_eq,@services, :id, :name, :include_blank=>"" ,style:"width:20px;" %>
-                  <%= f.collection_select :meeting_on,@lessonlist, :id, :meeting_on %>
-                </div></td></tr>
-              <% end %>
+              <table align="center">
+              <%= form_with(url:reservations_reservation_change_user_path,local: true) do |f| %>
+              <tr><td>
+              <p>
+              <%= f.hidden_field :reservation_id,value:@reservation.id %>
+              <%= f.collection_select :id,@lessonlists, :id, :content, {:include_blank => true},{:class =>"form-control share-form",:style=>"width:350px"} %>
+                ○：振替可能 ×：キャンセル待ち<br></p>
+              </td></tr>
               </table>
+              <P style="margin-left:200px">
+              <%= f.submit "実行", class: "btn btn-primary" %>&nbsp;
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+              </P>
+                 <% end %>
               </div>
             </div>
           </div>
