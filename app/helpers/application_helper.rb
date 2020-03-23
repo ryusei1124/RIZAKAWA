@@ -45,6 +45,15 @@ module ApplicationHelper
     end
     timese
   end
+  def yearpiriod(date)
+    date.to_date
+    if (date.month.to_i<=3) or (date.month.to_i==4 and date.day.to_i==1)
+      yearp=date.year.to_i-1
+    else 
+      yearp=date.year
+    end
+      yearp
+  end
   
   def jrhigh(nowday)
     nowday=nowday.to_date
@@ -55,6 +64,22 @@ module ApplicationHelper
     end
       jhdate=(jhyear.to_s+"/04/02").to_date
   end
+  
+  
+  def grade(born,nowday)
+    gradeyear=yearpiriod(nowday)-yearpiriod(born)
+    gradeyear
+  end
+  def gradeschool(born,nowday)
+    gradeyear=grade(born,nowday)
+    if gradeyear<=12
+      gradeschoolreturn="小学生"
+    else
+      gradeschoolreturn="中学生"
+    end
+    gradeschoolreturn
+  end
+    
   
   def tob(text)
     if text=="true"
@@ -71,8 +96,8 @@ module ApplicationHelper
   end
   
   class Listcollection
-  attr_accessor :id,:dateweek
-    def initialize(id,content)
+  attr_accessor :id,:content
+    def initialize(id,content,zoom)
       @id=id
       @content=content
     end

@@ -18,4 +18,5 @@ class Student < ApplicationRecord
       @grade="対象外"
     end
    end
+    
 end

@@ -1,13 +1,7 @@
-class ReservationsController < ApplicationController
-  include ApplicationHelper
+class ReservationusersController < ApplicationController
+   include ApplicationHelper
   before_action:unless_login
   require 'date'
-  
-  def index
-  end
-  
-  def reservations_log
-  end
   
   def useredit
     student_id=params[:student_id]
@@ -72,5 +66,4 @@ class ReservationsController < ApplicationController
     end
     redirect_to "/lessons/weeklyschedule?cation=1&changeday=#{lesson.meeting_on.to_s}"
   end
-  
 end
