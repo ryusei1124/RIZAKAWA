@@ -130,12 +130,14 @@
           <% if current_user.admin? %>
             <%= link_to lesson.target, "/attendances/lesson_detail/#{lesson.id}" %>
           <% elsif Reservation.where("lesson_id =?  and student_id=?" ,lesson.id,@student.id).present? %>
-            <%= link_to lesson.target, {controller: 'reservations', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
+            <%= link_to lesson.target, {controller: 'reservationusers', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% else %>
             <%= lesson.target %>
           <% end %>
           <% if lesson.examinee==true %> 
             <span class="label label-primary label-user-division">受</span>
+          <% elsif lesson.examinee==false %>
+            <span class="label label-primary label-user-division">般</span>
           <% end %>
           <% max=((lesson.finished_at.to_time-lesson.started_at.to_time)/1800) %>
           <% coursecount=max %>

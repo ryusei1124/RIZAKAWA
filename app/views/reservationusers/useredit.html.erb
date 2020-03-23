@@ -17,11 +17,8 @@
     <tr style="border-top:  solid midnightblue;"><td>固定時間</td><td><%=timedisplay(@reservation.fix_time) if @reservation.fix_time.present? %></td>
     <tr style="border-top: solid midnightblue;"><td>授業方法</td>
     <td>
-    <%= form_with(url:reservations_userupdate_path,local: true) do |f| %> 
-      <%= f.hidden_field :reservation_id,value:@reservation.id %>
-      <%= f.hidden_field :student_id,value:@student.id %>
-      <%= f.hidden_field :beforesite,value:@beforesite %>
-      <%= f.hidden_field :day,value:@lesson.meeting_on %>
+    <%#= form_with(url:reservationusers_userupdate_path,local: true) do |f| %> 
+     
       <% zoomseat=@lesson.seats_zoom %>
       <% realseat=@lesson.seats_real %>
     <% if zoom==true %>
@@ -36,7 +33,7 @@
     <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-primary">授業方法変更登録</a>&nbsp;
     <a href="" data-toggle="modal" data-target=#<%=modaltype%> class="btn btn-primary">キャンセル登録</a>&nbsp;
     <%= link_to "前のページに戻る" ,@beforesite %></p>
-    <% end %>
+    <%# end %>
     <% modaltype="newsc" %>
     
   </div>
@@ -57,7 +54,7 @@
       <% end %>
       </div></div>
       <div class="modal-footer">
-        <%= form_with(url:reservations_userupdate_path,local: true) do |f| %> 
+        <%= form_with(url:reservationusers_userupdate_path,local: true) do |f| %> 
           <%= f.hidden_field :reservation_id,value:@reservation.id %>
           <%= f.hidden_field :student_id,value:@student.id %>
           <%= f.hidden_field :beforesite,value:@beforesite %>
@@ -88,7 +85,7 @@
               <div>
               <h3 class="lead" style="text-align:center;">振替授業を選択して下さい</h3>
               <table align="center">
-              <%= form_with(url:reservations_reservation_change_user_path,local: true) do |f| %>
+              <%= form_with(url:reservationusers_reservation_change_user_path,local: true) do |f| %>
               <tr><td>
               <p>
               <%= f.hidden_field :reservation_id,value:@reservation.id %>
