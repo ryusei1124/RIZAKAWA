@@ -24,6 +24,6 @@ Rails.application.routes.draw do
   end
   
   resources :notices
-  resources :password_resets,     only: [:new, :create, :edit, :update]
+  resources :password_resets, only: [:new, :create, :edit, :update]
   resources :reservations
 end
