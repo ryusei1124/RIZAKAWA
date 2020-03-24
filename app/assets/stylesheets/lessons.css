@@ -7,3 +7,14 @@
   margin-left: auto;
   margin-top: 1.5%;
   margin-bottom: 1.5%; }
+  
+/* 基本情報編集モーダルウインドウ */
+
+.label-basic-info {
+  margin-top: 5px;
+}
+
+.btn-basic-info {
+  margin: 15px 0;
+  width: 30%;
+}
