@@ -1,14 +1,10 @@
 class ReservationsController < ApplicationController
-<<<<<<< HEAD
-
-=======
   include ApplicationHelper
   before_action:unless_login
   
   def index
   end
   
->>>>>>> 21c8c14d506ed4e688553ac0329e0dce50030364
   def reservations_log
   end
   
@@ -21,6 +17,7 @@ class ReservationsController < ApplicationController
     @zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count
     @realnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).count
   end
+  
   def userupdate
     reservation_id=params[:reservation_id]
     zoom=params[:zoom]

@@ -50,6 +50,10 @@ h2 {
   color: #777;
 }
 
+h4 {
+  text-align: center;
+}
+
 p {
   font-size: 1.1em;
   line-height: 1.7em;
@@ -122,4 +126,10 @@ p {
 .field_with_errors {
   display: contents;
   // もしくは display: inline;
+}
+
+/* モーダルウインドウの位置調整 */
+
+.modal-dialog-center {
+  padding-top: 10%;
 }

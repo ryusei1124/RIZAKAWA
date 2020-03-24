@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :logged_in_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy]
+  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   
   def index
     @users = User.paginate(page: params[:page], per_page: 20)
@@ -51,6 +51,12 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
+  def edit_basic_info
+  end
+  
+  def update_basic_info
+  end
+  
   def login_page
   end
   
@@ -61,11 +67,6 @@ class UsersController < ApplicationController
     end
     
     # beforeフィルター
-    
-    # paramsハッシュからユーザーを取得します。
-    def set_user
-      @user = User.find(params[:id])
-    end
 
     # ログイン済みのユーザーか確認します。
     def logged_in_user
