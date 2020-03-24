@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token, :activation_token, :reset_token
+  attr_accessor :remember_token, :reset_token
   has_many :notices
   has_many :lessons
   has_many :reservations
@@ -21,6 +21,32 @@ class User < ApplicationRecord
   
   validate :class_hoice
   
+  # 渡された文字列のハッシュ値を返す
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
+  
+  # トークンがダイジェストと一致すればtrueを返します。
+  def authenticated?(remember_token)
+    # ダイジェストが存在しない場合はfalseを返して終了します。
+    return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+  
+  # トークンがダイジェストと一致したらtrueを返す
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+  
+  # ランダムなトークンを返す
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+  
   # パスワード再設定の属性を設定する
   def create_reset_digest
     self.reset_token = User.new_token
@@ -37,11 +63,9 @@ class User < ApplicationRecord
     errors.add(:class_choice, "はどちらか一つ選択してください") if zoom.present? && real.present?
   end
   
-  # トークンがダイジェストと一致すればtrueを返します。
-  def authenticated?(remember_token)
-    # ダイジェストが存在しない場合はfalseを返して終了します。
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  # 生徒登録メールを送信する
+  def send_activation_email
+    UserMailer.send_mail(self).deliver_now
   end
   
 end

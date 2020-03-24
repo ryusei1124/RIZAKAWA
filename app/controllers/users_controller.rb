@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.send_activation_email
       flash[:success] = '新規作成に成功しました。'
       redirect_to @user
     else

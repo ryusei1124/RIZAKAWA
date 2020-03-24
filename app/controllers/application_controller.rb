@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   def set_user
     @user = User.find(params[:id])
   end
-   # ログインしてかどうか判定してなければログイン画面に推移
+   # ログイン状態を判定して、してなければログイン画面に推移
   def unless_login
     redirect_to "/login" if current_user.blank?
   end
