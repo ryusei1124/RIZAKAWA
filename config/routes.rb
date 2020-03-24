@@ -19,9 +19,17 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'reservations/reservations_log'
+      get 'edit_basic_info'
+      patch 'update_basic_info'
     end
   end
   
+  resources :lessons do
+   member do
+     get 'edit_basic_info'
+     patch 'update_basic_info'
+   end
+  end
   resources :notices
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :reservations
