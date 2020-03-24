@@ -130,8 +130,8 @@
           <% else %>
             <% rev=Reservation.where("lesson_id =? and student_id=?" ,lesson.id,@student.id).present?  %>
           <% end %>
-          <% if rev.present? %>
-            <% tdcolor="#C0C0C0" %>
+          <% if rev.present? and current_user.admin==false %>
+            <% tdcolor="#d3d3d3" %>
           <% else %>
             <% tdcolor="#c0ffc0" %>
           <% end %>
