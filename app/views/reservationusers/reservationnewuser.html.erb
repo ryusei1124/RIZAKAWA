@@ -20,7 +20,7 @@
       <%= form_with(url:reservationusers_reservationnewusercreate_path,local: true) do |f| %> 
       <% if zoom==true %>
         <%= f.radio_button :zoom, :false %> リアル(<%=realnumber %>/<%=realseat %>)
-        <%= f.radio_button :zoom, :true  ,{:checked => true} %>Zoom(<%=zoomnumber %>/<%=zoomseat %>
+        <%= f.radio_button :zoom, :true  ,{:checked => true} %>Zoom(<%=zoomnumber %>/<%=zoomseat %>)
       <% else %>
         <%= f.radio_button :zoom, :false  ,{:checked => true} %> リアル(<%=realnumber %>/<%=realseat %>)
         <%= f.radio_button :zoom, :true %> Zoom(<%=zoomnumber %>/<%=zoomseat %>)
