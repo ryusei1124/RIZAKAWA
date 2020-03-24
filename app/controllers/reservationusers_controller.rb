@@ -1,22 +1,22 @@
 class ReservationusersController < ApplicationController
-   include ApplicationHelper
+  include ApplicationHelper
   before_action:unless_login
   require 'date'
   
   def useredit
-    student_id=params[:student_id]
-    @student=Student.find(student_id)
     @lessonlists=[]
+    @student_id=params[:student_id]
+    @student=Student.find(@student_id)
     lesson_id=params[:lesson_id]
     @lesson=Lesson.find(lesson_id)
     @lessons=Lesson.includes(:reservations).all
     @reservation=Reservation.find_by(lesson_id:@lesson.id, student_id:@student.id)
     @zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count
     @realnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).count
-    today=Date.today
+    @today=Date.today
     #振替のためのコード。授業の日に該当生徒が小学生か中学生かを取得。
     gradesc=gradeschool(@student.birthday,@lesson.meeting_on)
-    lessons=Lesson.where("meeting_on> ? and regular= ?", today,true).where("target= ? or target= ?", gradesc,"小中学生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
+    lessons=Lesson.where("meeting_on> ? and regular= ?", @today,true).where("target= ? or target= ?", gradesc,"小中学生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
     lessons.each do |les|
       if Reservation.where("student_id= ? and lesson_id= ?", @student.id,les.id).count==0
         realcapacity=Lesson.find(lesson_id).seats_real
@@ -48,22 +48,73 @@ class ReservationusersController < ApplicationController
     end
     redirect_to request.referrer
   end
+  
   def reservation_change_user
-    reservation=Reservation.find(params[:reservation_id])
-    reservationarray=params[:id].split("-")
-    reservation.lesson_id=reservationarray[0].to_i
-    if reservationarray[1]=="1"
-      reservation.zoom=false
+    reservation_id=params[:reservation_id]
+    transfer_day_id=params[:id]
+    reservation=Reservation.find(reservation_id)
+    student_id=params[:student_id]
+    #振替日がブランクだった場合の処理
+    if transfer_day_id.blank?
+      #予約情報を削除
+      reservation.destroy
+      student=Student.find(student_id)
+      #生徒のキャンセル保有数をプラス１
+      if student.cancelnumber.present?
+        student.cancelnumber=student.cancelnumber+1
+      else
+        student.cancelnumber=1
+      end
+      lesson=Lesson.find(reservation.lesson_id)
+      lesson_meeting_on=lesson.meeting_on
+      if reservation.save and student.save
+        flash[:success]="キャンセル登録しました。別途振替授業を登録願います。"
+      else
+        flash[:success]="キャンセル登録に失敗しました。"
+      end
     else
-      reservation.zoom=true
+      reservationarray=transfer_day_id.split("-")
+      reservation.lesson_id=reservationarray[0].to_i
+      reservation.lesson_id=reservationarray[0].to_i
+      if reservationarray[1]=="1"
+        reservation.zoom=false
+      else
+        reservation.zoom=true
+      end
+      reservation.fix_time=nil
+      lesson=Lesson.find(reservation.lesson_id)
+      lesson_meeting_on=lesson.meeting_on
+      if reservation.save
+        flash[:success]="#{lesson.meeting_on.to_s}に受講日を振替しました。確認願います。"
+      else
+        flash[:danger]="受講日振替に失敗しました"
+      end
     end
-    reservation.transfer=true
-    lesson=Lesson.find(reservation.lesson_id)
-    if reservation.save
-      flash[:success]="#{lesson.meeting_on.to_s}に受講日を振替しました。確認願います。"
+    redirect_to "/lessons/weeklyschedule?cation=1&changeday=#{lesson_meeting_on.to_s}"
+  end
+  
+  def reservationnewuser
+    @reservation=Reservation.new
+    @student_id=params[:student_id]
+    @student=Student.find(@student_id)
+    @lesson_id=params[:lesson_id]
+    @lesson=Lesson.find(@lesson_id)
+  end
+  
+  def reservationnewusercreate
+    student=Student.find(params[:student_id])
+    lesson=Lesson.find(params[:lesson_id])
+    zoom=tob(params[:zoom])
+    user_id=student.user_id
+    #キャンセル登録マイナス１
+    student.cancelnumber=student.cancelnumber-1
+    reservation=Reservation.new(student_id:student.id,lesson_id:lesson.id,zoom:zoom,user_id:user_id)
+    if reservation.save and student.save
+      flash[:success]="#{lesson.meeting_on.to_s}に受講日を振替登録しました。確認願います。"
     else
-      flash[:success]="受講日振替に失敗しました"
+      flash[:danger]="受講日登録に失敗しました"
     end
     redirect_to "/lessons/weeklyschedule?cation=1&changeday=#{lesson.meeting_on.to_s}"
   end
 end
+

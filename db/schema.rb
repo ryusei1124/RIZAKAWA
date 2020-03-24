@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200319045919) do
+ActiveRecord::Schema.define(version: 20200324055332) do
 
   create_table "lessons", force: :cascade do |t|
     t.date "meeting_on", null: false
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20200319045919) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "examinee", default: false
+    t.boolean "hold", default: false
     t.index ["user_id"], name: "index_lessons_on_user_id"
   end
 
@@ -50,7 +51,6 @@ ActiveRecord::Schema.define(version: 20200319045919) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "student_id"
-    t.boolean "hold", default: true
     t.boolean "waiting", default: false
     t.time "attendance_time"
     t.time "leave_time"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20200319045919) do
     t.string "fix_day3"
     t.time "fix_time3"
     t.boolean "examinee", default: false
+    t.integer "cancelnumber"
   end
 
   create_table "users", force: :cascade do |t|

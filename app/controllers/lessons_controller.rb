@@ -70,7 +70,7 @@ class LessonsController < ApplicationController
       dayofweek=weekdate(lesson.meeting_on)
       if lesson.regular? #定例授業なら該当の生徒を自動で登録する
         #会員で該当曜日３つカラムから該当曜日の生徒抽出
-        students=Student.where("fix_day =? OR fix_day2 =? OR fix_day3 =?",dayofweek,dayofweek,dayofweek).where(withdrawal:nil)
+        students=Student.where("fix_day =? or fix_day2 =? or fix_day3 =?",dayofweek,dayofweek,dayofweek).where(withdrawal:nil)
         if lesson_params[:target]=="中学生" && lesson.examinee==true #中学生で受験生を自動登録
           rev=students.where("birthday < ? and examinee=?" ,jrhigh(lesson.meeting_on).to_date,true)
         elsif lesson_params[:target]=="中学生" && lesson.examinee==false #中学生で受験生以外を自動登録
