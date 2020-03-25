@@ -27,7 +27,7 @@ module ApplicationHelper
     hourdisplay(datetime).to_s+":"+mindisplay(datetime).to_s
   end
   def daydis(d)
-    dis=d.month+"月"+d.day+"日"
+    dis=d.month.to_s+"月"+d.day.to_s+"日"
     dis
   end
   
@@ -79,7 +79,6 @@ module ApplicationHelper
     end
     gradeschoolreturn
   end
-    
   
   def tob(text)
     if text=="true"

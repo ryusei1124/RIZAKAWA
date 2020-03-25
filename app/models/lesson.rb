@@ -6,4 +6,5 @@ class Lesson < ApplicationRecord
   attr_accessor:examineekanji
   attr_accessor :starttime
   attr_accessor :finishtime
+  attr_accessor :autoregister
 end

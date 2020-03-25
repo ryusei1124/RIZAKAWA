@@ -37,17 +37,17 @@ Student.create!(student_name:"太田沙",studentkana:"オオタサち",zoom:true
 Student.create!(student_name:"太田仁",studentkana:"オオタジン",zoom:true,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:10)
 Student.create!(student_name:"古川那奈",studentkana:"フルカワサチ",zoom:true,birthday:"2005/12/24",fix_day:"火",fix_time:"19:36",user_id:11)
 Student.create!(student_name:"古川一花",studentkana:"フルカワイチカ",zoom:true,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:11)
-Student.create!(student_name:"上田智",studentkana:"ウエダトモ",zoom:false,birthday:"2007/09/24",fix_day:"月",fix_time:"16:36",fix_day2:"火",fix_time2:"16:36",examinee:true,user_id:12)
+Student.create!(student_name:"上田智",studentkana:"ウエダトモ",zoom:false,birthday:"2007/09/24",fix_day:"月",fix_time:"16:36",fix_day2:"金",fix_time2:"16:50",examinee:true,user_id:12)
 Student.create!(student_name:"上田仁",studentkana:"ウエダジン",zoom:false,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:12)
-Student.create!(student_name:"佐竹優",studentkana:"サタケユウ",zoom:false,birthday:"2007/09/24",fix_day:"水",fix_time:"16:36",fix_day2:"水",fix_time2:"16:36",examinee:true,user_id:13)
+Student.create!(student_name:"佐竹優",studentkana:"サタケユウ",zoom:false,birthday:"2007/09/24",fix_day:"水",fix_time:"16:36",fix_day2:"水",fix_time2:"16:10",examinee:true,user_id:13)
 Student.create!(student_name:"佐竹元気",studentkana:"サタケゲンキ",zoom:false,birthday:"2005/03/24",fix_day:"水",fix_time:"20:30",examinee:true,user_id:13)
 Student.create!(student_name:"桑田祐樹",studentkana:"クワタユウキ",zoom:false,birthday:"2009/09/24",fix_day:"木",fix_time:"16:36",user_id:14)
 Student.create!(student_name:"多田茂",studentkana:"タダシゲル",zoom:true,birthday:"2005/12/24",fix_day:"木",fix_time:"20:36",user_id:15)
 Student.create!(student_name:"多田美玖",studentkana:"タダミク",zoom:false,birthday:"2010/01/24",fix_day:"火",fix_time:"16:56",user_id:15)
-Student.create!(student_name:"上田正志",studentkana:"ウエダマサシ",zoom:false,birthday:"2009/05/24",fix_day:"木",fix_time:"16:36",user_id:16)
-Student.create!(student_name:"柳生三郎",studentkana:"ヤギュウサブロウ",zoom:true,birthday:"2009/12/24",fix_day:"火",fix_time:"16:36",user_id:17)
-Student.create!(student_name:"柳生巴",studentkana:"ヤギュウトモエ",zoom:true,birthday:"2005/05/24",fix_day:"木",fix_time:"19:36",user_id:17)
-Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",zoom:true,birthday:"2010/05/24",fix_day:"金",fix_time:"16:36",user_id:17)
+Student.create!(student_name:"上田正志",studentkana:"ウエダマサシ",zoom:false,birthday:"2009/05/24",fix_day:"木",fix_time:"16:20",user_id:16)
+Student.create!(student_name:"柳生三郎",studentkana:"ヤギュウサブロウ",zoom:true,birthday:"2009/12/24",fix_day:"火",fix_time:"16:15",user_id:17)
+Student.create!(student_name:"柳生巴",studentkana:"ヤギュウトモエ",zoom:true,birthday:"2005/05/24",fix_day:"木",fix_time:"19:10",user_id:17)
+Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",zoom:true,birthday:"2010/05/24",fix_day:"金",fix_time:"16:20",user_id:17)
 61.times do |n|
   notice_title = "sample-#{n+1}タイトル"
   notice_content = "sample-#{n+1}内容"

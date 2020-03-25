@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-
-
-
   get '/attendances/lesson_detail/:lesson_id' ,to: 'attendances#lesson_detail'
   get 'lessons/weeklyschedule'
   post 'lessons/create', to: 'lessons#create'
@@ -9,6 +6,8 @@ Rails.application.routes.draw do
   get 'reservationusers/useredit', to: 'reservationusers#useredit'
   post 'reservationusers/userupdate', to: 'reservationusers#userupdate'
   post 'reservationusers/reservation_change_user', to: 'reservationusers#reservation_change_user'
+  post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
+  post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
   get 'sessions/new'
 
   root 'static_pages#top'
