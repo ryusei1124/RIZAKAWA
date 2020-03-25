@@ -1,10 +1,16 @@
+<% require 'date' %>
+<% thisday=Date.today %>
 <h2 class="lead">振替授業予約新規登録</h2>
 <div class="row"></div>
   <% @beforesite=request.referrer if @beforesite.blank? %>
   <div class="col-md-6 col-md-offset-3 lead">
     
     <table border="2" class="table" style="border : 2px solid midnightblue ;">
-    <tr ><td style="width:150px;">コース</td><td><%= @lesson.target %>コース</td></tr>  
+    <tr ><td style="width:150px;">コース</td><td><%= @lesson.target %>コース&nbsp; 
+    <% if @lesson.regular==false %>
+    (臨時開催)
+    <% end %>
+    </td></tr>  
     <tr style="border-top: solid  midnightblue;"><td style="width:150px;">名前</td><td><%= @student.student_name %></td></tr>
     <tr style="border-top:  solid midnightblue;"><td>予約日時</td>
     <td>
@@ -30,7 +36,9 @@
       <%= f.hidden_field :lesson_id,value:@lesson.id %>
     <tr style="border-top: solid midnightblue;"><td>備考</td><td><%=@reservation.note %></td>
     </table>
-    <%= f.submit "振替授業新規登録", class: "btn btn-primary" %>&nbsp;
+      <% if @lesson.meeting_on>thisday %>
+        <%= f.submit "振替授業新規登録", class: "btn btn-primary" %>&nbsp;
+      <% end %>
     <% end %>
     <% if @beforesite.present? %>
       <%= link_to "前のページに戻る" ,@beforesite %>
