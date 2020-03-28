@@ -1,5 +1,4 @@
 class Lesson < ApplicationRecord
-
   belongs_to :user
   has_many :reservations, dependent: :destroy
   attr_accessor :regularkanji
@@ -7,4 +6,5 @@ class Lesson < ApplicationRecord
   attr_accessor :starttime
   attr_accessor :finishtime
   attr_accessor :autoregister
+  attr_accessor:fixtimeres
 end

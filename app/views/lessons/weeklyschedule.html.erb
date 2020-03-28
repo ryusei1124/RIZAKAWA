@@ -1,5 +1,6 @@
 <% require 'date' %>
-<% thisday=Date.today %>
+<% nowtime=Time.new+32400  %>
+<% thisday=nowtime.to_date %>
 <% first_day=@today.to_date %>
 <% datedown=(first_day-7) %>
 <% dateup=(first_day+7) %>
@@ -8,14 +9,16 @@
 <% last_time="2000-01-01 22:30".to_time %>
 <% @student=Student.find(session[:student_id]) if session[:student_id].present? %>
 <% if @students.count>=2 %>
-<div style="padding-left:100px;"></div>
+<div style="padding-left:170px;">
 <% @students.each do |student| %>
 <div style="display: inline-block;">
   <% studentid=student.id %>
+  <%# cenceln="(#{student.cancelnumber.to_s})" if student.cancelnumber.present? %>
   <%= button_to student.student_name, {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changestudent:studentid,cation:"2"}} %>
   &nbsp;</div>
 <% end %>
 <% end %>
+</div>
 <div style="text-align:center">
   <div style="display: inline-block;"><%= button_to"←", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:datedown,cation:"1"}} %></div>
   <div style="display: inline-block;">
@@ -45,8 +48,7 @@
         </tr>
         <% end %>
       </table>
-
-      <% (first_day..last_day).each do |day| %>
+  <% (first_day..last_day).each do |day| %>
   <th>
   <td>
     <table border="2" class="table" style="width:105px; vertical-align:top;">
@@ -77,7 +79,7 @@
                   <%= f.select :starttime, @hourselect, {}, required: true, class: "form-control new-form" %>
                 </div>
                 <div class="form-group">
-                  <label for="select1a">終了時間:</label>
+                  <label for="select1a">終了時間:</label>　
                   <%= f.select :finishtime, @hourselect, {}, required: true, class: "form-control new-form" %>
                 </div>
                 <div class="form-group">
@@ -89,7 +91,7 @@
                   <%= f.select:seats_zoom,@capacity, {selected:5},class: "form-control new-form" %>
                 </div>
                 <div class="form-group">
-                  <label for="select1a">区分:</label>　※定例授業で対象生徒を自動登録する<%= f.check_box :autoregister, {:checked => true} %> 
+                  <label for="select1a">区分:</label>　<%= f.check_box :autoregister, {:checked => true} %> 定例で生徒を予約登録　<%= f.check_box :fixtimeres, {:checked => true} %> 定例で固定時間の合う生徒だけ予約登録
                   <%= f.select :regularkanji, [["定例"],["臨時"]], {}, required: true, class: "form-control new-form" %>
                 </div>
                 <%= f.hidden_field :meeting_on,value:day  %>
@@ -113,7 +115,7 @@
       <!--授業新規モーダルここまで -->
       <% end %>
       <tr>
-        <td align="center" bgcolor="#f2f2f2" style="border-bottom: 1px solid;"><%=day.day %>日(<%=weekdate(day) %>)</td>
+        <td align="center" bgcolor=<%= tdbgcolor(thisday,day,2) %> style="border-bottom: 1px solid;"><%=day.day %>日(<%=weekdate(day) %>)</td>
       </tr>
       <% time = first_time %>
       <% coursecount=0 %>
@@ -130,18 +132,30 @@
           <% else %>
             <% rev=Reservation.where("lesson_id =? and student_id=?" ,lesson.id,@student.id).present?  %>
           <% end %>
-          <% if rev.present? and current_user.admin==false %>
-            <% tdcolor="#d3d3d3" %>
-          <% else %>
+          <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
+          <% if rev.present? and current_user.admin==true %>
             <% tdcolor="#c0ffc0" %>
+          <% elsif ((lesson.target==gradesc or lesson.target=="小中学生") and (lesson.examinee==nil or lesson.examinee==@student.examinee) and  @student.cancelnumber.present? and @student.cancelnumber>0  and lesson.meeting_on.to_date>thisday) or ((lesson.target==gradesc or lesson.target=="小中学生") and lesson.regular==false) %>
+            <% selection=1 %>
+            <% if rev.present? %>
+              <% tdcolor="#c0ffc0" %>
+            <% else %>
+              <% tdcolor="#fffacd" %>
+            <% end %>
+          <% elsif rev.present? and current_user.admin==false %>
+            <% tdcolor="#c0ffc0" %>
+          <% elsif rev.present? and current_user.admin==false %>
+            <% tdcolor="#c0ffc0" %>
+          <% else %>
+            <% tdcolor="#d3d3d3" %>
           <% end %>
           <td bgcolor=<%=tdcolor %>>
-        <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
+        
           <% if current_user.admin? %>
             <%= link_to lesson.target, "/attendances/lesson_detail/#{lesson.id}" %>
           <% elsif rev.present? %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
-          <% elsif ((lesson.target==gradesc or lesson.target=="小中学生") and (lesson.examinee==nil or lesson.examinee==@student.examinee) and  @student.cancelnumber.present? and @student.cancelnumber>0  and lesson.meeting_on.to_date>thisday) or ((lesson.target==gradesc or lesson.target=="小中学生") and lesson.regular==false) %>
+          <% elsif selection==1 %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'reservationnewuser',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% else %>
             <%= lesson.target %>
@@ -162,11 +176,7 @@
           &nbsp;
           <% end %>
           <% else %>
-          <%if day.wday==0 || day.wday==6 %>
-        <td bgcolor="#ffede6">
-          <% else %>
-        <td>
-          <% end %>
+            <td bgcolor=<%= tdbgcolor(thisday,day,1) %>>
           &nbsp;
           <% end %>
         </td>

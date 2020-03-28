@@ -5,19 +5,41 @@
   <div class="col-md-6 col-md-offset-3 lead">
     
     <table border="2" class="table" style="border : 2px solid midnightblue ;">
-    <tr ><td style="width:150px;">コース</td><td><%= @lesson.target %>コース</td></tr>  
+    <tr ><td style="width:150px;">コース</td><td><%= @lesson.target %>
+    <% if @lesson.examinee==true %>
+    受験生 
+    <% elsif @lesson.examinee==true %>
+    一般
+    <% end %>
+    コース
+    <% if @reservation.waiting==true %>
+      <span class="label label-danger">キャンセル待ち</span>
+    <% else %>
+      <span class="label label-info">予約済</span>
+    <% end %>
+    </td></tr>  
     <tr style="border-top: solid  midnightblue;"><td style="width:150px;">名前</td><td><%= @student.student_name %></td></tr>
     <tr style="border-top:  solid midnightblue;"><td>予約日時</td>
     <td>
     <%= daydis(@lesson.meeting_on) %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
-    <% if @reservation.transfer? %>
+    <% if @reservation.transfer==true %>
      振替　
     <% end %>
     <% if @reservation.absence? %>
-      欠席　
+      <span class="label label-danger">欠席</span>
+    <% end %>
+    <% if @lesson.regular==false %>
+      <span class="label label-danger">臨時</span>
     <% end %>
     </td></tr>
-    <tr style="border-top:  solid midnightblue;"><td>固定時間</td><td><%=timedisplay(@reservation.fix_time) if @reservation.fix_time.present? %></td>
+    <tr style="border-top:  solid midnightblue;"><td>固定時間</td>
+    <td>
+    <% if @reservation.fix_time.present? %>
+    <%=timedisplay(@reservation.fix_time)  %>
+    <% else %>
+    <span class="label label-danger">未設定</span>
+    <% end %>
+    </td>
     <tr style="border-top: solid midnightblue;"><td>授業方法</td>
     <td>
       <% zoomseat=@lesson.seats_zoom %>
@@ -32,15 +54,24 @@
     </table>
     <% modaltype1="chengesc" %><% modaltype="newsc" %>
     <% if @lesson.meeting_on>@today %>
-      <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-primary">授業方法変更登録</a>&nbsp;
-      <a href="" data-toggle="modal" data-target=#<%=modaltype%> class="btn btn-primary">キャンセル登録</a>&nbsp;
+      <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success">授業方法変更登録</a>&nbsp;
+      <% if @lesson.regular==true %>
+      <div style="display: inline-block;">
+        <a href="" data-toggle="modal" data-target=#<%=modaltype%> class="btn btn-warning">キャンセル登録</a>&nbsp;
+      </div>
+      <% else %>
+      <div style="display: inline-block;">
+        <%= button_to "キャンセル登録", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, params: {reservation_id:@reservation.id},class:"btn btn-warning"} %>
+      </div>
+      <% end %>
     <% end %>
+    <div style="display: inline-block;">
     <% if @beforesite.present? %>
       <%= link_to "前のページに戻る" ,@beforesite %>
     <% else %>
       <%=link_to "カレンダーに戻る","/lessons/weeklyschedule?cation=1&changeday=#{lesson.meeting_on.to_s}" %>
     <% end %>
-    </p>
+    </div>
     <% modaltype="newsc" %>
     
   </div>
@@ -54,10 +85,10 @@
       <% realseat=@lesson.seats_real %>
     <div>本当に授業方法を変更しますか？
     <% if (@realnumber-realseat)>=0 %>
-      ※リアルは満席です。キャンセル待ちになります
+      ※リアルは満席です。キャンセル待ちになります。
     <% end %>
     <% if (@zoomnumber-zoomseat)>=0 %>
-      ※Zoomは満席です。キャンセル待ちになります
+      ※Zoomは満席です。キャンセル待ちになります.
     <% end %>
     </div></div>
     <div class="modal-footer">

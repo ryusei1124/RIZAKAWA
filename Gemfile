@@ -18,6 +18,7 @@ gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'ranked-model'
 gem 'jquery-ui-rails'
+gem 'holiday_japan'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
