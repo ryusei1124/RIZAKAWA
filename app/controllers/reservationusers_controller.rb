@@ -82,15 +82,32 @@ class ReservationusersController < ApplicationController
         reservation.zoom=true
       end
       reservation.fix_time=nil
+      reservation.transfer=true
       lesson=Lesson.find(reservation.lesson_id)
       lesson_meeting_on=lesson.meeting_on
+      #キャンセル待ち登録
+      if lesson.seats_zoom<Reservation.where("lesson_id= ? and zoom=?",lesson.id,true).count or  lesson.seats_real<Reservation.where("lesson_id= ? and zoom=?",lesson.id,false).count
+        reservation.waiting=true
+      else 
+        reservation.waiting=false
+      end
       if reservation.save
         flash[:success]="#{lesson.meeting_on.to_s}に受講日を振替しました。確認願います。"
+        flash[:warning]="キャンセル待ちになります" if reservation.waiting==true
       else
         flash[:danger]="受講日振替に失敗しました"
       end
     end
     redirect_to "/lessons/weeklyschedule?cation=1&changeday=#{lesson_meeting_on.to_s}"
+  end
+  def reservation_delete
+    reservation_id=params[:reservation_id]
+    reservation=Reservation.find(reservation_id)
+    lesson=Lesson.find(reservation.lesson_id)
+    #予約情報を削除
+    reservation.destroy
+    flash[:danger]="キャンセル登録しました"
+    redirect_to "/lessons/weeklyschedule?cation=1&changeday=#{lesson.meeting_on.to_s}"
   end
   
   def reservationnewuser
@@ -109,8 +126,9 @@ class ReservationusersController < ApplicationController
     #定例授業の場合キャンセル登録ポイントマイナス１
     student.cancelnumber=student.cancelnumber-1 if lesson.regular==true
     reservation=Reservation.new(student_id:student.id,lesson_id:lesson.id,zoom:zoom,user_id:user_id)
+    reservation.transfer=true if lesson.regular==true
     if reservation.save and student.save
-      flash[:success]="#{lesson.meeting_on.to_s}に受講日を振替登録しました。確認願います。"
+      flash[:success]="#{lesson.meeting_on.to_s}に受講日を登録しました。確認願います。"
     else
       flash[:danger]="受講日登録に失敗しました"
     end

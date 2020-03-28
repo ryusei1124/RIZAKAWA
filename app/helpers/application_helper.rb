@@ -94,6 +94,11 @@ module ApplicationHelper
     h(str).gsub(/\R/, "<br>")
   end
   
+  def holiday(d)
+    holidayreturn=HolidayJapan.check(Date.new(d.year,d.month,d.day))
+    holidayreturn
+  end
+  
   class Listcollection
   attr_accessor :id,:content
     def initialize(id,content,zoom)
@@ -101,5 +106,32 @@ module ApplicationHelper
       @content=content
     end
   end
-  
+  def tdbgcolor(thisday,day,section)
+    if day==thisday && section==1
+      bgcolor="#f8f8ff"
+    elsif day.wday==0  or holiday(day)
+      bgcolor="#ffede6"
+    elsif day.wday==6
+      bgcolor="#e0ffff"
+    elsif section==2
+      bgcolor="#f5f5dc"
+    else
+      bgcolor="#fffafa"
+    end
+    bgcolor
+  end
+  def tdcellbgcolor(thisday,day,section)
+    if day==thisday && section==1
+      bgcolor="#e9967a"
+    elsif day.wday==0  or holiday(day)
+      bgcolor="#ffede6"
+    elsif day.wday==6
+      bgcolor="#e0ffff"
+    elsif section==2
+      bgcolor="#dcdcdc"
+    else
+      bgcolor="#fffafa"
+    end
+    bgcolor
+  end
 end
