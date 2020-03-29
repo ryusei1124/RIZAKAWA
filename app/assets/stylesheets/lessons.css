@@ -18,3 +18,9 @@
   margin: 15px 0;
   width: 30%;
 }
+
+/* 修正・中止ボタン位置調整 */
+
+.lesson-discontinuation-fix-btn {
+  margin-bottom: 15px;
+}
