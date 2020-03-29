@@ -125,7 +125,9 @@ class LessonsController < ApplicationController
   end
   
   private
+  
   def lesson_params
      params.require(:lesson).permit(:meeting_on, :target,:examineekanji,:starttime,:finishtime,:seats_real,:seats_zoom,:autoregister,:regularkanji,:note,:fixtimeres)
   end
+  
 end

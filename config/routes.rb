@@ -31,6 +31,8 @@ Rails.application.routes.draw do
      patch 'lesson_detail'
      get 'lesson_discontinuation_fix'
      patch 'lesson_discontinuation_fix'
+     get 'add_student'
+     patch 'add_student'
    end
   end
   resources :notices
