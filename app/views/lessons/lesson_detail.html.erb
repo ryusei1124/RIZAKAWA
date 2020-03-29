@@ -3,11 +3,10 @@
 <h1>【予約詳細・出欠管理】</h1>
 
 <div class="col-md-10 col-md-offset-1">
+  <td><%= link_to "生徒追加", "#", class: "btn btn-success btn-sm" %></td>
+  <td><%= link_to "修正・中止", lesson_discontinuation_fix_lesson_path(@lesson), remote: true, class: "btn btn-danger btn-sm" %></td>
+  
   <table class="table table-bordered table-condensed" id="table-reservations">
-    
-    <%= link_to "生徒追加", "#", class: "btn btn-success btn-sm pull-right" %>
-    <%= link_to "修正・中止", "#", class: "btn btn-danger btn-sm pull-right" %>
-    
     <tr>
       <th class="col-md-3">日付</th>
       <td><%= @day %></td>
@@ -76,3 +75,6 @@
        </tr>
 　</table>
 </div>
+
+<!--モーダルウインドウ表示-->
+<div id="lesson-discontinuation-fix" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

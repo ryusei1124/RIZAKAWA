@@ -138,7 +138,7 @@
           <td bgcolor=<%=tdcolor %>>
         <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
           <% if current_user.admin? %>
-            <%= link_to lesson.target, "/attendances/lesson_detail/#{lesson.id}" %>
+            <%= link_to lesson.target, "/lessons/#{lesson.id}/lesson_detail" %>
           <% elsif rev.present? %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% elsif ((lesson.target==gradesc or lesson.target=="小中学生") and (lesson.examinee==nil or lesson.examinee==@student.examinee) and  @student.cancelnumber.present? and @student.cancelnumber>0  and lesson.meeting_on.to_date>thisday) or ((lesson.target==gradesc or lesson.target=="小中学生") and lesson.regular==false) %>
