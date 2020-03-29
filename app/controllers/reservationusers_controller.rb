@@ -20,11 +20,11 @@ class ReservationusersController < ApplicationController
     lessons.each do |les|
       if Reservation.where("student_id= ? and lesson_id= ?", @student.id,les.id).count==0
         realcapacity=Lesson.find(lesson_id).seats_real
-        overcapacity="○"
+        overcapacity="〇"
         overcapacity="×" if (realcapacity-Reservation.where("lesson_id= ? and zoom=?",les.id,false).count)<0
         content=overcapacity+les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　リアル"
         @lessonlists << Listcollection.new(les.id.to_s+"-1",content,false)
-        overcapacity="○"
+        overcapacity="〇"
         overcapacity="×" if (realcapacity-Reservation.where("lesson_id= ? and zoom=?",les.id,true).count)<0
         content=overcapacity+les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　ZOOM"
         @lessonlists << Listcollection.new(les.id.to_s+"-2",content,true)
@@ -124,10 +124,9 @@ class ReservationusersController < ApplicationController
     zoom=tob(params[:zoom])
     user_id=student.user_id
     #定例授業の場合キャンセル登録ポイントマイナス１
-    student.cancelnumber=student.cancelnumber-1 if lesson.regular==true
+    #student.cancelnumber=student.cancelnumber-1 if lesson.regular==true
     reservation=Reservation.new(student_id:student.id,lesson_id:lesson.id,zoom:zoom,user_id:user_id)
-    reservation.transfer=true if lesson.regular==true
-    if reservation.save and student.save
+    if reservation.save
       flash[:success]="#{lesson.meeting_on.to_s}に受講日を登録しました。確認願います。"
     else
       flash[:danger]="受講日登録に失敗しました"
