@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/attendances/lesson_detail/:lesson_id' ,to: 'attendances#lesson_detail'
+  
   get 'lessons/weeklyschedule'
   post 'lessons/create', to: 'lessons#create'
   post 'reservationusers/useredit', to: 'reservationusers#useredit'
@@ -27,8 +27,10 @@ Rails.application.routes.draw do
   
   resources :lessons do
    member do
-     get 'edit_basic_info'
-     patch 'update_basic_info'
+     get 'lesson_detail'
+     patch 'lesson_detail'
+     get 'lesson_discontinuation_fix'
+     patch 'lesson_discontinuation_fix'
    end
   end
   resources :notices

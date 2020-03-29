@@ -56,7 +56,7 @@
       <tr>
         <td align="center">
         <% modaltype="newsc" %>
-          <a href="" data-toggle="modal" data-target=#<%=day%><%=modaltype %>>＋</a>
+          <a href="" data-toggle="modal" data-target=#<%= day %><%= modaltype %>>＋</a>
       </tr>
       <!--授業新規モーダル -->
       <div class="modal fade" id=<%= day%><%=modaltype %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
@@ -152,7 +152,7 @@
           <td bgcolor=<%=tdcolor %>>
         
           <% if current_user.admin? %>
-            <%= link_to lesson.target, "/attendances/lesson_detail/#{lesson.id}" %>
+            <%= link_to lesson.target, "/lessons/#{lesson.id}/lesson_detail" %>
           <% elsif rev.present? %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% elsif selection==1 %>
