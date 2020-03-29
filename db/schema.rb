@@ -92,8 +92,17 @@ ActiveRecord::Schema.define(version: 20200324055332) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "student"
+    t.boolean "real", default: false
     t.boolean "zoom", default: false
+    t.string "sex"
+    t.string "school"
+    t.integer "school_year"
     t.boolean "admin", default: false
+    t.datetime "attendance_time"
+    t.datetime "leave_time"
+    t.string "fix_day"
+    t.datetime "fix_time"
+    t.date "birthday"
     t.date "withdrawal"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
