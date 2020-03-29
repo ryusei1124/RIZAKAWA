@@ -38,6 +38,7 @@ class LessonsController < ApplicationController
     finishtime=lesson_params[:finishtime].to_time
     autoregister=lesson_params[:autoregister]
     openday=lesson_params[:meeting_on]
+    fixtimeres=lesson_params[:fixtimeres]
     lesson.started_at=starttime+54000
     lesson.finished_at=finishtime+54000
     if lesson_params[:examineekanji]=="受験生"
@@ -77,6 +78,11 @@ class LessonsController < ApplicationController
       if lesson.regular? and autoregister=="1" #定例授業なら該当の生徒を自動で登録する
         #会員で該当曜日３つカラムから該当曜日の生徒抽出
         students=Student.where("fix_day =? or fix_day2 =? or fix_day3 =?",dayofweek,dayofweek,dayofweek).where(withdrawal:nil)
+        if fixtimeres=="1" #固定時間のあってる人のみ抽出し自動登録
+          students=students.where("fix_time >=? and fix_time <=?",lesson.started_at,lesson.finished_at)
+          .or(students.where("fix_time2 >=? and fix_time2 <=?",lesson.started_at,lesson.finished_at))
+          .or(students.where("fix_time3 >=? and fix_time3 <=?",lesson.started_at,lesson.finished_at))
+        end
         if lesson_params[:target]=="中学生" && lesson.examinee==true #中学生で受験生を自動登録
           rev=students.where("birthday < ? and examinee=?" ,jrhigh(lesson.meeting_on).to_date,true)
         elsif lesson_params[:target]=="中学生" && lesson.examinee==false #中学生で受験生以外を自動登録
@@ -120,6 +126,6 @@ class LessonsController < ApplicationController
   
   private
   def lesson_params
-     params.require(:lesson).permit(:meeting_on, :target,:examineekanji,:starttime,:finishtime,:seats_real,:seats_zoom,:autoregister,:regularkanji,:note)
+     params.require(:lesson).permit(:meeting_on, :target,:examineekanji,:starttime,:finishtime,:seats_real,:seats_zoom,:autoregister,:regularkanji,:note,:fixtimeres)
   end
 end

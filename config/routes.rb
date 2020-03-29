@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post 'reservationusers/useredit', to: 'reservationusers#useredit'
   get 'reservationusers/useredit', to: 'reservationusers#useredit'
   post 'reservationusers/userupdate', to: 'reservationusers#userupdate'
+  get 'reservationusers/reservation_delete', to: 'reservationusers#reservation_delete'
   post 'reservationusers/reservation_change_user', to: 'reservationusers#reservation_change_user'
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
   post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
