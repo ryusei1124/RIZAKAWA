@@ -13,18 +13,18 @@
 <% @students.each do |student| %>
 <div style="display: inline-block;">
   <% studentid=student.id %>
-  <%# cenceln="(#{student.cancelnumber.to_s})" if student.cancelnumber.present? %>
   <%= button_to student.student_name, {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changestudent:studentid,cation:"2"}} %>
   &nbsp;</div>
 <% end %>
 <% end %>
 </div>
-<div style="text-align:center">
+<div style="text-align:center;">
   <div style="display: inline-block;"><%= button_to"←", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:datedown,cation:"1"}} %></div>
-  <div style="display: inline-block;">
-    <h2>&nbsp;<b>&nbsp;<%=@student.student_name if @student.present? %>週間予定表(<%=first_day %>〜<%=last_day %>) </b>&nbsp;</h2>
+  <div style="display: inline-block;"><%= link_to "本日","/lessons/weeklyschedule",{class:"btn btn-default btn-sm"} %></div>
+  <div style="display: inline-block;"><%= button_to"→", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:dateup,cation:"1"}} %>
+    
   </div>
-  <div style="display: inline-block;"><%= button_to"→", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:dateup,cation:"1"}} %></div>
+  <div style="display: inline-block; padding-left:10px;"><h2>&nbsp;<b>&nbsp;<%=@student.student_name if @student.present? %>週間予定表(<%=first_day %>〜<%=last_day %>) </b>&nbsp;</h2></div>
 </div>
 <table border: 0px solid;" align="center">
   <th>
@@ -135,7 +135,7 @@
           <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
           <% if rev.present? and current_user.admin==true %>
             <% tdcolor="#c0ffc0" %>
-          <% elsif ((lesson.target==gradesc or lesson.target=="小中学生") and (lesson.examinee==nil or lesson.examinee==@student.examinee) and  @student.cancelnumber.present? and @student.cancelnumber>0  and lesson.meeting_on.to_date>thisday) or ((lesson.target==gradesc or lesson.target=="小中学生") and lesson.regular==false) %>
+          <% elsif ((lesson.target==gradesc or lesson.target=="小中学生") and (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday) or ((lesson.target==gradesc or lesson.target=="小中学生") and lesson.regular==false) %>
             <% selection=1 %>
             <% if rev.present? %>
               <% tdcolor="#c0ffc0" %>
@@ -155,7 +155,7 @@
             <%= link_to lesson.target, "/lessons/#{lesson.id}/lesson_detail" %>
           <% elsif rev.present? %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
-          <% elsif selection==1 %>
+          <% elsif ((lesson.target==gradesc or lesson.target=="小中学生") and (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday) or ((lesson.target==gradesc or lesson.target=="小中学生") and lesson.regular==false) %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'reservationnewuser',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% else %>
             <%= lesson.target %>
@@ -188,3 +188,10 @@
   </th>
   <% end %>
 </table>
+<% if current_user.admin==false %>
+  <div style="padding-left:170px;">〇薄緑色の授業は、予約済です。</div>
+  <div style="padding-left:170px;">〇ご契約で設定の授業は自動で予約登録されています。</div>
+  <div style="padding-left:170px;">〇黄色の授業は新規登録可能です。</div>
+  <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です。</div>
+  <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です。</div>
+<% end %>
