@@ -19,7 +19,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.send_mail(@user.email, "登録のお知らせ", "test", "/").deliver_now
+      title = "新規登録ありがとうございました"
+      content = "下記サイトから登録お願いします"
+      UserMailer.send_mail(@user.email, title, content, "/").deliver_now
       flash[:success] = '新規作成に成功しました。'
       redirect_to @user
     else
