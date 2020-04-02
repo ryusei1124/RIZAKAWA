@@ -1,9 +1,12 @@
 class UserMailer < ApplicationMailer
-  def send_mail(user)
+  def send_mail(user, title, content, link)
     @user = user
+    @title = title
+    @content = content
+    @link = link
     mail(
-      to: user.email,
-      subject: '生徒登録完了しました'
+      to: user,
+      subject: title
     )
   end
   

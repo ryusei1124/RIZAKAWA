@@ -5,7 +5,7 @@
   <div class="col-md-6 col-md-offset-3 lead">
     
     <table border="2" class="table" style="border : 2px solid midnightblue ;">
-    <tr ><td style="width:150px;">コース</td><td><%= @lesson.target %>
+    <tr ><td style="width:150px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
     <% if @lesson.examinee==true %>
     受験生 
     <% elsif @lesson.examinee==true %>
@@ -18,8 +18,8 @@
       <span class="label label-info">予約済</span>
     <% end %>
     </td></tr>  
-    <tr style="border-top: solid  midnightblue;"><td style="width:150px;">名前</td><td><%= @student.student_name %></td></tr>
-    <tr style="border-top:  solid midnightblue;"><td>予約日時</td>
+    <tr style="border-top: solid  midnightblue;"><td style="width:150px;" class="tdcondition1">名前</td><td><%= @student.student_name %></td></tr>
+    <tr style="border-top:  solid midnightblue;"><td class="tdcondition1">予約日時</td>
     <td>
     <%= daydis(@lesson.meeting_on) %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
     <% if @reservation.transfer==true %>
@@ -32,7 +32,7 @@
       <span class="label label-danger">臨時</span>
     <% end %>
     </td></tr>
-    <tr style="border-top:  solid midnightblue;"><td>固定時間</td>
+    <tr style="border-top:  solid midnightblue;"><td class="tdcondition1">固定時間</td>
     <td>
     <% if @reservation.fix_time.present? %>
     <%=timedisplay(@reservation.fix_time)  %>
@@ -40,7 +40,7 @@
     <span class="label label-danger">未設定</span>
     <% end %>
     </td>
-    <tr style="border-top: solid midnightblue;"><td>授業方法</td>
+    <tr style="border-top: solid midnightblue;"><td class="tdcondition1" >授業方法</td>
     <td>
       <% zoomseat=@lesson.seats_zoom %>
       <% realseat=@lesson.seats_real %>
@@ -50,7 +50,7 @@
      リアル
     <% end %>
     <br>
-    <tr style="border-top: solid midnightblue;"><td>備考</td><td><%=@lesson.note %></td>
+    <tr style="border-top: solid midnightblue;"><td class="tdcondition1">備考</td><td><%=@lesson.note %></td>
     </table>
     <% modaltype1="chengesc" %><% modaltype="newsc" %>
     <% if @lesson.meeting_on>@today %>
@@ -129,7 +129,7 @@
     <%= f.hidden_field :student_id,value:@student.id %>
     <%= f.collection_select :id,@lessonlists, :id, :content, {:include_blank => true},{:class =>"form-control share-form",:style=>"width:350px"} %>
 　  ○：振替可能 ×：キャンセル待ち<br>
-　  振替を指定なしでは、別途振替授業の登録が必要です<br></p>
+　  振替を指定しなければそのままキャンセル登録されます<br></p>
     </td></tr>
   </table>
     <P style="margin-left:200px">
