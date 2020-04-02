@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200324055332) do
+ActiveRecord::Schema.define(version: 2020_03_24_055332) do
 
   create_table "lessons", force: :cascade do |t|
     t.date "meeting_on", null: false
@@ -92,17 +92,8 @@ ActiveRecord::Schema.define(version: 20200324055332) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "student"
-    t.boolean "real", default: false
     t.boolean "zoom", default: false
-    t.string "sex"
-    t.string "school"
-    t.integer "school_year"
     t.boolean "admin", default: false
-    t.datetime "attendance_time"
-    t.datetime "leave_time"
-    t.string "fix_day"
-    t.datetime "fix_time"
-    t.date "birthday"
     t.date "withdrawal"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
