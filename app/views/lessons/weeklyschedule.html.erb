@@ -64,7 +64,7 @@
           <div class="modal-content">
             <div class="modal-body" style="background-color: #C8D7E6;">
               <div>
-              <h2><%= day %>　(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
+              <h2><%= day %>(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
                 <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
                 <div class="form-group">
                   <label for="select1a">学校対象:</label>
@@ -115,7 +115,7 @@
       <!--授業新規モーダルここまで -->
       <% end %>
       <tr>
-        <td align="center" bgcolor=<%= tdbgcolor(thisday,day,2) %> style="border-bottom: 1px solid;"><%=day.day %>日(<%=weekdate(day) %>)</td>
+        <td align="center" bgcolor=<%= tdbgcolor(thisday,day,2) %> style="border-bottom: 1px solid;"><%= day.day %>日(<%= weekdate(day) %>)</td>
       </tr>
       <% time = first_time %>
       <% coursecount=0 %>
