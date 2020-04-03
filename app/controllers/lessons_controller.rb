@@ -123,10 +123,16 @@ class LessonsController < ApplicationController
   
   def lesson_detail
     @lesson = Lesson.find(params[:id])
+    @zooms_sum = Reservation.where(zoom: true).count
+    @reals_sum = Reservation.where(zoom: false).count
+    @reservations = Reservation.all
+    @reservation = Reservation.find(params[:id])
   end
   
   private
+  
   def lesson_params
      params.require(:lesson).permit(:meeting_on, :target,:examineekanji,:starttime,:finishtime,:seats_real,:seats_zoom,:autoregister,:regularkanji,:note,:fixtimeres)
   end
+  
 end
