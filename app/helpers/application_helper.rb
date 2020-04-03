@@ -108,7 +108,7 @@ module ApplicationHelper
   end
   def tdbgcolor(thisday,day,section)
     if day==thisday && section==1
-      bgcolor="#f8f8ff"
+      bgcolor="#f5deb3"
     elsif day.wday==0  or holiday(day)
       bgcolor="#ffede6"
     elsif day.wday==6
