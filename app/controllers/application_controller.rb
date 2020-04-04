@@ -36,5 +36,4 @@ class ApplicationController < ActionController::Base
       session[:student_id]=@student.id
     end
   end
-  
 end
