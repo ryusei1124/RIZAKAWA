@@ -1,6 +1,8 @@
 class NoticesController < ApplicationController
   before_action :set_notice, only: %i(edit show update destroy)
   before_action :set_student
+  before_action:unless_login
+  
   def index
     @notices = Notice.paginate(page: params[:page], per_page: 10)
   end

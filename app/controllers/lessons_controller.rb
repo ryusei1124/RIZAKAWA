@@ -8,7 +8,8 @@ class LessonsController < ApplicationController
     if params[:cation]=="1"
       @today=params[:changeday].to_date
     else
-      @today = Date.today
+      nowtime=Time.new+32400
+      @today = nowtime.to_date
     end
     if params[:cation]=="2"
       studentid=params[:changestudent]
