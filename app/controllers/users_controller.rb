@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   
   def index
     @users = User.paginate(page: params[:page], per_page: 20)
-    @students=Student.all
+    @students = Student.all
   end
   
   def new
@@ -86,4 +86,5 @@ class UsersController < ApplicationController
     def correct_user
       redirect_to(root_url) unless current_user?(@user)
     end
+    
 end
