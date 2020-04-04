@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :logged_in_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
+  before_action :admin_user, only: [:destroy]
   
   def index
     @users = User.paginate(page: params[:page], per_page: 20)
-    @students = Student.all   
+    @students = Student.all
   end
   
   def new
@@ -19,7 +19,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.send_activation_email
+      title = "新規登録ありがとうございました"
+      content = "下記サイトから登録お願いします"
+      UserMailer.send_mail(@user.email, title, content, "/").deliver_now
       flash[:success] = '新規作成に成功しました。'
       redirect_to @user
     else
@@ -54,6 +56,7 @@ class UsersController < ApplicationController
   end
   
   def edit_basic_info
+    
   end
   
   def update_basic_info
