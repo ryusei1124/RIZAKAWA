@@ -26,8 +26,7 @@
           <% if current_user.admin? %>
             <%= link_to "削除", notice, method: :delete,
             data: { confirm: "削除してよろしいですか？" },
-            class: "btn btn-danger btn-sm pull-right" %>&nbsp;
-            <%= link_to "編集", edit_notice_path(notice),class: "btn btn-warning btn-sm pull-right"%>
+            class: "btn btn-danger btn-sm pull-right" %>
           <% end %>
         </td>
       </tr>

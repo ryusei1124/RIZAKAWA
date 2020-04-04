@@ -69,10 +69,32 @@
     </div>
     <div style="display: inline-block;">
     <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
-    </div>
+    </div><br /><br />
     <% modaltype="newsc" %>
+
+    <div style="font-size:15px">コメント(連絡事項)<br /></div>
+    <%= form_with(model:@lessoncomment,url: lessoncomments_create_path,local: true) do |f| %>
+      <%= f.hidden_field:reservation_id,value:@reservation.id %>
+      <%= f.hidden_field:lesson_id,value:@lesson.id %>
+      <%= f.text_field :content, class: "form-control", style:"width:600px" %>
+      <%= f.submit value:"送信",class:"btn-sm btn-info" %>
+    <% end %>
+    <br /><br />
+    <table style="width:600px; font-size:15px" class="table-bordered table-condensed lead">
+      <tr>
+      <td>
+      高田義男（保護者：高田史郎）2020年4月9日 17時15分<br>
+      すみません。風邪で急遽、欠席します<%= button_to "了解する", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, params: {reservation_id:@reservation.id},class:"btn-sm btn-danger"} %>
+      </td></tr>
+      <tr>
+      <td>
+      平川<br>
+      了解しました。お大事に。
+      </td></tr>
+    </table>
   </div>
 </div>
+
  <!--授業授業方法変更モーダル -->
 <div class="modal fade" id=modal1 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 <div class="modal-dialog modal-sm" role="document">
@@ -109,6 +131,7 @@
       </div>
     </div>
   </div>
+  
 </div>
      
 <!--授業振替モーダル -->

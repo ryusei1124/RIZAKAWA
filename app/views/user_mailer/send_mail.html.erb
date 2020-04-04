@@ -1,5 +1,13 @@
-<p><%#= @user.email %></p>
+<p><%= @user.guardian %>様</p>
 
-<p><%= @contet %></p>
+<p>いつもお世話になってありがとうございます</p>
 
-<p><%= link_to "test", @user %></p>
+<p>平川塾平川です</p>
+
+<p><%= @content %></p>
+
+<% if @link.present? %>
+
+<p><%= link_to "こちらのリンクを参照下さい", @link %></p>
+
+<% end %>
