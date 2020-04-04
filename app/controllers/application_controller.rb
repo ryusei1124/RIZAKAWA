@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
+  #時間修正値9時間（秒）
+  TIMECOL = 32400
 
   #学校を配列に
   def schoolgrade
@@ -26,15 +28,12 @@ class ApplicationController < ActionController::Base
     redirect_to "/login" if current_user.blank?
   end
   
-  #保護者でログインした時に子供情報を取得
+  #保護者でログインした時に情報がなければ一番目の子供情報を取得
   def set_student
-    @students=Student.where(user_id:current_user)
+    @students=Student.where(user_id:current_user).where(withdrawal:nil)
     if session[:student_id].blank? && @students.present?
       @student=@students.first
       session[:student_id]=@student.id
-    #else
-      #@student=Student.find_by(id:@student_id)
-      #session[:student]=@student
     end
   end
   

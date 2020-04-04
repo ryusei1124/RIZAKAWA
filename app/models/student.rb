@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
    belongs_to :user
+   has_many :reservations, dependent: :destroy
    def self.gradeyear(id)
     born=Student.find(id).birthday
     bornmonth=born.month
