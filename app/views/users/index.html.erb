@@ -25,7 +25,7 @@
         <% students = @students.where(user_id:user.id) %>
         <td>
           <% students.each do |student| %>
-            <%= link_to student.student_name, "#" %>  <!-- 生徒情報編集画面は事後対応します -->
+            <%= link_to student.student_name, "#" %> 
           <% end %>
         </td>
         <td>
