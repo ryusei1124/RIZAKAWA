@@ -5,7 +5,10 @@
 <div class="col-md-10 col-md-offset-1">
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
-      <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
+    <P>
+      <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>&nbsp;
+      <%= link_to "お知らせ編集", edit_notice_path(@notice.id), class: "btn btn-primary" %>
+    </P>
     <% end %>
   </div>
   <table class="table-bordered table-condensed" id="notices-info-show">
@@ -28,4 +31,6 @@
       </tr>
     </thead>
   </table>
+  <br>
+  <div style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">一覧に戻る</a></div>
 </div>

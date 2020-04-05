@@ -1,4 +1,4 @@
-<% provide(:class_text, 'lesson_discontinuation_fix') %>
+<% provide(:class_text, 'add_student') %>
 
 <div class="modal-dialog modal-lg modal-dialog-center">
   <div class="modal-content">
@@ -6,7 +6,7 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h1 class="modal-title">【修正・中止登録】</h1>
+      <h1 class="modal-title">【生徒追加】</h1>
     </div>
     <div class="modal-body">
       <div class="row">
@@ -15,30 +15,17 @@
     <table class="table table-bordered table-condensed" id="table-reservations">
       
       <tr>
-        <th class="col-md-3">日付</th>
+        <th class="col-md-3">生徒名</th>
         <td><%= @day %></td>
       </tr>
       <tr>
-        <th>対象者</th>
+        <th>授業方法</th>
         <td><%= @target %></td>
       </tr>
       <tr>
-        <th>席数</th>
+        <th>固定時間</th>
         <td>zoom:<%= "#" %>/<%= "#" %> リアル:<%= "#" %>/<%= "#" %></td>
       </tr>
-      <tr>
-        <th>開始時間</th>
-        <td>aaaaa</td>
-      </tr>
-      <tr>
-        <th>終了時間</th>
-        <td>aaaaa</td>
-      </tr>
-      <tr>
-        <th>備考</th>
-        <td>aaaaa</td>
-      </tr>
     </table>
-      <td><%= link_to "修正", "#", class: "btn btn-primary" %></td>
-      <td><%= link_to "中止", "#", class: "btn btn-primary" %></td>
+      <td><%= link_to "追加", "#", class: "btn btn-primary" %></td>
   </div>
