@@ -1,9 +1,9 @@
 class UserMailer < ApplicationMailer
-  def send_mail(user, title, content, link)
+  def send_mail(user, title, content)
     @user = user
     @title = title
     @content = content
-    @link = link
+    
     mail(
       to: user,
       subject: title
