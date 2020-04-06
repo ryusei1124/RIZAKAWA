@@ -21,4 +21,28 @@ class SessionsController < ApplicationController
     flash[:success] = "ログアウトしました"
     redirect_to root_url
   end
+  
+  def admin_login
+     user = User.find(1)
+    if user
+      log_in user
+      flash[:success] = '管理者でログインしました。'
+      redirect_back_or notices_url
+    else
+     flash.now[:danger] = '認証に失敗しました。'  
+     render :new
+    end
+  end
+  
+  def student_login
+    user = User.find(2)
+    if user
+      log_in user
+      flash[:success] = '生徒でログインしました。'
+      redirect_back_or notices_url
+    else
+     flash.now[:danger] = '認証に失敗しました。'  
+     render :new
+    end
+  end
 end

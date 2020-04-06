@@ -124,6 +124,7 @@ class LessonsController < ApplicationController
   def lesson_detail
     @lesson = Lesson.find(params[:id])
     @reservations = Reservation.where("lesson_id = ?", @lesson.id)
+    @reservation_waitings = Reservation.where("waiting = ?", @lesson.id)
     @zooms_sum = @reservations.count
     @reals_sum = @reservations.count
   end
