@@ -1,6 +1,6 @@
 <% provide(:title, 'All users') %>
 
-<h1>生徒一覧</h1>
+<h1>保護者一覧</h1>
 
 <div class="col-md-10 col-md-offset-1">
   <%= will_paginate %>
@@ -8,24 +8,32 @@
     <thead>
       <tr>
         <th><%= User.human_attribute_name :name %></th>
+        <th>受講生</th>
       </tr>
     </thead>
 
     <% @users.each do |user| %>
       <tr>
         <td>
-          <%= link_to user.student, user %>
+          <%= link_to user.guardian, user %>
           <% if user.admin? %>
             <span class="label label-primary label-user-division">管理者</span>
           <% else %>
             <span class="label label-success label-user-division">一般</span>
           <% end %>
         </td>
+        <% students = @students.where(user_id:user.id) %>
+        <td>
+          <% students.each do |student| %>
+            <%= link_to student.student_name, "#" %> 
+          <% end %>
+        </td>
         <td>
           <%= link_to "削除", user, method: :delete,
               data:  { confirm: "本当に削除してよろしいですか？"},
               class: "btn btn-danger btn-sm pull-right" %>
-          <%= link_to "編集", edit_basic_info_user_path(user), remote: true, class: "btn btn-success btn-sm pull-right" %>
+          <%= link_to "編集", "#", class: "btn btn-success btn-sm pull-right" %>
+          <!-- モーダル表示は事後対応します -->
         </td>
       </tr>
     <% end %>

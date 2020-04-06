@@ -16,8 +16,9 @@
   <%= button_to student.student_name, {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changestudent:studentid,cation:"2"}} %>
   &nbsp;</div>
 <% end %>
-<% end %>
 </div>
+<% end %>
+
 <div style="text-align:center;">
   <div style="display: inline-block;"><%= button_to"←", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:datedown,cation:"1"}} %></div>
   <div style="display: inline-block;"><%= link_to "本日","/lessons/weeklyschedule",{class:"btn btn-default btn-sm"} %></div>
@@ -64,7 +65,7 @@
           <div class="modal-content">
             <div class="modal-body" style="background-color: #C8D7E6;">
               <div>
-              <h2><%= day %>　(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
+              <h2><%= day %>(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
                 <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
                 <div class="form-group">
                   <label for="select1a">学校対象:</label>
@@ -104,7 +105,7 @@
                   <%= f.submit "登録", class: "btn btn-primary" %>
                 </div>&nbsp;
                 <div style=" display: inline-block; ">
-                  <a class="btn btn-primary" href="">閉じる</a>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
                 </div>
                 <% end %>
               </div>
@@ -115,7 +116,7 @@
       <!--授業新規モーダルここまで -->
       <% end %>
       <tr>
-        <td align="center" bgcolor=<%= tdbgcolor(thisday,day,2) %> style="border-bottom: 1px solid;"><%=day.day %>日(<%=weekdate(day) %>)</td>
+        <td align="center" bgcolor=<%= tdbgcolor(thisday,day,2) %> style="border-bottom: 1px solid;"><%= day.day %>日(<%= weekdate(day) %>)</td>
       </tr>
       <% time = first_time %>
       <% coursecount=0 %>
@@ -133,9 +134,11 @@
             <% rev=Reservation.where("lesson_id =? and student_id=?" ,lesson.id,@student.id).present?  %>
           <% end %>
           <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
-          <% if rev.present? and current_user.admin==true %>
+          <% if current_user.admin==true and rev.present? %>
             <% tdcolor="#c0ffc0" %>
-          <% elsif ((lesson.target==gradesc or lesson.target=="小中学生") and (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday) or ((lesson.target==gradesc or lesson.target=="小中学生") and lesson.regular==false) %>
+          <% elsif current_user.admin==true %>
+            <% tdcolor="#fffacd" %>
+          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中学生")  %>
             <% selection=1 %>
             <% if rev.present? %>
               <% tdcolor="#c0ffc0" %>
@@ -155,7 +158,7 @@
             <%= link_to lesson.target, "/lessons/#{lesson.id}/lesson_detail" %>
           <% elsif rev.present? %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
-          <% elsif ((lesson.target==gradesc or lesson.target=="小中学生") and (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday) or ((lesson.target==gradesc or lesson.target=="小中学生") and lesson.regular==false) %>
+          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中学生")  %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'reservationnewuser',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% else %>
             <%= lesson.target %>
@@ -195,3 +198,4 @@
   <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です。</div>
   <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です。</div>
 <% end %>
+<br /><br /><br />

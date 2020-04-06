@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
   
   def create
     user = User.find_by(email: params[:session][:email].downcase)
+    session[:student_id]= nil if session[:student_id].present?
     if user && user.authenticate(params[:session][:password])
       log_in user
       redirect_to notices_path

@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
   post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
   get 'sessions/new'
-
-  root 'static_pages#top'
+  
+  root :to => 'notices#index'
+  #root 'static_pages#top'
   get '/signup', to: 'users#new'
   get    '/login', to: 'sessions#new'
   post   '/login', to: 'sessions#create'
@@ -31,6 +32,8 @@ Rails.application.routes.draw do
      patch 'lesson_detail'
      get 'lesson_discontinuation_fix'
      patch 'lesson_discontinuation_fix'
+     get 'add_student'
+     patch 'add_student'
    end
   end
   resources :notices

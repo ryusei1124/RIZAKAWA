@@ -37,5 +37,4 @@ class ApplicationController < ActionController::Base
       #session[:student]=@student
     end
   end
-  
 end

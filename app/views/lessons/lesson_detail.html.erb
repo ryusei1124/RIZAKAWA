@@ -3,38 +3,47 @@
 <h1>【予約詳細・出欠管理】</h1>
 
 <div class="col-md-10 col-md-offset-1">
-  <td><%= link_to "生徒追加", "#", class: "btn btn-success btn-sm" %></td>
-  <td><%= link_to "修正・中止", lesson_discontinuation_fix_lesson_path(@lesson), remote: true, class: "btn btn-danger btn-sm" %></td>
+  <div class="lesson-discontinuation-fix-btn">
+    <td><%= link_to "生徒追加", add_student_lesson_path(@lesson), remote: true, class: "btn btn-success btn-sm" %></td>
+    <td><%= link_to "修正・中止", lesson_discontinuation_fix_lesson_path(@lesson), remote: true, class: "btn btn-danger btn-sm" %></td>
+  </div>
   
   <table class="table table-bordered table-condensed" id="table-reservations">
     <tr>
       <th class="col-md-3">日付</th>
-      <td><%= @day %></td>
+      <td><%= l(@lesson.meeting_on) %></td>
     </tr>
     <tr>
       <th>対象者</th>
-      <td><%= @target %></td>
+      <td>
+        <%= @lesson.target %>
+        <% if @lesson.examinee==true %> 
+          <span class="label label-primary label-user-division">受</span>
+        <% elsif @lesson.examinee==false %>
+          <span class="label label-primary label-user-division">般</span>
+        <% end %></td>
     </tr>
     <tr>
       <th>席数</th>
-      <td>zoom:<%= "#" %>/<%= "#" %> リアル:<%= "#" %>/<%= "#" %></td>
+      <td>zoom:<%= @zooms_sum %>/<%= @lesson.seats_zoom %> リアル:<%= @reals_sum %>/<%= @lesson.seats_real %></td>
     </tr>
     <tr>
       <th>開始時間</th>
-      <td>aaaaa</td>
+      <td><%= l(@lesson.started_at, format: :time) %></td>
     </tr>
     <tr>
       <th>終了時間</th>
-      <td>aaaaa</td>
+      <td><%= l(@lesson.finished_at, format: :time) %></td>
     </tr>
     <tr>
       <th>備考</th>
-      <td>aaaaa</td>
+      <td><%= @lesson.note %></td>
     </tr>
   </table>
  
 　<table class="table table-bordered table-condensed" id="table-reservations">
      <h3 class="modal-title center">【生徒】</h3>
+     <% @reservations.each do |reservation| %>
        <tr>
          <th>名前</th>
          <th>振替</th>
@@ -47,16 +56,22 @@
          <th>出欠ボタン</th>
        </tr>
        <tr>
-        <td><%= "羽島 健一楼" %></td>
+        <td><%= reservation.student_id %></td>
         <td><%= "#" %></td>
         <td><%= "#" %></td>
         <td><%= "#" %></td>
-        <td><%= link_to "出席", "#", remote: true, class: "btn btn-primary" %></td>
+        <td><%= link_to "修正", "#", remote: true, class: "btn btn-warning" %></td>
         <td><%= "#" %></td>
         <td><%= "#" %></td>
         <td><%= "#" %></td>
-        <td><%= link_to "欠席", "#", remote: true, class: "btn btn-danger" %></td>
+        <td>
+          <%= link_to "出席", "#", remote: true, class: "btn btn-primary" %>
+          <%= link_to "退席", "#", remote: true, class: "btn btn-success" %>
+          <%= link_to "クリア", "#", remote: true, class: "btn btn-info" %>
+          <%= link_to "欠席", "#", remote: true, class: "btn btn-danger" %>
+        </td>
        </tr>
+      <% end %>
 　</table>
 　　　　　　
 　<table class="table table-bordered table-condensed" id="table-reservations">
@@ -78,3 +93,4 @@
 
 <!--モーダルウインドウ表示-->
 <div id="lesson-discontinuation-fix" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="add-student" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
