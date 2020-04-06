@@ -1,0 +1,2 @@
+class Lessoncomment < ApplicationRecord
+end
