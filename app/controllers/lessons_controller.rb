@@ -8,7 +8,8 @@ class LessonsController < ApplicationController
     if params[:cation]=="1"
       @today=params[:changeday].to_date
     else
-      @today = Date.today
+      nowtime=Time.new+32400
+      @today = nowtime.to_date
     end
     if params[:cation]=="2"
       studentid=params[:changestudent]
@@ -122,10 +123,17 @@ class LessonsController < ApplicationController
   
   def lesson_detail
     @lesson = Lesson.find(params[:id])
+    
+    @reservations = Reservation.where("lesson_id = ?", @lesson.id)
+    @zooms_sum = @reservations.count
+    @reals_sum = @reservations.count
+    
   end
   
   private
+  
   def lesson_params
      params.require(:lesson).permit(:meeting_on, :target,:examineekanji,:starttime,:finishtime,:seats_real,:seats_zoom,:autoregister,:regularkanji,:note,:fixtimeres)
   end
+  
 end
