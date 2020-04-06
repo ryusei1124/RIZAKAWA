@@ -69,10 +69,27 @@
     </div>
     <div style="display: inline-block;">
     <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
-    </div>
+    </div><br /><br />
     <% modaltype="newsc" %>
+
+    コメント(連絡事項)<br />
+    <%= form_with(url:reservationusers_reservation_change_user_path,local: true) do |f| %>
+      <input type="text" style="width:500px;"/>&nbsp;<input type="submit" value="送信"/>
+    <% end %>
+    <br /><br />
+    <table style="width:600px;" class="table-bordered table-condensed lead">
+      <tr>
+      <td>
+      山田太郎<br>
+      すみません。風邪で急遽、欠席します<%= button_to "了解する", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, params: {reservation_id:@reservation.id},class:"btn-sm btn-danger"} %>
+      </td></tr>
+      <tr>
+      <td>
+      平川<br>
+      了解しました。お大事に。
+      </td></tr>
+    </table>
   </div>
- 
 </div>
 
  <!--授業授業方法変更モーダル -->
@@ -111,6 +128,7 @@
       </div>
     </div>
   </div>
+  
 </div>
      
 <!--授業振替モーダル -->
