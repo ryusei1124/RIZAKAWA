@@ -5,10 +5,11 @@ class LessonsController < ApplicationController
   include ApplicationHelper
   
   def weeklyschedule
+    @timecol=TIMECOL
     if params[:cation]=="1"
       @today=params[:changeday].to_date
     else
-      nowtime=Time.new+32400
+      nowtime=Time.new+@timecol
       @today = nowtime.to_date
     end
     if params[:cation]=="2"

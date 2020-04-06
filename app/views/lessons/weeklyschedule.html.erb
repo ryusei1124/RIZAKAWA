@@ -1,5 +1,5 @@
 <% require 'date' %>
-<% nowtime=Time.new+32400  %>
+<% nowtime=Time.new+@timecol  %>
 <% thisday=nowtime.to_date %>
 <% first_day=@today.to_date %>
 <% datedown=(first_day-7) %>
@@ -125,7 +125,7 @@
         <% times=("2000-01-01"+" "+time.to_s).to_time %>
         <% timesfinish=times+54000 %>
         <% lesson=Lesson.where(meeting_on:day) %>
-        <% times=times-32400 %>
+        <% times=times-@timecol %>
         <% lesson=lesson.find_by(started_at:times) %>
         <% if lesson.present?  %>
           <% if current_user.admin? %>
