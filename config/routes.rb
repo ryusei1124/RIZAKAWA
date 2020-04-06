@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
   post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
   get 'sessions/new'
-  
+  post 'lessoncomments/create', to: 'lessoncomments#create'
   root :to => 'notices#index'
   #root 'static_pages#top'
   get '/signup', to: 'users#new'
