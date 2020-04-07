@@ -16,6 +16,8 @@ class Student < ApplicationRecord
       @grade="小#{(grade)}"
     elsif grade<=9 
       @grade="中#{(grade-6)}"
+    elsif  grade<=12 
+      @grade="高#{(grade-9)}"
     else
       @grade="対象外"
     end
