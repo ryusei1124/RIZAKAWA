@@ -24,7 +24,7 @@
       <% zoom=true if @student.zoom? %>
       <% zoomseat=@lesson.seats_zoom %>
       <% zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count %>
-      <%= form_with(url:reservationusers_reservationnewusercreate_path,local: true) do |f| %> 
+      <%= form_with(url:reservationusers_create_path,local: true) do |f| %> 
       <% if zoom==true %>
         <%= f.radio_button :zoom, :false %>&nbsp;リアル(<%=realnumber %>/<%=realseat %>)
         <%= f.radio_button :zoom, :true  ,{:checked => true} %>&nbsp;Zoom(<%=zoomnumber %>/<%=zoomseat %>)

@@ -1,8 +1,13 @@
+
+<% if @user.admin==false %>
+
 <p><%= @user.guardian %>様</p>
 
 <p>いつもお世話になってありがとうございます</p>
 
 <p>平川塾平川です</p>
+
+<% end %>
 
 <p><%= @content %></p>
 

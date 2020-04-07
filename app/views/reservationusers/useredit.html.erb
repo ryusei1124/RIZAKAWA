@@ -75,25 +75,32 @@
     <div style="font-size:15px">コメント(連絡事項)<br /></div>
     <%= form_with(model:@lessoncomment,url: lessoncomments_create_path,local: true) do |f| %>
       <%= f.hidden_field:reservation_id,value:@reservation.id %>
+      <%= f.hidden_field:student_id,value:@student.id %>
       <%= f.hidden_field:lesson_id,value:@lesson.id %>
-      <%= f.text_field :content, class: "form-control", style:"width:600px" %>
+      <%= f.text_field :content, class: "form-control", style:"width:600px",required:true %>
       <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
-    <br /><br />
+    <br />
+     <% lessoncomments=Lessoncomment.where('lesson_id=? and user_id=?',@lesson.id,@student.user_id) %>
+    <% if lessoncomments.present? %>
     <table style="width:600px; font-size:15px" class="table-bordered table-condensed lead">
-      <tr>
-      <td>
-      高田義男（保護者：高田史郎）2020年4月9日 17時15分<br>
-      すみません。風邪で急遽、欠席します<%= button_to "了解する", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, params: {reservation_id:@reservation.id},class:"btn-sm btn-danger"} %>
+    <% lessoncomments.each do |comment| %>
+      <tr><td>
+      <%= comment.student.student_name %>
+      （保護者　<%= comment.user.guardian %>)
+      <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
+      <%= comment.content %><br />
+      <% if current_user.admin==true %>
+        <%= button_to "了解する", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, params: {reservation_id:@reservation.id},class:"btn-sm btn-danger"} %>
+      <% end %>
       </td></tr>
-      <tr>
-      <td>
-      平川<br>
-      了解しました。お大事に。
-      </td></tr>
+      <% end %>
     </table>
+    <% end %>
   </div>
 </div>
+ 
+
 
  <!--授業授業方法変更モーダル -->
 <div class="modal fade" id=modal1 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">

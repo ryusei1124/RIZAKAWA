@@ -37,7 +37,19 @@
 	<div class="panel-heading">
 	  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 		<%= link_to "スケジュールへのリンク", lessons_weeklyschedule_path %>
-	</div>
+	</div><br>
+  <% @reservations=Reservation.where('user_id=?',current_user.id) %>
+  <% if @reservations.present? %>
+  <div class="panel-heading" data-toggle="collapse" data-target="#demo">予約授業へのコメント</div>
+  <div id="demo" class="collapse">
+
+  <% @reservations.each do |reservation| %>
+  <% linkname=reservation.lesson.meeting_on %>
+  
+  <li><%=reservation.student.student_name %>　<%= link_to reservation.lesson.meeting_on, {controller: 'reservationusers', action: 'useredit',lesson_id:reservation.lesson.id,student_id:reservation.student_id}, {method: :post} %></li>
+  <% end %>
+</div>
+<% end %>
 </div>
 
   
