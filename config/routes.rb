@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'reservationusers/reservation_delete', to: 'reservationusers#reservation_delete'
   post 'reservationusers/reservation_change_user', to: 'reservationusers#reservation_change_user'
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
-  post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
+  post 'reservationusers/create', to: 'reservationusers#create'
   get 'sessions/new'
   post 'lessoncomments/create', to: 'lessoncomments#create'
   root :to => 'notices#index'
