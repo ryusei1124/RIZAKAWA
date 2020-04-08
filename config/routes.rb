@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
+  # ログインボタン(管理者、生徒)
+  patch 'login', to: 'sessions#admin_login'
+  put 'login', to: 'sessions#student_login'
+  
   resources :users do
     member do
       get 'reservations/reservations_log'
