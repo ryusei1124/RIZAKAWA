@@ -2,12 +2,12 @@
 <div class="row">
   <% zoom=@reservation.zoom %>
   <% @beforesite=request.referrer if @beforesite.blank? %>
-  
+
     <div class="container2">
     <table style="width:600px;" class="table-bordered table-condensed lead">
     <tr><td style="width:100px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
     <% if @lesson.examinee==true %>
-    受験生 
+    受験生
     <% elsif @lesson.examinee==true %>
     一般
     <% end %>
@@ -17,7 +17,7 @@
     <% else %>
       <span class="label label-info">予約済</span>
     <% end %>
-    </td></tr>  
+    </td></tr>
     <tr><td style="width:150px;" class="tdcondition1">名前</td><td><%= @student.student_name %></td></tr>
     <tr><td class="tdcondition1">予約日時</td>
     <td>
@@ -81,8 +81,7 @@
       <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
     <br />
-     <% lessoncomments=Lessoncomment.where('reservation_id=? and user_id=?',@reservation.id,@student.user_id)
-     .or(Lessoncomment.where("reservation_id =? and user_id =?",@reservation.id,1)) %>
+     <% lessoncomments=Lessoncomment.where("reservation_id =?" ,@reservation.id) %>
     <% if lessoncomments.present? %>
     <table style="width:600px; font-size:15px" class="table-bordered table-condensed lead">
     <% lessoncomments.each do |comment| %>
@@ -100,7 +99,7 @@
     <% end %>
   </div>
 </div>
- 
+
 
 
  <!--授業授業方法変更モーダル -->
@@ -119,7 +118,7 @@
     <% end %>
     </div></div>
     <div class="modal-footer">
-    <%= form_with(url:reservationusers_userupdate_path,local: true) do |f| %> 
+    <%= form_with(url:reservationusers_userupdate_path,local: true) do |f| %>
       <%= f.hidden_field :reservation_id,value:@reservation.id %>
       <%= f.hidden_field :student_id,value:@student.id %>
       <%= f.hidden_field :day,value:@lesson.meeting_on %>
@@ -139,9 +138,9 @@
       </div>
     </div>
   </div>
-  
+
 </div>
-     
+
 <!--授業振替モーダル -->
 <div class="modal fade" id=<%=modaltype %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog">
