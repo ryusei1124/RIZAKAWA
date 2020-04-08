@@ -7,6 +7,7 @@ class ReservationusersController < ApplicationController
     @lessonlists=[]
     @student_id=params[:student_id]
     @student=Student.find(@student_id)
+    session[:student_id]=@student.id
     lesson_id=params[:lesson_id]
     @lesson=Lesson.find(lesson_id)
     @lessons=Lesson.includes(:reservations).all

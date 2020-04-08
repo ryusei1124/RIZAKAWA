@@ -81,7 +81,8 @@
       <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
     <br />
-     <% lessoncomments=Lessoncomment.where('lesson_id=? and user_id=?',@lesson.id,@student.user_id) %>
+     <% lessoncomments=Lessoncomment.where('reservation_id=? and user_id=?',@reservation.id,@student.user_id)
+     .or(Lessoncomment.where("reservation_id =? and user_id =?",@reservation.id,1)) %>
     <% if lessoncomments.present? %>
     <table style="width:600px; font-size:15px" class="table-bordered table-condensed lead">
     <% lessoncomments.each do |comment| %>
