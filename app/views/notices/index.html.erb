@@ -1,14 +1,15 @@
 <% provide(:title, 'お知らせ一覧') %>
-
-<h1>お知らせ一覧</h1>
+<% require 'date' %>
+<% today=Date.today %>
+<h1 style="margin-bottom:-20px;">平川塾からのお知らせ</h1>
 
 <div class="col-md-8 col-md-offset-2">
+  <div style="margin-bottom:-40px;"><%= will_paginate %></div>
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
       <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
     <% end %>
   </div>
-  <%= will_paginate %>
   <table class="table-bordered table-condensed" id="notices-info">
     <thead>
       <tr>
@@ -36,8 +37,22 @@
  <div class="panel panel-info">
 	<div class="panel-heading">
 	  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-		<%= link_to "スケジュールへのリンク", lessons_weeklyschedule_path %>
-	</div>
+		<%= link_to "　スケジュールへのリンク", lessons_weeklyschedule_path %>
+	</div></div>
+  <div class="panel panel-warning">
+  <% @reservations=Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',today,current_user.id) %>
+  <% if @reservations.present? %>
+  <div class="panel-heading" data-toggle="collapse" data-target="#demo">
+  <span class="glyphicon glyphicon-road" aria-hidden="true"> 予約授業へのコメント＋</div></span>
+  <div id="demo" class="collapse">
+   <% @reservations.each do |reservation| %>
+   <br>
+  <% linkname=reservation.lesson.meeting_on %>
+  <P>・<%= link_to reservation.lesson.meeting_on,"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
+  <%=reservation.student.student_name %></P>
+  <% end %>
+</div>
+<% end %>
 </div>
 
   

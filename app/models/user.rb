@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :reset_token
-  has_many :notices
-  has_many :lessons
-  has_many :reservations
+  has_many :notices, dependent: :destroy
+  has_many :lessons, dependent: :destroy
+  has_many :lessoncomments, dependent: :destroy
+  has_many :reservations, dependent: :destroy
   has_many :students, dependent: :destroy
   
   # 生徒一覧の名前順

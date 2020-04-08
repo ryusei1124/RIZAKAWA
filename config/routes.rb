@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   get 'lessons/weeklyschedule'
   post 'lessons/create', to: 'lessons#create'
   post 'reservationusers/useredit', to: 'reservationusers#useredit'
@@ -10,18 +10,18 @@ Rails.application.routes.draw do
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
   post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
   get 'sessions/new'
-  
+  post 'lessoncomments/create', to: 'lessoncomments#create'
   root :to => 'notices#index'
   #root 'static_pages#top'
   get '/signup', to: 'users#new'
   get    '/login', to: 'sessions#new'
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-  
+
   # ログインボタン(管理者、生徒)
   patch 'login', to: 'sessions#admin_login'
   put 'login', to: 'sessions#student_login'
-  
+
   resources :users do
     member do
       get 'reservations/reservations_log'
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       patch 'update_basic_info'
     end
   end
-  
+
   resources :lessons do
    member do
      get 'lesson_detail'
