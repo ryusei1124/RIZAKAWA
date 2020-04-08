@@ -1,7 +1,7 @@
 <% provide(:title, 'お知らせ一覧') %>
 <% require 'date' %>
 <% today=Date.today %>
-<h1>お知らせ一覧</h1>
+<h1 style="margin-bottom:-20px;">平川塾からのお知らせ</h1>
 
 <div class="col-md-8 col-md-offset-2">
   <div class="add-notice-information-btn">
@@ -9,7 +9,7 @@
       <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
     <% end %>
   </div>
-  <%= will_paginate %>
+  <div style="margin-bottom:-40px;"><%= will_paginate %></div>
   <table class="table-bordered table-condensed" id="notices-info">
     <thead>
       <tr>
