@@ -4,7 +4,7 @@ class LessoncommentsController < ApplicationController
     lessoncomment .user_id=current_user.id
     if lessoncomment.save
       @user=User.find(lessoncomment.user_id)
-      @user=User.find(1) if @user.admin==false
+      @user=User.find(18) if @user.admin==false
       name=@user.guardian+"さんから"
       title = '#{name}授業へのコメントがありました'
       content = "下記のリンクからコメントの確認お願いします"
