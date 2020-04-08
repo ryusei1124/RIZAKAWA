@@ -4,12 +4,12 @@
 <h1 style="margin-bottom:-20px;">平川塾からのお知らせ</h1>
 
 <div class="col-md-8 col-md-offset-2">
+  <div style="margin-bottom:-40px;"><%= will_paginate %></div>
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
       <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
     <% end %>
   </div>
-  <div style="margin-bottom:-40px;"><%= will_paginate %></div>
   <table class="table-bordered table-condensed" id="notices-info">
     <thead>
       <tr>

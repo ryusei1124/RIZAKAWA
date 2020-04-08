@@ -90,9 +90,6 @@
       （保護者　<%= comment.user.guardian %>)
       <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
       <%= comment.content %><br />
-      <% if current_user.admin==true %>
-        <%= button_to "了解する", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, params: {reservation_id:@reservation.id},class:"btn-sm btn-danger"} %>
-      <% end %>
       </td></tr>
       <% end %>
     </table>
