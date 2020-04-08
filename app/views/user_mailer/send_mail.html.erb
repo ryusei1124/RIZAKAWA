@@ -1,5 +1,12 @@
-<p><%= @user.email %></p>
+<% if @user.admin==false %>
+  <p><%= @user.guardian %>様</p>
+  <p>いつもお世話になってありがとうございます</p>
+  <p>平川塾平川です</p>
+<% end %>
 
-<p><%#= @contet %></p>
+<p><%= @content %></p>
 
-<p><%#= link_to "test", @user %></p>
+<% if @link.present? %>
+  <p><%= link_to "こちらのリンクを参照下さい", @link %></p>
+<% end %>
+

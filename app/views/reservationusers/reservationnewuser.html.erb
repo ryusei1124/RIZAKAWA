@@ -4,10 +4,10 @@
 <div class="row"></div>
   <% @beforesite=request.referrer if @beforesite.blank? %>
   <div class="col-md-6 col-md-offset-3 lead">
-    
+
     <table border="2" class="table" style="border : 2px solid midnightblue ;">
-    <tr ><td style="width:150px;" class="tdcondition2">コース</td><td><%= @lesson.target %>コース&nbsp; 
-    </td></tr>  
+    <tr ><td style="width:150px;" class="tdcondition2">コース</td><td><%= @lesson.target %>コース&nbsp;
+    </td></tr>
     <tr style="border-top: solid  midnightblue;"><td style="width:150px;" class="tdcondition2">名前</td><td><%= @student.student_name %></td></tr>
     <tr style="border-top:  solid midnightblue;"><td class="tdcondition2">予約日時</td>
     <td>
@@ -24,7 +24,7 @@
       <% zoom=true if @student.zoom? %>
       <% zoomseat=@lesson.seats_zoom %>
       <% zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count %>
-      <%= form_with(url:reservationusers_reservationnewusercreate_path,local: true) do |f| %> 
+      <%= form_with(url:reservationusers_reservationnewusercreate_path,local: true) do |f| %>
       <% if zoom==true %>
         <%= f.radio_button :zoom, :false %>&nbsp;リアル(<%=realnumber %>/<%=realseat %>)
         <%= f.radio_button :zoom, :true  ,{:checked => true} %>&nbsp;Zoom(<%=zoomnumber %>/<%=zoomseat %>)
@@ -48,4 +48,3 @@
     <% modaltype="newsc" %>
     </div>
 </div>
-

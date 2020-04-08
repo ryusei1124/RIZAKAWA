@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_24_055332) do
+ActiveRecord::Schema.define(version: 2020_04_06_051913) do
+
+  create_table "lessoncomments", force: :cascade do |t|
+    t.integer "lesson_id", null: false
+    t.integer "user_id", null: false
+    t.integer "reservation_id"
+    t.integer "student_id"
+    t.string "content", null: false
+    t.integer "noted", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "lessons", force: :cascade do |t|
     t.date "meeting_on", null: false

@@ -5,10 +5,11 @@ class LessonsController < ApplicationController
   include ApplicationHelper
   
   def weeklyschedule
+    @timecol=TIMECOL
     if params[:cation]=="1"
       @today=params[:changeday].to_date
     else
-      nowtime=Time.new+32400
+      nowtime=Time.new+@timecol
       @today = nowtime.to_date
     end
     if params[:cation]=="2"
@@ -123,10 +124,10 @@ class LessonsController < ApplicationController
   
   def lesson_detail
     @lesson = Lesson.find(params[:id])
-    @zooms_sum = Reservation.where(zoom: true).count
-    @reals_sum = Reservation.where(zoom: false).count
-    @reservations = Reservation.all
-    @reservation = Reservation.find(params[:id])
+    @reservations = Reservation.where("lesson_id = ?", @lesson.id)
+    @reservation_waitings = Reservation.where("waiting = ?", @lesson.id)
+    @zooms_sum = @reservations.count
+    @reals_sum = @reservations.count
   end
   
   private

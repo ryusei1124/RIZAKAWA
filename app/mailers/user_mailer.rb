@@ -1,11 +1,11 @@
 class UserMailer < ApplicationMailer
-  def send_mail(user, title, content)
-    @user = user
+  def send_mail(user, title, content, link)
+    @user = user #ここのみオブジェクト変数を設定のこと
     @title = title
     @content = content
     
     mail(
-      to: user,
+      to: user.email,
       subject: title
     )
   end
