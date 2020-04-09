@@ -3,9 +3,9 @@
   <% zoom=@reservation.zoom %>
   <% @beforesite=request.referrer if @beforesite.blank? %>
 
-    <div class="container2">
-    <table style="width:600px;" class="table-bordered table-condensed lead">
-    <tr><td style="width:100px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
+    <div class="col-md-6 col-md-offset-2 lead">
+    <table style="width:700px;" class="table-bordered table-condensed lead">
+    <tr><td style="width:150px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
     <% if @lesson.examinee==true %>
     受験生
     <% elsif @lesson.examinee==true %>
@@ -18,7 +18,7 @@
       <span class="label label-info">予約済</span>
     <% end %>
     </td></tr>
-    <tr><td style="width:150px;" class="tdcondition1">名前</td><td><%= @student.student_name %></td></tr>
+    <tr><td class="tdcondition1">名前</td><td><%= @student.student_name %></td></tr>
     <tr><td class="tdcondition1">予約日時</td>
     <td>
     <%= daydis(@lesson.meeting_on) %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
@@ -77,13 +77,13 @@
       <%= f.hidden_field:reservation_id,value:@reservation.id %>
       <%= f.hidden_field:student_id,value:@student.id %>
       <%= f.hidden_field:lesson_id,value:@lesson.id %>
-      <%= f.text_field :content, class: "form-control", style:"width:600px",required:true %>
+      <%= f.text_field :content, class: "form-control", style:"width:700px",required:true %>
       <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
     <br />
      <% lessoncomments=Lessoncomment.where("reservation_id =?" ,@reservation.id) %>
     <% if lessoncomments.present? %>
-    <table style="width:600px; font-size:15px" class="table-bordered table-condensed lead">
+    <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
     <% lessoncomments.each do |comment| %>
       <tr><td>
       <%= comment.student.student_name %>
