@@ -3,6 +3,7 @@ class UserMailer < ApplicationMailer
     @user = user #ここのみオブジェクト変数を設定のこと
     @title = title
     @content = content
+    @link=link
     
     mail(
       to: user.email,

@@ -37,13 +37,13 @@
  <div class="panel panel-info">
 	<div class="panel-heading">
 	  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-		<%= link_to "　スケジュールへのリンク", lessons_weeklyschedule_path %>
+		&nbsp;<%= link_to "スケジュールへのリンク", lessons_weeklyschedule_path %>
 	</div></div>
   <div class="panel panel-warning">
-  <% @reservations=Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',today,current_user.id) %>
+  <% @reservations=Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',today,current_user.id).order(meeting_on: "ASC")  %>
   <% if @reservations.present? %>
   <div class="panel-heading" data-toggle="collapse" data-target="#demo">
-  <span class="glyphicon glyphicon-road" aria-hidden="true"> 予約授業へのコメント＋</div></span>
+  <span class="glyphicon glyphicon-road" aria-hidden="true"> 予約授業へのコメント（クリックで展開）</div></span>
   <div id="demo" class="collapse">
    <% @reservations.each do |reservation| %>
    <br>
@@ -51,8 +51,48 @@
   <P>・<%= link_to reservation.lesson.meeting_on,"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
   <%=reservation.student.student_name %></P>
   <% end %>
-</div>
+</div><br />
+<div class="panel panel-info">
+	<div class="panel-heading">
+	  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+		&nbsp;<a href=""  data-toggle="modal" data-target="#modal-sa"%>
+        会計編集</a>
+</div></div>
 <% end %>
 </div>
+<!-- 2.編集モーダルの配置 -->
+<div class="modal fade" id="modal-sa" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+<!-- 3.モーダルのコンテンツ -->
+    <div class="modal-content">
+      <!-- 4.モーダルのヘッダ -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="modal-label"><b>個人情報編集</b></h4>
+        <div class="modal-body">
+  <% students=Student.where("user_id = ?",current_user.id) %>
+  <% students.each do |student| %>
+  <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
+          <p>タイトル　：<%= student.student_name %></p>
+          <p>開始年月日：<%= student.studentkana %></p>
+          <p>学校名　　：<%= f.text_field :note, placeholder: '本文',style:"width:250px;"  %></p>
+           <p>
+          <%= f.submit "登録", class: "btn btn-primary",data: { disable_with: '送信中...' },style:"width:100px;height:50px" %></p>
+        <% end %> 
+        <hr>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2.編集モーダルの配置終了 -->
+<!-- 2.編集モーダルの配置 -->
+
+
+<!-- 2.編集モーダルの配置終了 -->
 
   

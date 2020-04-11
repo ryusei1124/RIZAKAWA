@@ -81,7 +81,7 @@
       <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
     <br />
-     <% lessoncomments=Lessoncomment.where("reservation_id =?" ,@reservation.id) %>
+     <% lessoncomments=Lessoncomment.where("lesson_id =? and student_id=?" ,@lesson.id,@student.id) %>
     <% if lessoncomments.present? %>
     <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
     <% lessoncomments.each do |comment| %>
@@ -167,3 +167,5 @@
   </div>
 </div>
       <!--授業新規モーダルここまで -->
+     
+        
