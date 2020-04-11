@@ -5,8 +5,8 @@ ja:
     attributes:
         user:
           id: ID
-          guardian: 保護者名
-          student: 生徒名
+          guardian: 保護者
+          student: 生徒
           email: メールアドレス
           real: リアル受講
           zoom: zoom受講
