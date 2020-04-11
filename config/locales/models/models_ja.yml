@@ -26,8 +26,8 @@ ja:
         notice:
           notice_title: 投稿タイトル
           notice_content: 投稿内容
-  static_pages:
-    top:
+  sessions:
+    new:
       email: メールアドレス
       password: パスワード
   
