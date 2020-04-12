@@ -25,7 +25,7 @@
           <% students = @students.where(user_id:user.id) %>
         <td>
           <% students.each do |student| %>
-            <%= link_to student.student_name, edit_basic_info_user_path(user,student), remote: true %> 
+            <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
             <%= student.user_id %>
           <% end %>
         </td>
@@ -33,7 +33,7 @@
           <%= link_to "削除", user, method: :delete,
               data:  { confirm: "本当に削除してよろしいですか？"},
               class: "btn btn-danger btn-sm pull-right" %>
-          <%= link_to "編集", edit_basic_info_user_path(user), class: "btn btn-success btn-sm pull-right" %>
+          <%= link_to "編集", edit_basic_info_user_path(user), remote: true, class: "btn btn-success btn-sm pull-right" %>
           <!-- モーダル表示は事後対応します -->
         </td>
       </tr>
@@ -44,3 +44,4 @@
 
 <!--モーダルウインドウ表示-->
 <div id="edit-basic-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="info-edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>

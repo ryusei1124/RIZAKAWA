@@ -37,4 +37,9 @@ class ApplicationController < ActionController::Base
       #session[:student]=@student
     end
   end
+  
+    # 選択した生徒をインスタンス化する
+  def select_student
+    @student = Student.find(params[:id])
+  end
 end

@@ -40,6 +40,14 @@ Rails.application.routes.draw do
      patch 'add_student'
    end
   end
+  
+  resources :students do
+    member do
+      get 'info_edit'
+      patch 'info_update'
+    end
+  end
+
   resources :notices
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :reservations

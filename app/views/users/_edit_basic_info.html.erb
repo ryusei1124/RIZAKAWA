@@ -7,19 +7,21 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h1 class="modal-title">基本生徒情報編集</h1>
+      <h1 class="modal-title">基本保護者情報編集</h1>
     </div>
     <div class="modal-body">
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
-          <%= form_with(model: @user, url: update_basic_info_user_path(@student), local: true, method: :patch) do |f| %>
-            <%= render 'shared/error_messages', object: @student %>
+          <%= form_with(model: @user, url: update_basic_info_user_path(@user), local: true, method: :patch) do |f| %>
+            <%= render 'shared/error_messages', object: @user %>
 
-            <%= f.label :student_name, class: "label-#{yield(:class_text)}" %>
-            <p><%= @student.student_name %></p>
-
-            <%= f.label :school, class: "label-#{yield(:class_text)}" %>
-            <%= f.text_field :school, class: "form-control" %>
+            <%= f.label :guardian, class: "label-#{yield(:class_text)}" %>
+            <p><%= @user.guardian %></p>
+            
+            <%= f.label :email, class: "label-#{yield(:class_text)}" %>
+            <%= f.text_field :email, class: "form-control" %>
+            
+            <!--電話番号のカラムが必要と思われるので実装予定-->
 
             <div class="center">
               <%= f.submit yield(:button_text), class: "btn btn-primary btn-#{yield(:class_text)}" %>
