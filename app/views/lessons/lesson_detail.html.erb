@@ -11,7 +11,7 @@
   <table class="table table-bordered table-condensed" id="table-reservations">
     <tr>
       <th class="col-md-3">日付</th>
-      <td><%= l(@lesson.meeting_on, format: :long_j) %></td>
+      <td><%= l(@lesson.meeting_on, format: :long) %></td>
     </tr>
     <tr>
       <th>対象者</th>
@@ -85,14 +85,22 @@
             <span class="label label-primary label-user-division">✕</span>
           <% end %>
           <% if reservation.absence == false %>
-            <%=  %>
+            <%= "#" %>
           <% end %>
         </td>
         <td>
-          <%= link_to "出席", "#", remote: true, class: "btn btn-primary" %>
-          <%= link_to "退席", "#", remote: true, class: "btn btn-success" %>
-          <%= link_to "クリア", "#", remote: true, class: "btn btn-info" %>
-          <%= link_to "欠席", "#", remote: true, class: "btn btn-danger" %>
+          <%= link_to "出席", reservation_path(reservation), method: :patch, class: "btn btn-primary" %>
+            
+          <% if reservation.attendance_time? %>
+            <%= link_to "退席", attendance_time_reservation_path(reservation), method: :patch, class: "btn btn-success" %>
+          <% end %>
+          
+          <%= link_to "クリア", "#",  class: "btn btn-info" %>
+          <%= link_to "欠席", "#", class: "btn btn-danger" %>
+          
+          <% if reservation.absence? %>
+            <%= link_to "退席", attendance_time_reservation_path(reservation), method: :patch, class: "btn btn-success" %>
+          <% end %>
         </td>
        </tr>
       <% end %>
