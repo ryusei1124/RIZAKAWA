@@ -6,7 +6,7 @@ class BasicInfosController < ApplicationController
         school:school,
         birthday:birthday)
     }
-    flash[:success]="基本情報一括編集に成功しました"
+    flash[:success]="基本情報更新に成功しました"
     redirect_to request.referrer
   end
   private

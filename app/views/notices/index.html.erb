@@ -84,7 +84,7 @@
               <% students.each do |student| %>
                 <%= fields_for "studentsmany[]",student do |st| %>
                   <%= st.label :生徒名　 %> <%= student.student_name %><br>
-                  <%= st.label :生年月日 %> <%= st.date_field :birthday , value: student.birthday.strftime("%Y-%m-%d"), required: true %><br>
+                  <%= st.label :生年月日 %> <%= st.date_field :birthday , value: student.birthday.strftime("%Y-%m-%d"), style: "width:160px", required: true %><br>
                   <%= st.label :固定時間 %> <%= student.fix_day %>曜日<%= student.fix_time.hour %>:<%= mindisplay(student.fix_time) %><br>
                   <% if student.fix_day2.present? %>
                     <%= st.label :固定時間２ %> <%= student.fix_day2 %>曜日<%= student.fix_time2.hour %>:<%= mindisplay(student.fix_time2) %><br>
@@ -92,14 +92,15 @@
                   <% if student.fix_day3.present? %>
                     <%= st.label :固定時間３ %> <%= student.fix_day3 %>曜日<%= student.fix_time3.hour %>:<%= mindisplay(student.fix_time3) %><br>
                   <% end %>
-                  <%= st.label :学校名　 %> <%= st.text_field :school , placeholder: '学校名'%><br>
+                  <%= st.label :学校名　 %> <%= st.text_field :school ,  style: "width:160px" %><br>
                   <%= st.label :学年　　 %> <%= Student.gradeyear(student.id) %><br>
                   <%= st.label :授業方法 %> <%= attend(student.zoom) %><br>
                   <%= st.label :受験区分 %> <%= tasker(student.examinee) %><br>
                   <hr>
                 <% end %>
               <% end %>
-            <%= submit_tag value="一括編集", :class => "btn btn-primary btn-lm", data: { confirm: "更新していいですか"} %>
+            <%= submit_tag value="更新", :class => "btn btn-primary", data: { confirm: "更新していいですか"} %>&nbsp;
+            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
           <% end %>
           <% end %>
           </div>
