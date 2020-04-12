@@ -80,7 +80,6 @@
           </button>
           <h4 class="modal-title" id="modal-label"><b>基本情報閲覧・編集</b></h4>
           <div class="modal-body">
-            
             <%= form_with(url: basic_infos_student_update_path, method: :put, local: true) do |f| %>
               <% students.each do |student| %>
                 <%= fields_for "studentsmany[]",student do |st| %>
