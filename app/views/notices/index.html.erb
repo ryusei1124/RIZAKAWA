@@ -2,12 +2,11 @@
 <% require 'date' %>
 <% today=Date.today %>
 <h1 style="margin-bottom:-20px;">平川塾からのお知らせ</h1>
-
 <div class="col-md-8 col-md-offset-2">
   <div style="margin-bottom:-40px;"><%= will_paginate %></div>
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
-      <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
+    <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
     <% end %>
   </div>
   <table class="table-bordered table-condensed" id="notices-info">
@@ -18,41 +17,95 @@
       </tr>
     </thead>
     <thead>
-    <% @notices.each do |notice| %>
+      <% @notices.each do |notice| %>
       <tr>
         <td colspan="1" class="col-md-3"><%= l(notice.updated_at, format: :day) %></td>
         <td colspan="5">
           <%= link_to notice.notice_title, notice %>
           <%#= link_to notice.notice_title, edit_notice_path(notice) %>
           <% if current_user.admin? %>
-            <%= link_to "削除", notice, method: :delete,
+          <%= link_to "削除", notice, method: :delete,
             data: { confirm: "削除してよろしいですか？" },
             class: "btn btn-danger btn-sm pull-right" %>
           <% end %>
         </td>
       </tr>
-    <% end %>
+      <% end %>
     </thead>
   </table><br>
- <div class="panel panel-info">
-	<div class="panel-heading">
-	  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-		<%= link_to "　スケジュールへのリンク", lessons_weeklyschedule_path %>
-	</div></div>
-  <div class="panel panel-warning">
-  <% @reservations=Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',today,current_user.id) %>
-  <% if @reservations.present? %>
-  <div class="panel-heading" data-toggle="collapse" data-target="#demo">
-  <span class="glyphicon glyphicon-road" aria-hidden="true"> 予約授業へのコメント＋</div></span>
-  <div id="demo" class="collapse">
-   <% @reservations.each do |reservation| %>
-   <br>
-  <% linkname=reservation.lesson.meeting_on %>
-  <P>・<%= link_to reservation.lesson.meeting_on,"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
-  <%=reservation.student.student_name %></P>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+      &nbsp;<%= link_to "スケジュールへのリンク", lessons_weeklyschedule_path %>
+    </div>
+  </div>
+  
+    <% @reservations=Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',today,current_user.id).order(meeting_on: "ASC")  %>
+    <% if @reservations.present? %>
+    <div class="bg-warning">
+    <div class="panel-heading" data-toggle="collapse" data-target="#demo">
+      <span class="glyphicon glyphicon-envelope" aria-hidden="true"> 予約授業へのコメント（遅刻等の連絡、クリックで展開）</div></span>
+    <div id="demo" class="collapse">
+      <% @reservations.each do |reservation| %>
+      <br>
+      <% linkname=reservation.lesson.meeting_on %>
+      <P>・<%= link_to reservation.lesson.meeting_on,"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
+        <%=reservation.student.student_name %></P>
+      <% end %>
+    </div>
+  </div>
   <% end %>
-</div>
-<% end %>
-</div>
+  <br>
+  
+  <!-- 2.編集モーダルの配置 -->
+  <% students=Student.where("user_id = ?",current_user.id).where(withdrawal: nil) %>
+  <% if students.present? %>
+<div class="panel panel-success">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+      &nbsp;<a href="" data-toggle="modal" data-target="#modal-sa" %>
+        基本情報</a>
+    </div>
+  </div>
+  <!-- 2.編集モーダルの配置 -->
+  <div class="modal fade" id="modal-sa" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+      <!-- 3.モーダルのコンテンツ -->
+      <div class="modal-content">
+        <!-- 4.モーダルのヘッダ -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="modal-label"><b>基本情報閲覧・編集</b></h4>
+          <div class="modal-body">
+            <%= form_with(url: basic_infos_student_update_path, method: :put, local: true) do |f| %>
+              <% students.each do |student| %>
+                <%= fields_for "studentsmany[]",student do |st| %>
+                  <%= st.label :生徒名　 %> <%= student.student_name %><br>
+                  <%= st.label :生年月日 %> <%= st.date_field :birthday , value: student.birthday.strftime("%Y-%m-%d"), required: true %><br>
+                  <%= st.label :固定時間 %> <%= student.fix_day %>曜日<%= student.fix_time.hour %>:<%= mindisplay(student.fix_time) %><br>
+                  <% if student.fix_day2.present? %>
+                    <%= st.label :固定時間２ %> <%= student.fix_day2 %>曜日<%= student.fix_time2.hour %>:<%= mindisplay(student.fix_time2) %><br>
+                  <% end %>
+                  <% if student.fix_day3.present? %>
+                    <%= st.label :固定時間３ %> <%= student.fix_day3 %>曜日<%= student.fix_time3.hour %>:<%= mindisplay(student.fix_time3) %><br>
+                  <% end %>
+                  <%= st.label :学校名　 %> <%= st.text_field :school , placeholder: '学校名'%><br>
+                  <%= st.label :学年　　 %> <%= Student.gradeyear(student.id) %><br>
+                  <%= st.label :授業方法 %> <%= attend(student.zoom) %><br>
+                  <%= st.label :受験区分 %> <%= tasker(student.examinee) %><br>
+                  <hr>
+                <% end %>
+              <% end %>
+            <%= submit_tag value="一括編集", :class => "btn btn-primary btn-lm", data: { confirm: "更新していいですか"} %>
+          <% end %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   

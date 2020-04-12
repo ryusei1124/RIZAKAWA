@@ -1,7 +1,10 @@
 class Student < ApplicationRecord
    belongs_to :user
+   validates :birthday,  presence: true
+   validates :student_name,  presence: true
    has_many :reservations, dependent: :destroy
    has_many :lessoncomments, dependent: :destroy
+   scope :kanaorder , -> { where(withdrawal:nil).order(studentkana: :asc)}
    def self.gradeyear(id)
     born=Student.find(id).birthday
     bornmonth=born.month

@@ -58,9 +58,7 @@ class LessonsController < ApplicationController
     count=0
     lasttime=(finishtimec-starttimec)/1800
     while starttimec<=finishtimec
-      
       #一回目のスタートタイムが前の授業の終わりと一緒でも登録必要にてそのまま通す
-      
       if Lesson.where("finished_at =? AND meeting_on = ?" ,starttimec, openday).count>0 and count>=1 
         reservecount=1
       elsif Lesson.where("started_at =? AND meeting_on = ?" ,starttimec, openday).count>0 and count<lasttime

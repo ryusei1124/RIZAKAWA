@@ -134,4 +134,18 @@ module ApplicationHelper
     end
     bgcolor
   end
+  def attend(zoom)
+    if zoom==true
+      result="Zoom"
+    else
+      result="リアル"
+    end
+  end
+   def tasker(ex)
+    if ex==true and ex.present?
+      result="受験生"
+    else
+      result="一般"
+    end
+  end
 end
