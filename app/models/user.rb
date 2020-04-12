@@ -63,7 +63,7 @@ class User < ApplicationRecord
   def class_hoice
     errors.add(:class_choice, "はどちらか一つ選択してください") if zoom.present? && real.present?
   end
-  #スコープ契約中の生徒がある保護者一覧
+  #スコープ契約中の保護者一覧
   def self.undercontract
     joins(:students).where(withdrawal:nil).group("users.id").order(guardiankana: "ASC")
   end
