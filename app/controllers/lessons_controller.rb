@@ -31,6 +31,7 @@ class LessonsController < ApplicationController
     @capacity=[*0..30]
     @regular=["定例","臨時"]
     @target=["小学生","中学生","小中学生"]
+    unlessuser
   end
   
   def create
@@ -132,6 +133,15 @@ class LessonsController < ApplicationController
   
   def lesson_params
      params.require(:lesson).permit(:meeting_on, :target,:examineekanji,:starttime,:finishtime,:seats_real,:seats_zoom,:autoregister,:regularkanji,:note,:fixtimeres)
+  end
+  
+  def unlessuser
+    if @student.present?
+      if @student.user_id =! current_user.id 
+        session[:student_id] = nil
+        redirect_to "/"
+      end
+    end
   end
   
 end

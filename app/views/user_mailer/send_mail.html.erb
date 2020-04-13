@@ -1,3 +1,4 @@
+
 <% if @user.admin==false %>
   <p><%= @user.guardian %>様</p>
   
@@ -6,10 +7,9 @@
   <p>平川塾平川です</p>
 
 <% else %>
-
-<P><%= @user.guardian %>様より</P>
-
-<p>お問い合わせや登録がありました。</p>
+<% current=User.find(current_user.id) %>
+  
+  <P><%=current.guardian  %>様より</P>
 
 <% end %>
 

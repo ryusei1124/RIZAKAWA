@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   #時間修正値9時間（秒）
   TIMECOL = 32400
+  
 
   #学校を配列に
   def schoolgrade

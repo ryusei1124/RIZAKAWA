@@ -7,6 +7,7 @@ class ReservationusersController < ApplicationController
     @lessonlists=[]
     @student_id=params[:student_id]
     @student=Student.find(@student_id)
+    unless_user
     session[:student_id]=@student.id
     lesson_id=params[:lesson_id]
     @lesson=Lesson.find(lesson_id)
@@ -134,6 +135,14 @@ class ReservationusersController < ApplicationController
       flash[:danger]="受講日登録に失敗しました"
     end
     redirect_to "/lessons/weeklyschedule?cation=1&changeday=#{lesson.meeting_on.to_s}"
+  end
+  def unless_user
+    if @student.user_id != current_user.id and current_user.admin == false
+        session[:student_id] = nil
+        flash[:warning] = "不正なアクセスがありました。ログインし直して下さい。"
+        log_out
+        redirect_to '/login'
+    end 
   end
 end
 

@@ -40,7 +40,7 @@ Student.create!(student_name:"古川那奈",studentkana:"フルカワサチ",zoo
 Student.create!(student_name:"古川一花",studentkana:"フルカワイチカ",zoom:true,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:11)
 Student.create!(student_name:"上田智",studentkana:"ウエダトモ",zoom:false,birthday:"2007/09/24",fix_day:"月",fix_time:"16:36",fix_day2:"金",fix_time2:"16:50",examinee:true,user_id:12)
 Student.create!(student_name:"上田仁",studentkana:"ウエダジン",zoom:false,birthday:"2012/12/24",fix_day:"土",fix_time:"10:30",user_id:12)
-Student.create!(student_name:"佐竹優",studentkana:"サタケユウ",zoom:false,birthday:"2007/09/24",fix_day:"水",fix_time:"16:36",fix_day2:"水",fix_time2:"16:10",examinee:true,user_id:13)
+Student.create!(student_name:"佐竹優",studentkana:"サタケユウ",zoom:false,birthday:"2007/09/24",fix_day:"水",fix_time:"16:36",fix_day2:"金",fix_time2:"16:10",examinee:true,user_id:13)
 Student.create!(student_name:"佐竹元気",studentkana:"サタケゲンキ",zoom:false,birthday:"2005/03/24",fix_day:"水",fix_time:"20:30",examinee:true,user_id:13)
 Student.create!(student_name:"桑田祐樹",studentkana:"クワタユウキ",zoom:false,birthday:"2009/09/24",fix_day:"木",fix_time:"16:36",user_id:14)
 Student.create!(student_name:"多田茂",studentkana:"タダシゲル",zoom:true,birthday:"2005/12/24",fix_day:"木",fix_time:"20:36",user_id:15)

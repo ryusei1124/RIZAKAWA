@@ -1,9 +1,10 @@
 class UserMailer < ApplicationMailer
   def send_mail(user, title, content, link)
+    url="https://rizakawa.herokuapp.com/"
     @user = user #ここのみオブジェクト変数を設定のこと
     @title = title
     @content = content
-    @link=link
+    @link=url+link
     
     mail(
       to: user.email,
