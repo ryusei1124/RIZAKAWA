@@ -191,7 +191,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt
-  bootstrap-sass (~> 3.3.6)
+  bootstrap-sass (>= 3.3.7)
   bootstrap-will_paginate
   bootstrap3-datetimepicker-rails
   byebug
