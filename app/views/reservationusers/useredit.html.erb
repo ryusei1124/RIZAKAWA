@@ -18,10 +18,10 @@
       <span class="label label-info">予約済</span>
     <% end %>
     </td></tr>
-    <tr><td class="tdcondition1">名前</td><td><%= @student.student_name %></td></tr>
+    <tr><td class="tdcondition1">名前　学年</td><td><%= @student.student_name %>（ <%= Student.gradeyear(@student.id) %> ) </td></tr>
     <tr><td class="tdcondition1">予約日時</td>
     <td>
-    <%= daydis(@lesson.meeting_on) %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
+    <%= daydis(@lesson.meeting_on) %> ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
     <% if @reservation.transfer==true %>
      振替　
     <% end %>
@@ -96,8 +96,6 @@
     <% end %>
   </div>
 </div>
-
-
 
  <!--授業授業方法変更モーダル -->
 <div class="modal fade" id=modal1 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">

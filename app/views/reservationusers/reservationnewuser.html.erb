@@ -8,11 +8,10 @@
     <table style="width:700px;" class="table-bordered table-condensed lead">
     <tr ><td style="width:150px;" class="tdcondition2">コース</td><td><%= @lesson.target %>コース&nbsp;
     </td></tr>
-    <tr><td style="width:150px;" class="tdcondition2">名前</td><td><%= @student.student_name %></td></tr>
+    <tr><td style="width:150px;" class="tdcondition2">名前　学年</td><td><%= @student.student_name %>（ <%= Student.gradeyear(@student.id) %> ) </td></tr>
     <tr><td class="tdcondition2">予約日時</td>
     <td>
-    <%= daydis(@lesson.meeting_on) %>(<%=weekdate(@lesson.meeting_on) %>)
-    <%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
+    <%= daydis(@lesson.meeting_on) %> ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
     <% if @lesson.regular==false %>
       <span class="label label-danger">臨時</span>
     <% end %>

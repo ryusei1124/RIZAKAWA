@@ -24,7 +24,9 @@ module ApplicationHelper
     result
   end
   def timedisplay(datetime)
-    hourdisplay(datetime).to_s+":"+mindisplay(datetime).to_s
+    if datetime.present?
+      hourdisplay(datetime).to_s+":" + mindisplay(datetime).to_s
+    end
   end
   def daydis(d)
     dis=d.month.to_s+"月"+d.day.to_s+"日"
