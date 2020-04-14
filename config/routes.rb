@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'questions/index'
   get 'lessons/weeklyschedule'
   post 'lessons/create', to: 'lessons#create'
   post 'reservationusers/useredit', to: 'reservationusers#useredit'
