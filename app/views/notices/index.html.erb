@@ -85,7 +85,7 @@
                 <%= fields_for "studentsmany[]",student do |st| %>
                   <%= st.label :生徒名　 %> <%= student.student_name %><br>
                   <% if student.birthday.present? %>
-                    <%= st.label :生年月日 %>  <%= student.birthday.year %>年 <%= daydis(student.birthday) %> <br>
+                    <%= st.label :生年月日 %>  <%= student.birthday.year %>年<%= daydis(student.birthday) %> <br>
                   <% end %>
                   <%= st.label :固定時間 %> <%= student.fix_day %>曜日<%= student.fix_time.hour %>:<%= mindisplay(student.fix_time) %><br>
                   <% if student.fix_day2.present? %>
