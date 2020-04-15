@@ -1,15 +1,15 @@
-<% if @user.admin==false %>
-  <p><%= @user.guardian %>様</p>
+
+<% if @send_user.admin==false %>
+  
+  <p><%= @destination_user.guardian %> 様</p>
   
   <p>いつもお世話になってありがとうございます</p>
   
   <p>平川塾平川です</p>
 
 <% else %>
-
-<P><%= @user.guardian %>様より</P>
-
-<p>お問い合わせや登録がありました。</p>
+  
+  <P><%= @send_user.guardian  %>様より</P>
 
 <% end %>
 

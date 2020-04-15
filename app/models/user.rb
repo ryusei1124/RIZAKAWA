@@ -67,4 +67,6 @@ class User < ApplicationRecord
   def self.undercontract
     joins(:students).where(withdrawal:nil).group("users.id").order(guardiankana: "ASC")
   end
+  #カレントユーザー以外はトップへ遷移
+  
 end
