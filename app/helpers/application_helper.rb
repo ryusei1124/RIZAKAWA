@@ -108,6 +108,7 @@ module ApplicationHelper
       @content=content
     end
   end
+
   def tdbgcolor(thisday,day,section)
     if day==thisday && section==1
       bgcolor="#f5deb3"

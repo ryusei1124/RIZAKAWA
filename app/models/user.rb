@@ -63,10 +63,30 @@ class User < ApplicationRecord
   def class_hoice
     errors.add(:class_choice, "はどちらか一つ選択してください") if zoom.present? && real.present?
   end
+  
   #スコープ契約中の保護者一覧
   def self.undercontract
     joins(:students).where(withdrawal:nil).group("users.id").order(guardiankana: "ASC")
   end
-  #カレントユーザー以外はトップへ遷移
+  #契約先全員へのメール
+  def self.sendmail_all_users(  title, content, link )
+    undercontracts = self.undercontract
+    @send_user = find(1)
+    @title = title
+    @content = content
+    @link = link
+    #契約中のユーザー全員にメールを送る
+    undercontracts.each do | user |
+      @destination_user = find(user.id)
+      UserMailer.send_mail( @destination_user, @send_user, @title, @content, @link ).deliver_now
+    end
+    #ユーザーに何を送ったかわかるように管理者にも送る。今はひとりだが将来も考え管理者全員に送る。
+    admins = where("admin = ?", true )
+    admins.each do | user |
+      @destination_user = find(user.id)
+      UserMailer.send_mail( @destination_user, @send_user, @title, @content, @link ).deliver_now
+    end
+  end
   
+
 end
