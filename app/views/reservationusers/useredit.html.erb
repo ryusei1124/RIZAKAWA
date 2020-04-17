@@ -2,7 +2,6 @@
 <div class="row">
   <% zoom=@reservation.zoom %>
   <% @beforesite=request.referrer if @beforesite.blank? %>
-
     <div class="col-md-6 col-md-offset-2 lead">
     <table style="width:700px;" class="table-bordered table-condensed lead">
     <tr><td style="width:150px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
@@ -18,10 +17,10 @@
       <span class="label label-info">予約済</span>
     <% end %>
     </td></tr>
-    <tr><td class="tdcondition1">名前</td><td><%= @student.student_name %></td></tr>
+    <tr><td class="tdcondition1">名前　学年</td><td><%= @student.student_name %>（ <%= Student.gradeyear(@student.id) %> ) </td></tr>
     <tr><td class="tdcondition1">予約日時</td>
     <td>
-    <%= daydis(@lesson.meeting_on) %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
+    <%= daydis(@lesson.meeting_on) %> ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
     <% if @reservation.transfer==true %>
      振替　
     <% end %>
@@ -86,8 +85,12 @@
     <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
     <% lessoncomments.each do |comment| %>
       <tr><td>
-      <%= comment.student.student_name %>
-      （保護者　<%= comment.user.guardian %>)
+      <% if comment.user.admin == false %>
+        <%= comment.student.student_name %>
+        （保護者　<%= comment.user.guardian %>)
+      <% else %>
+        <%= comment.user.guardian %>
+      <% end %>
       <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
       <%= comment.content %><br />
       </td></tr>
@@ -96,8 +99,6 @@
     <% end %>
   </div>
 </div>
-
-
 
  <!--授業授業方法変更モーダル -->
 <div class="modal fade" id=modal1 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">

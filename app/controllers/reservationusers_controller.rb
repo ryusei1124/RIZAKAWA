@@ -1,12 +1,11 @@
 class ReservationusersController < ApplicationController
   include ApplicationHelper
   before_action:unless_login
+  before_action:unless_student,   only: [:useredit]
   require 'date'
   
   def useredit
     @lessonlists=[]
-    @student_id=params[:student_id]
-    @student=Student.find(@student_id)
     session[:student_id]=@student.id
     lesson_id=params[:lesson_id]
     @lesson=Lesson.find(lesson_id)

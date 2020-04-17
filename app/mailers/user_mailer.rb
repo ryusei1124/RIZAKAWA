@@ -1,14 +1,14 @@
 class UserMailer < ApplicationMailer
-  def send_mail(user, title, content, link)
-    @user = user #ここのみオブジェクト変数を設定のこと
+  def send_mail(destination_user, send_user, title, content, link )
+    url="https://rizakawa.herokuapp.com/"
+    @destination_user = destination_user #オブジェクト変数を設定のこと
+    @send_user = send_user #オブジェクト変数を設定のこと
     @title = title
     @content = content
-    @link=link
-    
+    @link = url+link
     mail(
-      to: user.email,
-      subject: title
-    )
+      to: destination_user.email,
+      subject: title)
   end
   
   def password_reset(user)

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   #時間修正値9時間（秒）
   TIMECOL = 32400
+  
 
   #学校を配列に
   def schoolgrade
@@ -35,5 +36,15 @@ class ApplicationController < ActionController::Base
       @student=@students.first
       session[:student_id]=@student.id
     end
+  end
+  #保護者が他の家庭の生徒に保護者にアクセスしようとしたらログアウトする
+  def unless_student
+    @student = Student.find(params[:student_id])
+    if @student.user_id != current_user.id and current_user.admin == false
+        session[:student_id] = nil
+        flash[:warning] = "不正なアクセスがありました。ログインし直して下さい。"
+        log_out
+        redirect_to '/login'
+    end 
   end
 end
