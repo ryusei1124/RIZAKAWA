@@ -1,30 +1,29 @@
 <% require 'date' %>
 <% thisday=Date.today %>
-<h2 class="lead">授業予約新規登録</h2>
+<h2 class="lead" style="align:left;">授業予約新規登録</h2>
 <div class="row"></div>
   <% @beforesite=request.referrer if @beforesite.blank? %>
-  <div class="col-md-6 col-md-offset-3 lead">
-    
-    <table border="2" class="table" style="border : 2px solid midnightblue ;">
-    <tr ><td style="width:150px;" class="tdcondition2">コース</td><td><%= @lesson.target %>コース&nbsp; 
-    </td></tr>  
-    <tr style="border-top: solid  midnightblue;"><td style="width:150px;" class="tdcondition2">名前</td><td><%= @student.student_name %></td></tr>
-    <tr style="border-top:  solid midnightblue;"><td class="tdcondition2">予約日時</td>
+  <div class="col-md-6 col-md-offset-2 lead">
+
+    <table style="width:700px;" class="table-bordered table-condensed lead">
+    <tr ><td style="width:150px;" class="tdcondition2">コース</td><td><%= @lesson.target %>コース&nbsp;
+    </td></tr>
+    <tr><td style="width:150px;" class="tdcondition2">名前　学年</td><td><%= @student.student_name %>（ <%= Student.gradeyear(@student.id) %> ) </td></tr>
+    <tr><td class="tdcondition2">予約日時</td>
     <td>
-    <%= daydis(@lesson.meeting_on) %>(<%=weekdate(@lesson.meeting_on) %>)
-    <%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
+    <%= daydis(@lesson.meeting_on) %> ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
     <% if @lesson.regular==false %>
       <span class="label label-danger">臨時</span>
     <% end %>
     </td></tr>
-    <tr style="border-top: solid midnightblue;"><td class="tdcondition2">授業方法</td>
+    <tr><td class="tdcondition2">授業方法</td>
     <td>
       <% realseat=@lesson.seats_real %>
       <% realnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).count %>
       <% zoom=true if @student.zoom? %>
       <% zoomseat=@lesson.seats_zoom %>
       <% zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count %>
-      <%= form_with(url:reservationusers_reservationnewusercreate_path,local: true) do |f| %> 
+      <%= form_with(url:reservationusers_reservationnewusercreate_path,local: true) do |f| %>
       <% if zoom==true %>
         <%= f.radio_button :zoom, :false %>&nbsp;リアル(<%=realnumber %>/<%=realseat %>)
         <%= f.radio_button :zoom, :true  ,{:checked => true} %>&nbsp;Zoom(<%=zoomnumber %>/<%=zoomseat %>)
@@ -35,7 +34,7 @@
       <%= f.hidden_field :reservation_id,value:@reservation.id %>
       <%= f.hidden_field :student_id,value:@student.id %>
       <%= f.hidden_field :lesson_id,value:@lesson.id %>
-    <tr style="border-top: solid midnightblue;"><td class="tdcondition2">備考</td><td><%=@lesson.note %></td>
+    <tr><td class="tdcondition2">備考</td><td><%=@lesson.note %></td>
     </table>
     <p>
       <% if @lesson.meeting_on>thisday %>
@@ -46,6 +45,17 @@
     <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
     </p>
     <% modaltype="newsc" %>
+     <% lessoncomments=Lessoncomment.where("lesson_id =? and student_id=?" ,@lesson.id,@student.id) %>
+    <% if lessoncomments.present? %>
+    <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
+    <% lessoncomments.each do |comment| %>
+      <tr><td>
+      <%= comment.student.student_name %>
+      （保護者　<%= comment.user.guardian %>)
+      <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
+      <%= comment.content %><br />
+      </td></tr>
+      <% end %><% end %>
+    </table>
     </div>
 </div>
-

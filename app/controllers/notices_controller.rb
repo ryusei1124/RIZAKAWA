@@ -18,7 +18,11 @@ class NoticesController < ApplicationController
     @notice = Notice.new(notice_params)
     @notice.user_id=current_user.id
     if @notice.save
-      flash[:success] = "タイトル名「#{@notice.notice_title}」を作成しました。"
+      flash[:success] = "タイトル名「#{@notice.notice_title}」を作成し、契約中の保護者全員にお知らせメールを送りました"
+      title = "タイトル名「#{@notice.notice_title}」を作成しました。"
+      content = "お知らせ情報を追加しました。下記を参照下さい。"
+      link = "notices"
+      User.sendmail_all_users( title, content, link )
       redirect_to notices_url
     else
       render :new

@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :update_basic_info]
+  before_action :logged_in_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy]
+  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
+  before_action :select_student, only: [:edit_basic_info, :update_basic_info]
   
   def index
     @users = User.paginate(page: params[:page], per_page: 20)
@@ -20,9 +21,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       title = "新規登録ありがとうございました"
-      content = "下記サイトから登録お願いします"
-      UserMailer.send_mail(@user.email, title, content, "/").deliver_now
-      flash[:success] = '新規作成に成功しました。'
+      content = "下記サイトから登録確認お願いします"
+      @admin_user=User.find(18)
+      UserMailer.send_mail(@user,@admin_user, title, content, "/").deliver_now
+      flash[:success] = '新規作成に成功しました。ユーザーにメール送信しました。確認をお願いします。'
       redirect_to @user
     else
       render :new
@@ -85,6 +87,12 @@ class UsersController < ApplicationController
     # アクセスしたユーザーが現在ログインしているユーザーか確認します。
     def correct_user
       redirect_to(root_url) unless current_user?(@user)
+    end
+    
+    # 選択した生徒をインスタンス化する
+    def select_student
+      @user = User.find(params[:id])   #ここをコメントアウトすると表示されない
+      @student = Student.find(params[:id])
     end
     
 end

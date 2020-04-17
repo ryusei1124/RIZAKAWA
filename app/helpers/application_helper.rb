@@ -24,7 +24,9 @@ module ApplicationHelper
     result
   end
   def timedisplay(datetime)
-    hourdisplay(datetime).to_s+":"+mindisplay(datetime).to_s
+    if datetime.present?
+      hourdisplay(datetime).to_s+":" + mindisplay(datetime).to_s
+    end
   end
   def daydis(d)
     dis=d.month.to_s+"月"+d.day.to_s+"日"
@@ -58,9 +60,9 @@ module ApplicationHelper
   def jrhigh(nowday)
     nowday=nowday.to_date
     if nowday.month.to_i<=3
-      jhyear=nowday.year.to_i-14
-    else 
       jhyear=nowday.year.to_i-13
+    else 
+      jhyear=nowday.year.to_i-12
     end
       jhdate=(jhyear.to_s+"/04/02").to_date
   end
@@ -106,6 +108,7 @@ module ApplicationHelper
       @content=content
     end
   end
+
   def tdbgcolor(thisday,day,section)
     if day==thisday && section==1
       bgcolor="#f5deb3"
@@ -133,5 +136,19 @@ module ApplicationHelper
       bgcolor="#fffafa"
     end
     bgcolor
+  end
+  def attend(zoom)
+    if zoom==true
+      result="Zoom"
+    else
+      result="リアル"
+    end
+  end
+   def tasker(ex)
+    if ex==true and ex.present?
+      result="受験生"
+    else
+      result="一般"
+    end
   end
 end

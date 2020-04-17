@@ -1,6 +1,6 @@
 class Lesson < ApplicationRecord
   belongs_to :user
-  has_many :reservations, dependent: :destroy
+  has_many :lessoncomments, dependent: :destroy
   attr_accessor :regularkanji
   attr_accessor:examineekanji
   attr_accessor :starttime

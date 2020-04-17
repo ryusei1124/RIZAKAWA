@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :reset_token
-  has_many :notices
-  has_many :lessons
-  has_many :reservations
+  has_many :notices, dependent: :destroy
+  has_many :lessons, dependent: :destroy
+  has_many :lessoncomments, dependent: :destroy
+  has_many :reservations, dependent: :destroy
   has_many :students, dependent: :destroy
   
   # 生徒一覧の名前順
@@ -63,9 +64,29 @@ class User < ApplicationRecord
     errors.add(:class_choice, "はどちらか一つ選択してください") if zoom.present? && real.present?
   end
   
-  # 生徒登録メールを送信する
-  def send_activation_email
-    UserMailer.send_mail(self).deliver_now
+  #スコープ契約中の保護者一覧
+  def self.undercontract
+    joins(:students).where(withdrawal:nil).group("users.id").order(guardiankana: "ASC")
+  end
+  #契約先全員へのメール
+  def self.sendmail_all_users(  title, content, link )
+    undercontracts = self.undercontract
+    @send_user = find(1)
+    @title = title
+    @content = content
+    @link = link
+    #契約中のユーザー全員にメールを送る
+    undercontracts.each do | user |
+      @destination_user = find(user.id)
+      UserMailer.send_mail( @destination_user, @send_user, @title, @content, @link ).deliver_now
+    end
+    #ユーザーに何を送ったかわかるように管理者にも送る。今はひとりだが将来も考え管理者全員に送る。
+    admins = where("admin = ?", true )
+    admins.each do | user |
+      @destination_user = find(user.id)
+      UserMailer.send_mail( @destination_user, @send_user, @title, @content, @link ).deliver_now
+    end
   end
   
+
 end
