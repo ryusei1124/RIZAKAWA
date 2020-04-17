@@ -85,8 +85,12 @@
     <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
     <% lessoncomments.each do |comment| %>
       <tr><td>
-      <%= comment.student.student_name %>
-      （保護者　<%= comment.user.guardian %>)
+      <% if comment.user.admin == false %>
+        <%= comment.student.student_name %>
+        （保護者　<%= comment.user.guardian %>)
+      <% else %>
+        <%= comment.user.guardian %>
+      <% end %>
       <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
       <%= comment.content %><br />
       </td></tr>
