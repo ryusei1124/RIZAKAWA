@@ -92,11 +92,12 @@
           <% if reservation.attendance_time.nil? %>
             <%= link_to "出席", reservation_path(reservation), method: :patch, class: "btn btn-primary" %>
           <% end %>
+          
           <% if reservation.leave_time.nil? && reservation.attendance_time.present? %>
-            <%= link_to "退席", reservation_path(reservation), method: :patch, class: "btn btn-success" %>
+            <%= button_to "退席", reservation_path(reservation), method: :patch, class: "btn btn-success" %>
           <% end %>
               
-          <%= link_to "欠席", reservation_path(reservation), method: :patch, class: "btn btn-danger" %>
+          <%= link_to "欠席", reservation_path(reservation), method: :patch, class:"btn btn-danger" %>
           
           <% if reservation.absence.present? %>
             <%= link_to "退席", reservation_path(reservation), method: :patch, class: "btn btn-success" %>

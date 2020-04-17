@@ -23,24 +23,29 @@ class ReservationsController < ApplicationController
       else
         flash[:danger] = UPDATE_ERROR_MSG
       end
+      redirect_to request.referrer
     end
-    
-    if @reservation.absence.nil?
-      if @reservation.update_attributes!(absence: true)
-        flash[:success] = "欠席登録しました。"
-      else
-        flash[:danger] = UPDATE_ERROR_MSG
-      end
-    end
-    redirect_to lesson_detail_lesson_url(@reservation)
   end
   
+  def aaaa
+    if @reservation.absence.nil?
+      
+      if @reservation.attributes = { absence: true }
+        flash[:success] = "該当受講生の欠席登録しました。"
+      else
+        flash[:danger]  = "該当受講生の欠席登録に失敗しました。"
+      end
+    end
+     redirect_to request.referrer
+  end
+      
   def destroy
     @reservation = Reservation.find(params[:id])
     
     @reservation.destroy
     flash[:success] = "出席時間と退席時間を削除しました。"
-    redirect_to lessons_weeklyschedule_url(@lesson)
+    
+    redirect_to request.referrer
   end
   
   def reservations_log

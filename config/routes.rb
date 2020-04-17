@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
   post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
   get 'sessions/new'
+  patch 'lessons/attendance_processing',to: 'lessons#attendance_processing'
   
   root :to => 'notices#index'
   #root 'static_pages#top'
