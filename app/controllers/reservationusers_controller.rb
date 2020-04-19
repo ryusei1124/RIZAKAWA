@@ -15,6 +15,8 @@ class ReservationusersController < ApplicationController
     @realnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).count
     @today=Date.today
     @lessoncomment=Lessoncomment.new
+    #コメント抽出
+    @lessoncomments=Lessoncomment.where("lesson_id =? and student_id=?" ,@lesson.id,@student.id)
     #振替のためのコード。授業の日に該当生徒が小学生か中学生かを取得。
     gradesc=gradeschool(@student.birthday,@lesson.meeting_on)
     lessons=Lesson.where("meeting_on> ? and regular= ?", @today,true).where("target= ? or target= ?", gradesc,"小中学生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)

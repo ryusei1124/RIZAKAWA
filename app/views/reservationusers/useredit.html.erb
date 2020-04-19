@@ -1,7 +1,6 @@
 <h2 class="lead">授業予約詳細・変更登録</h2>
 <div class="row">
-  <% zoom=@reservation.zoom %>
-  <% @beforesite=request.referrer if @beforesite.blank? %>
+  <% @zoom=@reservation.zoom %>
     <div class="col-md-6 col-md-offset-2 lead">
     <table style="width:700px;" class="table-bordered table-condensed lead">
     <tr><td style="width:150px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
@@ -41,22 +40,22 @@
     </td>
     <tr><td class="tdcondition1" >授業方法</td>
     <td>
-      <% zoomseat=@lesson.seats_zoom %>
-      <% realseat=@lesson.seats_real %>
-    <% if zoom==true %>
+      <% @zoomseat=@lesson.seats_zoom %>
+      <% @realseat=@lesson.seats_real %>
+    <% if @zoom==true %>
       Zoom
     <% else %>
      リアル
     <% end %>
     <br>
-    <tr><td class="tdcondition1">備考</td><td><%=@lesson.note %></td>
+    <tr><td class="tdcondition1">備考</td><td><%=@lesson.note %></td></tr>
     </table>
-    <% modaltype1="chengesc" %><% modaltype="newsc" %>
+    <% modaltype1="chengesc" %><% @modaltype="newsc" %>
     <% if @lesson.meeting_on>@today %>
       <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success">授業方法変更</a>&nbsp;
       <% if @lesson.regular==true %>
       <div style="display: inline-block;">
-        <a href="" data-toggle="modal" data-target=#<%=modaltype%> class="btn btn-warning">授業振替</a>&nbsp;
+        <a href="" data-toggle="modal" data-target=#<%=@modaltype %> class="btn btn-warning">授業振替</a>&nbsp;
       </div>
       <% end %>
       <div style="display: inline-block;">
@@ -70,7 +69,6 @@
     <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
     </div><br /><br />
     <% modaltype="newsc" %>
-
     <div style="font-size:15px">コメント(連絡事項)<br /></div>
     <%= form_with(model:@lessoncomment,url: lessoncomments_create_path,local: true) do |f| %>
       <%= f.hidden_field:reservation_id,value:@reservation.id %>
@@ -80,10 +78,9 @@
       <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
     <br />
-     <% lessoncomments=Lessoncomment.where("lesson_id =? and student_id=?" ,@lesson.id,@student.id) %>
-    <% if lessoncomments.present? %>
+    <% if @lessoncomments.present? %>
     <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
-    <% lessoncomments.each do |comment| %>
+    <% @lessoncomments.each do |comment| %>
       <tr><td>
       <% if comment.user.admin == false %>
         <%= comment.student.student_name %>
@@ -101,72 +98,10 @@
 </div>
 
  <!--授業授業方法変更モーダル -->
-<div class="modal fade" id=modal1 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-<div class="modal-dialog modal-sm" role="document">
-  <div class="modal-content">
-    <div class="modal-body" style="text-align:center;">
-      <% zoomseat=@lesson.seats_zoom %>
-      <% realseat=@lesson.seats_real %>
-    <div>本当に授業方法を変更しますか？
-    <% if (@realnumber-realseat)>=0 %>
-      ※リアルは満席です。キャンセル待ちになります。
-    <% end %>
-    <% if (@zoomnumber-zoomseat)>=0 %>
-      ※Zoomは満席です。キャンセル待ちになります.
-    <% end %>
-    </div></div>
-    <div class="modal-footer">
-    <%= form_with(url:reservationusers_userupdate_path,local: true) do |f| %>
-      <%= f.hidden_field :reservation_id,value:@reservation.id %>
-      <%= f.hidden_field :student_id,value:@student.id %>
-      <%= f.hidden_field :day,value:@lesson.meeting_on %>
-      <% if zoom==true %>
-        <div style=" display: inline-block; ">
-      <%= f.submit "リアルに変更する", class: "btn btn-primary" %>
-      </div>
-      <% else %>
-        <div style=" display: inline-block; ">
-      <%= f.submit "Zoomに変更する", class: "btn btn-primary" %>
-      </div>
-    <% end %>
-        <div style=" display: inline-block; ">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-        </div>
-    <% end %>
-      </div>
-    </div>
-  </div>
-
-</div>
+<%= render partial: "methodchange" %>
+<!--授業授業方法変更モーダル終了 -->
 
 <!--授業振替モーダル -->
-<div class="modal fade" id=<%=modaltype %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-  <div class="modal-body" style="background-color: #C8D7E6; margin:auto;">
-  <div>
-  <h3 class="lead" style="text-align:center;">振替授業を選択して下さい</h3>
-  <table align="center">
-  <%= form_with(url:reservationusers_reservation_change_user_path,local: true) do |f| %>
-    <tr><td>
-  <p>
-    <%= f.hidden_field :reservation_id,value:@reservation.id %>
-    <%= f.hidden_field :student_id,value:@student.id %>
-    <%= f.collection_select :id,@lessonlists, :id, :content, {:include_blank => true},{:class =>"form-control share-form",:style=>"width:350px", required: true} %>
-　  〇：振替可能 ×：キャンセル待ち<br>
-　  振替授業は定期的授業に限ります<br></p>
-    </td></tr>
-  </table>
-    <P style="margin-left:200px">
-    <%= f.submit "登録", class: "btn btn-primary" %>&nbsp;
-    <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-    </P>
-    <% end %>
-    </div>
-  </div>
-  </div>
-  </div>
-</div>
-      <!--授業新規モーダルここまで -->
-     
+<%= render partial: "transfer" %>
+<!--授業振替モーダルここまで -->
         
