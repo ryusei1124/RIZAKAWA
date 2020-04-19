@@ -1,0 +1,54 @@
+<% provide(:title, '問い合わせ詳細') %>
+
+<h1>問い合わせ詳細</h1>
+
+<div class="col-md-10 col-md-offset-1">
+  <div class="add-notice-information-btn">
+    <% if current_user.admin? %>
+    <P>
+      <%#= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>&nbsp;
+      <%#= link_to "お知らせ編集", edit_notice_path(@question.id), class: "btn btn-primary" %>
+    </P>
+    <% end %>
+  </div>
+  <table class="table-bordered table-condensed" id="questions-info-show">
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">投稿日</th>
+        <td colspan="4"><%= l(@question.created_at, format: :default) %></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">タイトル</th>
+        <td colspan="4"><%= @question.question_title %></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">投稿者</th>
+        <td colspan="4"></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">生徒名</th>
+        <td colspan="4"></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">内容</th>
+        <td colspan="4"><%= raw(nl2br(@question.question_content)) %></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">コメント</th>
+        <td colspan="4"></td>
+      </tr>
+    </thead>
+  </table>
+  <br>
+  <div style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">問い合わせ一覧に戻る</a></div>
+</div>

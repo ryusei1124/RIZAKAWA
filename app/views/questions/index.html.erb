@@ -12,28 +12,26 @@
   <table class="table table-bordered table-condensed" id="table-users">
     <thead>
       <tr>
-        <th colspan="1">投稿日</th>
-        <th colspan="5">投稿者</th>
-        <th colspan="5">タイトル</th>
-        <th colspan="5">コメント</th>
-        <th colspan="5">投稿削除</th>
+        <th>投稿日</th>
+        <th>投稿者</th>
+        <th>タイトル</th>
+        <th>コメント</th>
+        <th>投稿削除</th>
       </tr>
     </thead>
     <thead>
       <% @questions.each do |question| %>
         <tr>
-          <td colspan="1" class="col-md-3"><%#= l(notice.updated_at, format: :day) %></td>
-          <td colspan="5"></td>
-          <td colspan="5"><%= question.question_title %></td>
-          <td colspan="5"></td>
-          <td colspan="5">
-            <%#= link_to notice.notice_title, notice %>
-            <%#= link_to notice.notice_title, edit_notice_path(notice) %>
-            <%# if current_user.admin? %>
-            <%= link_to "削除", method: :delete,
-              data: { confirm: "削除してよろしいですか？" },
-              class: "btn btn-danger btn-sm pull-right" %>
-            <%# end %>
+          <td><%= l(question.created_at, format: :long) %></td>
+          <td></td>
+          <td><%= link_to question.question_title, question %></td>
+          <td></td>
+          <td>
+            <% if current_user.admin? %>
+              <%= link_to "削除", method: :delete,
+                data: { confirm: "削除してよろしいですか？" },
+                class: "btn btn-danger btn-sm pull-right" %>
+            <% end %>
           </td>
         </tr>
       <% end %>
