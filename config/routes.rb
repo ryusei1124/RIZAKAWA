@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'sessions/new'
   post 'lessoncomments/create', to: 'lessoncomments#create'
   put 'basic_infos/student_update', to: 'basic_infos#student_update'
+  put 'maneger_students/update', to: 'maneger_students#update'
   root :to => 'notices#index'
   get '/signup', to: 'users#new'
   get    '/login', to: 'sessions#new'
