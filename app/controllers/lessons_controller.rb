@@ -48,7 +48,6 @@ class LessonsController < ApplicationController
     elsif lesson_params[:examineekanji]=="全"
       lesson.examinee=nil
     end
-    
     lesson.regular=false if lesson_params[:regularkanji]=="臨時"
     #30分毎重複チェック
     starttimec=lesson.started_at

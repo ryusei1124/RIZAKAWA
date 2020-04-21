@@ -1,7 +1,8 @@
 class ReservationusersController < ApplicationController
   include ApplicationHelper
-  before_action:unless_login
-  before_action:unless_student,   only: [:useredit]
+  before_action :unless_login
+  before_action :unless_student,   only: [:useredit]
+  before_action :weekday,   only: [:useredit]
   require 'date'
   
   def useredit

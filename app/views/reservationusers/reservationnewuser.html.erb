@@ -30,7 +30,7 @@
       <% else %>
         <%= f.radio_button :zoom, :false  ,{:checked => true} %> リアル(<%=realnumber %>/<%=realseat %>)
         <%= f.radio_button :zoom, :true %>&nbsp;Zoom(<%=zoomnumber %>/<%=zoomseat %>)
-    <% end %>
+      <% end %>
       <%= f.hidden_field :reservation_id,value:@reservation.id %>
       <%= f.hidden_field :student_id,value:@student.id %>
       <%= f.hidden_field :lesson_id,value:@lesson.id %>

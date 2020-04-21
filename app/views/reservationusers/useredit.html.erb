@@ -50,9 +50,12 @@
     <br>
     <tr><td class="tdcondition1">備考</td><td><%=@lesson.note %></td></tr>
     <% if current_user.admin? %>
-      <tr><td class="tdcondition1">生徒備考</td><td><%=@student.note %></td></tr>
+      <tr><td class="tdcondition1">生徒備考＊</td><td><%= simple_format(@student.note) %></td></tr>
     <% end %>
     </table>
+    <% if current_user.admin? %>
+      <div style="font-size:8px; margin-top:-15px;">＊印は管理者のみ閲覧可能</div>
+    <% end %>
     <% modaltype1="chengesc" %><% @modaltype="newsc" %>
     <% if @lesson.meeting_on>@today %>
       <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success">授業方法変更</a>&nbsp;
@@ -73,7 +76,9 @@
     </div>
     
     <% if current_user.admin? %>
-     <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning">備考情報修正</a>&nbsp;</p>
+     <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning">備考情報修正</a>&nbsp;
+     <%= link_to "授業管理画面へ" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info" %>&nbsp;
+     </p>
   　<% end %>
     <br />
     <% modaltype="newsc" %>
