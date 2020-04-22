@@ -17,6 +17,9 @@
             <%= f.label :student_name, class: "label-#{yield(:class_text)}" %>
             <p><%= @student.student_name %></p>
             
+            <%= f.label :birthday, class: "label-#{yield(:class_text)}" %>
+            <%= f.text_field :birthday, class: "form-control" %>
+            
             <%= f.label :real, class: "label-#{yield(:class_text)}" %>
             <%= f.check_box :real, { class: ""}, true, false %><br>
             
@@ -27,7 +30,7 @@
             <%= f.text_field :school, class: "form-control" %>
             
             <%= f.label :school_year, class: "label-#{yield(:class_text)}" %>
-            <%= f.text_field :school_year, class: "form-control" %>
+            <%= f.text_field :gradeyear, class: "form-control" %>
             
             <%= f.label :fix_day, class: "label-#{yield(:class_text)}" %><br>
             <%= f.select :fix_day,  [["日"],["月"],["火"],["水"],["木"],["金"],["土"] ],  class: "form-control" %>

@@ -61,7 +61,7 @@ class UsersController < ApplicationController
   end
   
   def update_basic_info
-    if @user.update_attributes(edit_basic_info_params)
+    if @user.update_attributes(user_params)
       flash[:success] = "#{@user.guardian}の基本情報を更新しました。"
     else
       flash[:danger] = "#{@user.guardian}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
