@@ -57,7 +57,7 @@
       <div style="font-size:8px; margin-top:-15px;">＊印は管理者のみ閲覧可能</div>
     <% end %>
     <% modaltype1="chengesc" %><% @modaltype="newsc" %>
-    <% if @lesson.meeting_on>@today %>
+    <% if @lesson.meeting_on>@today or current_user.admin? %>
       <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success">授業方法変更</a>&nbsp;
       <% if @lesson.regular==true %>
       <div style="display: inline-block;">
@@ -76,9 +76,11 @@
     </div>
     
     <% if current_user.admin? %>
-     <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning">備考情報修正</a>&nbsp;
-     <%= link_to "授業管理画面へ" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info" %>&nbsp;
-     </p>
+      <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning">備考情報修正</a>&nbsp;
+      <%= link_to "授業管理画面へ" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info" %>&nbsp;
+      </p>
+    <% else %>
+      <br />
   　<% end %>
     <br />
     <% modaltype="newsc" %>

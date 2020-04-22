@@ -3,7 +3,10 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="modal-title" id="label1" style="font-size:20px">基本情報修正(生徒名:<%= @student.student_name %>)</div>
+        <div class="modal-title" id="label1" style="font-size:20px">
+        基本情報修正(生徒名:<%= @student.student_name %>)　
+        <br />※備考以外は基本情報ため授業情報の表示変更はしません
+        </div>
       </div>
       <div class="modal-body">
         <%= form_with(model: @student, url: maneger_students_update_path , method: :patch , local: true) do |f| %>

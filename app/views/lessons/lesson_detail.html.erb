@@ -58,7 +58,7 @@
          <th>出欠ボタン</th>
        </tr>
        <tr>
-        <td><%= reservation.student.student_name %></td>
+        <td><%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student.id}"  %></td>
         <td>
           <% if reservation.transfer == true %> 
             <span class="label label-primary label-user-division">✕</span>
