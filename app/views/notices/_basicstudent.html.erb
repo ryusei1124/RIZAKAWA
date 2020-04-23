@@ -25,16 +25,14 @@
                   <tr>
                     <th>生年月日</th>
                     <td>
-                      <%= student.birthday.year %>年
-                      <%= daydis(student.birthday) %>
+                      <%= student.birthday.year %>年<%= daydis(student.birthday) %>
                     </td>
                   </tr>
                   <tr>
                     <th>固定時間</th>
                     <td>
                       <%= student.fix_day %>曜日
-                      <%= student.fix_time.hour %>:
-                      <%= mindisplay(student.fix_time) %>
+                      <%= student.fix_time.hour %>:<%= mindisplay(student.fix_time) %>
                     </td>
                   </tr>
                   <% if student.fix_day2.present? %>
@@ -42,8 +40,7 @@
                       <th>固定時間2</th>
                       <td>
                         <%= student.fix_day2 %>曜日
-                        <%= student.fix_time2.hour %>:
-                        <%= mindisplay(student.fix_time2) %>
+                        <%= student.fix_time2.hour %>:<%= mindisplay(student.fix_time2) %>
                       </td>
                     </tr>
                     <% end %>
@@ -52,8 +49,7 @@
                           <th>固定時間3</th>
                           <td>
                             <%= student.fix_day3 %>曜日
-                            <%= student.fix_time3.hour %>:
-                            <%= mindisplay(student.fix_time3) %>
+                            <%= student.fix_time3.hour %>:<%= mindisplay(student.fix_time3) %>
                           </td>
                         </tr>
                         <% end %>
