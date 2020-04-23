@@ -42,3 +42,45 @@
   margin: auto;
   width: 70%;
 }
+.table-student{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-student tr{
+  border-bottom: solid 2px white;
+}
+
+.table-student tr:last-child{
+  border-bottom: none;
+}
+
+.table-student th{
+  position: relative;
+  text-align: left;
+  width: 30%;
+  background-color: #52c2d0;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.table-student th:after{
+  display: block;
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  
+  border-left: 10px solid #52c2d0;
+  border-top: 10px solid transparent;
+  
+}
+
+.table-student td{
+  text-align: left;
+  width: 70%;
+  text-align: center;
+  background-color: #eee;
+  padding: 10px 0;
+}
