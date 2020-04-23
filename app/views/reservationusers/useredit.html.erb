@@ -50,7 +50,7 @@
     <br>
     <tr><td class="tdcondition1">備考</td><td><%=@lesson.note %></td></tr>
     <% if current_user.admin? %>
-      <tr><td class="tdcondition1">生徒備考＊</td><td><%= simple_format(@student.note) %></td></tr>
+      <tr><td class="tdcondition1">生徒備考＊</td><td style="font-size:15px"><%= simple_format(@student.note) %></td></tr>
     <% end %>
     </table>
     <% if current_user.admin? %>
@@ -109,7 +109,7 @@
       <% end %>
     </table>
     <% end %>
-  </div>
+  </>
 
 <!--授業授業方法変更モーダル -->
 <%= render partial: "methodchange" %>
