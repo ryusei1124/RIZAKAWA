@@ -74,10 +74,10 @@
     <div style="display: inline-block;">
       <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
     </div>
-    
+
     <% if current_user.admin? %>
-      <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning">備考情報修正</a>&nbsp;
-      <%= link_to "授業管理画面へ" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info" %>&nbsp;
+      <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning">備考情報修正*</a>&nbsp;
+      <%= link_to "授業管理画面へ*" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info" %>&nbsp;
       </p>
     <% else %>
       <br />
@@ -123,5 +123,3 @@
 <!--生徒情報変更モーダル -->
 <%= render partial: "student" %>
 <!--授業振替モーダルここまで -->
-
-        
