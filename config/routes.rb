@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   #　ユーザー側予約詳細へ
   post 'reservationusers/useredit', to: 'reservationusers#useredit'
   get 'reservationusers/useredit', to: 'reservationusers#useredit'
+  post 'reservationusers/usermail', to: 'reservationusers#usermail'
+  get 'reservationusers/usermail', to: 'reservationusers#usermail'
   #　ユーザー側予約情報更新
   post 'reservationusers/userupdate', to: 'reservationusers#userupdate'
   get 'reservationusers/reservation_delete', to: 'reservationusers#reservation_delete'

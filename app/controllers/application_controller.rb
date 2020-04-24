@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     @student = Student.find(params[:student_id])
     if @student.user_id != current_user.id and current_user.admin == false
         session[:student_id] = nil
-        flash[:warning] = "不正なアクセスがありました。ログインし直して下さい。"
+        flash[:warning] = "再ログインをお願いします"
         log_out
         redirect_to '/login'
     end 

@@ -1,41 +1,20 @@
 class ReservationusersController < ApplicationController
   include ApplicationHelper
   before_action :unless_login
-  before_action :unless_student,   only: [:useredit]
-  before_action :weekday,   only: [:useredit]
+  before_action :unless_student,   only: [:useredit, :usermail]
+  before_action :weekday,   only: [:useredit, :usermail]
   require 'date'
   
   def useredit
-    @lessonlists=[]
-    session[:student_id]=@student.id
-    lesson_id=params[:lesson_id]
-    @lesson=Lesson.find(lesson_id)
-    @lessons=Lesson.includes(:reservations).all
-    @reservation=Reservation.find_by(lesson_id:@lesson.id, student_id:@student.id)
-    @zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count
-    @realnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).count
-    @today=Date.today
-    @lessoncomment=Lessoncomment.new
-    #コメント抽出
-    @lessoncomments=Lessoncomment.where("lesson_id =? and student_id=?" ,@lesson.id,@student.id)
-    #振替のためのコード。授業の日に該当生徒が小学生か中学生かを取得。
-    gradesc=gradeschool(@student.birthday,@lesson.meeting_on)
-    lessons=Lesson.where("meeting_on> ? and regular= ?", @today,true).where("target= ? or target= ?", gradesc,"小中学生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
-    lessons.each do |les|
-      if Reservation.where("student_id= ? and lesson_id= ?", @student.id,les.id).count==0
-        realcapacity=Lesson.find(lesson_id).seats_real
-        overcapacity="〇"
-        overcapacity="×" if (realcapacity-Reservation.where("lesson_id= ? and zoom=?",les.id,false).count)<0
-        content=overcapacity+les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　リアル"
-        @lessonlists << Listcollection.new(les.id.to_s+"-1",content,false)
-        overcapacity="〇"
-        overcapacity="×" if (realcapacity-Reservation.where("lesson_id= ? and zoom=?",les.id,true).count)<0
-        content=overcapacity+les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　ZOOM"
-        @lessonlists << Listcollection.new(les.id.to_s+"-2",content,true)
-      end
-    end
+    @lesson_id = params[:lesson_id]
+    useredit_reserve
   end
-  
+  #メール送信用上記クローン
+  def usermail
+    @lesson_id = Reservation.find(params[:reservation_id].to_i).lesson_id
+    useredit_reserve
+  end
+
   def userupdate
     reservation_id=params[:reservation_id]
     if params[:commit] == "リアルに変更する"
@@ -136,6 +115,37 @@ class ReservationusersController < ApplicationController
       flash[:danger]="受講日登録に失敗しました"
     end
     redirect_to "/lessons/weeklyschedule?cation=1&changeday=#{lesson.meeting_on.to_s}"
+  end
+
+  private
+    def useredit_reserve
+    @lessonlists=[]
+    session[:student_id] = @student.id
+    @lesson = Lesson.find(@lesson_id)
+    @lessons = Lesson.includes(:reservations).all
+    @reservation = Reservation.find_by(lesson_id:@lesson.id, student_id:@student.id)
+    @zoomnumber = Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count
+    @realnumber = Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).count
+    @today = Date.today
+    @lessoncomment = Lessoncomment.new
+    #コメント抽出
+    @lessoncomments = Lessoncomment.where("reservation_id = ? and student_id= ?" , @reservation.id, @student.id)
+    #振替のためのコード。授業の日に該当生徒が小学生か中学生かを取得。
+    gradesc = gradeschool(@student.birthday,@lesson.meeting_on)
+    lessons = Lesson.where("meeting_on> ? and regular= ?", @today,true).where("target= ? or target= ?", gradesc,"小中学生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
+    lessons.each do |les|
+      if Reservation.where("student_id= ? and lesson_id= ?", @student.id,les.id).count==0
+        realcapacity = Lesson.find(@lesson.id).seats_real
+        overcapacity = "〇"
+        overcapacity = "×" if (realcapacity-Reservation.where("lesson_id= ? and zoom=?",les.id,false).count)<0
+        content = overcapacity+les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　リアル"
+        @lessonlists << Listcollection.new(les.id.to_s+"-1",content,false)
+        overcapacity = "〇"
+        overcapacity = "×" if (realcapacity-Reservation.where("lesson_id= ? and zoom=?",les.id,true).count)<0
+        content=overcapacity+les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　ZOOM"
+        @lessonlists << Listcollection.new(les.id.to_s+"-2",content,true)
+      end
+    end
   end
 end
 
