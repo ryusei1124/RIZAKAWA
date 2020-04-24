@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :lessoncomments, dependent: :destroy
   has_many :reservations, dependent: :destroy
   has_many :students, dependent: :destroy
+  has_many :questions, dependent: :destroy
   
   # 生徒一覧の名前順
   default_scope -> { order(student: :asc) }
@@ -86,6 +87,10 @@ class User < ApplicationRecord
       @destination_user = find(user.id)
       UserMailer.send_mail( @destination_user, @send_user, @title, @content, @link ).deliver_now
     end
+  end
+  
+  def feed
+    Question.where("user_id = ?", id)
   end
   
 

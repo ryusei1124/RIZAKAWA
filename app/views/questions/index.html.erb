@@ -3,12 +3,9 @@
 <h1>問い合わせ一覧</h1>
 
 <div class="col-md-10 col-md-offset-1">
-  <div class="add-notice-information-btn">
-    <% if current_user.admin? %>
-      <%= link_to "問い合わせ投稿", class: "btn btn-primary" %>
-    <% end %>
-  </div>
   
+  <%= link_to "問い合わせ投稿", new_question_path, class: "btn btn-primary" %>
+  <div><%= will_paginate %></div>
   <table class="table table-bordered table-condensed" id="table-users">
     <thead>
       <tr>
@@ -16,26 +13,29 @@
         <th>投稿者</th>
         <th>タイトル</th>
         <th>コメント</th>
-        <th>投稿削除</th>
+        <% if current_user.admin? %>
+          <th>投稿削除</th>
+        <% end %>
       </tr>
     </thead>
     <thead>
       <% @questions.each do |question| %>
         <tr>
           <td><%= l(question.created_at, format: :long) %></td>
-          <td></td>
+          <td><%= question.user_id %></td>
           <td><%= link_to question.question_title, question %></td>
           <td></td>
-          <td>
-            <% if current_user.admin? %>
-              <%= link_to "削除", method: :delete,
+          <% if current_user.admin? %>
+            <td>
+              <%= link_to "削除", question, method: :delete,
                 data: { confirm: "削除してよろしいですか？" },
                 class: "btn btn-danger btn-sm pull-right" %>
-            <% end %>
-          </td>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </thead>
   </table>
-  </div>
+  <%= will_paginate %>
+  
 </div>  

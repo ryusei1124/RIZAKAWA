@@ -55,3 +55,13 @@ Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",
   Notice.create!(notice_title: notice_title,
                  notice_content: notice_content,user_id:1)
 end
+
+61.times do |n|
+  question_title = "問い合わせ-#{n+1}タイトル"
+  question_content = "問い合わせ-#{n+1}内容"
+  destination = "#{n+1}"
+  Question.create!(question_title: question_title,
+                 question_content: question_content,
+                 destination: destination,
+                 user_id:1)
+end
