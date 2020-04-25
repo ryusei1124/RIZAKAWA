@@ -1,17 +1,27 @@
 Rails.application.routes.draw do
 
+  #　レッスン関連
   get 'lessons/weeklyschedule'
   post 'lessons/create', to: 'lessons#create'
+  #　ユーザー側予約詳細へ
   post 'reservationusers/useredit', to: 'reservationusers#useredit'
   get 'reservationusers/useredit', to: 'reservationusers#useredit'
+  post 'reservationusers/usermail', to: 'reservationusers#usermail'
+  get 'reservationusers/usermail', to: 'reservationusers#usermail'
+  #　ユーザー側予約情報更新
   post 'reservationusers/userupdate', to: 'reservationusers#userupdate'
   get 'reservationusers/reservation_delete', to: 'reservationusers#reservation_delete'
   post 'reservationusers/reservation_change_user', to: 'reservationusers#reservation_change_user'
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
   post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
-  get 'sessions/new'
+  # 授業コメント
   post 'lessoncomments/create', to: 'lessoncomments#create'
+  # ユーザー側生徒情報更新
   put 'basic_infos/student_update', to: 'basic_infos#student_update'
+  # 予約情報から生徒情報更新
+  patch 'maneger_students/update', to: 'maneger_students#update'
+  
+  get 'sessions/new'
   root :to => 'notices#index'
   get '/signup', to: 'users#new'
   get    '/login', to: 'sessions#new'

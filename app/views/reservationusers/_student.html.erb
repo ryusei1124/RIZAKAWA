@@ -1,0 +1,60 @@
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-title" id="label1" style="font-size:20px">
+          基本情報修正(生徒名:<%= @student.student_name %>)
+        </div>
+      </div>
+      <div class="modal-body" style="font-size:15px">
+        <%= form_with(model: @student, url: maneger_students_update_path , method: :patch , local: true) do |f| %>
+        <%= f.hidden_field :id %>
+        <%= fields_for :lesson, @lesson do |fi| %>
+        <%= fi.hidden_field :id %>
+        <label for="select1a">授業備考:</label><br/>
+        <%= fi.text_field :note, class: "form-control" %>
+      <% end %>
+      <label for="text1">生徒学校:</label>
+      <%= f.text_field :school , class: "form-control" %>
+      <label for="select1a">生徒備考:</label>
+      <%= f.text_area :note, class: "form-control" , size: "20x3"%>
+      <br/>------以下 生徒基本情報のみため授業画面の反映はありません------<br/><br/>
+      <label for="select1a">生徒授業方法:</label><br/>
+      <% if @student.zoom? %>
+        <%= f.radio_button :zoom, :false %>&nbsp;リアル
+        <%= f.radio_button :zoom, :true ,{:checked => true} %>&nbsp; zoom
+      <% else %>
+        <%= f.radio_button :zoom, :false ,{:checked => true} %>&nbsp;リアル
+        <%= f.radio_button :zoom, :true %>&nbsp; zoom
+      <% end %><br/><br/>
+      <label for="select1a">受験生区分:</label><br/>
+      <% if @student.examinee? %>
+        <%= f.radio_button :examinee, :false %>&nbsp; 一般
+        <%= f.radio_button :examinee, :true ,{:checked => true} %>&nbsp; 受験生
+      <% else %>
+        <%= f.radio_button :examinee, :false ,{:checked => true} %>&nbsp; 一般
+        <%= f.radio_button :examinee, :true %>&nbsp; 受験生
+      <% end %><br/><br/>
+      <label for="text2">生徒基本固定曜日1:</label>
+      <%= f.select :fix_day, @weekday, { selected:@student.fix_day }, required: true, class: "form-control" %>
+      <label for="text2">生徒基本固定時間1:</label>
+      <%= f.time_field :fix_time , class: "form-control", required: true %>
+      <label for="text2">生徒基本固定曜日2:</label>
+      <%= f.select :fix_day2, @weekday, { include_blank: true,selected:@student.fix_day2 }, class: "form-control" %>
+      <label for="text3">生徒基本固定時間2:</label>
+      <%= f.time_field :fix_time2 , class: "form-control" %>
+      <label for="text4">生徒基本固定曜日3:</label>
+      <%= f.select :fix_day3, @weekday, { include_blank: true,selected:@student.fix_day3 }, class: "form-control" %>
+      <label for="text5">生徒基本固定時間3:</label>
+      <%= f.time_field :fix_time3 , class: "form-control" %>
+      <div class="modal-footer">
+        <%= f.submit "更新", class: "btn btn-primary" %>
+      <% end %>&nbsp;
+      <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+    </div>
+  </div>
+</div>
+</div>
