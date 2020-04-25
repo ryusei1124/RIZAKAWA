@@ -127,6 +127,17 @@ class LessonsController < ApplicationController
     @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).count
   end
   
+  def attendance_processing
+    reservation = Reservation.find(params[:id])
+    reservation.absence = true
+    if reservation.save
+      flash[:success] = "該当受講生の欠席登録しました。"
+    else
+      flash[:danger]  = "該当受講生の欠席登録に失敗しました。"
+    end
+    redirect_to request.referrer
+  end
+  
   private
   
   def lesson_params
