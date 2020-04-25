@@ -61,13 +61,14 @@
         <td><%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %></td>
         <td>
           <% if reservation.transfer == true %>
-            <span class="label label-primary label-user-division">✕</span>
+            <span class="label label-primary label-user-division">〇</span>
           <% end %>
+          
           <% if reservation.transfer == false %>
             <%=  %>
           <% end %>
         </td>
-        <td><%= reservation.fix_time %></td>
+        <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
         <td>
           <% if reservation.zoom == true %>
             <span class="label label-primary label-user-division">ZOOM</span>
@@ -108,7 +109,7 @@
           
           <% if reservation.absence.present? %>
           <%= link_to "欠席登録解除", reservation_path(reservation, no: 5), method: :patch,
-              data: { confirm: "欠席登録をクリアしてもよろしいですか？" },
+              data: { confirm: "欠席登録を解除してもよろしいですか？" },
               class: "btn btn-primary" %>
           <% end %>
         </td>
