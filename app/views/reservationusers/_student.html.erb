@@ -2,6 +2,9 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+        </button>
         <div class="modal-title" id="label1" style="font-size:20px">
           基本情報修正(生徒名:<%= @student.student_name %>)
         </div>
@@ -26,6 +29,14 @@
       <% else %>
         <%= f.radio_button :zoom, :false ,{:checked => true} %>&nbsp;リアル
         <%= f.radio_button :zoom, :true %>&nbsp; zoom
+      <% end %><br/><br/>
+      <label for="select1a">受験生区分:</label><br/>
+      <% if @student.examinee? %>
+        <%= f.radio_button :examinee, :false %>&nbsp; 一般
+        <%= f.radio_button :examinee, :true ,{:checked => true} %>&nbsp; 受験生
+      <% else %>
+        <%= f.radio_button :examinee, :false ,{:checked => true} %>&nbsp; 一般
+        <%= f.radio_button :examinee, :true %>&nbsp; 受験生
       <% end %><br/><br/>
       <label for="text2">生徒基本固定曜日1:</label>
       <%= f.select :fix_day, @weekday, { selected:@student.fix_day }, required: true, class: "form-control" %>
