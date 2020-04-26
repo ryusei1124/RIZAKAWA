@@ -1,8 +1,8 @@
 <% dateup = @day.end_of_month+1 %>
 <% datedown = @day.beginning_of_month-1 %>
-<h2>
-<div style="display: inline-block;"><%= button_to "←", {controller: 'reservation_logs', action: 'index'}, {method: :get, class: "logbotton",params: {changeday:datedown,cation:"1"}} %></div>
-&nbsp;予約履歴&nbsp;
+<h2 style="font-size:30px;">予約履歴</h2>
+<h2><div style="display: inline-block;"><%= button_to "←", {controller: 'reservation_logs', action: 'index'}, {method: :get, class: "logbotton",params: {changeday:datedown,cation:"1"}} %></div>
+&nbsp;<%= year_month(@day) %>&nbsp;
 <div style="display: inline-block;"><%= button_to "→", {controller: 'reservation_logs', action: 'index'}, {method: :get,  class: "logbotton", params: {changeday:dateup,cation:"1"}} %></div>
 </h2>
 <div class="col-md-10 col-md-offset-1">
@@ -21,7 +21,7 @@
       <tr>
         <td><%= daydis(log.lesson.meeting_on) %> ( <%=weekdate(log.lesson.meeting_on) %> )</td>
         <td>
-           <%= timedisplay(log.lesson.started_at) %> - <%= timedisplay(log.lesson.finished_at) %>
+           <%= timedisplay(log.lesson.started_at) %> ～ <%= timedisplay(log.lesson.finished_at) %>
         </td>
         <td>
            <%= link_to log.student.student_name, "/reservationusers/useredit?lesson_id=#{log.lesson.id}&student_id=#{log.student.id}" %>
