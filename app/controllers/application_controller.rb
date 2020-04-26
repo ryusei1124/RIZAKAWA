@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
       session[:student_id]=@student.id
     end
   end
+  
   #保護者が他の家庭の生徒に保護者にアクセスしようとしたらログアウトする
   def unless_student
     @student = Student.find(params[:student_id])

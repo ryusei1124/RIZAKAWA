@@ -1,17 +1,19 @@
 class ReservationusersController < ApplicationController
   include ApplicationHelper
   before_action :unless_login
-  before_action :unless_student,   only: [:useredit, :usermail]
-  before_action :weekday,   only: [:useredit, :usermail]
+  before_action :unless_student,   only: [:useredit]
+  before_action :weekday,   only: [:useredit]
   require 'date'
   
   def useredit
-    @lesson_id = params[:lesson_id]
-    useredit_reserve
-  end
-  #メール送信用上記クローン
-  def usermail
-    @lesson_id = Reservation.find(params[:reservation_id].to_i).lesson_id
+    if params[:lesson_id].present?
+      @lesson_id = params[:lesson_id]
+    elsif  params[:reservation_id].present?
+      @lesson_id = Reservation.find(params[:reservation_id].to_i).lesson_id
+    else
+      flash[:warning] = "該当の授業がありません"
+      redirect_to '/'
+    end
     useredit_reserve
   end
 

@@ -1,3 +1,128 @@
-<!--授業詳細のモーダル -->
-<%= render partial: "useredit" %>
-<!--モーダル終了 -->
+<h2 class="lead">授業予約詳細・変更登録</h2>
+<div class="row">
+  <% @zoom=@reservation.zoom %>
+    <div class="col-md-6 col-md-offset-2 lead">
+    <table style="width:700px;" class="table-bordered table-condensed lead">
+    <tr><td style="width:150px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
+    <% if @lesson.examinee==true %>
+    受験生
+    <% elsif @lesson.examinee==true %>
+    一般
+    <% end %>
+    コース
+    <% if @reservation.waiting==true %>
+      <span class="label label-danger">キャンセル待ち</span>
+    <% else %>
+      <span class="label label-info">予約済</span>
+    <% end %>
+    </td></tr>
+    <tr><td class="tdcondition1">名前 学校 学年</td><td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td></tr>
+    <tr><td class="tdcondition1">予約日時</td>
+    <td>
+    <%= daydis(@lesson.meeting_on) %> ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
+    <% if @reservation.transfer==true %>
+     振替　
+    <% end %>
+    <% if @reservation.absence? %>
+      <span class="label label-danger">欠席</span>
+    <% end %>
+    <% if @lesson.regular==false %>
+      <span class="label label-danger">臨時</span>
+    <% end %>
+    </td></tr>
+    <tr><td class="tdcondition1">固定時間</td>
+    <td>
+    <% if @reservation.fix_time.present? %>
+    <%=timedisplay(@reservation.fix_time)  %>
+    <% else %>
+    <span class="label label-danger">未設定</span>
+    <% end %>
+    </td>
+    <tr><td class="tdcondition1" >授業方法</td>
+    <td>
+      <% @zoomseat=@lesson.seats_zoom %>
+      <% @realseat=@lesson.seats_real %>
+    <% if @zoom==true %>
+      Zoom
+    <% else %>
+     リアル
+    <% end %>
+    <br>
+    <tr><td class="tdcondition1">備考</td><td><%=@lesson.note %></td></tr>
+    <% if current_user.admin? %>
+      <tr><td class="tdcondition1">生徒備考＊</td><td style="font-size:15px"><%= simple_format(@student.note) %></td></tr>
+    <% end %>
+    </table>
+    <% if current_user.admin? %>
+      <div style="font-size:8px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div>
+    <% end %>
+    <% modaltype1="chengesc" %><% @modaltype="newsc" %>
+    <% if @lesson.meeting_on>@today or current_user.admin? %>
+      <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success button_size">方法変更</a>&nbsp;
+      <% if @lesson.regular==true %>
+      <div style="display: inline-block;">
+        <a href="" data-toggle="modal" data-target=#<%=@modaltype %> class="btn btn-warning button_size">授業振替</a>&nbsp;
+      </div>
+      <% end %>
+      <div style="display: inline-block;">
+        <%= button_to "授業取消", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, data: { confirm: '本当に取消しますか？' }, params: {reservation_id:@reservation.id},class:"btn btn-danger button_size"} %>
+      </div>&nbsp;
+    <% end %>
+    <div style="display: inline-block;">
+      <%= link_to "ｽｹｼﾞｭｰﾙ" ,"/lessons/weeklyschedule?cation=1&changeday=#{@lesson.meeting_on}",class:"btn btn-info button_size" %>&nbsp;
+    </div>
+    <div style="display: inline-block;">
+      <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
+    </div>
+    
+    <% if current_user.admin? %>
+      <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">情報修正＊</a>&nbsp;
+      <%= link_to "管理画面＊" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info button_size" %>&nbsp;
+      </p>
+    <% else %>
+      <br />
+  　<% end %>
+    <br />
+    <% modaltype="newsc" %>
+    <div style="font-size:15px">コメント(連絡事項)<br /></div>
+    <%= form_with(model:@lessoncomment,url: lessoncomments_create_path,local: true) do |f| %>
+      <%= f.hidden_field:reservation_id,value:@reservation.id %>
+      <%= f.hidden_field:student_id,value:@student.id %>
+      <%= f.hidden_field:lesson_id,value:@lesson.id %>
+      <%= f.text_field :content, class: "form-control", style:"width:700px",required:true %>
+      <%= f.submit value:"送信",class:"btn-sm btn-info" %>
+    <% end %>
+    <br />
+    <% if @lessoncomments.present? %>
+    <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
+    <% @lessoncomments.each do |comment| %>
+      <tr><td>
+      <% if comment.user.admin == false %>
+        <%= comment.student.student_name %>
+        （保護者　<%= comment.user.guardian %>)
+      <% else %>
+        <%= comment.user.guardian %>
+      <% end %>
+      <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
+      <%= comment.content %><br />
+      </td></tr>
+      <% end %>
+    </table>
+    <% end %>
+  </>
+
+<!--授業授業方法変更モーダル -->
+<%= render partial: "methodchange" %>
+<!--授業授業方法変更モーダル終了 -->
+
+<!--授業振替モーダル -->
+<%= render partial: "transfer" %>
+<!--授業振替モーダルここまで -->
+
+<!--生徒情報変更モーダル -->
+<%= render partial: "student" %>
+<!--授業振替モーダルここまで -->
+
+</div>
+
+        
