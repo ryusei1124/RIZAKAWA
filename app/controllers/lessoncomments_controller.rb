@@ -3,10 +3,10 @@ class LessoncommentsController < ApplicationController
     lessoncomment = Lessoncomment.new(lessoncomment_params)
     lessoncomment.user_id = current_user.id
     if lessoncomment.save
-      currentuser = User.find(current_user.id)
+      user_id = Reservation.find(lessoncomment.reservation_id).user_id
       admin_user = User.find(18)
-      normal_user = User.find(currentuser.id) 
-      if  currentuser.admin == false
+      normal_user = User.find(user_id) 
+      if  current_user.admin == false
        @destination_user = admin_user
        @send_user =  normal_user
       else
@@ -17,7 +17,7 @@ class LessoncommentsController < ApplicationController
       content = "授業に関するコメントが投稿されました。"
       link = "reservationusers/useredit?reservation_id=#{lessoncomment.reservation_id}&student_id=#{lessoncomment.student_id}"
       UserMailer.send_mail( @destination_user, @send_user, title, content,link).deliver_now
-      flash[:success] = "コメント登録に成功しました"
+      flash[:success] = "コメント登録に成功し、お知らせメールを送信しました"
     else
       flash[:warning] = "登録に失敗しました"
     end
