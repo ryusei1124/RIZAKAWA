@@ -63,5 +63,6 @@ end
   Question.create!(question_title: question_title,
                  question_content: question_content,
                  destination: destination,
-                 user_id:1)
+                 student_id: 3,
+                 user_id: 1)
 end

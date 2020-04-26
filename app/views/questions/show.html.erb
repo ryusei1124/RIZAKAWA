@@ -27,13 +27,13 @@
     <thead>
       <tr>
         <th colspan="2" class="col-md-3">投稿者</th>
-        <td colspan="4"><%= @question.user_id %></td>
+        <td colspan="4"><%= @question.user.guardian %></td>
       </tr>
     </thead>
     <thead>
       <tr>
         <th colspan="2" class="col-md-3">生徒名</th>
-        <td colspan="4"><%#= @student.student_name %></td>
+        <td colspan="4"><%= @question.student.student_name %></td>
       </tr>
     </thead>
     <thead>

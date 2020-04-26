@@ -8,10 +8,10 @@
     <%= form_with(model: @question, local: true) do |f| %>
       <%= render 'shared/error_messages_question' %>
       
-      <% if current_user.admin? %>
+      <%# if current_user.admin? %>
         <%= f.label :destination, "送信先", class: "label-#{yield(:class_text)}" %>
         <%= f.collection_select :destination, User.all, :id, :guardian, {}, required: true, class: "form-control" %>
-      <% end %>
+      <%# end %>
       
       <%= f.label :student_id, "生徒名", class: "label-#{yield(:class_text)}" %>
       <%= f.collection_select :student_id, Student.all, :id, :student_name, {include_blank: true}, class: "form-control" %>
