@@ -45,7 +45,7 @@
 
 　<table class="table table-bordered table-condensed" id="table-reservations">
      <h3 class="modal-title center">【生徒】</h3>
-     <% @reservations.each do |reservation| %>
+      <% @reservations.each do |reservation| %>
        <tr>
          <th>名前</th>
          <th>振替</th>
@@ -76,30 +76,40 @@
             <span class="label label-primary label-user-division">リアル</span>
           <% end %>
         </td>
-        </td>
         <td><%= link_to "修正", "#", remote: true, class: "btn btn-warning" %></td>
-        <td><%= reservation.attendance_time %></td>
-        <td><%= reservation.leave_time %></td>
+        <td><%= l(reservation.attendance_time, format: :time, default: '-') %></td>
+        <td><%= l(reservation.leave_time, format: :time, default: '-') %></td>
         <td>
-          <% if reservation.absence == true %>
-            <span class="label label-primary label-user-division">✕</span>
+          <% if reservation.absence == true %> 
+            <span class="label label-danger label-user-division">✕</span>
           <% end %>
           <% if reservation.absence == false %>
-            <%= "#" %>
+            <%= "-" %>
           <% end %>
         </td>
         <td>
-          <%= link_to "出席", reservation_path(reservation), method: :patch, class: "btn btn-primary" %>
-
-          <% if reservation.attendance_time? %>
-            <%= link_to "退席", attendance_time_reservation_path(reservation), method: :patch, class: "btn btn-success" %>
+          <% if reservation.attendance_time.nil? && reservation.absence == false %>
+            <%= link_to "出席", reservation_path(reservation, no: 1), method: :patch, class: "btn btn-primary" %>
           <% end %>
 
-          <%= link_to "クリア", "#",  class: "btn btn-info" %>
-          <%= link_to "欠席", "#", class: "btn btn-danger" %>
-
-          <% if reservation.absence? %>
-            <%= link_to "退席", attendance_time_reservation_path(reservation), method: :patch, class: "btn btn-success" %>
+          <% if reservation.leave_time.nil? && reservation.attendance_time.present? %>
+            <%= link_to "退席", reservation_path(reservation, no: 2), method: :patch, class: "btn btn-success" %>
+          <% end %>
+          
+          <% if reservation.attendance_time.present? %>
+          <%= link_to "クリア", reservation_path(reservation, no: 3), method: :patch,
+              data: { confirm: "出席と退席時間をクリアしてもよろしいですか？" },
+              class: "btn btn-info" %>
+          <% end %>
+          
+          <% if reservation.attendance_time.nil? && reservation.absence == false %>
+            <%= link_to "欠席", reservation_path(reservation, no: 4), method: :patch, class:"btn btn-danger" %>
+          <% end %>
+          
+          <% if reservation.absence.present? %>
+          <%= link_to "欠席登録解除", reservation_path(reservation, no: 5), method: :patch,
+              data: { confirm: "欠席登録をクリアしてもよろしいですか？" },
+              class: "btn btn-primary" %>
           <% end %>
         </td>
        </tr>

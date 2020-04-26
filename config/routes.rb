@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   post 'lessoncomments/create', to: 'lessoncomments#create'
   # ユーザー側生徒情報更新
   put 'basic_infos/student_update', to: 'basic_infos#student_update'
-  # 予約情報から生徒情報更新
   patch 'maneger_students/update', to: 'maneger_students#update'
   
   get 'sessions/new'
@@ -50,11 +49,13 @@ Rails.application.routes.draw do
      patch 'add_student'
    end
   end
+  
   resources :notices
   
+  resources :reservations, only: [:update, :destroy]
   resources :questions
   
   resources :password_resets, only: [:new, :create, :edit, :update]
   
-  resources :reservations, only: :update
+  resources :password_resets, only: [:new, :create, :edit, :update]
 end

@@ -23,7 +23,7 @@
         <tr>
           <td><%= l(question.created_at, format: :long) %></td>
           <td><%= question.user.guardian %></td>
-          <td><%= link_to question.question_title, question %></td>
+          <td><%= link_to question.question_title %></td>
           <td></td>
           <% if current_user.admin? %>
             <td>
