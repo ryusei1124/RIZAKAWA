@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
     @questions = Question.paginate(page: params[:page], per_page: 10)
     if logged_in?
       @question  = current_user.questions.build
-      @feed_items = current_user.feed.paginate(page: params[:page])
     end
   end
   
@@ -20,7 +19,7 @@ class QuestionsController < ApplicationController
   end
   
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.build(question_params)
     # ログインしているidが反映させる↓
     @question.user_id = current_user.id
     if @question.save

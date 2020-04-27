@@ -13,9 +13,7 @@
         <th>投稿者</th>
         <th>タイトル</th>
         <th>コメント</th>
-        <% if current_user.admin? %>
-          <th>投稿削除</th>
-        <% end %>
+        <th>投稿削除</th>
       </tr>
     </thead>
     <thead>
@@ -23,15 +21,14 @@
         <tr>
           <td><%= l(question.created_at, format: :long) %></td>
           <td><%= question.user.guardian %></td>
-          <td><%= link_to question.question_title %></td>
+          <td><%= link_to question.question_title, question %></td>
           <td></td>
-          <% if current_user.admin? %>
-            <td>
+          <td>
+            <% if current_user?(question.user) && !current_user.admin? %>
               <%= link_to "削除", question, method: :delete,
-                data: { confirm: "削除してよろしいですか？" },
-                class: "btn btn-danger btn-sm pull-right" %>
-            </td>
-          <% end %>
+                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger btn-sm" %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </thead>
