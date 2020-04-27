@@ -9,7 +9,7 @@
             <li><%= link_to "保護者一覧", users_path %></li>
           <% end %>
           <li><%= link_to "スケジュール", lessons_weeklyschedule_path %></li>
-          <li><%= link_to "予約履歴", reservations_reservations_log_user_path(current_user) %></li>
+          <li><%= link_to "予約履歴", reservation_logs_path %></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <%= current_user.guardian %> <b class="caret"></b>
