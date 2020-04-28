@@ -1,6 +1,5 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: %i(show destroy)
-  before_action :admin_user, only: :destroy
   
   def index
     @questions = Question.paginate(page: params[:page], per_page: 10)

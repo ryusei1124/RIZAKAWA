@@ -18,15 +18,14 @@
     </thead>
     <thead>
       <% @questions.each do |question| %>
-        <tr>
+        <tr id="question-<%= question.id %>">
           <td><%= l(question.created_at, format: :long) %></td>
           <td><%= question.user.guardian %></td>
           <td><%= link_to question.question_title, question %></td>
           <td></td>
           <td>
-            <% if current_user?(question.user) && !current_user.admin? %>
-              <%= link_to "削除", question, method: :delete,
-                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger btn-sm" %>
+            <% if current_user?(question.user) %>
+              <%= link_to "削除", question, method: :delete, data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger btn-sm" %>
             <% end %>
           </td>
         </tr>
@@ -34,5 +33,4 @@
     </thead>
   </table>
   <%= will_paginate %>
-  
 </div>  

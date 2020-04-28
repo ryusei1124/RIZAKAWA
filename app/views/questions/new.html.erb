@@ -8,18 +8,29 @@
     <%= form_with(model: @question, local: true) do |f| %>
       <%= render 'shared/error_messages_question' %>
       
-      <%# if current_user.admin? %>
+      <% if current_user.admin %>
         <%= f.label :destination, "送信先", class: "label-#{yield(:class_text)}" %>
-        <%= f.collection_select :destination, User.all, :id, :guardian, {}, required: true, class: "form-control" %>
-      <%# end %>
+        <span class="label label-danger label-user-division">必須</span>
+        <%= f.collection_select :destination, User.all.where.not(id: 1), :id, :guardian, {}, required: true, class: "form-control" %>
+      <% else %>
+        <%= f.collection_select :destination, User.where(id: 1), :id, :guardian, {}, style: "#{'display:none'}", class: "form-control" %>
+      <% end %>
       
-      <%= f.label :student_id, "生徒名", class: "label-#{yield(:class_text)}" %>
-      <%= f.collection_select :student_id, Student.all, :id, :student_name, {include_blank: true}, class: "form-control" %>
+      <% if current_user.admin %>
+        <%= f.label :student_id, "生徒名", class: "label-#{yield(:class_text)}" %>
+        <%= f.collection_select :student_id, Student.all, :id, :student_name, {include_blank: true}, class: "form-control" %>
+      <% else %>
+        <%= f.label :student_id, "生徒名", class: "label-#{yield(:class_text)}" %>
+        <%= f.collection_select :student_id, Student.all, :id, :student_name, {include_blank: true}, class: "form-control" %>
+        <%#= f.collection_select :student_id, Student.all.where(user_id: user.id), :id, :student_name, {include_blank: true}, class: "form-control" %>
+      <% end %>
     
       <%= f.label :question_title, "タイトル", class: "label-#{yield(:class_text)}" %>
+      <span class="label label-danger label-user-division">必須</span>
       <%= f.text_field :question_title, required: true, class: "form-control" %>
       
       <%= f.label :question_content, "内容", class: "label-#{yield(:class_text)}" %>
+      <span class="label label-danger label-user-division">必須</span>
       <%= f.text_area :question_content, required: true, class: "form-control", rows: 5 %>
       
       <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>

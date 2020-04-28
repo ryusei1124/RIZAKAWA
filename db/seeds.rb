@@ -56,15 +56,15 @@ Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",
                  notice_content: notice_content,user_id:1)
 end
 
-61.times do |n|
-  question_title = Faker::Lorem.sentence
-  question_content = Faker::Lorem.sentence
-  destination = "#{n+1}"
-  student_id = 8
-  user_id = 1
-  Question.create!(question_title: question_title,
-                 question_content: question_content,
-                 destination: destination,
-                 student_id: student_id,
-                 user_id: user_id)
-end
+# 61.times do |n|
+#   question_title = Faker::Lorem.sentence
+#   question_content = Faker::Lorem.sentence
+#   destination = "#{n+1}"
+#   student_id = 8
+#   user_id = 1
+#   Question.create!(question_title: question_title,
+#                 question_content: question_content,
+#                 destination: destination,
+#                 student_id: student_id,
+#                 user_id: user_id)
+# end
