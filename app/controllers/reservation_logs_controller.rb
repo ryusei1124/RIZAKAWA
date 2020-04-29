@@ -1,6 +1,7 @@
 class ReservationLogsController < ApplicationController
   before_action :unless_login
   require 'date'
+
   def index
     if params[:cation] == "1"
       @day = params[:changeday].to_date

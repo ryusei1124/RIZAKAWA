@@ -4,12 +4,12 @@
     <div class="modal-body" style="text-align:center;">
       <% zoomseat=@lesson.seats_zoom %>
       <% realseat=@lesson.seats_real %>
-    <div style="font-size:15px;">本当に授業方法を変更しますか？
-    <% if (@realnumber-realseat)>=0 %>
-      ※リアルは満席です。キャンセル待ちになります。
+    <div style="font-size:15px;">本当に授業方法を変更しますか？<br />
+    <% if (@realnumber-realseat)>=0 and @zoom == true %>
+      ※キャンセル待ちになります
     <% end %>
-    <% if (@zoomnumber-zoomseat)>=0 %>
-      ※Zoomは満席です。キャンセル待ちになります.
+    <% if (@zoomnumber-zoomseat)>=0 and @zoom == false %>
+      ※キャンセル待ちになります
     <% end %>
     </div></div>
     <div class="modal-footer">

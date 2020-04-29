@@ -33,9 +33,9 @@
     <tr><td class="tdcondition1">固定時間</td>
     <td>
     <% if @reservation.fix_time.present? %>
-    <%=timedisplay(@reservation.fix_time)  %>
+      <%=timedisplay(@reservation.fix_time)  %>～
     <% else %>
-    <span class="label label-danger">未設定</span>
+      <span class="label label-danger">未設定</span>
     <% end %>
     </td>
     <tr><td class="tdcondition1" >授業方法</td>
@@ -71,10 +71,7 @@
     <div style="display: inline-block;">
       <%= link_to "ｽｹｼﾞｭｰﾙ" ,"/lessons/weeklyschedule?cation=1&changeday=#{@lesson.meeting_on}",class:"btn btn-info button_size" %>&nbsp;
     </div>
-    <div style="display: inline-block;">
-      <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
-    </div>
-    
+
     <% if current_user.admin? %>
       <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">情報修正＊</a>&nbsp;
       <%= link_to "管理画面＊" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info button_size" %>&nbsp;

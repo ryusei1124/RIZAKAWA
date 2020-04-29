@@ -13,12 +13,13 @@ Rails.application.routes.draw do
   get 'reservationusers/reservation_delete', to: 'reservationusers#reservation_delete'
   post 'reservationusers/reservation_change_user', to: 'reservationusers#reservation_change_user'
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
-  post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
+  post 'reservationusers/reservation_create'
   # 授業コメント
   post 'lessoncomments/create', to: 'lessoncomments#create'
   # ユーザー側生徒情報更新
   put 'basic_infos/student_update', to: 'basic_infos#student_update'
   patch 'maneger_students/update', to: 'maneger_students#update'
+  #管理者　予約追加
   
   get 'sessions/new'
   root :to => 'notices#index'

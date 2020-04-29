@@ -54,6 +54,7 @@ class ReservationsController < ApplicationController
        redirect_to request.referrer and return
     end
   end
+
   
   def reservations_log
     @user = User.find_by(params[:id])

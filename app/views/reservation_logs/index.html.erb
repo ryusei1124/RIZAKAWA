@@ -1,6 +1,6 @@
 <% dateup = @day.end_of_month+1 %>
 <% datedown = @day.beginning_of_month-1 %>
-<h2 style="font-size:30px;">予約履歴</h2>
+<h2 class="lead">予約履歴</h2>
 <h2><div style="display: inline-block;"><%= button_to "←", {controller: 'reservation_logs', action: 'index'}, {method: :get, class: "logbotton",params: {changeday:datedown,cation:"1"}} %></div>
 &nbsp;<%= year_month(@day) %>&nbsp;
 <div style="display: inline-block;"><%= button_to "→", {controller: 'reservation_logs', action: 'index'}, {method: :get,  class: "logbotton", params: {changeday:dateup,cation:"1"}} %></div>
