@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def full_title(page_name = "")
     base_title = "RIZAKAWA"
     if page_name.empty?
@@ -7,6 +8,7 @@ module ApplicationHelper
       page_name + " | " + base_title
     end
   end
+  
   def hourdisplay(datetime)
     if datetime.hour<10
       result="0"+datetime.hour.to_s
@@ -15,6 +17,7 @@ module ApplicationHelper
     end
     result
   end
+  
   def mindisplay(datetime)
     if datetime.min<10
       result="0"+datetime.min.to_s
@@ -23,11 +26,21 @@ module ApplicationHelper
     end
     result
   end
+  
   def timedisplay(datetime)
     if datetime.present?
       hourdisplay(datetime).to_s+":" + mindisplay(datetime).to_s
     end
   end
+
+   def timedisplayk(datetime)
+      hourdisplay(datetime).to_s + "時" + mindisplay(datetime).to_s + "分" if datetime.present?
+  end
+
+  def year_month(date)
+      date.year.to_s + "年" + date.month.to_s + "月" if date.present?
+  end
+  
   def daydis(d)
     dis=d.month.to_s+"月"+d.day.to_s+"日"
     dis
@@ -39,6 +52,7 @@ module ApplicationHelper
       youbi[d.wday]
     end
   end
+  
   def timeselect(start,finish)
     timese=[]
     (start..finish).each do |time|
@@ -47,6 +61,7 @@ module ApplicationHelper
     end
     timese
   end
+  
   def yearpiriod(date)
     date.to_date
     if (date.month.to_i<=3) or (date.month.to_i==4 and date.day.to_i==1)
@@ -67,11 +82,11 @@ module ApplicationHelper
       jhdate=(jhyear.to_s+"/04/02").to_date
   end
   
-  
   def grade(born,nowday)
     gradeyear=yearpiriod(nowday)-yearpiriod(born)
     gradeyear
   end
+  
   def gradeschool(born,nowday)
     gradeyear=grade(born,nowday)
     if gradeyear<=12
@@ -123,6 +138,7 @@ module ApplicationHelper
     end
     bgcolor
   end
+  
   def tdcellbgcolor(thisday,day,section)
     if day==thisday && section==1
       bgcolor="#e9967a"
@@ -137,6 +153,7 @@ module ApplicationHelper
     end
     bgcolor
   end
+  
   def attend(zoom)
     if zoom==true
       result="Zoom"
@@ -144,7 +161,8 @@ module ApplicationHelper
       result="リアル"
     end
   end
-   def tasker(ex)
+  
+  def tasker(ex)
     if ex==true and ex.present?
       result="受験生"
     else

@@ -16,7 +16,7 @@ class LessonsController < ApplicationController
       studentid=params[:changestudent]
       session[:student_id]=Student.find_by(id:studentid).id if studentid.present?
       @student=Student.find(session[:student_id])
-      flash[:warning]="#{ @student.student_name}に切替成功しました。"
+      flash[:warning]="#{ @student.student_name }に切替成功しました。"
     end
     @students=Student.where(user_id:current_user)
     if @students.blank?
