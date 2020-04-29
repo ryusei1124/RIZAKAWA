@@ -3,14 +3,6 @@
 <h1>問い合わせ詳細</h1>
 
 <div class="col-md-10 col-md-offset-1">
-  <div class="add-notice-information-btn">
-    <% if current_user.admin? %>
-    <P>
-      <%#= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>&nbsp;
-      <%#= link_to "お知らせ編集", edit_notice_path(@question.id), class: "btn btn-primary" %>
-    </P>
-    <% end %>
-  </div>
   <table class="table-bordered table-condensed" id="questions-info-show">
     <thead>
       <tr>
@@ -44,7 +36,31 @@
     </thead>
     <thead>
       <tr>
-        <th colspan="2" class="col-md-3">コメント</th>
+        <th colspan="2" class="col-md-3">返信</th>
+          <%= form_with(model:@lessoncomment,url: lessoncomments_create_path,local: true) do |f| %>
+            <%= f.hidden_field:reservation_id,value:@reservation.id %>
+            <%= f.hidden_field:student_id,value:@student.id %>
+            <%= f.hidden_field:lesson_id,value:@lesson.id %>
+            <%= f.text_field :content, class: "form-control", style:"width:700px",required:true %>
+            <%= f.submit value:"送信",class:"btn-sm btn-info" %>
+          <% end %>
+          <br />
+          <% if @lessoncomments.present? %>
+          <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
+          <% @lessoncomments.each do |comment| %>
+            <tr><td>
+            <% if comment.user.admin == false %>
+              <%= comment.student.student_name %>
+              （保護者　<%= comment.user.guardian %>)
+            <% else %>
+              <%= comment.user.guardian %>
+            <% end %>
+            <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
+            <%= comment.content %><br />
+            </td></tr>
+            <% end %>
+          </table>
+          <% end %>
         <td colspan="4"></td>
       </tr>
     </thead>

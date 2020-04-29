@@ -2,9 +2,10 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i(show destroy)
   
   def index
-    @questions = Question.paginate(page: params[:page], per_page: 10)
-    if logged_in?
-      @question  = current_user.questions.build
+    if current_user.admin?
+      @questions = Question.paginate(page: params[:page], per_page: 10)
+    else
+      @questions = Question.where("user_id =?", current_user.id).paginate(page: params[:page], per_page: 10)
     end
   end
   
@@ -13,8 +14,12 @@ class QuestionsController < ApplicationController
   
   def new
     @question = Question.new
-    @students = Student.all
-    @users = User.all
+    if current_user.admin?
+      @students = Student.kanaorder
+      @users = User.undercontract
+    else
+      @students = Student.kanaorder.where("user_id = ?", current_user.id)
+    end
   end
   
   def create
