@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :students, dependent: :destroy
   
   # 生徒一覧の名前順
-  default_scope -> { order(student: :asc) }
+  default_scope -> { order(guardian: :asc) }
   
   before_save { self.email = email.downcase }
 

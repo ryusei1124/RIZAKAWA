@@ -1,0 +1,49 @@
+<% provide(:class_text, 'info-edit') %>
+<% provide(:button_text, '更新') %>
+
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1 class="modal-title">基本生徒情報編集</h1>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <%= form_with(model: @student, url: info_update_student_path(@student), local: true, method: :patch) do |f| %>
+
+            <%= f.label :student_name, class: "label-#{yield(:class_text)}" %>
+            <p><%= @student.student_name %></p>
+            
+            <%= f.label :birthday, class: "label-#{yield(:class_text)}" %>
+            <%= f.text_field :birthday, class: "form-control" %>
+            
+            <%= f.label :real, class: "label-#{yield(:class_text)}" %>
+            <%= f.check_box :real, { class: ""}, true, false %><br>
+            
+            <%= f.label :zoom, class: "label-#{yield(:class_text)}" %>
+            <%= f.check_box :zoom, { class: ""}, true, false %><br>
+            
+            <%= f.label :school, class: "label-#{yield(:class_text)}" %>
+            <%= f.text_field :school, class: "form-control" %>
+            
+            <%= f.label :school_year, class: "label-#{yield(:class_text)}" %>
+            <%= f.text_field :gradeyear, class: "form-control" %>
+            
+            <%= f.label :fix_day, class: "label-#{yield(:class_text)}" %><br>
+            <%= f.select :fix_day,  [["日"],["月"],["火"],["水"],["木"],["金"],["土"] ],  class: "form-control" %>
+
+            <div class="center">
+              <%= f.submit yield(:button_text), class: "btn btn-primary btn-#{yield(:class_text)}" %>
+              <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">
+                キャンセル
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

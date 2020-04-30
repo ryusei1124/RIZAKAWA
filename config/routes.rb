@@ -51,6 +51,14 @@ Rails.application.routes.draw do
    end
   end
   
+  resources :students do
+    member do
+      get 'info_edit'
+      patch 'info_update'
+    end
+  end
+
+
   resources :notices
   
   resources :reservations, only: [:update, :destroy]

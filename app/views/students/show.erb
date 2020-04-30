@@ -1,0 +1,23 @@
+<% provide(:title, 'All users') %>
+
+<h1>保護者一覧</h1>
+
+<div class="col-md-10 col-md-offset-1">
+  <table class="table table-condensed table-hover" id="table-users">
+    <thead>
+      <tr>
+        <th><%= User.human_attribute_name :name %></th>
+        <th>受講生</th>
+      </tr>
+    </thead>
+
+    <% @students.each do |student| %>
+      <tr>
+        <td>
+          <%= link_to student.student_name, info_edit_student_path(student), remote: true %>
+
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
