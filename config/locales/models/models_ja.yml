@@ -5,8 +5,8 @@ ja:
     attributes:
         user:
           id: ID
-          guardian: 保護者名
-          student: 生徒名
+          guardian: 保護者
+          student: 生徒
           email: メールアドレス
           real: リアル受講
           zoom: zoom受講
@@ -26,8 +26,8 @@ ja:
         notice:
           notice_title: 投稿タイトル
           notice_content: 投稿内容
-  static_pages:
-    top:
+  sessions:
+    new:
       email: メールアドレス
       password: パスワード
   

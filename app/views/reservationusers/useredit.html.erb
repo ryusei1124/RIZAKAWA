@@ -1,13 +1,11 @@
-<h2 class="lead">授業予約詳細・変更登録</h2>
+ <h2 class="lead">授業予約詳細・変更登録</h2>
 <div class="row">
-  <% zoom=@reservation.zoom %>
-  <% @beforesite=request.referrer if @beforesite.blank? %>
-  
-    <div class="container2">
-    <table style="width:600px;" class="table-bordered table-condensed lead">
-    <tr><td style="width:100px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
+  <% @zoom=@reservation.zoom %>
+    <div class="col-md-6 col-md-offset-2 lead">
+    <table style="width:700px;" class="table-bordered table-condensed lead">
+    <tr><td style="width:150px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
     <% if @lesson.examinee==true %>
-    受験生 
+    受験生
     <% elsif @lesson.examinee==true %>
     一般
     <% end %>
@@ -17,11 +15,11 @@
     <% else %>
       <span class="label label-info">予約済</span>
     <% end %>
-    </td></tr>  
-    <tr><td style="width:150px;" class="tdcondition1">名前</td><td><%= @student.student_name %></td></tr>
+    </td></tr>
+    <tr><td class="tdcondition1">名前 学校 学年</td><td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td></tr>
     <tr><td class="tdcondition1">予約日時</td>
     <td>
-    <%= daydis(@lesson.meeting_on) %>(<%=weekdate(@lesson.meeting_on) %>)<%=timedisplay(@lesson.started_at) %>〜<%=timedisplay(@lesson.finished_at) %>
+    <%= daydis(@lesson.meeting_on) %> ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
     <% if @reservation.transfer==true %>
      振替　
     <% end %>
@@ -42,101 +40,89 @@
     </td>
     <tr><td class="tdcondition1" >授業方法</td>
     <td>
-      <% zoomseat=@lesson.seats_zoom %>
-      <% realseat=@lesson.seats_real %>
-    <% if zoom==true %>
+      <% @zoomseat=@lesson.seats_zoom %>
+      <% @realseat=@lesson.seats_real %>
+    <% if @zoom==true %>
       Zoom
     <% else %>
      リアル
     <% end %>
     <br>
-    <tr><td class="tdcondition1">備考</td><td><%=@lesson.note %></td>
+    <tr><td class="tdcondition1">備考</td><td><%=@lesson.note %></td></tr>
+    <% if current_user.admin? %>
+      <tr><td class="tdcondition1">生徒備考＊</td><td style="font-size:15px"><%= simple_format(@student.note) %></td></tr>
+    <% end %>
     </table>
-    <% modaltype1="chengesc" %><% modaltype="newsc" %>
-    <% if @lesson.meeting_on>@today %>
-      <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success">授業方法変更</a>&nbsp;
+    <% if current_user.admin? %>
+      <div style="font-size:8px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div>
+    <% end %>
+    <% modaltype1="chengesc" %><% @modaltype="newsc" %>
+    <% if @lesson.meeting_on>@today or current_user.admin? %>
+      <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success button_size">方法変更</a>&nbsp;
       <% if @lesson.regular==true %>
       <div style="display: inline-block;">
-        <a href="" data-toggle="modal" data-target=#<%=modaltype%> class="btn btn-warning">授業振替</a>&nbsp;
+        <a href="" data-toggle="modal" data-target=#<%=@modaltype %> class="btn btn-warning button_size">授業振替</a>&nbsp;
       </div>
       <% end %>
       <div style="display: inline-block;">
-        <%= button_to "授業取消", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, data: { confirm: '本当に取消しますか？' }, params: {reservation_id:@reservation.id},class:"btn btn-danger"} %>
+        <%= button_to "授業取消", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, data: { confirm: '本当に取消しますか？' }, params: {reservation_id:@reservation.id},class:"btn btn-danger button_size"} %>
       </div>&nbsp;
     <% end %>
     <div style="display: inline-block;">
-      <%= link_to "ｽｹｼﾞｭｰﾙ" ,"/lessons/weeklyschedule?cation=1&changeday=#{@lesson.meeting_on}",class:"btn btn-info" %>&nbsp;
+      <%= link_to "ｽｹｼﾞｭｰﾙ" ,"/lessons/weeklyschedule?cation=1&changeday=#{@lesson.meeting_on}",class:"btn btn-info button_size" %>&nbsp;
     </div>
     <div style="display: inline-block;">
-    <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
+      <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
     </div>
+    
+    <% if current_user.admin? %>
+      <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">情報修正＊</a>&nbsp;
+      <%= link_to "管理画面＊" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info button_size" %>&nbsp;
+      </p>
+    <% else %>
+      <br />
+  　<% end %>
+    <br />
     <% modaltype="newsc" %>
-  </div>
-</div>
- <!--授業授業方法変更モーダル -->
-<div class="modal fade" id=modal1 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-<div class="modal-dialog modal-sm" role="document">
-  <div class="modal-content">
-    <div class="modal-body" style="text-align:center;">
-      <% zoomseat=@lesson.seats_zoom %>
-      <% realseat=@lesson.seats_real %>
-    <div>本当に授業方法を変更しますか？
-    <% if (@realnumber-realseat)>=0 %>
-      ※リアルは満席です。キャンセル待ちになります。
+    <div style="font-size:15px">コメント(連絡事項)<br /></div>
+    <%= form_with(model:@lessoncomment,url: lessoncomments_create_path,local: true) do |f| %>
+      <%= f.hidden_field:reservation_id,value:@reservation.id %>
+      <%= f.hidden_field:student_id,value:@student.id %>
+      <%= f.hidden_field:lesson_id,value:@lesson.id %>
+      <%= f.text_field :content, class: "form-control", style:"width:700px",required:true %>
+      <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
-    <% if (@zoomnumber-zoomseat)>=0 %>
-      ※Zoomは満席です。キャンセル待ちになります.
-    <% end %>
-    </div></div>
-    <div class="modal-footer">
-    <%= form_with(url:reservationusers_userupdate_path,local: true) do |f| %> 
-      <%= f.hidden_field :reservation_id,value:@reservation.id %>
-      <%= f.hidden_field :student_id,value:@student.id %>
-      <%= f.hidden_field :day,value:@lesson.meeting_on %>
-      <% if zoom==true %>
-        <div style=" display: inline-block; ">
-      <%= f.submit "リアルに変更する", class: "btn btn-primary" %>
-      </div>
+    <br />
+    <% if @lessoncomments.present? %>
+    <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
+    <% @lessoncomments.each do |comment| %>
+      <tr><td>
+      <% if comment.user.admin == false %>
+        <%= comment.student.student_name %>
+        （保護者　<%= comment.user.guardian %>)
       <% else %>
-        <div style=" display: inline-block; ">
-      <%= f.submit "Zoomに変更する", class: "btn btn-primary" %>
-      </div>
+        <%= comment.user.guardian %>
+      <% end %>
+      <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
+      <%= comment.content %><br />
+      </td></tr>
+      <% end %>
+    </table>
     <% end %>
-        <div style=" display: inline-block; ">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-        </div>
-    <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-     
+  </>
+
+<!--授業授業方法変更モーダル -->
+<%= render partial: "methodchange" %>
+<!--授業授業方法変更モーダル終了 -->
+
 <!--授業振替モーダル -->
-<div class="modal fade" id=<%=modaltype %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-  <div class="modal-body" style="background-color: #C8D7E6; margin:auto;">
-  <div>
-  <h3 class="lead" style="text-align:center;">振替授業を選択して下さい</h3>
-  <table align="center">
-  <%= form_with(url:reservationusers_reservation_change_user_path,local: true) do |f| %>
-    <tr><td>
-  <p>
-    <%= f.hidden_field :reservation_id,value:@reservation.id %>
-    <%= f.hidden_field :student_id,value:@student.id %>
-    <%= f.collection_select :id,@lessonlists, :id, :content, {:include_blank => true},{:class =>"form-control share-form",:style=>"width:350px", required: true} %>
-　  〇：振替可能 ×：キャンセル待ち<br>
-　  振替授業は定期的授業に限ります<br></p>
-    </td></tr>
-  </table>
-    <P style="margin-left:200px">
-    <%= f.submit "登録", class: "btn btn-primary" %>&nbsp;
-    <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-    </P>
-    <% end %>
-    </div>
-  </div>
-  </div>
-  </div>
+<%= render partial: "transfer" %>
+<!--授業振替モーダルここまで -->
+
+<!--生徒情報変更モーダル -->
+<%= render partial: "student" %>
+<!--授業振替モーダルここまで -->
+
 </div>
-      <!--授業新規モーダルここまで -->
+
+        

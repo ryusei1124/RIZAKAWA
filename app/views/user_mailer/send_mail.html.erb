@@ -1,5 +1,19 @@
-<p><%#= @user.email %></p>
 
-<p><%= @contet %></p>
+<% if @send_user.admin == false %>
+  
+  <P><%= @send_user.guardian  %>様より投稿がありました</P>
 
-<p><%= link_to "test", @user %></p>
+<% else  %>
+  
+  <p><%= @destination_user.guardian %> 様</p>
+  
+  <p>いつもお世話になってありがとうございます</p>
+  
+  <p>平川塾からのお知らせです</p>
+
+  <p><%= @content %></p>
+
+<% end %>
+
+<p><%= link_to "こちらのリンクを参照下さい", @link %></p>
+

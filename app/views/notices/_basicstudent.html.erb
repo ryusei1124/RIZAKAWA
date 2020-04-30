@@ -1,0 +1,92 @@
+<!-- 2.編集モーダルの配置 -->
+<div class="modal fade" id="modal-sa" tabindex="-1" style="font-size: 20px;">
+  <div class="modal-dialog modal-xl">
+    <!-- 3.モーダルのコンテンツ -->
+    <div class="modal-content">
+      <!-- 4.モーダルのヘッダ -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        <h2 class="modal-title" id="modal-label"><b>基本情報閲覧・学校名編集</b></h2>
+
+        <div class="modal-body">
+
+          <%= form_with(model:@artile,url: basic_infos_student_update_path, method: :put, local: true) do |f| %>
+            <% @students.each do |student| %>
+              <%= fields_for "studentsmany[]",student do |st| %>
+                <table class="table-student">
+                  <tr>
+                    <th>生徒名</th>
+                    <td>
+                      <%= student.student_name %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>生年月日</th>
+                    <td>
+                      <%= student.birthday.year %>年<%= daydis(student.birthday) %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>固定時間</th>
+                    <td>
+                      <%= student.fix_day %>曜日
+                      <%= student.fix_time.hour %>:<%= mindisplay(student.fix_time) %>
+                    </td>
+                  </tr>
+                  <% if student.fix_day2.present? %>
+                    <tr>
+                      <th>固定時間2</th>
+                      <td>
+                        <%= student.fix_day2 %>曜日
+                        <%= student.fix_time2.hour %>:<%= mindisplay(student.fix_time2) %>
+                      </td>
+                    </tr>
+                    <% end %>
+                      <% if student.fix_day3.present? %>
+                        <tr>
+                          <th>固定時間3</th>
+                          <td>
+                            <%= student.fix_day3 %>曜日
+                            <%= student.fix_time3.hour %>:<%= mindisplay(student.fix_time3) %>
+                          </td>
+                        </tr>
+                        <% end %>
+                          <tr>
+                            <th>学校名</th>
+                            <td>
+                              <%= st.text_field :school ,  style: "width:200px" %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>学年</th>
+                            <td>
+                              <%= Student.gradeyear(student.id) %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>授業方法</th>
+                            <td>
+                              <%= attend(student.zoom) %>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>受験区分</th>
+                            <td>
+                              <%= tasker(student.examinee) %>
+                            </td>
+                          </tr>
+                </table> <br />
+                <% end %>
+              <% end %>
+            <div class="modal-footer">
+              <%= submit_tag value="更新", :class => "btn btn-primary", data: { confirm: "更新していいですか"} %>&nbsp;
+              <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

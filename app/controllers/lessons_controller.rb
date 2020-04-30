@@ -5,17 +5,18 @@ class LessonsController < ApplicationController
   include ApplicationHelper
   
   def weeklyschedule
+    @timecol=TIMECOL
     if params[:cation]=="1"
       @today=params[:changeday].to_date
     else
-      nowtime=Time.new+32400
+      nowtime=Time.new+@timecol
       @today = nowtime.to_date
     end
     if params[:cation]=="2"
       studentid=params[:changestudent]
       session[:student_id]=Student.find_by(id:studentid).id if studentid.present?
       @student=Student.find(session[:student_id])
-      flash[:warning]="#{ @student.student_name}に切替成功しました。"
+      flash[:warning]="#{ @student.student_name }に切替成功しました。"
     end
     @students=Student.where(user_id:current_user)
     if @students.blank?
@@ -47,7 +48,6 @@ class LessonsController < ApplicationController
     elsif lesson_params[:examineekanji]=="全"
       lesson.examinee=nil
     end
-    
     lesson.regular=false if lesson_params[:regularkanji]=="臨時"
     #30分毎重複チェック
     starttimec=lesson.started_at
@@ -57,9 +57,7 @@ class LessonsController < ApplicationController
     count=0
     lasttime=(finishtimec-starttimec)/1800
     while starttimec<=finishtimec
-      
       #一回目のスタートタイムが前の授業の終わりと一緒でも登録必要にてそのまま通す
-      
       if Lesson.where("finished_at =? AND meeting_on = ?" ,starttimec, openday).count>0 and count>=1 
         reservecount=1
       elsif Lesson.where("started_at =? AND meeting_on = ?" ,starttimec, openday).count>0 and count<lasttime
@@ -125,8 +123,19 @@ class LessonsController < ApplicationController
     @lesson = Lesson.find(params[:id])
     @reservations = Reservation.where("lesson_id = ?", @lesson.id)
     @reservation_waitings = Reservation.where("waiting = ?", @lesson.id)
-    @zooms_sum = @reservations.count
-    @reals_sum = @reservations.count
+    @zooms_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,true).count
+    @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).count
+  end
+  
+  def attendance_processing
+    reservation = Reservation.find(params[:id])
+    reservation.absence = true
+    if reservation.save
+      flash[:success] = "該当受講生の欠席登録しました。"
+    else
+      flash[:danger]  = "該当受講生の欠席登録に失敗しました。"
+    end
+    redirect_to request.referrer
   end
   
   private
@@ -134,5 +143,5 @@ class LessonsController < ApplicationController
   def lesson_params
      params.require(:lesson).permit(:meeting_on, :target,:examineekanji,:starttime,:finishtime,:seats_real,:seats_zoom,:autoregister,:regularkanji,:note,:fixtimeres)
   end
-  
+
 end

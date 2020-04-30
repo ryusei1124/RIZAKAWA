@@ -1,14 +1,14 @@
 <% provide(:title, 'お知らせ一覧') %>
-
-<h1>お知らせ一覧</h1>
-
+<% require 'date' %>
+<% today=Date.today %>
+<h1 style="margin-bottom:-20px;">平川塾からのお知らせ</h1>
 <div class="col-md-8 col-md-offset-2">
+  <div style="margin-bottom:-40px;"><%= will_paginate %></div>
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
-      <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
+    <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
     <% end %>
   </div>
-  <%= will_paginate %>
   <table class="table-bordered table-condensed" id="notices-info">
     <thead>
       <tr>
@@ -17,27 +17,61 @@
       </tr>
     </thead>
     <thead>
-    <% @notices.each do |notice| %>
+      <% @notices.each do |notice| %>
       <tr>
         <td colspan="1" class="col-md-3"><%= l(notice.updated_at, format: :day) %></td>
         <td colspan="5">
           <%= link_to notice.notice_title, notice %>
           <%#= link_to notice.notice_title, edit_notice_path(notice) %>
           <% if current_user.admin? %>
-            <%= link_to "削除", notice, method: :delete,
+          <%= link_to "削除", notice, method: :delete,
             data: { confirm: "削除してよろしいですか？" },
             class: "btn btn-danger btn-sm pull-right" %>
           <% end %>
         </td>
       </tr>
-    <% end %>
+      <% end %>
     </thead>
   </table><br>
- <div class="panel panel-info">
-	<div class="panel-heading">
-	  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-		<%= link_to "スケジュールへのリンク", lessons_weeklyschedule_path %>
-	</div>
-</div>
+  
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+      &nbsp;<%= link_to "スケジュールへのリンク", lessons_weeklyschedule_path %>
+    </div>
+  </div>
+  
+    <% @reservations=Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',today,current_user.id).order(meeting_on: "ASC")  %>
+    <% if @reservations.present? %>
+    <div class="bg-warning">
+    <div class="panel-heading" data-toggle="collapse" data-target="#demo">
+      <span class="glyphicon glyphicon-envelope" aria-hidden="true"> 予約授業へのコメント（遅刻等の連絡、クリックで展開）</div></span>
+    <div id="demo" class="collapse">
+      <% @reservations.each do |reservation| %>
+      <br>
+      <% linkname=reservation.lesson.meeting_on %>
+      <P>・<%= link_to reservation.lesson.meeting_on,"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
+        <%=reservation.student.student_name %></P>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+  <br>
+  
+  <!-- 2.編集モーダルの配置 -->
+  <% @students=Student.where("user_id = ?",current_user.id).where(withdrawal: nil) %>
+  <% if @students.present? %>
+<div class="panel panel-success">
+    <div class="panel-heading">
+      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+      &nbsp;<a href="" data-toggle="modal" data-target="#modal-sa" %>
+        基本情報</a>
+    </div>
+  </div>
+  <% end %>
+ <!--基本情報モーダル -->
+<%= render partial: "basicstudent" %>
+<!--基本情報モーダル終了 -->
+
 
   

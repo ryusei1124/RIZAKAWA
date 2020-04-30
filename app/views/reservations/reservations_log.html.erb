@@ -7,23 +7,27 @@
   <table class="table-bordered table-condensed" id="reservations-info">
     <thead>
       <tr>
-        <th colspan="1" class="col-md-3">授業日</th>
-        <th colspan="1" class="col-md-3">授業時間</th>
-        <th colspan="5">備考</th>
+        <th  class="col-md-2">授業日</th>
+        <th  class="col-md-2">授業時間</th>
+        <th  class="col-md-2">生徒名</th>
+        <th  class="col-md-4">備考</th>
       </tr>
     </thead>
     <thead>
-   
+   <% @reservation_logs.each do |log| %>
       <tr>
-        <td colspan="1" class="col-md-3"><%= "#" %></td>
-        <td colspan="1">
+        <td><%= log.lesson.meeting_on %></td>
+        <td>
+           <%= link_to "" %>
+        </td>
+        <td>
            <%= link_to "#" %>
         </td>
-        <td colspan="5">
+        <td>
            <%= link_to "#" %>
         </td>
       </tr>
-    
+    <% end %>
     </thead>
   </table>
   

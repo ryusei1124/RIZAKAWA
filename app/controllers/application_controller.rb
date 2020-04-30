@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
+  #時間修正値9時間（秒）
+  TIMECOL = 32400
+  
 
   #学校を配列に
   def schoolgrade
@@ -26,20 +29,31 @@ class ApplicationController < ActionController::Base
     redirect_to "/login" if current_user.blank?
   end
   
-  #保護者でログインした時に子供情報を取得
+  #保護者でログインした時に情報がなければ一番目の子供情報を取得
   def set_student
-    @students=Student.where(user_id:current_user)
+    @students=Student.where(user_id:current_user).where(withdrawal:nil)
     if session[:student_id].blank? && @students.present?
       @student=@students.first
       session[:student_id]=@student.id
-    #else
-      #@student=Student.find_by(id:@student_id)
-      #session[:student]=@student
     end
   end
   
-    # 選択した生徒をインスタンス化する
+  # 選択した生徒をインスタンス化する
   def select_student
     @student = Student.find(params[:id])
+  end
+  
+  #保護者が他の家庭の生徒に保護者にアクセスしようとしたらログアウトする
+  def unless_student
+    @student = Student.find(params[:student_id])
+    if @student.user_id != current_user.id and current_user.admin == false
+        session[:student_id] = nil
+        flash[:warning] = "再ログインをお願いします"
+        log_out
+        redirect_to '/login'
+    end 
+  end
+  def weekday
+    @weekday = ["月","火","水","木","金","土","日"]
   end
 end

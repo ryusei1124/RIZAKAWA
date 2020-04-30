@@ -1,0 +1,27 @@
+<div class="modal fade" id=<%=@modaltype %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-body" style="background-color: #C8D7E6; margin:auto;">
+  <div>
+  <h3 class="lead" style="text-align:center;">振替授業を選択して下さい</h3>
+  <table align="center">
+  <%= form_with(url:reservationusers_reservation_change_user_path,local: true) do |f| %>
+    <tr><td style="font-size:15px;">
+  <p>
+    <%= f.hidden_field :reservation_id,value:@reservation.id %>
+    <%= f.hidden_field :student_id,value:@student.id %>
+    <%= f.collection_select :id,@lessonlists, :id, :content, {:include_blank => true},{:class =>"form-control share-form",:style=>"width:400px", required: true} %>
+　  〇：振替可能 ×：キャンセル待ち<br>
+　  振替授業は定期的授業に限ります<br></p>
+    </td></tr>
+  </table>
+    <P style="margin-left:200px">
+    <%= f.submit "登録", class: "btn btn-primary" %>&nbsp;
+    <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+    </P>
+    <% end %>
+    </div>
+  </div>
+  </div>
+  </div>
+</div>
