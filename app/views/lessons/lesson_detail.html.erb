@@ -44,7 +44,7 @@
   </table>
 
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h3 class="modal-title center">【生徒】</h3>
+     <h1 class="modal-title center">【生徒】</h1>
       <% @reservations.each do |reservation| %>
        <tr>
          <th>名前</th>
@@ -70,14 +70,11 @@
         </td>
         <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
         <td>
-          <% if reservation.zoom == true %>
-            <span class="label label-primary label-user-division">ZOOM</span>
-          <% end %>
-          <% if reservation.zoom == false %>
-            <span class="label label-primary label-user-division">リアル</span>
-          <% end %>
+          <%= form_with(model: reservation, url: reservation_path(reservation, no: 6), method: :patch, local:true) do |f| %>
+            <%= f.select :zoom, {zoom: true, "リアル": false} %>
         </td>
-        <td><%= link_to "修正", "#", remote: true, class: "btn btn-warning" %></td>
+        <td><%= f.submit '修正', class: "btn btn-warning" %></td>
+          <% end %>
         <td><%= l(reservation.attendance_time, format: :time, default: '-') %></td>
         <td><%= l(reservation.leave_time, format: :time, default: '-') %></td>
         <td>
@@ -118,7 +115,7 @@
 　</table>
 　　　　　　
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h3 class="modal-title center">【キャンセル待ち】</h3>
+     <h1 class="modal-title center">【キャンセル待ち】</h1>
       <% @reservation_waitings.each do |reservation| %>
        <tr>
         <th>名前</th>
@@ -129,7 +126,7 @@
        <tr>
         <td>
           <% if reservation.waiting == true %>
-            <%= reservation.student.student_name %>
+            <td><%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %></td>
           <% end %>
           <% if reservation.waiting == false %>
             <%= reservation.student.student_name %>

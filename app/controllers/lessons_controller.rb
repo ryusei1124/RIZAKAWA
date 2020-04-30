@@ -123,8 +123,8 @@ class LessonsController < ApplicationController
     @lesson = Lesson.find(params[:id])
     @reservations = Reservation.where("lesson_id = ?", @lesson.id)
     @reservation_waitings = Reservation.where("waiting = ?", @lesson.id)
-    @zooms_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,true).count
-    @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).count
+    @zooms_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, true).count
+    @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, false).count
   end
   
   def attendance_processing
