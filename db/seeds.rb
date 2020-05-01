@@ -25,7 +25,7 @@ Student.create!(student_name:"木村花",studentkana:"キムラハナ",zoom:fals
 Student.create!(student_name:"高田義男",studentkana:"タカダヨシオ",zoom:false,birthday:"2009/11/24",fix_day:"月",fix_time:"16:25",user_id:4)
 Student.create!(student_name:"高田真由",studentkana:"タカダマユ",zoom:false,birthday:"2010/12/24",fix_day:"金",fix_time:"16:30",user_id:4)
 Student.create!(student_name:"佐藤良子",studentkana:"サトウヨシコ",zoom:false,birthday:"2004/4/10",fix_day:"月",fix_time:"19:30",user_id:5)
-Student.create!(student_name:"佐藤太郎",studentkana:"ヤマダタロウ",zoom:false,birthday:"2010/4/10",fix_day:"金",fix_time:"16:45",user_id:5)
+Student.create!(student_name:"佐藤太郎",studentkana:"サトウタロウ",zoom:false,birthday:"2010/4/10",fix_day:"金",fix_time:"16:45",user_id:5)
 Student.create!(student_name:"杉村都和",studentkana:"スギムラトワ",zoom:false,birthday:"2011/4/10",fix_day:"火",fix_time:"16:10",user_id:6)
 Student.create!(student_name:"伊藤千佳",studentkana:"イトウチカ",zoom:true,birthday:"2004/10/24",fix_day:"水",fix_time:"19:05",user_id:7)
 Student.create!(student_name:"伊藤裕",studentkana:"イトウヒロシ",zoom:true,birthday:"2009/11/24",fix_day:"火",fix_time:"16:25",user_id:7)

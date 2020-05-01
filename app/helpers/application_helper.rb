@@ -92,7 +92,7 @@ module ApplicationHelper
     if gradeyear<=12
       gradeschoolreturn="小学生"
     else
-      gradeschoolreturn="中学生"
+      gradeschoolreturn="中高生"
     end
     gradeschoolreturn
   end

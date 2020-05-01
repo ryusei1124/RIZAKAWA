@@ -4,7 +4,7 @@
 
 <div class="col-md-10 col-md-offset-1">
   <div class="lesson-discontinuation-fix-btn">
-    <td><%= link_to "生徒追加", add_student_lesson_path(@lesson), remote: true, class: "btn btn-success btn-sm" %></td>
+    <td><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">生徒追加</a></td>
     <td><%= link_to "修正・中止", lesson_discontinuation_fix_lesson_path(@lesson), remote: true, class: "btn btn-danger btn-sm" %></td>
   </div>
 
@@ -143,5 +143,8 @@
 </div>
 
 <!--モーダルウインドウ表示-->
+<!--基本情報モーダル -->
+  <%= render partial: "add_student" %>
+<!--基本情報モーダル終了 -->
 <div id="lesson-discontinuation-fix" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="add-student" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
