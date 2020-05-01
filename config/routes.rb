@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
   # 授業コメント
   post 'lessoncomments/create', to: 'lessoncomments#create'
+  # 問い合わせ回答
+  post 'answers/create', to: 'answers#create'
   # ユーザー側生徒情報更新
   put 'basic_infos/student_update', to: 'basic_infos#student_update'
   patch 'maneger_students/update', to: 'maneger_students#update'

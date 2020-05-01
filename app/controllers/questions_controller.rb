@@ -10,6 +10,8 @@ class QuestionsController < ApplicationController
   end
   
   def show
+    question_id = params[:id]
+    @answers = Answer.where("question_id = ?" , question_id)
   end
   
   def new

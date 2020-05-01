@@ -22,7 +22,7 @@
           <td><%= l(question.created_at, format: :long) %></td>
           <td><%= question.user.guardian %></td>
           <td><%= link_to question.question_title, question %></td>
-          <td></td>
+          <td><%=question.answers.count %></td>
           <td>
             <% if current_user?(question.user) %>
               <%= link_to "削除", question, method: :delete, data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger btn-sm" %>
