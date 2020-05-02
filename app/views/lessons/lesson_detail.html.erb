@@ -68,12 +68,12 @@
             <%=  %>
           <% end %>
         </td>
-        <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
         <td>
           <%= form_with(model: reservation, url: reservation_path(reservation, no: 6), method: :patch, local:true) do |f| %>
-            <%= f.select :zoom, {zoom: true, "リアル": false} %>
+            <%= f.time_field :fix_time %>
         </td>
-        <td><%= f.submit '修正', class: "btn btn-warning" %></td>
+        <td><%= f.select :zoom, {zoom: true, "リアル": false} %></td>
+        <td>  <%= f.submit '修正', class: "btn btn-warning" %></td>
           <% end %>
         <td><%= l(reservation.attendance_time, format: :time, default: '-') %></td>
         <td><%= l(reservation.leave_time, format: :time, default: '-') %></td>
