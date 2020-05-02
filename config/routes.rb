@@ -13,12 +13,13 @@ Rails.application.routes.draw do
   get 'reservationusers/reservation_delete', to: 'reservationusers#reservation_delete'
   post 'reservationusers/reservation_change_user', to: 'reservationusers#reservation_change_user'
   post 'reservationusers/reservationnewuser', to: 'reservationusers#reservationnewuser'
-  post 'reservationusers/reservationnewusercreate', to: 'reservationusers#reservationnewusercreate'
+  post 'reservationusers/reservation_create'
   # 授業コメント
   post 'lessoncomments/create', to: 'lessoncomments#create'
   # ユーザー側生徒情報更新
   put 'basic_infos/student_update', to: 'basic_infos#student_update'
   patch 'maneger_students/update', to: 'maneger_students#update'
+  #管理者　予約追加
   
   get 'sessions/new'
   root :to => 'notices#index'
@@ -27,13 +28,14 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  resources :reservation_logs, only: [:index]
+  
   # ログインボタン(管理者、生徒)
   patch 'login', to: 'sessions#admin_login'
   put 'login', to: 'sessions#student_login'
-
+  
   resources :users do
     member do
-      get 'reservations/reservations_log'
       get 'edit_basic_info'
       patch 'update_basic_info'
     end
@@ -50,6 +52,14 @@ Rails.application.routes.draw do
    end
   end
   
+  resources :students do
+    member do
+      get 'info_edit'
+      patch 'info_update'
+    end
+  end
+
+
   resources :notices
   
   resources :reservations, only: [:update, :destroy]

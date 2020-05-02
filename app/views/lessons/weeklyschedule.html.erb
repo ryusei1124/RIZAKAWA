@@ -69,7 +69,7 @@
                 <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
                 <div class="form-group">
                   <label for="select1a">学校対象:</label>
-                  <%= f.select :target, @grade, {}, required: true, class: "form-control new-form" %>
+                  <%= f.select :target, @target, {}, required: true, class: "form-control new-form" %>
                 </div>
                 <div class="form-group">
                   <label for="select1a">受験生区分:</label>
@@ -129,9 +129,9 @@
         <% lesson=lesson.find_by(started_at:times) %>
         <% if lesson.present?  %>
           <% if current_user.admin? %>
-            <% rev=Reservation.where("lesson_id =?" ,lesson.id).present? %>
+            <% rev=Reservation.where("lesson_id =?" ,lesson.id) %>
           <% else %>
-            <% rev=Reservation.where("lesson_id =? and student_id=?" ,lesson.id,@student.id).present?  %>
+            <% rev = Reservation.find_by(lesson_id: lesson.id, student_id: @student.id) %>
           <% end %>
           <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
           <% if current_user.admin==true and rev.present? %>
@@ -140,14 +140,16 @@
             <% tdcolor="#fffacd" %>
           <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中学生")  %>
             <% selection=1 %>
-            <% if rev.present? %>
+            <% if rev.present? and rev.waiting? %>
+              <% tdcolor="#fff0f5" %>
+            <% elsif rev.present? %>
               <% tdcolor="#c0ffc0" %>
             <% else %>
               <% tdcolor="#fffacd" %>
             <% end %>
-          <% elsif rev.present? and current_user.admin==false %>
-            <% tdcolor="#c0ffc0" %>
-          <% elsif rev.present? and current_user.admin==false %>
+          <% elsif rev.present? and current_user.admin == false %>
+            <% tdcolor="#e0ffff" %>
+          <% elsif rev.present? and current_user.admin == false %>
             <% tdcolor="#c0ffc0" %>
           <% else %>
             <% tdcolor="#d3d3d3" %>
@@ -174,7 +176,7 @@
           <%  elsif coursecount>1 %>
           <td bgcolor=<%=tdcolor %> style="padding-left:2px;"><%coursecount=coursecount.to_i-1 %>
           <% if (max-coursecount)==1 %>
-          <%= (Lesson.find(lesson_id).started_at).strftime("%H:%M") %>-<%= (Lesson.find(lesson_id).finished_at).strftime("%H:%M") %>
+            <%= (Lesson.find(lesson_id).started_at).strftime("%H:%M") %>-<%= (Lesson.find(lesson_id).finished_at).strftime("%H:%M") %>
           <% else %>
           &nbsp;
           <% end %>
@@ -193,6 +195,7 @@
 </table>
 <% if current_user.admin==false %>
   <div style="padding-left:170px;">〇薄緑色の授業は、予約済です。</div>
+  <div style="padding-left:170px;">〇ピンク色の授業は、キャンセル待ちです。</div>
   <div style="padding-left:170px;">〇ご契約で設定の授業は自動で予約登録されています。</div>
   <div style="padding-left:170px;">〇黄色の授業は新規登録可能です。</div>
   <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です。</div>

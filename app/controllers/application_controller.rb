@@ -37,6 +37,12 @@ class ApplicationController < ActionController::Base
       session[:student_id]=@student.id
     end
   end
+  
+  # 選択した生徒をインスタンス化する
+  def select_student
+    @student = Student.find(params[:id])
+  end
+  
   #保護者が他の家庭の生徒に保護者にアクセスしようとしたらログアウトする
   def unless_student
     @student = Student.find(params[:student_id])

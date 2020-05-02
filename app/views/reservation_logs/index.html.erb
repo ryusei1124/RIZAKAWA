@@ -1,0 +1,41 @@
+<% dateup = @day.end_of_month+1 %>
+<% datedown = @day.beginning_of_month-1 %>
+<h2 class="lead">予約履歴</h2>
+<h2><div style="display: inline-block;"><%= button_to "←", {controller: 'reservation_logs', action: 'index'}, {method: :get, class: "logbotton",params: {changeday:datedown,cation:"1"}} %></div>
+&nbsp;<%= year_month(@day) %>&nbsp;
+<div style="display: inline-block;"><%= button_to "→", {controller: 'reservation_logs', action: 'index'}, {method: :get,  class: "logbotton", params: {changeday:dateup,cation:"1"}} %></div>
+</h2>
+<div class="col-md-10 col-md-offset-1">
+<% if @reservation_logs.present? %>
+  <table class="table-bordered table-condensed" id="reservations-info">
+    <thead>
+      <tr>
+        <th  class="col-md-2">授業日</th>
+        <th  class="col-md-2">授業時間</th>
+        <th  class="col-md-3">生徒名</th>
+        <th  class="col-md-3">備考</th>
+      </tr>
+    </thead>
+    <thead>
+   <% @reservation_logs.each do |log| %>
+      <tr>
+        <td><%= daydis(log.lesson.meeting_on) %> ( <%=weekdate(log.lesson.meeting_on) %> )</td>
+        <td>
+           <%= timedisplay(log.lesson.started_at) %> ～ <%= timedisplay(log.lesson.finished_at) %>
+        </td>
+        <td>
+           <%= link_to log.student.student_name, "/reservationusers/useredit?lesson_id=#{log.lesson.id}&student_id=#{log.student.id}" %>
+        </td>
+        <td>
+           <%= log_waiting(log.waiting) %>
+           <%= log_transfer(log.transfer) %>
+           <%= log_absence(log.absence) %>
+        </td>
+      </tr>
+    <% end %>
+    </thead>
+  </table>
+  <% else %>
+    <h2>対象がありません</h2>
+  <% end %>
+</div>
