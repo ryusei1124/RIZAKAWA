@@ -53,11 +53,27 @@ class ReservationsController < ApplicationController
         end
        redirect_to request.referrer and return
     end
+    
+    if params[:no] == "6"
+        if @reservation.update_attributes(zoom: params[:reservation][:zoom])
+           @reservation.update_attributes(fix_time: params[:reservation][:fix_time])
+          flash[:success] = "固定時間と授業方法を更新しました。"
+        else
+          flash[:danger] = "固定時間と授業方法の更新に失敗しました。"
+        end
+       redirect_to request.referrer and return
+    end
   end
 
   
   def reservations_log
     @user = User.find_by(params[:id])
+  end
+  
+  private
+  
+  def reservation_params
+     params.require(:reservation).permit(:zoom, :fix_time)
   end
   
 end
