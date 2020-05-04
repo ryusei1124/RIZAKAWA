@@ -18,6 +18,12 @@ textarea {
   resize: vertical;
 }
 
+input, button, textarea, select {
+    font-family: auto;
+    -moz-appearance: none;
+    appearance: none;
+}
+
 .center {
   text-align: center;
 }

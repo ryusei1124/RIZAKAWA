@@ -1,3 +1,6 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 #table-reservations {
   width: 100%;
   vertical-align: middle;
@@ -20,4 +23,8 @@
     vertical-align: middle;
     text-align: center;
   }
+}
+
+select {
+  height: 1.7em;
 }
