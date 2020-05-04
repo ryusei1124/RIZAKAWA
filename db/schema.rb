@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_025656) do
     t.datetime "updated_at", null: false
     t.boolean "examinee", default: false
     t.boolean "hold", default: false
-    t.boolean "cancel"
+    t.boolean "cancel", default: false
     t.index ["user_id"], name: "index_lessons_on_user_id"
   end
 

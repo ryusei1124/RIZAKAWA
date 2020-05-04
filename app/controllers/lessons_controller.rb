@@ -121,6 +121,7 @@ class LessonsController < ApplicationController
     @lesson.seats_real = lesson_params[:seats_real]
     @lesson.seats_zoom = lesson_params[:seats_zoom]
     @lesson.note = lesson_params[:note]
+    @lesson.rescheduled = true
     if @reservecounttotal >= 1 
       flash[:danger] = "重複登録があります。処理を中止します"
     elsif @lesson.save
@@ -131,10 +132,6 @@ class LessonsController < ApplicationController
     redirect_to request.referrer
   end
 
-  def cancellation
-    @lesson
-    redirect_to request.referrer
-  end
   
   def attendance_processing
     reservation = Reservation.find(params[:id])

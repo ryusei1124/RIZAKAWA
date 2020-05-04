@@ -1,5 +1,5 @@
 class AddDetailsToStudents < ActiveRecord::Migration[5.2]
   def change
-    t.boolean "cancel", default: false
+    add_column :students, :note, :text
   end
 end
