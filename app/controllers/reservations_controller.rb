@@ -63,6 +63,15 @@ class ReservationsController < ApplicationController
         end
        redirect_to request.referrer and return
     end
+    
+    if params[:no] == "7"
+        if @reservation.update_attributes(waiting: false)
+          flash[:success] = "キャンセル待ちを解除して授業枠の登録をしました。"
+        else
+          flash[:danger] = "キャンセル待ちを解除して授業枠の登録に失敗しました。"
+        end
+       redirect_to request.referrer and return
+    end
   end
 
   

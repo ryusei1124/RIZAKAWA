@@ -1,44 +1,39 @@
-<div class="modal fade" id=modal1 tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog">
-  <div class="modal-content" margin:auto;">
-  <div class="modal-body">
-  <h2 style="font-size:25px">生徒追加</h2>
-  <%= form_with(url:reservationusers_reservation_create_path,local: true) do |f| %>
-      <%= f.hidden_field:lesson_id,value:@lesson.id %>
-  <table class="table-student">
-                  <tr>
-                    <th>生徒名</th>
-                    <td>
-                      <% @students_add = Student.kanaorder %>
-        <%= f.collection_select :student_id, @students_add, :id, :student_name, {include_blank: true}, required:true, class: "form-control" %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>授業方法</th>
-                    <td>
-                      <%= f.radio_button :zoom, :false %>&nbsp;リアル
-        <%= f.radio_button :zoom, :true  ,{:checked => true} %>&nbsp;Zoom
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>固定時間</th>
-                    <td>
-                     <%= f.time_field :fix_time, class: "form-control" %>
-                    </td>
-                  </tr>
-                  
-                </table> <br />
-
-<div class="modal-footer">
-        <%= f.submit "登録", class: "btn btn-primary" %>
-      <% end %>&nbsp;
-      <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+    <div class="modal-content" margin:auto;"=" margin:auto;""="margin:auto;""">
+      <div class="modal-body">
+        <h2 style="font-size:25px">生徒追加</h2>
+        <%= form_with(url:reservationusers_reservation_create_path,local: true) do |f| %>
+        <%= f.hidden_field:lesson_id,value:@lesson.id %>
+        <table class="table-student">
+          <tr>
+            <th>生徒名</th>
+            <td>
+              <% @students_add = Student.kanaorder %>
+                <%= f.collection_select :student_id, @students_add, :id, :student_name, {include_blank: true}, required:true, class: "form-control" %>
+              </td>
+            </tr>
+            <tr>
+              <th>授業方法</th>
+              <td>
+                <%= f.radio_button :zoom, :false %>&nbsp;リアル
+                <%= f.radio_button :zoom, :true ,{:checked => true} %>&nbsp;Zoom
+              </td>
+            </tr>
+            <tr>
+              <th>固定時間</th>
+              <td>
+                <%= f.time_field :fix_time, class: "form-control" %>
+              </td>
+            </tr>
+          </table>
+          <br/>
+          <div class="modal-footer">
+            <%= f.submit "登録", class: "btn btn-primary" %>
+          <% end %>&nbsp;
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+          </div>
+        </div>
     </div>
-
-
-
-  </div>
-  </div>
   </div>
 </div>
-

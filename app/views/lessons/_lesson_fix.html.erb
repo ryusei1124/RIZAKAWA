@@ -1,68 +1,61 @@
-<div class="modal fade" id=modal2 tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
   <div class="modal-dialog">
-  <div class="modal-content">
-  <div class="modal-body" style="margin: auto;">
-  <h2 style = "font-size: 30px">授業内容変更</h2>
-  <% start_at = timedisplay( @lesson.started_at ) %>
-  <% finished_at = timedisplay( @lesson.finished_at ) %>
-  <table class="table-student">
-         <%= form_with(model: @lesson,url: lesson_path, method: :put, local: true) do |f| %>         
-                  <tr>
-                    <th>開催日:</th>
-                    <td>
-                     <%= f.date_field :meeting_on , style: "width:200px", required: true, class: "form-control" %>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>開始時間:</th>
-                    <td>
-                     <%= f.select :starttime, @hourselect, { selected: start_at }, required: true , class: "form-control" %>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>終了時間:</th>
-                    <td>
-                     <%= f.select :finishtime, @hourselect, { selected: finished_at }, required: true, class: "form-control" %>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>リアル定員:</th>
-                    <td>
-                     <%= f.select :seats_real, @capacity, { selected: @lesson.seats_real }, required: true , class: "form-control" %>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>ZOOM定員:</th>
-                    <td>
-                     <%= f.select :seats_zoom, @capacity, { selected: @lesson.seats_zoom }, required: true, class: "form-control" %>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th>備考:</th>
-                    <td>
-                     <%= f.text_field :note ,   class: "form-control" %>
-                    </td>
-                  </tr>
-                  
-                </table> <br />
-                
-                <div class="modal-footer">
-                <div style=" display: inline-block; ">
-                  <%= f.submit "登録", class: "btn btn-primary" %>
-                </div>&nbsp;
-                <div style=" display: inline-block; ">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-                </div></div>
-              <% end %>  
+    <div class="modal-content">
+      <div class="modal-body" style="margin: auto;">
+        <h2 style="font-size: 30px">授業内容変更</h2>
+        <% start_at = timedisplay( @lesson.started_at ) %>
+          <% finished_at = timedisplay( @lesson.finished_at ) %>
+            <table class="table-student">
+              <%= form_with(model: @lesson,url: lesson_path, method: :put, local: true) do |f| %>
+              <tr>
+                <th>開催日:</th>
+                <td>
+                  <%= f.date_field :meeting_on , style: "width:200px", required: true, class: "form-control" %>
+                </td>
+              </tr>
+              <tr>
+                <th>開始時間:</th>
+                <td>
+                  <%= f.select :starttime, @hourselect, { selected: start_at }, required: true , class: "form-control" %>
+                </td>
+              </tr>
+              <tr>
+                <th>終了時間:</th>
+                <td>
+                  <%= f.select :finishtime, @hourselect, { selected: finished_at }, required: true, class: "form-control" %>
+                </td>
+              </tr>
+              <tr>
+                <th>リアル定員:</th>
+                <td>
+                  <%= f.select :seats_real, @capacity, { selected: @lesson.seats_real }, required: true , class: "form-control" %>
+                </td>
+              </tr>
+              <tr>
+                <th>ZOOM定員:</th>
+                <td>
+                  <%= f.select :seats_zoom, @capacity, { selected: @lesson.seats_zoom }, required: true, class: "form-control" %>
+                </td>
+              </tr>
+              <tr>
+                <th>備考:</th>
+                <td>
+                  <%= f.text_field :note , class: "form-control" %>
+                </td>
+              </tr>
+            </table>
+            <br/>
+            <div class="modal-footer">
+              <div style=" display: inline-block; ">
+                <%= f.submit "登録", class: "btn btn-primary" %>
+              </div>&nbsp;
+              <div style=" display: inline-block; ">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
               </div>
             </div>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
   </div>
 </div>
