@@ -63,11 +63,11 @@ class LessonsController < ApplicationController
           .or(students.where("fix_time2 >=? and fix_time2 <=?",@lesson.started_at,@lesson.finished_at))
           .or(students.where("fix_time3 >=? and fix_time3 <=?",@lesson.started_at,@lesson.finished_at))
         end
-        if lesson_params[:target] == "中高生" && @lesson.examinee == true #中学生、高校生で受験生を自動登録
+        if lesson_params[:target] == "中高生" and @lesson.examinee == true #中学生、高校生で受験生を自動登録
           rev=students.where("birthday < ? and examinee = ?" ,jrhigh(@lesson.meeting_on).to_date,true)
-        elsif lesson_params[:target] == "中高生" && @lesson.examinee == false #中学生、高校生で受験生以外を自動登録
+        elsif lesson_params[:target] == "中高生" and @lesson.examinee == false #中学生、高校生で受験生以外を自動登録
           rev=students.where("birthday < ? and examinee = ?" , jrhigh(@lesson.meeting_on).to_date,false)
-        elsif lesson_params[:target] == "中高生" && @lesson.examinee.nil? #中学生、高校生を自動登録
+        elsif lesson_params[:target] == "中高生" and @lesson.examinee.nil? #中学生、高校生を自動登録
           rev=students.where("birthday < ? " , jrhigh(@lesson.meeting_on).to_date)  
         elsif lesson_params[:target] == "小学生" and @lesson.examinee == true #小学生で受験生を自動登録
           rev=students.where("birthday >= ? and examinee=?", jrhigh(@lesson.meeting_on).to_date,true)
@@ -125,13 +125,36 @@ class LessonsController < ApplicationController
     if @reservecounttotal >= 1 
       flash[:danger] = "重複登録があります。処理を中止します"
     elsif @lesson.save
-      flash[:success] = "保存に成功しました"
+      flash[:success] = "更新に成功しました"
     else
-      flash[:danger] = "保存に失敗しました"
+      flash[:danger] = "更新に失敗しました"
     end
     redirect_to request.referrer
   end
 
+  def cancellation
+    lesson = Lesson.find(params[:id])
+    if params[:cancel] == "Yes"
+      lesson.cancel = true
+    else
+      lesson.cancel = false
+      message = "再開"
+    end
+    if lesson.save
+      if lessons.cancel?
+       title = "授業を中止にします"
+       content = "#{daydis(lesson.meeting_on)}#{timedisplayk(lesson.started_at)}からの授業を中止にします。ご了承の程お願いします"
+       link = "weeklyschedule"
+       User.sendmail_all_users( title, content, link )
+       flash[:warning] = "中止及び全員にメール送信しました。"
+      else
+       flash[:success] = "授業を再開しました。"
+      end 
+    else
+      flash[:danger] = "#{message}登録に失敗しました"
+    end
+    redirect_to request.referrer
+  end
   
   def attendance_processing
     reservation = Reservation.find(params[:id])

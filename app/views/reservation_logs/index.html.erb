@@ -26,10 +26,11 @@
         <td>
            <%= link_to log.student.student_name, "/reservationusers/useredit?lesson_id=#{log.lesson.id}&student_id=#{log.student.id}" %>
         </td>
-        <td>
+        <td style="text-align: left;">
            <%= log_waiting(log.waiting) %>
            <%= log_transfer(log.transfer) %>
            <%= log_absence(log.absence) %>
+           <%= log_cancel(Lesson.find(log.lesson_id).cancel) %>
         </td>
       </tr>
     <% end %>

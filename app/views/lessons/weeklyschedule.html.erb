@@ -165,7 +165,9 @@
           <% else %>
             <%= lesson.target %>
           <% end %>
-          <% if lesson.examinee==true %>
+          <% if lesson.cancel == true %>
+            <span class="label label-danger label-user-division">止</span>
+          <% elsif lesson.examinee==true %>
             <span class="label label-primary label-user-division">受</span>
           <% elsif lesson.examinee==false %>
             <span class="label label-primary label-user-division">般</span>
@@ -198,6 +200,7 @@
   <div style="padding-left:170px;">〇ピンク色の授業は、キャンセル待ちです。</div>
   <div style="padding-left:170px;">〇ご契約で設定の授業は自動で予約登録されています。</div>
   <div style="padding-left:170px;">〇黄色の授業は新規登録可能です。</div>
+  <div style="padding-left:170px;">〇<span class="label label-danger label-user-division">止</span>の印のあるものは中止になった授業です。</div>
   <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です。</div>
   <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です。</div>
 <% end %>

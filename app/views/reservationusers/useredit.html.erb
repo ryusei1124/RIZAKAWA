@@ -15,6 +15,9 @@
     <% else %>
       <span class="label label-info">予約済</span>
     <% end %>
+    <% if @lesson.cancel == true %>
+      <span class="label label-danger label-user-division">中止になりました</span>
+    <% end %>
     </td></tr>
     <tr><td class="tdcondition1">名前 学校 学年</td><td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td></tr>
     <tr><td class="tdcondition1">予約日時</td>
