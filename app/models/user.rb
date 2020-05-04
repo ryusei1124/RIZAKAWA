@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :students, dependent: :destroy
   has_many :questions, dependent: :destroy
+  has_many :answers, dependent: :destroy
   
   # 生徒一覧の名前順
   default_scope -> { order(student: :asc) }

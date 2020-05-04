@@ -2,7 +2,7 @@
 
 <h1>問い合わせ詳細</h1>
 
-<div class="col-md-10 col-md-offset-1">
+<div class="col-md-8 col-md-offset-2">
   <table class="table-bordered table-condensed" id="questions-info-show">
     <thead>
       <tr>
@@ -40,30 +40,32 @@
   <div>返信</div>
   <%= form_with(model:@answer,url: answers_create_path,local: true) do |f| %>
     <%= f.hidden_field:question_id, value:@question.id %>
-    <%#= f.hidden_field:user_id, value:@user.id %>
-    <%= f.text_field :answer_content, class: "form-control",required:true %>
-    <br>
-    <%= f.submit value:"返信",class:"btn-sm btn-info" %>
+    <%= f.hidden_field:user_id, value: current_user.id %>
+    <%= f.text_area :answer_content, class: "form-control", required:true, rows: 2 %>
+    <div class="answer-btn-1"><%= f.submit value:"返信", class:"btn-sm btn-info answer-btn-2" %></div>
   <% end %>
   
   <% if @answers.present? %>
-    <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
+    <table style="width:100%; font-size:15px" class="table-bordered table-condensed lead">
       <% @answers.each do |comment| %>
-              
-        <%# if comment.user.admin == false %>
-          <%#= comment.student.student_name %>
-          （保護者　<%#= comment.user.guardian %>)
-        <%# else %>
-          <%#= comment.user.guardian %>
-        <%# end %>
-        <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %>
-        <%= comment.answer_content %>
-              
+        <tr>
+          <td>
+            <% if comment.user.admin == false %>
+              <div><%= comment.user.guardian %></div>
+            <% else %>
+              <%= comment.user.guardian %>
+              <br>
+            <% end %>
+              <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %>
+              <br>
+            <%= raw(nl2br(comment.answer_content)) %>
+          </td>
+        </tr>      
       <% end %>
     </table>
   <% end %>
   
   <br>
   <%= link_to "問い合わせ投稿", new_question_path, class: "btn btn-primary" %>
-  <div style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">問い合わせ一覧に戻る</a></div>
+  <div style="text-align:center"><a class="questions" href="#" onclick="javascript:window.history.back(-1);return false;">問い合わせ一覧に戻る</a></div>
 </div>
