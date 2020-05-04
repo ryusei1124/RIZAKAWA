@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_17_083434) do
+ActiveRecord::Schema.define(version: 2020_05_04_025656) do
 
   create_table "answers", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2020_04_17_083434) do
     t.datetime "updated_at", null: false
     t.boolean "examinee", default: false
     t.boolean "hold", default: false
+    t.boolean "cancel"
     t.index ["user_id"], name: "index_lessons_on_user_id"
   end
 

@@ -5,7 +5,11 @@
 <div class="col-md-10 col-md-offset-1">
   <div class="lesson-discontinuation-fix-btn">
     <td><a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success button_size">生徒追加</a></td>
-    <td><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">授業振替</a></td>
+    <td><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">授業変更</a></td>
+    <td>
+     <%= botton_to "授業中止", reservation_path(reservation, no: 5), method: :patch,
+                  data: { confirm: "本当に中止しますか？" },
+                  class: "btn btn-danger button_size" %>
   </div>
 
   <table class="table table-bordered table-condensed" id="table-reservations">
