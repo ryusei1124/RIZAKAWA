@@ -141,7 +141,7 @@ class LessonsController < ApplicationController
       message = "再開"
     end
     if lesson.save
-      if lessons.cancel?
+      if lesson.cancel?
        title = "授業を中止にします"
        content = "#{daydis(lesson.meeting_on)}#{timedisplayk(lesson.started_at)}からの授業を中止にします。ご了承の程お願いします"
        link = "weeklyschedule"
