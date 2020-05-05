@@ -133,7 +133,7 @@ class ReservationusersController < ApplicationController
       @lessoncomments = Lessoncomment.where("reservation_id = ? and student_id= ?" , @reservation.id, @student.id)
       #振替のためのコード。授業の日に該当生徒が小学生か中学生かを取得。
       gradesc = gradeschool(@student.birthday,@lesson.meeting_on)
-      lessons = Lesson.where("meeting_on> ? and regular= ?", @today,true).where("target= ? or target= ?", gradesc,"小中高生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
+      lessons = Lesson.where("meeting_on> ? and regular= ? and cancel = ?", @today,true,false).where("target= ? or target= ?", gradesc,"小中高生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
       lessons.each do |les|
       if Reservation.where("student_id= ? and lesson_id= ?", @student.id,les.id).count == 0
         realcapacity = Lesson.find(les.id).seats_real

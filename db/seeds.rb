@@ -10,7 +10,7 @@ User.create!(guardian:"伊藤七海",guardiankana:"イトウナナミ",email:"sa
 User.create!(guardian:"工藤幸子",guardiankana:"クドウサチコ",email:"sample-7@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"斎藤雅美",guardiankana:"サイトウマサミ",email:"sample-8@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"太田祐樹",guardiankana:"オオタユウタ",email:"sample-9@email.com",password:"password",password_confirmation:"password")
-User.create!(guardian:"古川真由美",guardiankana:"フルカワマユミ",email:"nanoleaf0218@gmail.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"古川真由美",guardiankana:"フルカワマユミ",email:"sample-9@email.com-10",password:"password",password_confirmation:"password")
 User.create!(guardian:"上田優",guardiankana:"ウエダユウ",email:"sample-11@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"佐竹真紀",guardiankana:"サタケマキ",email:"sample-12@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"桑田貞",guardiankana:"クワタサダ",email:"sample-13@email.com",password:"password",password_confirmation:"password")

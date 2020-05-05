@@ -1,4 +1,4 @@
- <h2 class="lead">授業予約詳細・変更登録</h2>
+  <h2 class="lead">授業予約詳細・変更登録</h2>
 <div class="row">
   <% @zoom=@reservation.zoom %>
     <div class="col-md-6 col-md-offset-2 lead">
@@ -14,6 +14,9 @@
       <span class="label label-danger">キャンセル待ち</span>
     <% else %>
       <span class="label label-info">予約済</span>
+    <% end %>
+    <% if @lesson.cancel == true %>
+      <span class="label label-danger label-user-division">中止になりました</span>
     <% end %>
     </td></tr>
     <tr><td class="tdcondition1">名前 学校 学年</td><td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td></tr>
@@ -121,5 +124,3 @@
 <!--授業振替モーダルここまで -->
 
 </div>
-
-        

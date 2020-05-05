@@ -4,14 +4,31 @@
 
 <div class="col-md-10 col-md-offset-1">
   <div class="lesson-discontinuation-fix-btn">
-    <td><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">生徒追加</a></td>
-    <td><%= link_to "修正・中止", lesson_discontinuation_fix_lesson_path(@lesson), remote: true, class: "btn btn-danger" %></td>
+  <p>
+    <div style="display: inline-block;">
+    <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success button_size">生徒追加</a>
+    </div>
+    <div style="display: inline-block;">
+    <a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">授業変更</a>
+    </div>
+     <div style="display: inline-block;">
+     <% if @lesson.cancel == false %>
+      <%= button_to "授業中止", {controller: 'lessons', action: 'cancellation'}, {method: :patch, data: { confirm: '本当に中止にしますか？' }, params: {id: @lesson.id, cancel: "Yes" },class:"btn btn-danger button_size"} %>
+     <% else %>
+      <%= button_to "授業再開", {controller: 'lessons', action: 'cancellation'}, {method: :patch, data: { confirm: '本当に再開しますか？' }, params: {id: @lesson.id},class:"btn btn-primary button_size"} %>
+     <% end %>
+     </div>
+  </p>
   </div>
 
   <table class="table table-bordered table-condensed" id="table-reservations">
     <tr>
       <th class="col-md-3">日付</th>
-      <td><%= l(@lesson.meeting_on, format: :long) %></td>
+      <td><%= l(@lesson.meeting_on, format: :long) %>
+        <% if @lesson.cancel == true %>
+          <span class="label label-danger label-user-division">中止になりました</span>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <th>対象者</th>
@@ -159,6 +176,9 @@
 <!--モーダルウインドウ表示-->
 <!--基本情報モーダル -->
   <%= render partial: "add_student" %>
+<!--基本情報モーダル終了 -->
+<!--基本情報モーダル -->
+  <%= render partial: "lesson_fix" %>
 <!--基本情報モーダル終了 -->
 <div id="lesson-discontinuation-fix" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="add-student" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
