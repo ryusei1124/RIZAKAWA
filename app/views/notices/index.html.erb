@@ -1,14 +1,14 @@
 <% provide(:title, 'お知らせ一覧') %>
 <% require 'date' %>
 <% today=Date.today %>
-<h1 style="margin-bottom:-20px;">平川塾からのお知らせ</h1>
+<h1>平川塾からのお知らせ</h1>
 <div class="col-md-8 col-md-offset-2">
-  <div style="margin-bottom:-40px;"><%= will_paginate %></div>
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
     <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
     <% end %>
   </div>
+  <% if @notices.present? %>
   <table class="table-bordered table-condensed" id="notices-info">
     <thead>
       <tr>
@@ -32,8 +32,17 @@
       </tr>
       <% end %>
     </thead>
-  </table><br>
-  
+  </table>
+  <% else %>
+    <h2>投稿はありません</h2>
+  <% end %>
+  <% if will_paginate.blank? %>
+    <br>
+  <% else %>
+  <div style = "margin : -20px 0 -20px 0" >
+      <%= will_paginate %>
+  </div>
+  <% end %>
   <div class="panel panel-info">
     <div class="panel-heading">
       <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>

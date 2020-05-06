@@ -13,6 +13,6 @@ module ReservationsLogHelper
   end
   def log_cancel( cancel ) 
     body = ""
-    body = "【中止】" if cancel == true
+    body = "【授業が中止になりました】" if cancel == true
   end
 end
