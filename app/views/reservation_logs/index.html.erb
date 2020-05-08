@@ -19,7 +19,7 @@
     <thead>
    <% @reservation_logs.each do |log| %>
       <tr>
-        <td><%= daydis(log.lesson.meeting_on) %> ( <%=weekdate(log.lesson.meeting_on) %> )</td>
+        <td><%= log.lesson.meeting_on %> ( <%=weekdate(log.lesson.meeting_on) %> )</td>
         <td>
            <%= timedisplay(log.lesson.started_at) %> ～ <%= timedisplay(log.lesson.finished_at) %>
         </td>
@@ -27,6 +27,7 @@
            <%= link_to log.student.student_name, "/reservationusers/useredit?lesson_id=#{log.lesson.id}&student_id=#{log.student.id}" %>
         </td>
         <td style="text-align: left;">
+           <%= log_personal_cancel(log.cancel) %>
            <%= log_waiting(log.waiting) %>
            <%= log_transfer(log.transfer) %>
            <%= log_absence(log.absence) %>

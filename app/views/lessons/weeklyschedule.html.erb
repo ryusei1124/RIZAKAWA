@@ -138,7 +138,7 @@
             <% tdcolor="#c0ffc0" %>
           <% elsif current_user.admin==true %>
             <% tdcolor="#fffacd" %>
-          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中学生")  %>
+          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中高生")  %>
             <% selection=1 %>
             <% if rev.present? and rev.waiting? %>
               <% tdcolor="#fff0f5" %>
@@ -160,11 +160,12 @@
             <%= link_to lesson.target, "/lessons/#{lesson.id}/lesson_detail" %>
           <% elsif rev.present? %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
-          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中学生")  %>
+          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中高生")  %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'reservationnewuser',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% else %>
             <%= lesson.target %>
           <% end %>
+
           <% if lesson.cancel == true %>
             <span class="label label-danger label-user-division">止</span>
           <% elsif lesson.examinee==true %>

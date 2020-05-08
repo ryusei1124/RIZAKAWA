@@ -183,6 +183,41 @@
         <% end %>
       <% end %>
 　</table>
+
+<table class="table table-bordered table-condensed" id="table-reservations">
+     <h1 class="modal-title center">【予約取消】</h1>
+     
+      <% if @reservations_cancelonly.present? %>
+           <tr>
+            <th>名前</th>
+            <th>固定時間</th>
+            <th>授業方法</th>
+           </tr>
+      <% else %>
+        <th><h2>予約取消生徒なし</h2></th>
+      <% end %>
+      
+    　<% @reservations_cancelonly.each do |reservation| %>
+        <% if reservation.cancel == true %>
+           <tr>
+            <td>
+              <%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
+            </td>
+            <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
+            <td>
+              <% if reservation.zoom == true %>
+                <span class="label label-info label-user-division">ZOOM</span>
+              <% end %>
+              
+              <% if reservation.zoom == false %>
+                <span class="label label-success label-user-division">リアル</span>
+              <% end %>
+            </td>
+           </tr>
+        <% end %>
+      <% end %>
+　</table>
+
 </div>
 
 <!--モーダルウインドウ表示-->

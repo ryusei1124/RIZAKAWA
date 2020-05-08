@@ -56,8 +56,13 @@ class ReservationsController < ApplicationController
     
     if params[:no] == "6"
         if @reservation.update_attributes(zoom: params[:reservation][:zoom])
-           @reservation.update_attributes(fix_time: params[:reservation][:fix_time])
-          flash[:success] = "固定時間と授業方法を更新しました。"
+          @reservation.update_attributes(fix_time: params[:reservation][:fix_time])
+         
+          send_mail_address
+          title = "授業時間が確定しました"
+          content = "授業時間が確定しました。下記のリンクを確認お願いします。"
+          UserMailer.send_mail( @destination_user, @send_user, title, content, @link).deliver_now
+          flash[:success] = "固定時間と授業方法を更新し、該当ユーザーにメールを送信しました"
         else
           flash[:danger] = "固定時間と授業方法の更新に失敗しました。"
         end
@@ -66,7 +71,11 @@ class ReservationsController < ApplicationController
     
     if params[:no] == "7"
         if @reservation.update_attributes(waiting: false)
-          flash[:success] = "キャンセル待ちを解除して授業枠の登録をしました。"
+          send_mail_address
+          title = "キャンセル待ちを解除して授業枠の登録をしました"
+          content = "キャンセル待ちを解除して授業枠の登録をしました。下記のリンクを確認お願いします。"
+          UserMailer.send_mail( @destination_user, @send_user, title, content, @link).deliver_now
+          flash[:success] = "キャンセル待ちを解除して授業枠の登録をして、該当ユーザーにメールを送信しました"
         else
           flash[:danger] = "キャンセル待ちを解除して授業枠の登録に失敗しました。"
         end
@@ -79,10 +88,16 @@ class ReservationsController < ApplicationController
     @user = User.find_by(params[:id])
   end
   
+  def send_mail_address 
+    @destination_user = User.find( @reservation.user_id )
+    @send_user =  current_user
+    @link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
+  end
   private
   
   def reservation_params
      params.require(:reservation).permit(:zoom, :fix_time)
   end
+
   
 end
