@@ -2,12 +2,13 @@ class LessonsController < ApplicationController
   before_action :schoolgrade
   before_action :set_student
   before_action :set_lesson
+  
   require 'date'
   include ApplicationHelper
   
   def weeklyschedule
-    @timecol=TIMECOL
-    if params[:cation]=="1"
+    @timecol = TIMECOL
+    if params[:cation] == "1"
       @today=params[:changeday].to_date
     else
       nowtime=Time.new+@timecol

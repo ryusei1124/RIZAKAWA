@@ -1,11 +1,11 @@
 module ReservationsLogHelper
   def log_personal_cancel( cancel )
     body = ""
-    body = "予約取消ました" if cancel == true
+    body = "【予約取消しました】" if cancel == true
   end
   def log_waiting( waiting )
     body = ""
-    body = "キャンセル待ちです " if waiting == true
+    body = "【キャンセル待ちです】 " if waiting == true
   end
   def log_transfer( transfer )
     body = ""
@@ -13,10 +13,10 @@ module ReservationsLogHelper
   end
   def log_absence( absence ) 
     body = ""
-    body = "欠席" if absence == true
+    body = "【欠席しました】" if absence == true
   end
   def log_cancel( cancel ) 
     body = ""
-    body = "【授業が中止になりました】" if cancel == true
+    body = "【授業が中止です】" if cancel == true
   end
 end
