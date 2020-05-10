@@ -3,17 +3,11 @@
 <h1>問い合わせ詳細</h1>
 
 <div class="col-md-8 col-md-offset-2">
-  <table class="table-bordered table-condensed" id="questions-info-show">
+  <table class="table-bordered table-condensed" id="questions-info-show" style="table-layout:fixed;width:100%;">
     <thead>
       <tr>
         <th colspan="2" class="col-md-3">投稿日</th>
         <td colspan="4"><%= l(@question.created_at, format: :default) %></td>
-      </tr>
-    </thead>
-    <thead>
-      <tr>
-        <th colspan="2" class="col-md-3">タイトル</th>
-        <td colspan="4"><%= @question.question_title %></td>
       </tr>
     </thead>
     <thead>
@@ -24,14 +18,24 @@
     </thead>
     <thead>
       <tr>
-        <th colspan="2" class="col-md-3">生徒名</th>
+        <% if current_user.admin? %>
+          <th colspan="2" class="col-md-3">送信先</th>
+        <% else %>
+          <th colspan="2" class="col-md-3">生徒名</th>
+        <% end %>
         <td colspan="4"><%= @question.student.student_name %></td>
       </tr>
     </thead>
     <thead>
       <tr>
+        <th colspan="2" class="col-md-3">タイトル</th>
+        <td colspan="4" style="word-wrap:break-word;"><%= @question.question_title %></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
         <th colspan="2" class="col-md-3">内容</th>
-        <td colspan="4"><%= raw(nl2br(@question.question_content)) %></td>
+        <td colspan="4" style="word-wrap:break-word;"><%= raw(nl2br(@question.question_content)) %></td>
       </tr>
     </thead>
   </table>
@@ -42,30 +46,33 @@
     <%= f.hidden_field:question_id, value:@question.id %>
     <%= f.hidden_field:user_id, value: current_user.id %>
     <%= f.text_area :answer_content, class: "form-control", required:true, rows: 2 %>
-    <div class="answer-btn-1"><%= f.submit value:"返信", class:"btn-sm btn-info answer-btn-2" %></div>
+    <div class="answer-btn-1"><%= f.submit value:"返信", class:"btn-sm btn-primary answer-btn-2" %></div>
   <% end %>
   
   <% if @answers.present? %>
-    <table style="width:100%; font-size:15px" class="table-bordered table-condensed lead">
+    <div style="text-align:center;">〜 返信一覧 〜</div>
+    <table style="table-layout:fixed;width:100%; font-size:15px" class="table-bordered table-condensed answer_table">
       <% @answers.each do |comment| %>
         <tr>
-          <td>
-            <% if comment.user.admin == false %>
-              <div><%= comment.user.guardian %></div>
-            <% else %>
-              <%= comment.user.guardian %>
-              <br>
-            <% end %>
-              <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %>
-              <br>
-            <%= raw(nl2br(comment.answer_content)) %>
+          <!--文が長い場合は改行させる-->
+          <td style="word-wrap:break-word;">
+            <div class="answer_left">
+              <% if comment.user.admin == false %>
+                <%= comment.user.guardian %>
+                <br>
+              <% else %>
+                <%= comment.user.guardian %>
+                <br>
+              <% end %>
+            </div>
+            <div class="answer_right" style="font-size:13px;"><%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %></div>
+            <br>
+            <div style="margin-top:5px;"><%= raw(nl2br(comment.answer_content)) %></div>
           </td>
         </tr>      
       <% end %>
     </table>
   <% end %>
-  
-  <br>
-  <%= link_to "問い合わせ投稿", new_question_path, class: "btn btn-primary" %>
-  <div style="text-align:center"><a class="questions" href="#" onclick="javascript:window.history.back(-1);return false;">問い合わせ一覧に戻る</a></div>
+
+  <div style="text-align:center; margin-top:10px;"><%= link_to "問い合わせ一覧に戻る", questions_path %></div>
 </div>

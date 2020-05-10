@@ -1,11 +1,12 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: %i(show destroy)
+  before_action :unless_question, only: :show
   
   def index
     if current_user.admin?
       @questions = Question.paginate(page: params[:page], per_page: 10)
     else
-      @questions = Question.where("user_id =?", current_user.id).paginate(page: params[:page], per_page: 10)
+      @questions = Question.where("user_id =? or destination =?", current_user.id, current_user.id).paginate(page: params[:page], per_page: 10)
     end
   end
   
@@ -50,5 +51,39 @@ class QuestionsController < ApplicationController
     
     def set_question
       @question = Question.find(params[:id])
+    end
+    
+    
+    # def unless_question
+    #   question_id = params[:id]
+    #   @question = Question.find(question_id) 
+    #   #管理者じゃなく宛先もしくはuser_idが該当のユーザーじゃない場合　|| はor あんまり使ってないわかりやすいのでorやand使ってる
+    #   if (@question.user_id != current_user.id || @question.destination != current_user.id) && !current_user.admin? || current_user
+    #   # if @question.user_id != current_user.id && !current_user.admin? && @question.user_id != current_user.admin
+    #     flash[:warning] = "ログインし直して下さい"#長らくログインしてなくてメールから来る場合があるのでやわらかい表現で
+    #     #ログイン画面へ
+    #     log_out
+    #     redirect_to '/login'
+    #   end
+    # end
+    
+    # def unless_question
+    #   @question = Question.find(params[:id])
+    #   if current_user.admin? or @question.user.id == current_user.id or @question.destination == current_user.id
+
+    #   else
+    #     flash[:success] = "ログインしなおして下さい"
+    #     log_out
+    #     redirect_to login_url
+    #   end 
+    # end
+    
+    def unless_question
+      @question = Question.find(params[:id])
+      unless current_user.admin? or @question.user.id == current_user.id or @question.destination == current_user.id
+        flash[:success] = "ログインしなおして下さい"
+        log_out
+        redirect_to login_url
+      end 
     end
 end

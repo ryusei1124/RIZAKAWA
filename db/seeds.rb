@@ -56,28 +56,57 @@ Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",
                  notice_content: notice_content,user_id:1)
 end
 
+# 問い合わせ投稿(管理者)
 20.times do |n|
   question_title = Faker::Lorem.sentence
   question_content = Faker::Lorem.sentence
-  destination = "#{n+1}"
-  student_id = 8
-  user_id = 1
   Question.create!(question_title: question_title,
                 question_content: question_content,
-                destination: destination,
-                student_id: student_id,
-                user_id: user_id)
+                destination: 2,
+                student_id: 2,
+                user_id: 1)
 end
 
+# 問い合わせ投稿(一般)
 20.times do |n|
   question_title = Faker::Lorem.sentence
   question_content = Faker::Lorem.sentence
-  destination = 1
-  student_id = 3
-  user_id = 2
   Question.create!(question_title: question_title,
                 question_content: question_content,
-                destination: destination,
-                student_id: student_id,
-                user_id: user_id)
+                destination: 1,
+                student_id: 3,
+                user_id: 2)
 end
+
+# 問い合わせ投稿(長文)
+Question.create!(question_title: "おいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえお",
+                question_content: "かきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこ",
+                destination: 2,
+                student_id: 2,
+                user_id: 1)
+
+# 問い合わせ返信(管理者)
+20.times do |n|
+  answer_content = Faker::Lorem.sentence
+  question_id = "#{n+1}"
+  Answer.create!(answer_content: answer_content,
+                question_id: question_id,
+                student_id: 2,
+                user_id: 1)
+end
+
+# 問い合わせ返信(一般)
+20.times do |n|
+  answer_content = Faker::Lorem.sentence
+  question_id = "#{n+1}"
+  Answer.create!(answer_content: answer_content,
+                question_id: question_id,
+                student_id: 2,
+                user_id: 2)
+end
+
+# 問い合わせ返信(長文)
+Answer.create!(answer_content: "さしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそ",
+                question_id: 41,
+                student_id: 2,
+                user_id: 2)

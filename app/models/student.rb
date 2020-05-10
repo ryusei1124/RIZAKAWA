@@ -4,8 +4,6 @@ class Student < ApplicationRecord
    validates :student_name,  presence: true
    has_many :reservations, dependent: :destroy
    has_many :lessoncomments, dependent: :destroy
-#   has_many :questions, dependent: :destroy
-#   has_many :answers, dependent: :destroy
    attr_accessor :lesson_id
    attr_accessor :lesson_note
    scope :kanaorder , -> { where(withdrawal:nil).order(studentkana: :asc)}

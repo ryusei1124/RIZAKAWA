@@ -48,6 +48,7 @@ class ApplicationController < ActionController::Base
         redirect_to '/login'
     end 
   end
+  
   def weekday
     @weekday = ["月","火","水","木","金","土","日"]
   end
