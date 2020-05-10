@@ -1,4 +1,4 @@
- <h2 class="lead">授業予約詳細・変更登録</h2>
+  <h2 class="lead">授業予約詳細・変更登録</h2>
 <div class="row">
   <% @zoom=@reservation.zoom %>
     <div class="col-md-6 col-md-offset-2 lead">
@@ -10,10 +10,15 @@
     一般
     <% end %>
     コース
-    <% if @reservation.waiting==true %>
+    <% if @reservation.cancel? %>
+      <span class="label label-danger">予約取消</span>
+    <% elsif @reservation.waiting == true %>
       <span class="label label-danger">キャンセル待ち</span>
     <% else %>
       <span class="label label-info">予約済</span>
+    <% end %>
+    <% if @lesson.cancel == true %>
+      <span class="label label-danger label-user-division">中止になりました</span>
     <% end %>
     </td></tr>
     <tr><td class="tdcondition1">名前 学校 学年</td><td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td></tr>
@@ -33,9 +38,9 @@
     <tr><td class="tdcondition1">固定時間</td>
     <td>
     <% if @reservation.fix_time.present? %>
-    <%=timedisplay(@reservation.fix_time)  %>
+      <%=timedisplay(@reservation.fix_time)  %>～
     <% else %>
-    <span class="label label-danger">未設定</span>
+      <span class="label label-danger">未設定</span>
     <% end %>
     </td>
     <tr><td class="tdcondition1" >授業方法</td>
@@ -65,16 +70,17 @@
       </div>
       <% end %>
       <div style="display: inline-block;">
-        <%= button_to "授業取消", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, data: { confirm: '本当に取消しますか？' }, params: {reservation_id:@reservation.id},class:"btn btn-danger button_size"} %>
+      <% if @reservation.cancel == false %>
+        <%= button_to "授業取消", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, data: { confirm: '本当に取消しますか？' }, params: {reservation_id:@reservation.id, cancel:true },class:"btn btn-danger button_size"} %>
+      <% else %>
+        <%= button_to "授業再開", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, data: { confirm: '本当に再開しますか？' }, params: {reservation_id:@reservation.id},class:"btn btn-primary button_size"} %>
+      <% end %>
       </div>&nbsp;
     <% end %>
     <div style="display: inline-block;">
-      <%= link_to "ｽｹｼﾞｭｰﾙ" ,"/lessons/weeklyschedule?cation=1&changeday=#{@lesson.meeting_on}",class:"btn btn-info button_size" %>&nbsp;
+      <%= link_to "ｽｹｼﾞｭｰﾙ" ,lessons_weeklyschedule_path, class:"btn btn-info button_size" %>&nbsp;
     </div>
-    <div style="display: inline-block;">
-      <a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
-    </div>
-    
+
     <% if current_user.admin? %>
       <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">情報修正＊</a>&nbsp;
       <%= link_to "管理画面＊" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info button_size" %>&nbsp;
@@ -124,5 +130,3 @@
 <!--授業振替モーダルここまで -->
 
 </div>
-
-        

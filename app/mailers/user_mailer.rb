@@ -6,8 +6,10 @@ class UserMailer < ApplicationMailer
     @title = title
     @content = content
     @link = url+link
+    @bcc = "tito40358@gmail.com"
     mail(
       to: destination_user.email,
+      bcc: @bcc,
       subject: title)
   end
   

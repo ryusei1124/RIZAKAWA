@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  require 'date'
   include SessionsHelper
   #時間修正値9時間（秒）
   TIMECOL = 32400
@@ -7,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   #学校を配列に
   def schoolgrade
-     @grade= ["小学生", "中学生","小中学生"]
+     @grade= ["小学生", "中学生","小中高生"]
   end
   #管理者でなければログイン画面に推移する
   def  unlessadmintransition
@@ -38,6 +39,11 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # 選択した生徒をインスタンス化する
+  def select_student
+    @student = Student.find(params[:id])
+  end
+  
   #保護者が他の家庭の生徒に保護者にアクセスしようとしたらログアウトする
   def unless_student
     @student = Student.find(params[:student_id])
@@ -51,5 +57,9 @@ class ApplicationController < ActionController::Base
   
   def weekday
     @weekday = ["月","火","水","木","金","土","日"]
+  end
+  def day_setting
+    nowtime = Time.new + TIMECOL
+    @today = nowtime.to_date
   end
 end

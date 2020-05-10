@@ -1,14 +1,14 @@
 <% provide(:title, 'お知らせ一覧') %>
 <% require 'date' %>
 <% today=Date.today %>
-<h1 style="margin-bottom:-20px;">平川塾からのお知らせ</h1>
+<h1>平川塾からのお知らせ</h1>
 <div class="col-md-8 col-md-offset-2">
-  <div style="margin-bottom:-40px;"><%= will_paginate %></div>
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
     <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
     <% end %>
   </div>
+  <% if @notices.present? %>
   <table class="table-bordered table-condensed" id="notices-info">
     <thead>
       <tr>
@@ -32,16 +32,23 @@
       </tr>
       <% end %>
     </thead>
-  </table><br>
-  
+  </table>
+  <% else %>
+    <h2>投稿はありません</h2>
+  <% end %>
+  <% if will_paginate.blank? %>
+    <br>
+  <% else %>
+  <div style = "margin : -20px 0 -20px 0" >
+      <%= will_paginate %>
+  </div>
+  <% end %>
   <div class="panel panel-info">
     <div class="panel-heading">
       <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
       &nbsp;<%= link_to "スケジュールへのリンク", lessons_weeklyschedule_path %>
     </div>
   </div>
-  
-    <% @reservations=Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',today,current_user.id).order(meeting_on: "ASC")  %>
     <% if @reservations.present? %>
     <div class="bg-warning">
     <div class="panel-heading" data-toggle="collapse" data-target="#demo">
@@ -49,9 +56,16 @@
     <div id="demo" class="collapse">
       <% @reservations.each do |reservation| %>
       <br>
-      <% linkname=reservation.lesson.meeting_on %>
       <P>・<%= link_to reservation.lesson.meeting_on,"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
-        <%=reservation.student.student_name %></P>
+      (<%=weekdate(reservation.lesson.meeting_on) %>)
+      <%= timedisplay(reservation.lesson.started_at) %>～<%= timedisplay(reservation.lesson.finished_at) %>
+      <%= reservation.student.student_name %>&nbsp;&nbsp;
+      <%= log_personal_cancel(reservation.cancel) %>
+           <%= log_waiting(reservation.waiting) %>
+           <%= log_transfer(reservation.transfer) %>
+           <%= log_absence(reservation.absence) %>
+           <%= log_cancel(Lesson.find(reservation.lesson_id).cancel) %>
+      </P>
       <% end %>
     </div>
   </div>
@@ -59,13 +73,12 @@
   <br>
   
   <!-- 2.編集モーダルの配置 -->
-  <% @students=Student.where("user_id = ?",current_user.id).where(withdrawal: nil) %>
   <% if @students.present? %>
 <div class="panel panel-success">
     <div class="panel-heading">
       <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
       &nbsp;<a href="" data-toggle="modal" data-target="#modal-sa" %>
-        基本情報</a>
+        基本情報(確認用）</a>
     </div>
   </div>
   <% end %>

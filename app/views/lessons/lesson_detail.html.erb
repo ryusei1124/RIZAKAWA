@@ -1,17 +1,34 @@
 <% provide(:title, '予約状況') %>
 
-<h1>【予約詳細・出欠管理】</h1>
+<h1>【予約詳細】</h1>
 
 <div class="col-md-10 col-md-offset-1">
   <div class="lesson-discontinuation-fix-btn">
-    <td><%= link_to "生徒追加", add_student_lesson_path(@lesson), remote: true, class: "btn btn-success btn-sm" %></td>
-    <td><%= link_to "修正・中止", lesson_discontinuation_fix_lesson_path(@lesson), remote: true, class: "btn btn-danger btn-sm" %></td>
+  <p>
+    <div style="display: inline-block;">
+    <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success button_size">生徒追加</a>
+    </div>
+    <div style="display: inline-block;">
+    <a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">授業変更</a>
+    </div>
+     <div style="display: inline-block;">
+     <% if @lesson.cancel == false %>
+      <%= button_to "授業中止", {controller: 'lessons', action: 'cancellation'}, {method: :patch, data: { confirm: '本当に中止にしますか？' }, params: {id: @lesson.id, cancel: "Yes" },class:"btn btn-danger button_size"} %>
+     <% else %>
+      <%= button_to "授業再開", {controller: 'lessons', action: 'cancellation'}, {method: :patch, data: { confirm: '本当に再開しますか？' }, params: {id: @lesson.id},class:"btn btn-primary button_size"} %>
+     <% end %>
+     </div>
+  </p>
   </div>
 
   <table class="table table-bordered table-condensed" id="table-reservations">
     <tr>
       <th class="col-md-3">日付</th>
-      <td><%= l(@lesson.meeting_on, format: :long) %></td>
+      <td><%= l(@lesson.meeting_on, format: :long) %>
+        <% if @lesson.cancel == true %>
+          <span class="label label-danger label-user-division">中止になりました</span>
+        <% end %>
+      </td>
     </tr>
     <tr>
       <th>対象者</th>
@@ -44,104 +61,171 @@
   </table>
 
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h3 class="modal-title center">【生徒】</h3>
-      <% @reservations.each do |reservation| %>
-       <tr>
-         <th>名前</th>
-         <th>振替</th>
-         <th>固定時間</th>
-         <th>授業方法</th>
-         <th>固定時間方法修正</th>
-         <th>出席時間</th>
-         <th>退席時間</th>
-         <th>欠席</th>
-         <th>出欠ボタン</th>
-       </tr>
-       <tr>
-        <td><%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %></td>
-        <td>
-          <% if reservation.transfer == true %>
-            <span class="label label-primary label-user-division">✕</span>
-          <% end %>
-          <% if reservation.transfer == false %>
-            <%=  %>
-          <% end %>
-        </td>
-        <td><%= reservation.fix_time %></td>
-        <td>
-          <% if reservation.zoom == true %>
-            <span class="label label-primary label-user-division">ZOOM</span>
-          <% end %>
-          <% if reservation.zoom == false %>
-            <span class="label label-primary label-user-division">リアル</span>
-          <% end %>
-        </td>
-        <td><%= link_to "修正", "#", remote: true, class: "btn btn-warning" %></td>
-        <td><%= l(reservation.attendance_time, format: :time, default: '-') %></td>
-        <td><%= l(reservation.leave_time, format: :time, default: '-') %></td>
-        <td>
-          <% if reservation.absence == true %> 
-            <span class="label label-danger label-user-division">✕</span>
-          <% end %>
-          <% if reservation.absence == false %>
-            <%= "-" %>
-          <% end %>
-        </td>
-        <td>
-          <% if reservation.attendance_time.nil? && reservation.absence == false %>
-            <%= link_to "出席", reservation_path(reservation, no: 1), method: :patch, class: "btn btn-primary" %>
-          <% end %>
+     <h1 class="modal-title center">【予約生徒・修正&出欠管理】</h1>
 
-          <% if reservation.leave_time.nil? && reservation.attendance_time.present? %>
-            <%= link_to "退席", reservation_path(reservation, no: 2), method: :patch, class: "btn btn-success" %>
-          <% end %>
-          
-          <% if reservation.attendance_time.present? %>
-          <%= link_to "クリア", reservation_path(reservation, no: 3), method: :patch,
-              data: { confirm: "出席と退席時間をクリアしてもよろしいですか？" },
-              class: "btn btn-info" %>
-          <% end %>
-          
-          <% if reservation.attendance_time.nil? && reservation.absence == false %>
-            <%= link_to "欠席", reservation_path(reservation, no: 4), method: :patch, class:"btn btn-danger" %>
-          <% end %>
-          
-          <% if reservation.absence.present? %>
-          <%= link_to "欠席登録解除", reservation_path(reservation, no: 5), method: :patch,
-              data: { confirm: "欠席登録をクリアしてもよろしいですか？" },
-              class: "btn btn-primary" %>
-          <% end %>
-        </td>
-       </tr>
+     <% if @reservations.present? == true %>
+         <tr>
+           <th>名前</th>
+           <th>振替</th>
+           <th>固定時間</th>
+           <th>授業方法</th>
+           <th>
+             固定時間/授業方法<br>
+             修正ボタン
+           </th>
+           <th>出席時間</th>
+           <th>退席時間</th>
+           <th>欠席</th>
+           <th>出欠ボタン</th>
+         </tr>
+      <% else %>
+        <th><h2>予約生徒なし</h2></th>
+      <% end %>
+      
+      <% @reservations.each do |reservation| %>
+        <% if reservation.waiting == false %>
+           <tr>
+            <td>
+              <%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
+            </td>
+            <td>
+              <% if reservation.transfer == true %>
+                <span class="label label-primary label-user-division">〇</span>
+              <% end %>
+              
+              <% if reservation.transfer == false %>
+                <%=  %>
+              <% end %>
+            </td>
+            <td>
+              <%= form_with(model: reservation, url: reservation_path(reservation, no: 6), method: :patch, local:true) do |f| %>
+                <%= f.time_field :fix_time %>
+            </td>
+            <td><%= f.select :zoom, {"ZOOM": true, "リアル": false} %></td>
+            <td>  <%= f.submit '修正', class: "btn btn-warning btn-sm" %></td>
+              <% end %>
+            <td><%= l(reservation.attendance_time, format: :time, default: '-') %></td>
+            <td><%= l(reservation.leave_time, format: :time, default: '-') %></td>
+            <td>
+              <% if reservation.absence == true %> 
+                <span class="label label-danger label-user-division">✕</span>
+              <% end %>
+              <% if reservation.absence == false %>
+                <%= "-" %>
+              <% end %>
+            </td>
+            <td>
+              <% if reservation.attendance_time.nil? && reservation.absence == false %>
+                <%= link_to "出席", reservation_path(reservation, no: 1), method: :patch, class: "btn btn-primary btn-sm" %>
+              <% end %>
+    
+              <% if reservation.leave_time.nil? && reservation.attendance_time.present? %>
+                <%= link_to "退席", reservation_path(reservation, no: 2), method: :patch, class: "btn btn-success btn-sm" %>
+              <% end %>
+              
+              <% if reservation.attendance_time.present? %>
+              <%= link_to "クリア", reservation_path(reservation, no: 3), method: :patch,
+                  data: { confirm: "出席と退席時間をクリアしてもよろしいですか？" },
+                  class: "btn btn-info btn-sm" %>
+              <% end %>
+              
+              <% if reservation.attendance_time.nil? && reservation.absence == false %>
+                <%= link_to "欠席", reservation_path(reservation, no: 4), method: :patch, class:"btn btn-danger btn-sm" %>
+              <% end %>
+              
+              <% if reservation.absence.present? %>
+              <%= link_to "欠席登録解除", reservation_path(reservation, no: 5), method: :patch,
+                  data: { confirm: "欠席登録を解除してもよろしいですか？" },
+                  class: "btn btn-primary" %>
+              <% end %>
+            </td>
+           </tr>
+        <% end %>
       <% end %>
 　</table>
 　　　　　　
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h3 class="modal-title center">【キャンセル待ち】</h3>
-      <% @reservation_waitings.each do |reservation| %>
-       <tr>
-        <th>名前</th>
-        <th>固定時間</th>
-        <th>授業方法</th>
-        <th>登録ボタン</th>
-       </tr>
-       <tr>
-        <td>
-          <% if reservation.waiting == true %>
-            <%= reservation.student.student_name %>
-          <% end %>
-          <% if reservation.waiting == false %>
-            <%= reservation.student.student_name %>
-          <% end %>
-        </td>
-        <td><%= "#" %></td>
-        <td><%= "#" %></td>
-        <td><%= link_to "登録", "#", class: "btn btn-primary" %></td>
-       </tr>
+     <h1 class="modal-title center">【キャンセル待ち】</h1>
+     
+      <% if @waiting != 0 %>
+           <tr>
+            <th>名前</th>
+            <th>固定時間</th>
+            <th>授業方法</th>
+            <th>登録ボタン</th>
+           </tr>
+      <% else %>
+        <th><h2>キャンセル待ち生徒なし</h2></th>
+      <% end %>
+      
+    　<% @reservations.each do |reservation| %>
+        <% if reservation.waiting == true %>
+           <tr>
+            <td>
+              <%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
+            </td>
+            <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
+            <td>
+              <% if reservation.zoom == true %>
+                <span class="label label-info label-user-division">ZOOM</span>
+              <% end %>
+              
+              <% if reservation.zoom == false %>
+                <span class="label label-success label-user-division">リアル</span>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to "キャンセル待ち解除 & 授業枠登録", reservation_path(reservation, no: 7), method: :patch,
+                data: { confirm: "キャンセル待ちを解除して授業予約登録しますがよろしいですか？" },
+                class: "btn btn-primary" %>
+            </td>
+           </tr>
+        <% end %>
       <% end %>
 　</table>
+
+<table class="table table-bordered table-condensed" id="table-reservations">
+     <h1 class="modal-title center">【予約取消】</h1>
+     
+      <% if @reservations_cancelonly.present? %>
+           <tr>
+            <th>名前</th>
+            <th>固定時間</th>
+            <th>授業方法</th>
+           </tr>
+      <% else %>
+        <th><h2>予約取消生徒なし</h2></th>
+      <% end %>
+      
+    　<% @reservations_cancelonly.each do |reservation| %>
+        <% if reservation.cancel == true %>
+           <tr>
+            <td>
+              <%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
+            </td>
+            <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
+            <td>
+              <% if reservation.zoom == true %>
+                <span class="label label-info label-user-division">ZOOM</span>
+              <% end %>
+              
+              <% if reservation.zoom == false %>
+                <span class="label label-success label-user-division">リアル</span>
+              <% end %>
+            </td>
+           </tr>
+        <% end %>
+      <% end %>
+　</table>
+
 </div>
 
 <!--モーダルウインドウ表示-->
+<!--基本情報モーダル -->
+  <%= render partial: "add_student" %>
+<!--基本情報モーダル終了 -->
+<!--基本情報モーダル -->
+  <%= render partial: "lesson_fix" %>
+<!--基本情報モーダル終了 -->
 <div id="lesson-discontinuation-fix" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <div id="add-student" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
