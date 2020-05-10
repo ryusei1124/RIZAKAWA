@@ -6,5 +6,5 @@ class Lesson < ApplicationRecord
   attr_accessor :starttime
   attr_accessor :finishtime
   attr_accessor :autoregister
-  attr_accessor:fixtimeres
+  attr_accessor :fixtimeres
 end

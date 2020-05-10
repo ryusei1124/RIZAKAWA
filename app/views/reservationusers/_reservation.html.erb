@@ -19,10 +19,10 @@
     <tr><td class="tdcondition2">授業方法</td>
     <td>
       <% @realseat=@lesson.seats_real %>
-      <% @realnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).count %>
+      <% @realnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).cancel_exclusion.count %>
       <% @zoom=true if @student.zoom? %>
       <% @zoomseat=@lesson.seats_zoom %>
-      <% @zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count %>
+      <% @zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).cancel_exclusion.count %>
       <%= form_with(url:reservationusers_reservationnewusercreate_path,local: true) do |f| %>
       <% if @zoom? %>
         <%= f.radio_button :zoom, :false %>&nbsp;リアル(<%=@realnumber %>/<%=@realseat %>)

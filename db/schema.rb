@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_025656) do
+ActiveRecord::Schema.define(version: 2020_05_07_190306) do
 
   create_table "answers", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2020_05_04_025656) do
     t.boolean "absence", default: false
     t.boolean "transfer", default: false
     t.time "fix_time"
+    t.boolean "cancel", default: false
     t.index ["lesson_id"], name: "index_reservations_on_lesson_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end

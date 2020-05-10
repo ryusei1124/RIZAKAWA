@@ -1,10 +1,13 @@
 class NoticesController < ApplicationController
   before_action :set_notice, only: %i(edit show update destroy)
   before_action :set_student
-  before_action:unless_login
+  before_action :unless_login
+  before_action :day_setting, only: %i(index)
   
   def index
     @notices = Notice.paginate(page: params[:page], per_page: 10)
+    @reservations = Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',@today,current_user.id).order(meeting_on: "ASC") 
+    @students = Student.where("user_id = ?",current_user.id).where(withdrawal: nil)
   end
   
   def new

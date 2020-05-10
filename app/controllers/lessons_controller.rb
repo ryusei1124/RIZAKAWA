@@ -2,12 +2,13 @@ class LessonsController < ApplicationController
   before_action :schoolgrade
   before_action :set_student
   before_action :set_lesson
+  
   require 'date'
   include ApplicationHelper
   
   def weeklyschedule
-    @timecol=TIMECOL
-    if params[:cation]=="1"
+    @timecol = TIMECOL
+    if params[:cation] == "1"
       @today=params[:changeday].to_date
     else
       nowtime=Time.new+@timecol
@@ -102,11 +103,12 @@ class LessonsController < ApplicationController
   
   def lesson_detail
     @lesson = Lesson.find(params[:id])
-    @reservations = Reservation.where("lesson_id = ?", @lesson.id)
-    @zooms_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,true).count
-    @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).count
+    @reservations = Reservation.where("lesson_id = ?", @lesson.id).fix_time_order
+    @reservations_cancelonly = Reservation.where("lesson_id = ?", @lesson.id).cancel_only
+    @zooms_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,true).cancel_exclusion.count
+    @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).cancel_exclusion.count
     @students_add = Student.kanaorder
-    @waiting = Reservation.where(waiting: true).count
+    @waiting = Reservation.where("lesson_id = ? and waiting = ?", @lesson.id, true).count
   end
 
   def update
@@ -138,7 +140,6 @@ class LessonsController < ApplicationController
       lesson.cancel = true
     else
       lesson.cancel = false
-      message = "再開"
     end
     if lesson.save
       if lesson.cancel?
@@ -151,7 +152,7 @@ class LessonsController < ApplicationController
        flash[:success] = "授業を再開しました。"
       end 
     else
-      flash[:danger] = "#{message}登録に失敗しました"
+      flash[:danger] = "登録に失敗しました"
     end
     redirect_to request.referrer
   end
