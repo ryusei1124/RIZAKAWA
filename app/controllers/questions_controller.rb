@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: %i(show destroy)
+  before_action :set_question, only: [:show, :destroy]
   before_action :unless_question, only: :show
+  before_action :logged_in_user, only: [:show, :update, :index, :destroy]
+  before_action :admin_user, only: :destroy
   
   def index
     if current_user.admin?
@@ -46,37 +48,12 @@ class QuestionsController < ApplicationController
    private
    
     def question_params
-      params.require(:question).permit(:question_title, :question_content, :destination, :student_id)
+      params.require(:question).permit(:question_title, :question_content, :destination)
     end
     
     def set_question
       @question = Question.find(params[:id])
     end
-    
-    
-    # def unless_question
-    #   question_id = params[:id]
-    #   @question = Question.find(question_id) 
-    #   #管理者じゃなく宛先もしくはuser_idが該当のユーザーじゃない場合　|| はor あんまり使ってないわかりやすいのでorやand使ってる
-    #   if (@question.user_id != current_user.id || @question.destination != current_user.id) && !current_user.admin? || current_user
-    #   # if @question.user_id != current_user.id && !current_user.admin? && @question.user_id != current_user.admin
-    #     flash[:warning] = "ログインし直して下さい"#長らくログインしてなくてメールから来る場合があるのでやわらかい表現で
-    #     #ログイン画面へ
-    #     log_out
-    #     redirect_to '/login'
-    #   end
-    # end
-    
-    # def unless_question
-    #   @question = Question.find(params[:id])
-    #   if current_user.admin? or @question.user.id == current_user.id or @question.destination == current_user.id
-
-    #   else
-    #     flash[:success] = "ログインしなおして下さい"
-    #     log_out
-    #     redirect_to login_url
-    #   end 
-    # end
     
     def unless_question
       @question = Question.find(params[:id])
@@ -85,5 +62,18 @@ class QuestionsController < ApplicationController
         log_out
         redirect_to login_url
       end 
+    end
+    
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "ログインしてください。"
+        redirect_to login_url
+      end
+    end
+    
+    # システム管理権限所有かどうか判定します。
+    def admin_user
+      redirect_to root_url unless current_user.admin?
     end
 end

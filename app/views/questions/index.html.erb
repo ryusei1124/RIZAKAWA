@@ -5,7 +5,7 @@
 <div class="col-md-8 col-md-offset-2">
   
   <%= link_to "問い合わせ投稿", new_question_path, class: "btn btn-primary question-btn" %>
-  <% unless @questions.empty? %>
+  <% if @questions.present? %>
     <div class="question-paginate"><%= will_paginate %></div>
     <table class="table table-bordered table-condensed" id="table-question" style="table-layout:fixed;">
       <thead>
