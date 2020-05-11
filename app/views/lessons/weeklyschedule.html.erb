@@ -140,7 +140,6 @@
           <% elsif current_user.admin? %>
             <% tdcolor="#fffacd" %>
           <% elsif (lesson.examinee == nil or lesson.examinee == @student.examinee)  and (lesson.target==gradesc or lesson.target=="小中高生")  %>
-            <% selection=1 %>
             <% if rev.present? and rev.waiting? %>
               <% tdcolor = "#00CCCC" %>
             <% elsif rev.present? and rev.cancel? %>
@@ -150,8 +149,6 @@
             <% else %>
               <% tdcolor = "#fffacd" %>
             <% end %>
-          <%# elsif rev.present? and current_user.admin == false %>
-            <%# tdcolor = "#c0ffc0" %>
           <% else %>
             <% tdcolor = "#d3d3d3" %>
           <% end %>
