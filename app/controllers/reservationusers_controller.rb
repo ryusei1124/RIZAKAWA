@@ -59,11 +59,9 @@ class ReservationusersController < ApplicationController
     waiting_registration
     if @reservation.save
       flash[:success] = "受講日を振替しました。確認願います。"
-      title = "予約の振替がありました"
-      content = "予約の振替がありました。下記リンクの確認をお願いします。"
-      link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
+      @title = "予約の振替がありました"
+      @content = "予約の振替がありました。下記リンクの確認をお願いします。"
       send_mail_address
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, title, content,link).deliver_now
       flash[:warning] = "キャンセル待ちになります" if @reservation.waiting == true
     else
       flash[:danger] = "受講日振替に失敗しました"
@@ -85,19 +83,15 @@ class ReservationusersController < ApplicationController
       @reservation.cancel = false 
     end
     if @reservation.save and @reservation.cancel?
-      title = "予約の取消しがありました"
-      content = "予約の取消しがありました。下記リンクの確認をお願いします。"
-      link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
+      @title = "予約の取消しがありました"
+      @content = "予約の取消しがありました。下記リンクの確認をお願いします。"
       send_mail_address
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, title, content,link).deliver_now
       flash[:warning] = "予約取消しました"
     elsif @reservation.save and @reservation.cancel == false
       flash[:success] = "予約再開しました"
-      title = "予約の再開がありました"
-      content = "予約の再開がありました。下記リンクの確認をお願いします。"
-      link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
+      @title = "予約の再開がありました"
+      @content = "予約の再開がありました。下記リンクの確認をお願いします。"
       send_mail_address
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, title, content,link).deliver_now
       #キャンセル待ち登録
       waiting_registration
       if @reservation.save and @reservation.waiting?
@@ -134,10 +128,9 @@ class ReservationusersController < ApplicationController
     waiting_registration
     if @reservation.save
       flash[:success] = "予約登録しました"
-      title = "予約の追加登録がありました"
-      content = "予約の追加登録がありました。下記リンクの確認をお願いします。"
+      @title = "予約の追加登録がありました"
+      @content = "予約の追加登録がありました。下記リンクの確認をお願いします。"
       send_mail_address
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, title, content,@link).deliver_now
       message = ""
       if @reservation.waiting?
         message = "キャンセル待ちになりました。"
@@ -147,10 +140,9 @@ class ReservationusersController < ApplicationController
       flash[:danger] = "受講日登録に失敗しました"
     end
     if current_user.admin?
-      title = "授業枠の登録をしました"
-      content = "授業枠の登録をしました。#{message}下記のリンクを確認お願いします"
+      @title = "授業枠の登録をしました"
+      @content = "授業枠の登録をしました。#{message}下記のリンクを確認お願いします"
       send_mail_address
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, title, content,@link).deliver_now
       redirect_to request.referrer
     else
       redirect_to "/reservationusers/useredit?lesson_id=#{@reservation.lesson_id}&student_id=#{student.id}"
@@ -200,6 +192,7 @@ class ReservationusersController < ApplicationController
       @reservation.waiting = false
     end
   end
+  
   def send_mail_address
     if current_user.admin?
       @destination_user = User.find( @reservation.user_id )
@@ -210,6 +203,7 @@ class ReservationusersController < ApplicationController
     end
     @send_user =  current_user
     @link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
+    UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
   end
 end
 
