@@ -120,6 +120,7 @@ class LessonsController < ApplicationController
   end
   
   def lesson_detail
+    @student = Student.find(params[:id])
     @lesson = Lesson.find(params[:id])
     @reservations = Reservation.where("lesson_id = ?", @lesson.id)
     @zooms_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,true).count
