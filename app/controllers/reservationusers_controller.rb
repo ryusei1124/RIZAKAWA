@@ -27,7 +27,7 @@ class ReservationusersController < ApplicationController
     @reservation = Reservation.find(reservation_id)
     @reservation.zoom = @zoom
     @reservation.save
-    @lesson = Lesson.find(@reservation.lesson_id)
+    
     waiting_registration
     if @reservation.save
       flash[:success] = "受講方法を変更しました"
@@ -45,7 +45,7 @@ class ReservationusersController < ApplicationController
     reservationarray = transfer_day_id.split("-")
     @reservation.lesson_id = reservationarray[0].to_i
     @reservation.lesson_id = reservationarray[0].to_i
-    if reservationarray[1]=="1"
+    if reservationarray[1] == "1"
       @reservation.zoom = false
     else
       @reservation.zoom = true
@@ -55,7 +55,6 @@ class ReservationusersController < ApplicationController
     @lesson = Lesson.find(@reservation.lesson_id)
     @lesson_meeting_on = @lesson.meeting_on
     @reservation.save
-    @zoom = @reservation.zoom
     #キャンセル待ち登録
     waiting_registration
     if @reservation.save
@@ -68,25 +67,39 @@ class ReservationusersController < ApplicationController
   end
 
   def reservation_delete
-    reservation_id=params[:reservation_id]
-    reservation=Reservation.find(reservation_id)
-    lesson=Lesson.find(reservation.lesson_id)
-    #予約情報を削除
-    reservation.destroy
-    flash[:danger]="キャンセル登録しました"
-    if current_user.admin?
-      redirect_to "/lessons/#{lesson.id}/lesson_detail"
+    cancel = params[:cancel]
+    reservation_id = params[:reservation_id]
+    @reservation = Reservation.find(reservation_id)
+    if cancel == "true"
+    #予約情報をキャンセル登録
+      @reservation.cancel = true
+    #キャンセル待ちも解除する
+      @reservation.waiting = false
     else
-       redirect_to "/lessons/weeklyschedule?cation=1&changeday=#{lesson.meeting_on.to_s}"
+      @reservation.fix_time = nil
+      @reservation.cancel = false 
     end
+    if @reservation.save and @reservation.cancel?
+      flash[:warning] = "予約取消しました"
+    elsif @reservation.save and @reservation.cancel == false
+      flash[:success] = "予約再開しました"
+      #キャンセル待ち登録
+      waiting_registration
+      if @reservation.save and @reservation.waiting?
+        flash[:warning] = "キャンセル登録になります"
+      end
+    else
+      flash[:danger] = "取消失敗しました"
+    end
+    redirect_to request.referrer
   end
   
   def reservationnewuser
-    @reservation=Reservation.new
-    @student_id=params[:student_id]
-    @student=Student.find(@student_id)
-    @lesson_id=params[:lesson_id]
-    @lesson=Lesson.find(@lesson_id)
+    @reservation = Reservation.new
+    @student_id = params[:student_id]
+    @student = Student.find(@student_id)
+    @lesson_id = params[:lesson_id]
+    @lesson = Lesson.find(@lesson_id)
   end
   
   def reservation_create
@@ -103,15 +116,22 @@ class ReservationusersController < ApplicationController
     #student.cancelnumber=student.cancelnumber-1 if lesson.regular==true
     @reservation = Reservation.new(student_id:student.id,lesson_id:@lesson.id,zoom:zoom,user_id:user_id,fix_time:fix_time)
     @reservation.save
-    @zoom = @reservation.zoom
     waiting_registration
     if @reservation.save
+      message = ""
+      if @reservation.waiting == true
+        message = "キャンセル待ちになりました。"
+        flash[:warning] = "キャンセル待ちになります" if @reservation.waiting == true
+      end
       flash[:success] = "予約登録しました"
-      flash[:warning] = "キャンセル待ちになります" if @reservation.waiting == true
     else
       flash[:danger] = "受講日登録に失敗しました"
     end
     if current_user.admin?
+      send_mail_address
+      title = "授業枠の登録をしました"
+      content = "授業枠の登録をしました。#{message}下記のリンクを確認お願いします。"
+      UserMailer.send_mail( @destination_user, @send_user, title, content, @link).deliver_now
       redirect_to request.referrer
     else
       redirect_to "/reservationusers/useredit?lesson_id=#{@reservation.lesson_id}&student_id=#{student.id}"
@@ -125,15 +145,15 @@ class ReservationusersController < ApplicationController
       @lesson = Lesson.find(@lesson_id)
       @lessons = Lesson.includes(:reservations).all
       @reservation = Reservation.find_by(lesson_id:@lesson.id, student_id:@student.id)
-      @zoomnumber = Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).count
-      @realnumber = Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).count
+      @zoomnumber = Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).cancel_exclusion.count
+      @realnumber = Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).cancel_exclusion.count
       @today = Date.today
       @lessoncomment = Lessoncomment.new
       #コメント抽出
       @lessoncomments = Lessoncomment.where("reservation_id = ? and student_id= ?" , @reservation.id, @student.id)
       #振替のためのコード。授業の日に該当生徒が小学生か中学生かを取得。
       gradesc = gradeschool(@student.birthday,@lesson.meeting_on)
-      lessons = Lesson.where("meeting_on> ? and regular= ?", @today,true).where("target= ? or target= ?", gradesc,"小中高生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
+      lessons = Lesson.where("meeting_on> ? and regular= ? and cancel = ?", @today,true,false).where("target= ? or target= ?", gradesc,"小中高生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
       lessons.each do |les|
       if Reservation.where("student_id= ? and lesson_id= ?", @student.id,les.id).count == 0
         realcapacity = Lesson.find(les.id).seats_real
@@ -150,14 +170,21 @@ class ReservationusersController < ApplicationController
     end
   end
 
-  def waiting_registration 
-    if @zoom == true and @lesson.seats_zoom < Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, true).count 
+  def waiting_registration
+    @zoom = @reservation.zoom
+    @lesson = Lesson.find(@reservation.lesson_id) 
+    if @zoom == true and @lesson.seats_zoom < Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, true).cancel_exclusion.count 
       @reservation.waiting = true
-    elsif @lesson.seats_real < Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, false).count
+    elsif @lesson.seats_real < Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, false).cancel_exclusion.count
       @reservation.waiting = true
     else 
       @reservation.waiting = false
     end
+  end
+  def send_mail_address 
+    @destination_user = User.find( @reservation.user_id )
+    @send_user =  current_user
+    @link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
   end
 end
 

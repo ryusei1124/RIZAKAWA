@@ -19,7 +19,8 @@ Rails.application.routes.draw do
   # ユーザー側生徒情報更新
   put 'basic_infos/student_update', to: 'basic_infos#student_update'
   patch 'maneger_students/update', to: 'maneger_students#update'
-  #管理者　予約追加
+  #管理者　授業中止
+  patch '/lessons/cancellation', to: 'lessons#cancellation'
   
   get 'sessions/new'
   root :to => 'notices#index'
@@ -40,7 +41,7 @@ Rails.application.routes.draw do
       patch 'update_basic_info'
     end
   end
-
+  
   resources :lessons do
    member do
      get 'lesson_detail'
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
    end
   end
   
+
   resources :students do
     member do
       get 'info_edit'
