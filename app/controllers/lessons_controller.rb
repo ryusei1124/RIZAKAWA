@@ -2,6 +2,7 @@ class LessonsController < ApplicationController
   before_action :schoolgrade
   before_action :set_student
   before_action :set_lesson
+  before_action :unless_login  
   
   require 'date'
   include ApplicationHelper
@@ -103,7 +104,7 @@ class LessonsController < ApplicationController
   
   def lesson_detail
     @lesson = Lesson.find(params[:id])
-    @reservations = Reservation.where("lesson_id = ?", @lesson.id).fix_time_order
+    @reservations = Reservation.where("lesson_id = ?", @lesson.id).cancel_exclusion.fix_time_order
     @reservations_cancelonly = Reservation.where("lesson_id = ?", @lesson.id).cancel_only
     @zooms_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,true).cancel_exclusion.count
     @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).cancel_exclusion.count
@@ -145,7 +146,7 @@ class LessonsController < ApplicationController
       if lesson.cancel?
        title = "授業を中止にします"
        content = "#{daydis(lesson.meeting_on)}#{timedisplayk(lesson.started_at)}からの授業を中止にします。ご了承の程お願いします"
-       link = "weeklyschedule"
+       link = "lessons/weeklyschedule"
        User.sendmail_all_users( title, content, link )
        flash[:warning] = "中止及び全員にメール送信しました。"
       else

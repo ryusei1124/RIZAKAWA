@@ -130,38 +130,35 @@
         <% lesson=lesson.find_by(started_at:times) %>
         <% if lesson.present?  %>
           <% if current_user.admin? %>
-            <% rev=Reservation.where("lesson_id =?" ,lesson.id) %>
+            <% rev = Reservation.where("lesson_id =?" ,lesson.id) %>
           <% else %>
             <% rev = Reservation.find_by(lesson_id: lesson.id, student_id: @student.id) %>
           <% end %>
           <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
-          <% if current_user.admin==true and rev.present? %>
+          <% if current_user.admin? and rev.present? %>
             <% tdcolor="#c0ffc0" %>
-          <% elsif current_user.admin==true %>
+          <% elsif current_user.admin? %>
             <% tdcolor="#fffacd" %>
-          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中高生")  %>
-            <% selection=1 %>
+          <% elsif (lesson.examinee == nil or lesson.examinee == @student.examinee)  and (lesson.target==gradesc or lesson.target=="小中高生")  %>
             <% if rev.present? and rev.waiting? %>
-              <% tdcolor="#fff0f5" %>
+              <% tdcolor = "#00CCCC" %>
+            <% elsif rev.present? and rev.cancel? %>
+              <% tdcolor = "#fff0f5" %>
             <% elsif rev.present? %>
-              <% tdcolor="#c0ffc0" %>
+              <% tdcolor = "#c0ffc0" %>
             <% else %>
-              <% tdcolor="#fffacd" %>
+              <% tdcolor = "#fffacd" %>
             <% end %>
-          <% elsif rev.present? and current_user.admin == false %>
-            <% tdcolor="#e0ffff" %>
-          <% elsif rev.present? and current_user.admin == false %>
-            <% tdcolor="#c0ffc0" %>
           <% else %>
-            <% tdcolor="#d3d3d3" %>
+            <% tdcolor = "#d3d3d3" %>
           <% end %>
-          <td bgcolor=<%=tdcolor %>>
+          <td bgcolor = <%=tdcolor %>>
 
           <% if current_user.admin? %>
             <%= link_to lesson.target, "/lessons/#{lesson.id}/lesson_detail" %>
           <% elsif rev.present? %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'useredit',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
-          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee) and lesson.meeting_on.to_date>thisday and (lesson.target==gradesc or lesson.target=="小中高生")  %>
+          <% elsif (lesson.examinee==nil or lesson.examinee==@student.examinee)  and (lesson.target==gradesc or lesson.target=="小中高生")  %>
             <%= link_to lesson.target, {controller: 'reservationusers', action: 'reservationnewuser',lesson_id:lesson.id,student_id:@student.id}, {method: :post} %>
           <% else %>
             <%= lesson.target %>
@@ -198,12 +195,13 @@
   <% end %>
 </table>
 <% if current_user.admin==false %>
-  <div style="padding-left:170px;">〇薄緑色の授業は、予約済です。</div>
-  <div style="padding-left:170px;">〇ピンク色の授業は、キャンセル待ちです。</div>
-  <div style="padding-left:170px;">〇ご契約で設定の授業は自動で予約登録されています。</div>
-  <div style="padding-left:170px;">〇黄色の授業は新規登録可能です。</div>
-  <div style="padding-left:170px;">〇<span class="label label-danger label-user-division">止</span>の印のあるものは中止になった授業です。</div>
-  <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です。</div>
-  <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です。</div>
+  <div style="padding-left:170px;">〇ご契約で設定の授業は自動で予約登録されています</div>
+  <div style="padding-left:170px;">〇薄緑色の授業は、予約済です</div>
+  <div style="padding-left:170px;">〇黄色の授業は、明日以降新規登録可能です</div>
+  <div style="padding-left:170px;">〇青緑色の授業は、キャンセル待ちです</div>
+  <div style="padding-left:170px;">〇ピンク色の授業は、取消された授業です</div>
+  <div style="padding-left:170px;">〇<span class="label label-danger label-user-division">止</span>の印のあるものは中止になった授業です</div>
+  <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です</div>
+  <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です</div>
 <% end %>
 <br /><br /><br />
