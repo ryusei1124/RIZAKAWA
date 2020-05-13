@@ -3,13 +3,12 @@
   <% @zoom=@reservation.zoom %>
     <div class="col-md-6 col-md-offset-2 lead">
     <table style="width:700px;" class="table-bordered table-condensed lead">
-    <tr><td style="width:150px;" class="tdcondition1">コース</td><td><%= @lesson.target %>
+    <tr><td style="width:150px;" class="tdcondition1">対象</td><td><%= @lesson.target %>
     <% if @lesson.examinee==true %>
     受験生
     <% elsif @lesson.examinee==true %>
     一般
     <% end %>
-    コース
     <% if @reservation.cancel? %>
       <span class="label label-danger">予約取消</span>
     <% elsif @reservation.waiting == true %>
@@ -61,7 +60,7 @@
     <% end %>
     </table>
     <% if current_user.admin? %>
-      <div style="font-size:8px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div>
+      <div style="font-size:10px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div>
     <% end %>
     <% modaltype1="chengesc" %><% @modaltype="newsc" %>
     <% if @lesson.meeting_on>@today or current_user.admin? %>
