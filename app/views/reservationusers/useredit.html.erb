@@ -24,7 +24,9 @@
     <tr><td class="tdcondition1">名前 学校 学年</td><td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td></tr>
     <tr><td class="tdcondition1">予約日時</td>
     <td>
-    <%= daydis(@lesson.meeting_on) %> ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
+    <%= @lesson.meeting_on.year %>年
+    <%= daydis(@lesson.meeting_on) %>
+     ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
     <% if @reservation.transfer==true %>
      振替　
     <% end %>
