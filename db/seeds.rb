@@ -15,7 +15,7 @@ User.create!(guardian:"上田優",guardiankana:"ウエダユウ",email:"sample-1
 User.create!(guardian:"佐竹真紀",guardiankana:"サタケマキ",email:"sample-12@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"桑田貞",guardiankana:"クワタサダ",email:"sample-13@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"多田千晴",guardiankana:"オオタチハル",email:"sample-14@email.com",password:"password",password_confirmation:"password")
-User.create!(guardian:"上田優",guardiankana:"ウエダユウ",email:"sample-15@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"上田勇也",guardiankana:"ウエダユウヤ",email:"sample-15@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"柳生進",guardiankana:"ヤギュウススム",email:"xgppm340@ybb.ne.jp",password:"password",password_confirmation:"password")
 User.create!(guardian:"システム管理者",guardiankana:"イトウトシノリ",email:"tito40358@gmail.com",password:"password",password_confirmation:"password",admin: true)
 Student.create!(student_name:"山田良子",studentkana:"ヤマダヨシコ",zoom:false,birthday:"2006/5/15",fix_day:"月",fix_time:"19:10",user_id:2)

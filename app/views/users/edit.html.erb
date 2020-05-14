@@ -4,20 +4,27 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @user, local: true) do |f| %>
-       <!--メールアドレス-->
+    
+      ・<%= f.label :保護者名前, class: "label-signup" %>
+      <span class="label label-danger label-user-division">必須</span>
+      <%= f.text_field :guardian, required: true, class: "form-control" %>
+
+      ・<%= f.label :保護者カナ, class: "label-signup" %>
+      <span class="label label-danger label-user-division">必須</span>
+      <%= f.text_field :guardiankana, required: true, class: "form-control new-form" %>
+
+     <!--メールアドレス-->
       ・<%= f.label :email, class: "label-signup" %>
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.email_field :email, required: true, class: "form-control new-form" %>
+      <%= f.email_field :email, required: true, class: "form-control" %>
       
      <!--パスワード-->
       ・<%= f.label :password, class: "label-signup" %> 
-      <span class="label label-danger label-user-division">必須</span>
-      <%= f.password_field :password, required: true, class: "form-control new-form" %>
+      <%= f.password_field :password, required: true, class: "form-control" %>
       
       <!--パスワード再入力-->
       ・<%= f.label :password_confirmation, class: "label-signup" %> 
-      <span class="label label-danger label-user-division">必須</span>
-      <%= f.password_field :password_confirmation, required: true, class: "form-control new-form" %>
+      <%= f.password_field :password_confirmation, required: true, class: "form-control" %>
 
       <%= f.submit "更新", class: "btn btn-primary btn-block btn-user--edit" %>
     <% end %>
