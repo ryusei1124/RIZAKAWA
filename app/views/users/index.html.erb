@@ -15,7 +15,7 @@
     <% @users.each do |user| %>
       <tr>
         <td>
-          <%= user.guardian %>
+          <%= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
           <% if user.admin? %>
             <span class="label label-primary label-user-division">管理者</span>
           <% else %>
@@ -40,7 +40,7 @@
           <% end %>
         </td>
         <td>
-          <%= link_to "編集", edit_basic_info_user_path(user), remote: true, class: "btn btn-success btn-sm pull-right" %>
+          
           <% @user_id = user.id %>
           <a href="" data-toggle="modal" data-target=#<%= @user_id %> class="btn btn-primary btn-sm">受講生新規</a>
             <!--生徒新規モーダル -->
