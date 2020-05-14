@@ -49,9 +49,27 @@ Student.create!(student_name:"上田正志",studentkana:"ウエダマサシ",zoo
 Student.create!(student_name:"柳生三郎",studentkana:"ヤギュウサブロウ",zoom:true,birthday:"2009/12/24",fix_day:"火",fix_time:"16:15",user_id:17)
 Student.create!(student_name:"柳生巴",studentkana:"ヤギュウトモエ",zoom:true,birthday:"2005/05/24",fix_day:"木",fix_time:"19:10",user_id:17)
 Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",zoom:true,birthday:"2010/05/24",fix_day:"金",fix_time:"16:20",user_id:17)
+
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+
+Answer.create!(answer_content: "test", question_id: 11, student_id: 2, user_id: 1)
+Answer.create!(answer_content: "test", question_id: 11, student_id: 2, user_id: 2)
+                
+
 61.times do |n|
   notice_title = "sample-#{n+1}タイトル"
   notice_content = "sample-#{n+1}内容"
   Notice.create!(notice_title: notice_title,
                  notice_content: notice_content,user_id:1)
 end
+

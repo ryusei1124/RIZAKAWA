@@ -2,6 +2,8 @@ ja:
   activerecord:
     models:
       user: ユーザー
+    student: 生徒
+    notice: お知らせ
     attributes:
         user:
           id: ID
@@ -11,18 +13,28 @@ ja:
           real: リアル受講
           zoom: zoom受講
           sex: 性別
-          school: 学校名
           school_year: 学年
-          birthday: 生年月日
           class_choice: 受講方法
           attendance_time: 入室時間
           leave_time: 退室時間
-          fix_day: 固定曜日
-          fix_time: 固定時間
           password: パスワード
           password_confirmation: パスワード再入力
           created_at: 作成日
           updated_at: 更新日
+        student:
+          student_name: 生徒名
+          studentkana: 生徒名カナ
+          zoom: ZOOM受講
+          taking_lectures: 受験生
+          school: 学校名
+          birthday: 生年月日
+          fix_day: 固定曜日
+          fix_time: 固定時間
+          fix_day2: 固定曜日2
+          fix_time2: 固定時間2
+          fix_day3: 固定曜日3
+          fix_time3: 固定時間3
+          withdrawal: 退会日
         notice:
           notice_title: 投稿タイトル
           notice_content: 投稿内容
@@ -30,4 +42,6 @@ ja:
     new:
       email: メールアドレス
       password: パスワード
+      
+      
   

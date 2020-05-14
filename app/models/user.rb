@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many :lessoncomments, dependent: :destroy
   has_many :reservations, dependent: :destroy
   has_many :students, dependent: :destroy
+  has_many :questions, dependent: :destroy
+  has_many :answers, dependent: :destroy
   
   # 生徒一覧の名前順
   default_scope -> { order(guardian: :asc) }
@@ -88,4 +90,5 @@ class User < ApplicationRecord
       UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content, @link ).deliver_now
     end
   end
+
 end
