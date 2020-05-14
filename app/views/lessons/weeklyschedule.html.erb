@@ -10,7 +10,7 @@
 <% last_time="2000-01-01 22:30".to_time %>
 <% @student=Student.find(session[:student_id]) if session[:student_id].present? %>
 <% if @students.count>=2 %>
-<div style="padding-left:170px;">
+<div style="padding-left:260px;">
 <% @students.each do |student| %>
 <div style="display: inline-block;">
   <% studentid=student.id %>
@@ -193,13 +193,13 @@
   <% end %>
 </table>
 <% if current_user.admin==false %>
-  <div style="padding-left:170px;">〇ご契約で設定の授業は自動で予約登録されています</div>
-  <div style="padding-left:170px;">〇薄緑色の授業は、予約済です</div>
-  <div style="padding-left:170px;">〇黄色の授業は、明日以降新規登録可能です</div>
-  <div style="padding-left:170px;">〇青緑色の授業は、キャンセル待ちです</div>
-  <div style="padding-left:170px;">〇ピンク色の授業は、取消された授業です</div>
-  <div style="padding-left:170px;">〇<span class="label label-danger label-user-division">止</span>の印のあるものは中止になった授業です</div>
-  <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です</div>
-  <div style="padding-left:170px;">〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です</div>
+  <div style="padding-left:260px;">〇ご契約で設定の授業は自動で予約登録されています</div>
+  <div style="padding-left:260px;">〇薄緑色の授業は、予約済です</div>
+  <div style="padding-left:260px;">〇黄色の授業は、明日以降新規登録可能です</div>
+  <div style="padding-left:260px;">〇青緑色の授業は、キャンセル待ちです</div>
+  <div style="padding-left:260px;">〇ピンク色の授業は、取消された授業です</div>
+  <div style="padding-left:260px;">〇<span class="label label-danger label-user-division">止</span>の印のあるものは中止になった授業です</div>
+  <div style="padding-left:260px;">〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です</div>
+  <div style="padding-left:260px;">〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です</div>
 <% end %>
 <br /><br /><br />

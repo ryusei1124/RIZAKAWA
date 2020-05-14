@@ -204,7 +204,7 @@ class ReservationusersController < ApplicationController
       @destination_user = User.find( @reservation.user_id )
       @bcc = current_user.email
     else
-      @destination_user = User.find(18)
+      @destination_user = User.find(1)
       @bcc = ""
     end
     @send_user =  current_user

@@ -28,7 +28,7 @@
 </tr>
 <tr>
   <th>予約日時</th>
-  <td><%= @lesson.meeting_on.year %>年
+  <td>
     <%= daydis(@lesson.meeting_on) %>
      ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
     <% if @reservation.transfer==true %>

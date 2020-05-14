@@ -17,10 +17,9 @@
             </a>
             <ul class="dropdown-menu">
               <% if current_user.admin? %>
-                <li><%= link_to "生徒登録", signup_path %></li>
+                <li><%= link_to "ユーザー登録", signup_path %></li>
               <% end %>
-              <li><%= link_to "Show", current_user %></li>
-              <li><%= link_to "編集", edit_user_path(current_user) %></li>
+              <li><%= link_to "情報修正", "/users/#{current_user.id}/edit" %></li>
               <li class="divider"></li>
               <li>
                 <%= link_to "ログアウト", logout_path, method: :delete %>
