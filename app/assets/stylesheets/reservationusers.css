@@ -12,4 +12,105 @@
 .button_size {
   width: 100px;
 }
+
+.table-reverb{
+  width: 100%;
+  border-collapse: collapse;
+  margin: auto;
+  font-size: 20px;
+}
+
+.table-reverb tr{
+  border-bottom: solid 2px white;
+}
+
+.table-reverb tr:last-child{
+  border-bottom: none;
+}
+
+.table-reverb th{
+  position: relative;
+  text-align: center;
+  width: 30%;
+  background-color: #008000;
+  color: white;
+  padding: 10px 0;
+}
+
+.table-reverb th:after{
+  display: block;
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-top: 10px solid transparent;
+}
+
+.table-reverb td{
+  text-align: left;
+  width: 70%;
+  text-align: left;
+  background-color: #eee;
+  padding: 0px 0px 0px 20px;
+}
+
+.table-under{
+  width: 60%;
+  border-collapse: collapse;
+  margin: auto;
+  font-size: 20px;
+}
+
+.container{
+width: 70%;
+
+}
+.table-newb{
+  width: 100%;
+  border-collapse: collapse;
+  margin: auto;
+  font-size: 20px;
+}
+
+.table-newb tr{
+  border-bottom: solid 2px white;
+}
+
+.table-newb tr:last-child{
+  border-bottom: none;
+}
+
+.table-newb th{
+  position: relative;
+  text-align: center;
+  width: 30%;
+  background-color: #0000EF;
+  color: white;
+  padding: 10px 0;
+}
+
+.table-newb th:after{
+  display: block;
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-top: 10px solid transparent;
+}
+
+.table-newb td{
+  text-align: left;
+  width: 70%;
+  text-align: left;
+  background-color: #eee;
+  padding: 0px 0px 0px 20px;
+}
+
+.table-under{
+  width: 60%;
+  border-collapse: collapse;
+  margin: auto;
+  font-size: 20px;
+}
+
 /*# sourceMappingURL=reservationusers.css.map */

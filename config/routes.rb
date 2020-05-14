@@ -60,10 +60,14 @@ Rails.application.routes.draw do
     member do
       get 'info_edit'
       patch 'info_update'
+      get 'create'
+    end
+    collection do
+      post 'create'
     end
   end
 
-
+ 
   resources :notices
   
   resources :reservations, only: [:update, :destroy]

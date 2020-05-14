@@ -4,10 +4,13 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :select_student, only: [:edit_basic_info, :update_basic_info]
+  before_action :weekday, only: [:index]
   
   def index
     @users = User.paginate(page: params[:page], per_page: 20)
     @students = Student.all
+    @weekday = ["月","火","水","木","金","土","日"]
+    
   end
   
   def new

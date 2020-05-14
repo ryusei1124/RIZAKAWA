@@ -26,15 +26,25 @@
         <td>
           <% students.each do |student| %>
             <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
-            <%= student.user_id %>
+            (<%= Student.gradeyear(student.id) %> <%= student.school %>)
+            固定時間1:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>
+            <% if student.fix_day2.present? %>
+               固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>
+            <% end %>
+            <% if student.examinee? %>
+              <span class="label label-success label-user-division">受験生</span>
+            <% end %>
+            <% if students.count >1 %>
+              <br>
+            <% end %>
           <% end %>
         </td>
         <td>
-          <%= link_to "削除", user, method: :delete,
-              data:  { confirm: "本当に削除してよろしいですか？"},
-              class: "btn btn-danger btn-sm pull-right" %>
           <%= link_to "編集", edit_basic_info_user_path(user), remote: true, class: "btn btn-success btn-sm pull-right" %>
-          <!-- モーダル表示は事後対応します -->
+          <% @user_id = user.id %>
+          <a href="" data-toggle="modal" data-target=#<%= @user_id %> class="btn btn-primary btn-sm">受講生新規</a>
+            <!--生徒新規モーダル -->
+          <%= render partial: "new_basic_info" %>
         </td>
       </tr>
     <% end %>

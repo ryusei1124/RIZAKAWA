@@ -15,11 +15,17 @@
           <%= form_with(model: @user, url: update_basic_info_user_path(@user), local: true, method: :patch) do |f| %>
             <%= render 'shared/error_messages', object: @user %>
 
-            <%= f.label :guardian, class: "label-#{yield(:class_text)}" %>
-            <p><%= @user.guardian %></p>
+            <%= f.label :保護者, class: "label-#{yield(:class_text)}" %>
+            <p><%= f.text_field :guardian, class: "form-control", required: true %></p>
+
+            <%= f.label :保護者カナ, class: "label-#{yield(:class_text)}" %>
+            <p><%= f.text_field :guardian_kana, class: "form-control", required: true %></p>
             
             <%= f.label :email, class: "label-#{yield(:class_text)}" %>
-            <%= f.text_field :email, class: "form-control" %>
+            <%= f.email_field :email, class: "form-control", required: true %>
+
+            <%= f.label :password, class: "label-#{yield(:class_text)}" %>
+            <%= f.password_field :password, class: "form-control" %>
             
             <!--電話番号のカラムが必要と思われるので実装予定-->
 

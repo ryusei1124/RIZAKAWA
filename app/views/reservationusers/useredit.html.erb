@@ -1,29 +1,34 @@
-  <h2 class="lead">授業予約詳細・変更登録</h2>
-<div class="row">
-  <% @zoom=@reservation.zoom %>
-    <div class="col-md-6 col-md-offset-2 lead">
-    <table style="width:700px;" class="table-bordered table-condensed lead">
-    <tr><td style="width:150px;" class="tdcondition1">対象</td><td><%= @lesson.target %>
-    <% if @lesson.examinee==true %>
-    受験生
-    <% elsif @lesson.examinee==true %>
+<h2 class="lead">授業予約詳細・変更登録</h2>
+<div class="container">
+<table class="table-reverb">
+<tr>
+  <th>対象</th>
+  <td>
+  <%= @lesson.target %>
+  <% if @lesson.examinee==true %>
+      受験生
+  <% elsif @lesson.examinee==true %>
     一般
-    <% end %>
-    <% if @reservation.cancel? %>
+  <% end %>
+  <% if @reservation.cancel? %>
       <span class="label label-danger">予約取消</span>
-    <% elsif @reservation.waiting == true %>
+  <% elsif @reservation.waiting == true %>
       <span class="label label-danger">キャンセル待ち</span>
-    <% else %>
+  <% else %>
       <span class="label label-info">予約済</span>
-    <% end %>
-    <% if @lesson.cancel == true %>
+  <% end %>
+  <% if @lesson.cancel == true %>
       <span class="label label-danger label-user-division">中止になりました</span>
-    <% end %>
-    </td></tr>
-    <tr><td class="tdcondition1">名前 学校 学年</td><td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td></tr>
-    <tr><td class="tdcondition1">予約日時</td>
-    <td>
-    <%= @lesson.meeting_on.year %>年
+  <% end %>
+  </td>
+</tr>
+<tr>
+  <th>名前 学年</th>
+  <td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td>
+</tr>
+<tr>
+  <th>予約日時</th>
+  <td><%= @lesson.meeting_on.year %>年
     <%= daydis(@lesson.meeting_on) %>
      ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
     <% if @reservation.transfer==true %>
@@ -35,32 +40,43 @@
     <% if @lesson.regular==false %>
       <span class="label label-danger">臨時</span>
     <% end %>
-    </td></tr>
-    <tr><td class="tdcondition1">固定時間</td>
-    <td>
-    <% if @reservation.fix_time.present? %>
+  </td>
+</tr>
+<tr>
+  <th>固定時間</th>
+  <td>
+  <% if @reservation.fix_time.present? %>
       <%=timedisplay(@reservation.fix_time)  %>～
     <% else %>
       <span class="label label-danger">未設定</span>
     <% end %>
-    </td>
-    <tr><td class="tdcondition1" >授業方法</td>
-    <td>
-      <% @zoomseat=@lesson.seats_zoom %>
-      <% @realseat=@lesson.seats_real %>
-    <% if @zoom==true %>
+  </td>
+</tr>
+<tr>
+  <th>授業方法</th>
+  <td>
+    <% if @reservation.zoom == true %>
       Zoom
     <% else %>
      リアル
     <% end %>
-    <br>
-    <tr><td class="tdcondition1">備考</td><td><%=@lesson.note %></td></tr>
+    </td>
+  </tr>
+
+  <tr>
+    <th>備考</th>
+    <td><%=@lesson.note %></td>
+  </tr>
+  <% if current_user.admin? %>
+  <tr>
+    <th>生徒備考＊</th>
+    <td><%= simple_format(@student.note) %></td>
+  </tr>
+  <% end %>
+</table>
+<br />
     <% if current_user.admin? %>
-      <tr><td class="tdcondition1">生徒備考＊</td><td style="font-size:15px"><%= simple_format(@student.note) %></td></tr>
-    <% end %>
-    </table>
-    <% if current_user.admin? %>
-      <div style="font-size:10px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div>
+      <div style="font-size:20px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div>
     <% end %>
     <% modaltype1="chengesc" %><% @modaltype="newsc" %>
     <% if @lesson.meeting_on>@today or current_user.admin? %>
@@ -80,11 +96,15 @@
     <% end %>
     <div style="display: inline-block;">
       <%= link_to "ｽｹｼﾞｭｰﾙ" ,lessons_weeklyschedule_path, class:"btn btn-info button_size" %>&nbsp;
-    </div>
-
+   </div>
+    
     <% if current_user.admin? %>
-      <p><a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">情報修正＊</a>&nbsp;
+      <div style="display: inline-block;">
+      <a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">情報修正＊</a>&nbsp;
+      </div>
+      <div style="display: inline-block;">
       <%= link_to "管理画面＊" ,"/lessons/#{@lesson.id}/lesson_detail",class:"btn btn-info button_size" %>&nbsp;
+      </div>
       </p>
     <% else %>
       <br />
@@ -96,7 +116,7 @@
       <%= f.hidden_field:reservation_id,value:@reservation.id %>
       <%= f.hidden_field:student_id,value:@student.id %>
       <%= f.hidden_field:lesson_id,value:@lesson.id %>
-      <%= f.text_field :content, class: "form-control", style:"width:700px",required:true %>
+      <%= f.text_field :content, class: "form-control", style:"width:600px",required:true %><br />
       <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
     <br />
@@ -116,8 +136,7 @@
       <% end %>
     </table>
     <% end %>
-  </>
-
+ </div>
 <!--授業授業方法変更モーダル -->
 <%= render partial: "methodchange" %>
 <!--授業授業方法変更モーダル終了 -->
