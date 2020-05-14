@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = '新規作成に成功しました。確認をお願いします。'
-      redirect_to "/"
+      redirect_to '/users'
     else
       render :new
     end
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "情報を更新しました。"
-      redirect_to "/"
+      redirect_to '/users'
     else
       render :edit      
     end

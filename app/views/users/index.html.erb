@@ -7,7 +7,7 @@
   <table class="table table-condensed table-hover" id="table-users">
     <thead>
       <tr>
-        <th><%= User.human_attribute_name :guardian %></th>
+        <th><%= User.human_attribute_name :guardian %><%= link_to "新規登録", signup_path %></th>
         <th>受講生</th>
       </tr>
     </thead>
