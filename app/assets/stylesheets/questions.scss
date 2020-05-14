@@ -1,0 +1,54 @@
+#questions-info-show {
+  width: 100%;
+  th{
+    text-align: center;
+  }
+}
+
+.question-btn{
+  margin-bottom: 10px;
+}
+
+.question-paginate{
+  .pagination {
+    margin: 10px 0 5px 0;
+  }
+}
+
+.answer_table {
+  /* 子要素のタイトルを aboslute 配置するため必要 */
+  position: relative;
+}
+.answer_table .answer_left {
+  position: absolute;
+  left: 0;
+  margin-left: 5px;
+}
+.answer_table .answer_right {
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+}
+
+.question-index{
+  text-align: center;
+  font-size: 20px;
+}
+
+#table-question{
+  th, td{
+   text-align: center; 
+  }
+  .question_title{
+    
+    overflow-x: scroll;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.test{
+  text-align: left;
+  margin: 0 auto;
+}
+

@@ -22,7 +22,7 @@
             <span class="label label-success label-user-division">一般</span>
           <% end %>
         </td>
-          <% students = @students.where(user_id:user.id) %>
+          <% students = @students.where(user_id: user.id) %>
         <td>
           <% students.each do |student| %>
             <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
