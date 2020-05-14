@@ -49,6 +49,23 @@ Student.create!(student_name:"上田正志",studentkana:"ウエダマサシ",zoo
 Student.create!(student_name:"柳生三郎",studentkana:"ヤギュウサブロウ",zoom:true,birthday:"2009/12/24",fix_day:"火",fix_time:"16:15",user_id:17)
 Student.create!(student_name:"柳生巴",studentkana:"ヤギュウトモエ",zoom:true,birthday:"2005/05/24",fix_day:"木",fix_time:"19:10",user_id:17)
 Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",zoom:true,birthday:"2010/05/24",fix_day:"金",fix_time:"16:20",user_id:17)
+
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
+
+Answer.create!(answer_content: "test", question_id: 11, student_id: 2, user_id: 1)
+Answer.create!(answer_content: "test", question_id: 11, student_id: 2, user_id: 2)
+                
+
 61.times do |n|
   notice_title = "sample-#{n+1}タイトル"
   notice_content = "sample-#{n+1}内容"
@@ -56,57 +73,3 @@ Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",
                  notice_content: notice_content,user_id:1)
 end
 
-# 問い合わせ投稿(管理者)
-20.times do |n|
-  question_title = Faker::Lorem.sentence
-  question_content = Faker::Lorem.sentence
-  Question.create!(question_title: question_title,
-                question_content: question_content,
-                destination: 2,
-                student_id: 2,
-                user_id: 1)
-end
-
-# 問い合わせ投稿(一般)
-20.times do |n|
-  question_title = Faker::Lorem.sentence
-  question_content = Faker::Lorem.sentence
-  Question.create!(question_title: question_title,
-                question_content: question_content,
-                destination: 1,
-                student_id: 3,
-                user_id: 2)
-end
-
-# 問い合わせ投稿(長文)
-Question.create!(question_title: "おいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえおおいうえお",
-                question_content: "かきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこかきくけこ",
-                destination: 2,
-                student_id: 2,
-                user_id: 1)
-
-# 問い合わせ返信(管理者)
-20.times do |n|
-  answer_content = Faker::Lorem.sentence
-  question_id = "#{n+1}"
-  Answer.create!(answer_content: answer_content,
-                question_id: question_id,
-                student_id: 2,
-                user_id: 1)
-end
-
-# 問い合わせ返信(一般)
-20.times do |n|
-  answer_content = Faker::Lorem.sentence
-  question_id = "#{n+1}"
-  Answer.create!(answer_content: answer_content,
-                question_id: question_id,
-                student_id: 2,
-                user_id: 2)
-end
-
-# 問い合わせ返信(長文)
-Answer.create!(answer_content: "さしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそさしすせそ",
-                question_id: 41,
-                student_id: 2,
-                user_id: 2)
