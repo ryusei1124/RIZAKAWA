@@ -1,6 +1,6 @@
 # coding: utf-8
 
-User.create!(guardian: "sample",guardiankana:"サンプル",email: "sample@email.com",password: "password",password_confirmation: "password",admin: true)
+User.create!(guardian: "平川",guardiankana:"ヒラカワ",email: "sample@email.com",password: "password",password_confirmation: "password",admin: true)
 User.create!(guardian:"山田太郎",guardiankana:"ヤマダタロウ",email:"sample-1@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"木村喜朗",guardiankana:"キムラヨシロウ",email:"sample-2@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"高田史郎",guardiankana:"タカダシロウ",email:"sample-3@email.com",password:"password",password_confirmation:"password")
@@ -15,9 +15,9 @@ User.create!(guardian:"上田優",guardiankana:"ウエダユウ",email:"sample-1
 User.create!(guardian:"佐竹真紀",guardiankana:"サタケマキ",email:"sample-12@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"桑田貞",guardiankana:"クワタサダ",email:"sample-13@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"多田千晴",guardiankana:"オオタチハル",email:"sample-14@email.com",password:"password",password_confirmation:"password")
-User.create!(guardian:"上田優",guardiankana:"ウエダユウ",email:"sample-15@email.com",password:"password",password_confirmation:"password")
+User.create!(guardian:"上田勇也",guardiankana:"ウエダユウヤ",email:"sample-15@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"柳生進",guardiankana:"ヤギュウススム",email:"xgppm340@ybb.ne.jp",password:"password",password_confirmation:"password")
-User.create!(guardian:"伊藤利典",guardiankana:"イトウトシノリ",email:"tito40358@gmail.com",password:"password",password_confirmation:"password",admin: true)
+User.create!(guardian:"システム管理者",guardiankana:"イトウトシノリ",email:"tito40358@gmail.com",password:"password",password_confirmation:"password",admin: true)
 Student.create!(student_name:"山田良子",studentkana:"ヤマダヨシコ",zoom:false,birthday:"2006/5/15",fix_day:"月",fix_time:"19:10",user_id:2)
 Student.create!(student_name:"山田一郎",studentkana:"ヤマダイチロ",zoom:false,birthday:"2010/4/23",fix_day:"火",fix_time:"16:10",user_id:2)
 Student.create!(student_name:"山田次郎",studentkana:"ヤマダジロウ",zoom:false,birthday:"2011/4/10",fix_day:"月",fix_time:"16:10",user_id:2)
@@ -50,26 +50,7 @@ Student.create!(student_name:"柳生三郎",studentkana:"ヤギュウサブロ�
 Student.create!(student_name:"柳生巴",studentkana:"ヤギュウトモエ",zoom:true,birthday:"2005/05/24",fix_day:"木",fix_time:"19:10",user_id:17)
 Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",zoom:true,birthday:"2010/05/24",fix_day:"金",fix_time:"16:20",user_id:17)
 
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 1, student_id: 3, user_id: 2)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
-Question.create!(question_title: "タイトル", question_content: "内容", destination: 2, student_id: 3, user_id: 1)
 
-Answer.create!(answer_content: "test", question_id: 11, student_id: 2, user_id: 1)
-Answer.create!(answer_content: "test", question_id: 11, student_id: 2, user_id: 2)
                 
 
-61.times do |n|
-  notice_title = "sample-#{n+1}タイトル"
-  notice_content = "sample-#{n+1}内容"
-  Notice.create!(notice_title: notice_title,
-                 notice_content: notice_content,user_id:1)
-end
 

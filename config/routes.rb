@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     member do
       get 'edit_basic_info'
       patch 'update_basic_info'
+      get 'edit'
+      patch 'update'
     end
   end
   
@@ -60,10 +62,14 @@ Rails.application.routes.draw do
     member do
       get 'info_edit'
       patch 'info_update'
+      get 'create'
+    end
+    collection do
+      post 'create'
     end
   end
 
-
+ 
   resources :notices
   
   resources :reservations, only: [:update, :destroy]

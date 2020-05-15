@@ -8,9 +8,6 @@ class User < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
   
-  # 生徒一覧の名前順
-  default_scope -> { order(guardian: :asc) }
-  
   before_save { self.email = email.downcase }
 
   validates :guardian, length: { maximum: 50 }
@@ -23,6 +20,10 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   
   validate :class_hoice
+  
+  def self.maneger_kana_order
+   order(admin: "desc").order(guardiankana: "ASC")
+  end
   
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)

@@ -12,6 +12,11 @@
       <span class="label label-danger label-user-division">必須</span>
       <%= f.text_field :guardian, required: true, class: "form-control new-form" %>
 
+      <!--保護者名-->
+      ・<%= f.label :保護者カナ, class: "label-signup" %>
+      <span class="label label-danger label-user-division">必須</span>
+      <%= f.text_field :guardiankana, required: true, class: "form-control new-form" %>
+
       <!--メールアドレス-->
       ・<%= f.label :email, class: "label-signup" %>
       <span class="label label-danger label-user-division">必須</span>
