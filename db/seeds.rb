@@ -1,6 +1,6 @@
 # coding: utf-8
 
-User.create!(guardian: "sample",guardiankana:"サンプル",email: "sample@email.com",password: "password",password_confirmation: "password",admin: true)
+User.create!(guardian: "平川塾",guardiankana:"ヒラカワジュク",email: "sample@email.com",password: "password",password_confirmation: "password",admin: true)
 User.create!(guardian:"山田太郎",guardiankana:"ヤマダタロウ",email:"sample-1@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"木村喜朗",guardiankana:"キムラヨシロウ",email:"sample-2@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"高田史郎",guardiankana:"タカダシロウ",email:"sample-3@email.com",password:"password",password_confirmation:"password")
