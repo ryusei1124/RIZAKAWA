@@ -32,7 +32,10 @@ class QuestionsController < ApplicationController
     # ログインしているidが反映させる↓
     @question.user_id = current_user.id
     if @question.save
-      flash[:success] = "送信しました"
+      @title = "お問い合わせの登録がありました"
+      @content = "お問い合わせの登録がありました。下記リンクの確認をお願いします。"
+      send_mail_address
+      flash[:success] = "登録に成功し、通知メールを送信しました"
       redirect_to questions_url
     else
       render :new
@@ -74,5 +77,18 @@ class QuestionsController < ApplicationController
     # システム管理権限所有かどうか判定します。
     def admin_user
       redirect_to root_url unless current_user.admin?
+    end
+
+    def send_mail_address
+      if current_user.admin?
+        @destination_user = User.find( @question.user_id )
+        @bcc = current_user.email
+      else
+        @destination_user = User.find(1)
+        @bcc = ""
+      end
+      @send_user =  current_user
+      @link = "questions"
+      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
     end
 end

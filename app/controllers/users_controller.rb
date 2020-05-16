@@ -1,17 +1,21 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :logged_in_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :logged_in_user, only: [:new, :show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :select_student, only: [:edit_basic_info, :update_basic_info]
+  before_action :weekday, only: [:index]
   
   def index
-    @users = User.paginate(page: params[:page], per_page: 20)
+    @users = User.maneger_kana_order.paginate(page: params[:page], per_page: 40)
     @students = Student.all
+    @weekday = ["月","火","水","木","金","土","日"]
+    
   end
   
   def new
     @user = User.new
+    @student = Student.new
   end
   
   def show
@@ -20,16 +24,16 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      title = "新規登録ありがとうございました"
-      content = "下記サイトから登録確認お願いします"
-      @admin_user=User.find(18)
-      UserMailer.send_mail(@user,@admin_user, title, content, "/").deliver_now
-      flash[:success] = '新規作成に成功しました。ユーザーにメール送信しました。確認をお願いします。'
-      redirect_to @user
+      flash[:success] = '新規作成に成功しました。確認をお願いします。'
+      redirect_to '/users'
     else
       render :new
     end
   end
+  def edit
+    
+  end
+
 
   def destroy
     @user.destroy
@@ -37,13 +41,11 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
-  def edit
-  end
   
   def update
-    if @user.student.update_attributes(user_params)
-      flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to @user
+    if @user.update_attributes(user_params)
+      flash[:success] = "情報を更新しました。"
+      redirect_to '/users'
     else
       render :edit      
     end
@@ -65,7 +67,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       flash[:success] = "#{@user.guardian}の基本情報を更新しました。"
     else
-      flash[:danger] = "#{@user.guardian}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+      flash[:danger] = "#{@user.guardian}の更新は失敗しました。" + @user.errors.full_messages
     end
     redirect_to users_url
   end
@@ -76,7 +78,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:guardian, :student, :email, :birthday, :school, :school_year, :zoom, :real, :fix_day, :fix_time, :password, :password_confirmation)
+      params.require(:user).permit(:guardian, :guardiankana,:student, :email, :birthday, :school, :school_year, :zoom, :real, :fix_day, :fix_time, :password, :password_confirmation)
     end
     
     # beforeフィルター

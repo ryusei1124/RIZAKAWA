@@ -43,8 +43,13 @@
   text-align: left;
 }
 
+.acordion {
+  margin: 10px 0 0 0;
+}
+
 // 生徒一覧
 #table-users {
+  font-size :20px;
   th {
     vertical-align: middle;
   }
@@ -63,3 +68,4 @@
   margin: 15px 0;
   width: 30%;
 }
+

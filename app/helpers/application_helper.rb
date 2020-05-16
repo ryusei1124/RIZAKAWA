@@ -33,8 +33,8 @@ module ApplicationHelper
     end
   end
 
-   def timedisplayk(datetime)
-      hourdisplay(datetime).to_s + "時" + mindisplay(datetime).to_s + "分" if datetime.present?
+  def timedisplayk(datetime)
+    hourdisplay(datetime).to_s + "時" + mindisplay(datetime).to_s + "分" if datetime.present?
   end
 
   def year_month(date)

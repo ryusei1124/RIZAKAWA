@@ -86,7 +86,9 @@
         <% if reservation.waiting == false %>
            <tr>
             <td>
-              <%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
+              <%= link_to reservation.student.student_name,
+              "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
+              ( <%= Student.gradeyear(reservation.student_id) %> )
             </td>
             <td>
               <% if reservation.transfer == true %>

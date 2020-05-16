@@ -109,6 +109,12 @@ class ReservationusersController < ApplicationController
     @student = Student.find(@student_id)
     @lesson_id = params[:lesson_id]
     @lesson = Lesson.find(@lesson_id)
+    @lessoncomments = Lessoncomment.where("lesson_id =? and student_id=?" ,@lesson.id,@student.id)
+    @realseat=@lesson.seats_real
+    @realnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, false).cancel_exclusion.count
+    @zoom=true if @student.zoom?
+    @zoomseat=@lesson.seats_zoom
+    @zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).cancel_exclusion.count
   end
   
   def reservation_create
@@ -198,7 +204,7 @@ class ReservationusersController < ApplicationController
       @destination_user = User.find( @reservation.user_id )
       @bcc = current_user.email
     else
-      @destination_user = User.find(18)
+      @destination_user = User.find(1)
       @bcc = ""
     end
     @send_user =  current_user
