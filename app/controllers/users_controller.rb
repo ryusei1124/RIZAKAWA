@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:new, :show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update, :index]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
-  before_action :select_student, only: [:edit_basic_info, :update_basic_info]
   before_action :weekday, only: [:index]
   
   def index
@@ -67,7 +66,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       flash[:success] = "#{@user.guardian}の基本情報を更新しました。"
     else
-      flash[:danger] = "#{@user.guardian}の更新は失敗しました。" + @user.errors.full_messages
+      flash[:danger] = "#{@user.guardian}の更新は失敗しました。メールアドレスの重複等確認願います。" 
     end
     redirect_to users_url
   end
