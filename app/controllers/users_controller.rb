@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :logged_in_user, only: [:new, :show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update, :index]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :select_student, only: [:edit_basic_info, :update_basic_info]
   before_action :weekday, only: [:index]
@@ -94,7 +94,9 @@ class UsersController < ApplicationController
     
     # アクセスしたユーザーが現在ログインしているユーザーか確認します。
     def correct_user
-      redirect_to(root_url) unless current_user?(@user)
+      if current_user.admin == false
+        redirect_to(root_url) unless current_user?(@user)
+      end
     end
     
 end

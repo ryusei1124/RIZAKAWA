@@ -11,7 +11,7 @@
 
       ・<%= f.label :保護者カナ, class: "label-signup" %>
       <span class="label label-danger label-user-division">必須</span>
-      <%= f.text_field :guardiankana, required: true, class: "form-control new-form" %>
+      <%= f.text_field :guardiankana, required: true, class: "form-control" %>
 
      <!--メールアドレス-->
       ・<%= f.label :email, class: "label-signup" %>
@@ -20,13 +20,15 @@
       
      <!--パスワード-->
       ・<%= f.label :password, class: "label-signup" %> 
-      <%= f.password_field :password, required: true, class: "form-control" %>
+      <%= f.password_field :password, class: "form-control" %>
       
       <!--パスワード再入力-->
       ・<%= f.label :password_confirmation, class: "label-signup" %> 
-      <%= f.password_field :password_confirmation, required: true, class: "form-control" %>
+      <%= f.password_field :password_confirmation, class: "form-control" %>
 
       <%= f.submit "更新", class: "btn btn-primary btn-block btn-user--edit" %>
     <% end %>
+    <br />
+    <div style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">前のページに戻る</a></div>
   </div>
 </div>

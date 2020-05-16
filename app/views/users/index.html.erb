@@ -15,7 +15,9 @@
     <% @users.each do |user| %>
       <tr>
         <td>
-          <%= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
+        <% modaltype = "modalusernew" %>
+        <% @user_id = user.id %>
+        <%= link_to user.guardian, "/users/#{@user_id}/edit" %>
           <% if user.admin? %>
             <span class="label label-primary label-user-division">管理者</span>
           <% else %>
@@ -31,6 +33,9 @@
             <% if student.fix_day2.present? %>
                固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>
             <% end %>
+            <% if student.fix_day3.present? %>
+               固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time3) %>
+            <% end %>
             <% if student.examinee? %>
               <span class="label label-success label-user-division">受験生</span>
             <% end %>
@@ -41,7 +46,7 @@
         </td>
         <td>
           
-          <% @user_id = user.id %>
+          
           <a href="" data-toggle="modal" data-target=#<%= @user_id %> class="btn btn-primary btn-sm">受講生新規</a>
             <!--生徒新規モーダル -->
           <%= render partial: "new_basic_info" %>
