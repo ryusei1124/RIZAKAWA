@@ -1,4 +1,11 @@
 module ApplicationHelper
+  class Studentlist
+  attr_accessor :id,:student_name
+    def initialize(id,student_name)
+      @id = id
+      @student_name = student_name
+    end
+  end
 
   def full_title(page_name = "")
     base_title = "RIZAKAWA"

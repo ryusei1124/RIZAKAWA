@@ -105,6 +105,13 @@ class LessonsController < ApplicationController
   
   def lesson_detail
     #@student = Student.find(params[:id])
+    @student_lists = Array.new()
+    @students = Student.kanaorder
+    @students.each do | st |
+      id = st.id
+      student_name = st.student_name + "(" + Student.gradeyear( st.id ) + ")" 
+      @student_lists << Studentlist.new( id, student_name )
+    end
     @lesson = Lesson.find(params[:id])
     @reservations = Reservation.where("lesson_id = ?", @lesson.id).cancel_exclusion.fix_time_order
     @reservations_cancelonly = Reservation.where("lesson_id = ?", @lesson.id).cancel_only
