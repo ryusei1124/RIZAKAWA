@@ -2,7 +2,7 @@
 
 <h1>【予約詳細】</h1>
 
-<div class="col-md-10 col-md-offset-1">
+<div class="warapper_lesson_detail">
   <div class="lesson-discontinuation-fix-btn">
   <p>
     <div style="display: inline-block;">
@@ -126,8 +126,8 @@
               <% end %>
               
               <% if reservation.attendance_time.present? %>
-              <%= link_to "クリア", reservation_path(reservation, no: 3), method: :patch,
-                  data: { confirm: "出席と退席時間をクリアしてもよろしいですか？" },
+              <%= link_to "消去", reservation_path(reservation, no: 3), method: :patch,
+                  data: { confirm: "出席と退席時間を消去してもよろしいですか？" },
                   class: "btn btn-info btn-sm" %>
               <% end %>
               
