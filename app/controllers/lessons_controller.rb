@@ -3,7 +3,7 @@ class LessonsController < ApplicationController
   before_action :set_student
   before_action :set_lesson
   before_action :admin_user, only: %i(lesson_detail)
-  before_action :unless_login  
+  before_action :unless_login
   
   require 'date'
   include ApplicationHelper
