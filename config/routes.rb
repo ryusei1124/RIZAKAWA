@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post 'reservationusers/reservation_create'
   # 授業コメント
   post 'lessoncomments/create', to: 'lessoncomments#create'
+  # 問い合わせ回答
+  post 'answers/create', to: 'answers#create'
   # ユーザー側生徒情報更新
   put 'basic_infos/student_update', to: 'basic_infos#student_update'
   patch 'maneger_students/update', to: 'maneger_students#update'
@@ -39,6 +41,8 @@ Rails.application.routes.draw do
     member do
       get 'edit_basic_info'
       patch 'update_basic_info'
+      get 'edit'
+      patch 'update'
     end
   end
   
@@ -58,13 +62,20 @@ Rails.application.routes.draw do
     member do
       get 'info_edit'
       patch 'info_update'
+      get 'create'
+    end
+    collection do
+      post 'create'
     end
   end
 
-
+ 
   resources :notices
   
   resources :reservations, only: [:update, :destroy]
+  resources :questions
+  
+  resources :password_resets, only: [:new, :create, :edit, :update]
   
   resources :password_resets, only: [:new, :create, :edit, :update]
 end

@@ -17,11 +17,21 @@ class StudentsController < ApplicationController
     end
     redirect_to users_url
   end
+
+  def create
+     students = Student.create(student_params)
+     if students.save
+       flash[:success] = "基本情報を登録しました。"
+     else
+      flash[:danger] = "登録に失敗しました。"
+    end
+    redirect_to users_url
+  end
   
   private
 
     def student_params
-      params.require(:student).permit(:student_name, :studentkana, :real, :zoom, :school, :school_year, :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3 )
+      params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :school,  :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3, :note, :withdrawal)
     end
     
   # beforeフィルター

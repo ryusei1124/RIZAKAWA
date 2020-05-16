@@ -5,9 +5,8 @@ class User < ApplicationRecord
   has_many :lessoncomments, dependent: :destroy
   has_many :reservations, dependent: :destroy
   has_many :students, dependent: :destroy
-  
-  # 生徒一覧の名前順
-  default_scope -> { order(guardian: :asc) }
+  has_many :questions, dependent: :destroy
+  has_many :answers, dependent: :destroy
   
   before_save { self.email = email.downcase }
 
@@ -21,6 +20,10 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   
   validate :class_hoice
+  
+  def self.maneger_kana_order
+   order(admin: "desc").order(guardiankana: "ASC")
+  end
   
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
@@ -72,21 +75,21 @@ class User < ApplicationRecord
   def self.sendmail_all_users(  title, content, link )
     undercontracts = self.undercontract
     @send_user = find(1)
+    @bcc = ""
     @title = title
     @content = content
     @link = link
     #契約中のユーザー全員にメールを送る
     undercontracts.each do | user |
       @destination_user = find(user.id)
-      UserMailer.send_mail( @destination_user, @send_user, @title, @content, @link ).deliver_now
+      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content, @link ).deliver_now
     end
     #ユーザーに何を送ったかわかるように管理者にも送る。今はひとりだが将来も考え管理者全員に送る。
     admins = where("admin = ?", true )
     admins.each do | user |
       @destination_user = find(user.id)
-      UserMailer.send_mail( @destination_user, @send_user, @title, @content, @link ).deliver_now
+      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content, @link ).deliver_now
     end
   end
-  
 
 end
