@@ -4,7 +4,7 @@ class LessoncommentsController < ApplicationController
     lessoncomment.user_id = current_user.id
     if lessoncomment.save
       user_id = Reservation.find(lessoncomment.reservation_id).user_id
-      admin_user = User.find(18)
+      admin_user = User.find(1)
       normal_user = User.find(user_id) 
       if  current_user.admin == false
        @destination_user = admin_user

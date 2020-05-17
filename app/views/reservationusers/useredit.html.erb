@@ -1,5 +1,5 @@
 <h2 class="lead">授業予約詳細・変更登録</h2>
-<div class="container">
+<div class="wrapper">
 <table class="table-reverb">
 <tr>
   <th>対象</th>
@@ -76,7 +76,7 @@
 </table>
 <br />
     <% if current_user.admin? %>
-      <div style="font-size:20px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div>
+      <div style="font-size:15px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div>
     <% end %>
     <% modaltype1="chengesc" %><% @modaltype="newsc" %>
     <% if @lesson.meeting_on>@today or current_user.admin? %>
@@ -116,12 +116,12 @@
       <%= f.hidden_field:reservation_id,value:@reservation.id %>
       <%= f.hidden_field:student_id,value:@student.id %>
       <%= f.hidden_field:lesson_id,value:@lesson.id %>
-      <%= f.text_field :content, class: "form-control", style:"width:600px",required:true %><br />
+      <%= f.text_field :content, class: "form-control", style:"width:100%",required:true %><br />
       <%= f.submit value:"送信",class:"btn-sm btn-info" %>
     <% end %>
     <br />
     <% if @lessoncomments.present? %>
-    <table style="width:700px; font-size:15px" class="table-bordered table-condensed lead">
+    <table style="width:100%; font-size:15px" class="table-bordered table-condensed lead">
     <% @lessoncomments.each do |comment| %>
       <tr><td>
       <% if comment.user.admin == false %>

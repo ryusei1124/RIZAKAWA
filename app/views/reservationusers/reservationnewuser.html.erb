@@ -1,7 +1,7 @@
 <% require 'date' %>
 <% thisday=Date.today %>
 <h2 class="lead" style="align:left;">授業予約新規登録</h2>
-<div class="container">
+<div class="wrapper">
 <table class="table-newb">
 <tr>
   <th>対象</th>
@@ -11,13 +11,6 @@
       受験生
   <% elsif @lesson.examinee==true %>
     一般
-  <% end %>
-  <% if @reservation.cancel? %>
-      <span class="label label-danger">予約取消</span>
-  <% elsif @reservation.waiting == true %>
-      <span class="label label-danger">キャンセル待ち</span>
-  <% else %>
-      <span class="label label-info">予約済</span>
   <% end %>
   <% if @lesson.cancel == true %>
       <span class="label label-danger label-user-division">中止になりました</span>

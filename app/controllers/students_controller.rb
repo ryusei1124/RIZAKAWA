@@ -31,7 +31,7 @@ class StudentsController < ApplicationController
   private
 
     def student_params
-      params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :school,  :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3, :note, :withdrawal)
+      params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :examinee, :school,  :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3, :note, :withdrawal)
     end
     
   # beforeフィルター

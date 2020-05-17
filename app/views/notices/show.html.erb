@@ -27,7 +27,7 @@
     <thead>
       <tr>
         <th colspan="2" class="col-md-3">内容</th>
-        <td colspan="4"><%= raw(nl2br(@notice.notice_content)) %></td>
+        <td colspan="4"><%= simple_format(@notice.notice_content) %></td>
       </tr>
     </thead>
   </table>
