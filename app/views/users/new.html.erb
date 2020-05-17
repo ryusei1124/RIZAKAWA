@@ -33,66 +33,6 @@
       <%= f.password_field :password_confirmation, required: true, class: "form-control new-form" %>
 
       <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-signup" %>
-    
-<div class="acordion">
-<a href="#demo<%= @student.id %>" data-toggle="collapse">+ 生徒情報登録</a>
-</div>
-        
-    <div id="demo<%= @student.id %>" class="collapse">
-    <div class="row">
-    <div class="col-md-12 col-md-offset-0">
-    <%= form_with(model: @student, local: true) do |f| %>
-          
-      ・<%= f.label :student_name, class: "label-signup " %>
-      <span class="label label-danger label-user-division">必須</span>
-      <%= f.text_field :student_name, class: "form-control" %>
-      
-      ・<%= f.label :studentkana, class: "label-signup" %>
-      <span class="label label-danger label-user-division">必須</span>
-      <%= f.text_field :studentkana, class: "form-control" %>
-      
-      <div class="class-choice">
-        ・<label style="margin-bottom:0px;">受講方法を選択</label>
-        <span class="label label-danger label-user-division">必須</span><br>
-        <%= f.label :zoom, class: "label-user--edit zoom-choice" %>
-        <%= f.check_box :zoom, {}, "true", "false" %>
-        
-        <%= f.label :リアル受講, class: "label-user--edit zoom-choice" %>
-        <%= f.check_box :rial, {}, "true", "false" %>
-      </div>
-      
-      <div class="class-choice">
-        ・<label style="margin-bottom:0px;">受験生はチェックを付ける</label><br>
-        <%= f.label :taking_lectures, class: "label-user--edit zoom-choice" %>
-        <%= f.check_box :taking_lectures, {}, "true", "false" %>
-      </div>
-      
-      ・<%= f.label :school, class: "label-signup" %>
-      <%= f.text_field :school, class: "form-control" %>
-      
-      ・<%= f.label :birthday, class: "label-signup" %>
-      <span class="label label-danger label-user-division">必須</span>
-      <%= f.text_field :birthday, class: "form-control" %>
-      
-      ・<%= f.label :fix_day, class: "label-signup" %>
-      <span class="label label-danger label-user-division">必須</span>
-      <%= f.text_field :fix_day, class: "form-control" %>
-      
-      ・<%= f.label :fix_time, class: "label-signup" %>
-      <span class="label label-danger label-user-division">必須</span>
-      <%= f.time_field :fix_time, class: "form-control" %>
-      
-      ・<%= f.label :fix_day2, class: "label-signup" %>
-      <%= f.text_field :fix_day2, class: "form-control" %>
-      
-      ・<%= f.label :fix_time3, class: "label-signup" %>
-      <%= f.time_field :fix_time3, class: "form-control" %>
-      
-      ・<%= f.label :withdrawal, class: "label-signup" %>
-      <%= f.date_field :withdrawal, class: "form-control" %>
-      
-      <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-signup" %>
     <% end %>
-  <% end %>
   </div>
 </div>

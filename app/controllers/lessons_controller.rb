@@ -2,7 +2,8 @@ class LessonsController < ApplicationController
   before_action :schoolgrade
   before_action :set_student
   before_action :set_lesson
-  before_action :unless_login  
+  before_action :admin_user, only: %i(lesson_detail)
+  before_action :unless_login
   
   require 'date'
   include ApplicationHelper
@@ -103,7 +104,7 @@ class LessonsController < ApplicationController
   end
   
   def lesson_detail
-    @student = Student.find(params[:id])
+    #@student = Student.find(params[:id])
     @lesson = Lesson.find(params[:id])
     @reservations = Reservation.where("lesson_id = ?", @lesson.id).cancel_exclusion.fix_time_order
     @reservations_cancelonly = Reservation.where("lesson_id = ?", @lesson.id).cancel_only
@@ -111,6 +112,15 @@ class LessonsController < ApplicationController
     @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).cancel_exclusion.count
     @students_add = Student.kanaorder
     @waiting = Reservation.where("lesson_id = ? and waiting = ?", @lesson.id, true).count
+    @student_lists = Array.new()
+    @students = Student.kanaorder
+    @students.each do | st |
+      if  @reservations.find_by( student_id: st.id ).blank?
+        id = st.id
+        student_name = st.student_name + "(" + Student.gradeyear( st.id ) + ")" 
+        @student_lists << Studentlist.new( id, student_name )
+      end
+    end
   end
 
   def update
