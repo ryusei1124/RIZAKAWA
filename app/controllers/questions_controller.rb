@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
   end
   
   def create
-    @question = current_user.questions.build(question_params)
+    @question = Question.new(question_params)
     # ログインしているidが反映させる↓
     @question.user_id = current_user.id
     if @question.save
