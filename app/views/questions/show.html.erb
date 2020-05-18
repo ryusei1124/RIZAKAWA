@@ -6,7 +6,7 @@
   <table class="table-bordered table-condensed" id="questions-info-show" style="table-layout:fixed;width:100%;">
     <thead>
       <tr>
-        <th colspan="2" class="col-md-3">投稿日</th>
+        <th colspan="2" class="col-md-3">投稿日時</th>
         <td colspan="4"><%= l(@question.created_at, format: :default) %></td>
       </tr>
     </thead>
@@ -18,11 +18,11 @@
     </thead>
     <thead>
       <tr>
-        <% if current_user.admin? %>
-          <th colspan="2" class="col-md-3">送信先</th>
-        <% else %>
+        <!--<%# if current_user.admin? %>-->
+        <!--  <th colspan="2" class="col-md-3">送信先</th>-->
+        <!--<%# else %>-->
           <th colspan="2" class="col-md-3">生徒名</th>
-        <% end %>
+        <%# end %>
         <td colspan="4"><%= @question.student.student_name %></td>
       </tr>
     </thead>
