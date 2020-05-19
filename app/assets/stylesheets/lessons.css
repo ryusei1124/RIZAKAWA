@@ -24,17 +24,3 @@
 .lesson-discontinuation-fix-btn {
   margin-bottom: 15px;
 }
-
-/* 予約詳細画面レスポンシブ設定 */
-.warapper_lesson_detail {
-  width: 70%;
-  margin: auto;
-}
-
-@media screen and (max-width:1000px){
-
-.warapper_lesson_detail { 
-  width: 100%;
-  margin: auto;
-  }
-}

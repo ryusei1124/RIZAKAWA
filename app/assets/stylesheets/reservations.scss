@@ -1,3 +1,4 @@
+/* 予約詳細画面レスポンシブ設定 */
 #table-reservations {
   width: 100%;
   vertical-align: middle;
@@ -8,11 +9,9 @@
     font-size: 130%;
   }
   td {
-    font-size: 150%;
-    font-size: 130%;
-  }
-  td {
-    font-size: 150%;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 160%;
   }
 }
 
@@ -26,6 +25,14 @@
   }
 }
 
+/* zoom,リアル選択ボックス高さ調整 */
+
 select {
   height: 1.7em;
+}
+
+/* time_fieldスマホ横幅調整 */
+
+input[type="time"] {
+  width: 100%;
 }
