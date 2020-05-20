@@ -2,7 +2,7 @@
 <% require 'date' %>
 <% today=Date.today %>
 <h1>平川塾からのお知らせ</h1>
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-12 col-md-offset-0">
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
     <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
