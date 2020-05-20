@@ -18,11 +18,11 @@
     </thead>
     <thead>
       <tr>
-        <% if current_user.admin? %>
-          <th colspan="2" class="col-md-3">送信先</th>
-        <% else %>
-          <th colspan="2" class="col-md-3">生徒名</th>
-        <% end %>
+        <!--<%# if current_user.admin? %>-->
+        <!--  <th colspan="2" class="col-md-3">送信先</th>-->
+        <!--<%# else %>-->
+        <th colspan="2" class="col-md-3">生徒名</th>
+        <%# end %>
         <td colspan="4"><%= @question.student.student_name %></td>
       </tr>
     </thead>

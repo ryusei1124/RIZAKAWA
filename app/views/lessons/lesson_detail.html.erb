@@ -61,21 +61,21 @@
   </table>
 
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h1>【予約生徒・修正&出欠管理】</h1>
+     <h1 class="modal-title center">【予約生徒・修正&出欠管理】</h1>
 
      <% if @reservations.present? == true %>
          <tr>
-           <th style = "width:200px;">名前</th>
+           <th style = "width:150px;">名前</th>
            <th style = "width:50px;">振替</th>
            <th style = "width:100px;">固定時間</th>
-           <th>授業方法</th>
-           <th>
+           <th style = "width:100px;">授業方法</th>
+           <th style = "width:50px;">
              修正
            </th>
            <th style = "width:100px;">出席時間</th>
            <th style = "width:100px;">退席時間</th>
-           <th>欠席</th>
-           <th style = "width:120px;">出欠ボタン</th>
+           <th style = "width:50px;">欠席</th>
+           <th style = "width:120px;">出欠管理</th>
          </tr>
       <% else %>
         <th><h2>予約生徒なし</h2></th>
