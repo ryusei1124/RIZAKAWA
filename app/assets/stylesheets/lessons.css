@@ -27,11 +27,11 @@
 
 /* 予約詳細画面レスポンシブ設定 */
 .warapper_lesson_detail {
-  width: 70%;
+  width: 90%;
   margin: auto;
 }
 
-@media screen and (max-width:1000px){
+@media screen and (max-width:1200px){
 
 .warapper_lesson_detail { 
   width: 100%;

@@ -24,7 +24,11 @@
 </tr>
 <tr>
   <th>名前 学年</th>
-  <td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td>
+  <td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) 
+  <% if @student.examinee? %>
+    <span class="label label-success label-user-division">受験生</span>
+  <% end %>
+  </td>
 </tr>
 <tr>
   <th>予約日時</th>

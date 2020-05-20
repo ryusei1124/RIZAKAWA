@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
    belongs_to :user
+   has_many :questions, dependent: :destroy
    validates :birthday,  presence: true
    validates :student_name,  presence: true
    has_many :reservations, dependent: :destroy

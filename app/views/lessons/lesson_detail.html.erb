@@ -61,22 +61,21 @@
   </table>
 
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h1 class="modal-title center">【予約生徒・修正&出欠管理】</h1>
+     <h1>【予約生徒・修正&出欠管理】</h1>
 
      <% if @reservations.present? == true %>
          <tr>
-           <th>名前</th>
-           <th>振替</th>
+           <th style = "width:180px;">名前</th>
+           <th style = "width:50px;">振替</th>
            <th>固定時間</th>
            <th>授業方法</th>
            <th>
-             固定時間/授業方法<br>
-             修正ボタン
+             修正
            </th>
-           <th>出席時間</th>
-           <th>退席時間</th>
+           <th style = "width:100px;">出席時間</th>
+           <th style = "width:100px;">退席時間</th>
            <th>欠席</th>
-           <th>出欠ボタン</th>
+           <th style = "width:120px;">出欠ボタン</th>
          </tr>
       <% else %>
         <th><h2>予約生徒なし</h2></th>
@@ -85,10 +84,10 @@
       <% @reservations.each do |reservation| %>
         <% if reservation.waiting == false %>
            <tr>
-            <td>
+            <td style="text-align:left;">
               <%= link_to reservation.student.student_name,
               "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
-              ( <%= Student.gradeyear(reservation.student_id) %> )
+              (<%= Student.gradeyear(reservation.student_id) %>)
             </td>
             <td>
               <% if reservation.transfer == true %>
@@ -163,8 +162,9 @@
     　<% @reservations.each do |reservation| %>
         <% if reservation.waiting == true %>
            <tr>
-            <td>
+            <td style="text-align:left;">
               <%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
+              (<%= Student.gradeyear(reservation.student_id) %>)
             </td>
             <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
             <td>
@@ -202,7 +202,7 @@
     　<% @reservations_cancelonly.each do |reservation| %>
         <% if reservation.cancel == true %>
            <tr>
-            <td>
+            <td style="text-align:left;">
               <%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
             </td>
             <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
