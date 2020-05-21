@@ -24,7 +24,11 @@
 </tr>
 <tr>
   <th>名前 学年</th>
-  <td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) </td>
+  <td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) 
+  <% if @student.examinee? %>
+    <span class="label label-success label-user-division">受験生</span>
+  <% end %>
+  </td>
 </tr>
 <tr>
   <th>予約日時</th>
@@ -62,7 +66,6 @@
     <% end %>
     </td>
   </tr>
-
   <tr>
     <th>備考</th>
     <td><%=@lesson.note %></td>
@@ -97,7 +100,6 @@
     <div style="display: inline-block;">
       <%= link_to "ｽｹｼﾞｭｰﾙ" ,lessons_weeklyschedule_path, class:"btn btn-info button_size" %>&nbsp;
    </div>
-    
     <% if current_user.admin? %>
       <div style="display: inline-block;">
       <a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">情報修正＊</a>&nbsp;
@@ -137,6 +139,7 @@
     </table>
     <% end %>
  </div>
+ 
 <!--授業授業方法変更モーダル -->
 <%= render partial: "methodchange" %>
 <!--授業授業方法変更モーダル終了 -->
