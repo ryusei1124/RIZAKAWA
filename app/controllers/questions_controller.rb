@@ -19,12 +19,12 @@ class QuestionsController < ApplicationController
   
   def new
     @question = Question.new
-    if current_user.admin?
-      @students = Student.kanaorder
+    # if current_user.admin?
+    #   @students = Student.kanaorder
       @users = User.undercontract
-    else
-      @students = Student.kanaorder.where("user_id = ?", current_user.id)
-    end
+    # else
+    #   @students = Student.kanaorder.where("user_id = ?", current_user.id)
+    # end
   end
   
   def create
