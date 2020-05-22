@@ -17,8 +17,11 @@
       <% end %>
       
       <%= f.label :student_id, "生徒名", class: "label-#{yield(:class_text)}" %>
-      <%= f.collection_select :student_id, @students, :id, :student_name, {include_blank: true}, class: "form-control" %>
-      
+      <% if current_user.admin %>
+        <%= f.collection_select :student_id, Student.kanaorder, :id, :student_name, {include_blank: true}, class: "form-control" %>
+      <% else %>
+        <%= f.collection_select :student_id, Student.kanaorder.where("user_id = ?", current_user.id), :id, :student_name, {include_blank: true}, class: "form-control" %>
+      <% end %>
     
       <%= f.label :question_title, "タイトル", class: "label-#{yield(:class_text)}" %>
       <span class="label label-danger label-user-division">必須</span>
