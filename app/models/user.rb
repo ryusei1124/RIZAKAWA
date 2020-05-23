@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :reset_token
+  require 'date'
   has_many :notices, dependent: :destroy
   has_many :lessons, dependent: :destroy
   has_many :lessoncomments, dependent: :destroy
@@ -18,8 +19,8 @@ class User < ApplicationRecord
                     uniqueness: true    
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  
   validate :class_hoice
+  scope :user_kanaorder , -> { where(withdrawal:nil).order(guardiankana: :asc)}
   
   def self.maneger_kana_order
    order(admin: "desc").order(guardiankana: "ASC")
@@ -69,7 +70,10 @@ class User < ApplicationRecord
   
   #スコープ契約中の保護者一覧
   def self.undercontract
-    joins(:students).where(withdrawal:nil).group("users.id").order(guardiankana: "ASC")
+    nowtime = Time.new
+    today = nowtime.to_date
+    where("withdrawal is null or withdrawal > ?", today).order(guardiankana: "ASC")
+    #joins(:students).where(students: { withdrawal:nil }).group("users.id").order(guardiankana: "ASC")
   end
   #契約先全員へのメール
   def self.sendmail_all_users(  title, content, link )

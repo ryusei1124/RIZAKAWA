@@ -132,7 +132,8 @@
       <% else %>
         <%= comment.user.guardian %>
       <% end %>
-      <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %><br />
+      <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)&nbsp;
+      <%=timedisplay(comment.created_at) %><br />
       <%= comment.content %><br />
       </td></tr>
       <% end %>

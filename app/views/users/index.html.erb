@@ -1,9 +1,10 @@
 <% provide(:title, 'All users') %>
-
-<h1>保護者一覧</h1>
-
 <div class="col-md-10 col-md-offset-1">
-  <%= will_paginate %>
+<h2 style="font-size:30px;">保護者一覧</h2>
+  <div style="display: inline-block;"><%= button_to "契約者", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"1"}} %></div>
+  <div style="display: inline-block;"><%= button_to "全表示", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"2"}} %></div>
+  <div style="display: inline-block;"><%= button_to "登録順", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"3"}} %></div>
+  <br />
   <table class="table table-condensed table-hover" id="table-users">
     <thead>
       <tr>
@@ -12,28 +13,37 @@
       </tr>
     </thead>
 
+    <% @admins.each do |user| %>
+      <tr>
+        <td>
+          <%= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
+          <span class="label label-primary label-user-division">管理者</span>
+         </td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>   
     <% @users.each do |user| %>
       <tr>
         <td>
-          <%#= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
           <%= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
-          <% if user.admin? %>
-            <span class="label label-primary label-user-division">管理者</span>
-          <% else %>
-            <span class="label label-success label-user-division">一般</span>
-          <% end %>
+          <span class="label label-success label-user-division">一般</span>
         </td>
           <% students = @students.where(user_id: user.id) %>
         <td>
           <% students.each do |student| %>
             <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
             (<%= Student.gradeyear(student.id) %> <%= student.school %>)
-            固定時間1:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>
-            <% if student.fix_day2.present? %>
-               固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>
-            <% end %>
-            <% if student.examinee? %>
-              <span class="label label-success label-user-division">受験生</span>
+            <% if student.withdrawal.blank? %>
+                固定時間1:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>
+              <% if student.fix_day2.present? %>
+                固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>
+              <% end %>
+              <% if student.examinee? %>
+                <span class="label label-success label-user-division">受験生</span>
+              <% end %>
+            <% else %>
+                <span class="label label-danger label-user-division">退会済</span>
             <% end %>
             <% if students.count >1 %>
               <br>
@@ -41,7 +51,6 @@
           <% end %>
         </td>
         <td>
-          
           <% @user_id = user.id %>
           <a href="" data-toggle="modal" data-target=#<%= @user_id %> class="btn btn-primary btn-sm pull-right">受講生新規</a>
             <!--生徒新規モーダル -->
