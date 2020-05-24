@@ -15,7 +15,7 @@ class Student < ApplicationRecord
     where("withdrawal is null or withdrawal > ?", today).order(studentkana: "ASC")
    end
 
-   def self.under_contact_createorder
+   def self.under_contact_createorder #入会順
     nowtime = Time.new
     today = nowtime.to_date
     where("withdrawal is null or withdrawal > ?", today).order(created_at: "ASC")

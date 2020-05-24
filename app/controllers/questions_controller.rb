@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
   
   def new
     @question = Question.new
-    @users = User.undercontract
+    @users = User.undercontract.where.not(id:current_user.id)
   end
   
   def create
