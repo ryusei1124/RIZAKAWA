@@ -22,7 +22,7 @@ class LessonsController < ApplicationController
       @student=Student.find(session[:student_id])
       flash[:warning]="#{ @student.student_name }に切替成功しました。"
     end
-    @students=Student.where(user_id:current_user)
+    @students=Student.where(user_id:current_user).under_contact_createorder
     if @students.blank?
       session[:student_id]= nil
     elsif session[:student_id].blank?
