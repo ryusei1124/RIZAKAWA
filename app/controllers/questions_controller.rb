@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
     question_id = params[:id]
     @answers = Answer.where("question_id = ?" , question_id)
     @student = Student.find_by(params[:student_name])
+    @user_guargian = User.find(@question.destination).guardian
   end
   
   def new
