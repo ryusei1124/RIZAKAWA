@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token, :reset_token
+  attr_accessor :remember_token, :activation_token, :reset_token
   has_many :notices, dependent: :destroy
   has_many :lessons, dependent: :destroy
   has_many :lessoncomments, dependent: :destroy
@@ -90,6 +90,11 @@ class User < ApplicationRecord
       @destination_user = find(user.id)
       UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content, @link ).deliver_now
     end
+  end
+  
+  # パスワード再設定の期限が切れている場合はtrueを返す
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
 end
