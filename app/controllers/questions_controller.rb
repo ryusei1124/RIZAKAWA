@@ -78,7 +78,7 @@ class QuestionsController < ApplicationController
 
     def send_mail_address
       if current_user.admin?
-        @destination_user = User.find( @question.user_id )
+        @destination_user = User.find( @question.destination )
         @bcc = current_user.email
       else
         @destination_user = User.find(1)
