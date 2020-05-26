@@ -13,7 +13,7 @@
         <span class="label label-danger label-user-division">必須</span>
         <%= f.collection_select :destination, @users, :id, :guardian, {}, required: true, class: "form-control" %>
       <% else %>
-        <%= f.collection_select :destination, User.where(id: 1), :id, :guardian, {}, style: "#{'display:none'}", class: "form-control" %>
+        <%= f.hidden_field :destination, value: 1 %>
       <% end %>
       
       <%= f.label :student_id, "生徒名", class: "label-#{yield(:class_text)}" %>

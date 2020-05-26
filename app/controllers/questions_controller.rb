@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
     question_id = params[:id]
     @answers = Answer.where("question_id = ?" , question_id)
     @student = Student.find_by(params[:student_name])
+    @user_guargian = User.find(@question.destination).guardian
   end
   
   def new
@@ -77,7 +78,7 @@ class QuestionsController < ApplicationController
 
     def send_mail_address
       if current_user.admin?
-        @destination_user = User.find( @question.user_id )
+        @destination_user = User.find( @question.destination )
         @bcc = current_user.email
       else
         @destination_user = User.find(1)
