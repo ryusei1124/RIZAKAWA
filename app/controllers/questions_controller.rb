@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
   def show
     question_id = params[:id]
     @answers = Answer.where("question_id = ?" , question_id)
-    @student = Student.find(@question.student_id)
+    @student = Student.find(@question.student_id) if @question.student_id.present?
     @user_guargian = User.find(@question.destination).guardian
   end
   
