@@ -11,7 +11,7 @@
       <% if current_user.admin %>
         <%= f.label :destination, "送信先", class: "label-#{yield(:class_text)}" %>
         <span class="label label-danger label-user-division">必須</span>
-        <%= f.collection_select :destination, @users.where.not(id: current_user), :id, :guardian, {}, required: true, class: "form-control" %>
+        <%= f.collection_select :destination, @users, :id, :guardian, {}, required: true, class: "form-control" %>
       <% else %>
         <%= f.hidden_field :destination, value: 1 %>
       <% end %>

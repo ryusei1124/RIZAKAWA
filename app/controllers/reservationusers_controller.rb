@@ -62,7 +62,7 @@ class ReservationusersController < ApplicationController
       @title = "予約の振替がありました"
       @content = "予約の振替がありました。下記リンクの確認をお願いします。"
       send_mail_address
-      flash[:warning] = "キャンセル待ちになります" if @reservation.waiting == true
+      flash[:warning] = "キャンセル待ちになります。メールを送信しました" if @reservation.waiting == true
     else
       flash[:danger] = "受講日振替に失敗しました"
     end
@@ -86,7 +86,7 @@ class ReservationusersController < ApplicationController
       @title = "予約の取消しがありました"
       @content = "予約の取消しがありました。下記リンクの確認をお願いします。"
       send_mail_address
-      flash[:warning] = "予約取消しました"
+      flash[:warning] = "予約取消し、メールを送信しました"
     elsif @reservation.save and @reservation.cancel == false
       flash[:success] = "予約再開しました"
       @title = "予約の再開がありました"
@@ -133,7 +133,7 @@ class ReservationusersController < ApplicationController
     @reservation.save
     waiting_registration
     if @reservation.save
-      flash[:success] = "予約登録しました"
+      flash[:success] = "予約登録し、メールを送信しました"
       @title = "予約の追加登録がありました"
       @content = "予約の追加登録がありました。下記リンクの確認をお願いします。"
       send_mail_address
