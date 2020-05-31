@@ -58,8 +58,15 @@ class ApplicationController < ActionController::Base
   def weekday
     @weekday = ["月","火","水","木","金","土","日"]
   end
+
   def day_setting
     nowtime = Time.new + TIMECOL
     @today = nowtime.to_date
+  end
+  
+  def mail_link_host
+    protocol = request.protocol
+    host = request.host
+    @url = "#{ protocol }#{ host }/" #現在のurlを取得
   end
 end

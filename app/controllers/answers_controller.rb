@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  before_action :mail_link_host,   only: [:create]
+  
   def create
     @answer = Answer.new(answer_params)
     @answer.user_id = current_user.id
@@ -33,7 +35,8 @@ class AnswersController < ApplicationController
         @bcc = ""
       end
       @send_user =  current_user
-      @link = "questions"
+      link = "questions"
+      @link = @url + link
       UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
   end
 end
