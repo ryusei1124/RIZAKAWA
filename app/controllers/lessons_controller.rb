@@ -22,7 +22,7 @@ class LessonsController < ApplicationController
       @student=Student.find(session[:student_id])
       flash[:warning]="#{ @student.student_name }に切替成功しました。"
     end
-    @students=Student.where(user_id:current_user)
+    @students=Student.where(user_id:current_user).under_contact_createorder
     if @students.blank?
       session[:student_id]= nil
     elsif session[:student_id].blank?
@@ -60,7 +60,7 @@ class LessonsController < ApplicationController
       dayofweek=weekdate(@lesson.meeting_on)
       if @lesson.regular? and autoregister == "1" #定例授業なら該当の生徒を自動で登録する
         #会員で該当曜日３つカラムから該当曜日の生徒抽出
-        students = Student.where("fix_day =? or fix_day2 =? or fix_day3 =?",dayofweek,dayofweek,dayofweek).where(withdrawal:nil)
+        students = Student.where("fix_day =? or fix_day2 =? or fix_day3 =?",dayofweek,dayofweek,dayofweek).under_contact
         if fixtimeres=="1" #固定時間のあってる人のみ抽出し自動登録
           students=students.where("fix_time >=? and fix_time <=?",@lesson.started_at,@lesson.finished_at)
           .or(students.where("fix_time2 >=? and fix_time2 <=?",@lesson.started_at,@lesson.finished_at))
@@ -104,7 +104,7 @@ class LessonsController < ApplicationController
   end
   
   def lesson_detail
-    @student = Student.find(params[:id])
+    #@student = Student.find(params[:id])
     @lesson = Lesson.find(params[:id])
     @reservations = Reservation.where("lesson_id = ?", @lesson.id).cancel_exclusion.fix_time_order
     @reservations_cancelonly = Reservation.where("lesson_id = ?", @lesson.id).cancel_only
@@ -112,6 +112,15 @@ class LessonsController < ApplicationController
     @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).cancel_exclusion.count
     @students_add = Student.kanaorder
     @waiting = Reservation.where("lesson_id = ? and waiting = ?", @lesson.id, true).count
+    @student_lists = Array.new()
+    @students = Student.kanaorder
+    @students.each do | st |
+    if  @reservations.find_by( student_id: st.id ).blank?
+      id = st.id
+      student_name = st.student_name + "(" + Student.gradeyear( st.id ) + ")" 
+      @student_lists << Studentlist.new( id, student_name )
+      end
+    end
   end
 
   def update

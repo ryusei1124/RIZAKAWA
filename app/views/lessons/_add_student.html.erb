@@ -10,7 +10,7 @@
             <th>生徒名</th>
             <td>
               <% @students_add = Student.kanaorder %>
-                <%= f.collection_select :student_id, @students_add, :id, :student_name, {include_blank: true}, required:true, class: "form-control" %>
+                <%= f.collection_select :student_id, @student_lists, :id, :student_name, {include_blank: true}, required:true, class: "form-control" %>
               </td>
             </tr>
             <tr>

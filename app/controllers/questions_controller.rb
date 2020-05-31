@@ -6,29 +6,26 @@ class QuestionsController < ApplicationController
   
   def index
     if current_user.admin?
-      @questions = Question.paginate(page: params[:page], per_page: 10)
+      @questions = Question.paginate(page: params[:page], per_page: 10).created_at_order
     else
-      @questions = Question.where("user_id =? or destination =?", current_user.id, current_user.id).paginate(page: params[:page], per_page: 10)
+      @questions = Question.where("user_id =? or destination =?", current_user.id, current_user.id).paginate(page: params[:page], per_page: 10).created_at_order
     end
   end
   
   def show
     question_id = params[:id]
     @answers = Answer.where("question_id = ?" , question_id)
+    @student = Student.find(@question.student_id) if @question.student_id.present?
+    @user_guargian = User.find(@question.destination).guardian
   end
   
   def new
     @question = Question.new
-    if current_user.admin?
-      @students = Student.kanaorder
-      @users = User.undercontract
-    else
-      @students = Student.kanaorder.where("user_id = ?", current_user.id)
-    end
+    @users = User.undercontract.where.not(id:current_user.id)
   end
   
   def create
-    @question = current_user.questions.build(question_params)
+    @question = Question.new(question_params)
     # ログインしているidが反映させる↓
     @question.user_id = current_user.id
     if @question.save
@@ -81,7 +78,7 @@ class QuestionsController < ApplicationController
 
     def send_mail_address
       if current_user.admin?
-        @destination_user = User.find( @question.user_id )
+        @destination_user = User.find( @question.destination )
         @bcc = current_user.email
       else
         @destination_user = User.find(1)

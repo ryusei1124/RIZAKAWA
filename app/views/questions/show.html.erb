@@ -2,7 +2,7 @@
 
 <h1>問い合わせ詳細</h1>
 
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-13 col-md-offset-0">
   <table class="table-bordered table-condensed" id="questions-info-show" style="table-layout:fixed;width:100%;">
     <thead>
       <tr>
@@ -18,12 +18,18 @@
     </thead>
     <thead>
       <tr>
-        <% if current_user.admin? %>
-          <th colspan="2" class="col-md-3">送信先</th>
+        <th colspan="2" class="col-md-3">送信先</th>
+        <td colspan="4"><%= @user_guargian %></td>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="2" class="col-md-3">生徒名</th>
+        <% if @question.student_id.present? %>
+          <td colspan="4"><%= @student.student_name %></td>
         <% else %>
-          <th colspan="2" class="col-md-3">生徒名</th>
+          <td colspan="4">対象なし</td>
         <% end %>
-        <td colspan="4"><%= @question.student.student_name %></td>
       </tr>
     </thead>
     <thead>

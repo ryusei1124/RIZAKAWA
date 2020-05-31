@@ -38,6 +38,11 @@ ja:
         notice:
           notice_title: 投稿タイトル
           notice_content: 投稿内容
+        question: 
+          question_content: 内容
+          question_title: タイトル
+          student_id: 生徒名
+          destination: 送信先
   sessions:
     new:
       email: メールアドレス

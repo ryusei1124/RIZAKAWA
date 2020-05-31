@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
    belongs_to :user
+   require 'date'
    validates :birthday,  presence: true
    validates :student_name,  presence: true
    has_many :reservations, dependent: :destroy
@@ -8,6 +9,19 @@ class Student < ApplicationRecord
    attr_accessor :lesson_note
    scope :kanaorder , -> { where(withdrawal:nil).order(studentkana: :asc)}
    
+   def self.under_contact #カナ順
+    nowtime = Time.new
+    today = nowtime.to_date
+    where("withdrawal is null or withdrawal > ?", today).order(studentkana: "ASC")
+   end
+
+   def self.under_contact_createorder #入会順
+    nowtime = Time.new
+    today = nowtime.to_date
+    where("withdrawal is null or withdrawal > ?", today).order(created_at: "ASC")
+   end
+   
+
    def self.gradeyear(id)
     born=Student.find(id).birthday
     bornmonth=born.month
