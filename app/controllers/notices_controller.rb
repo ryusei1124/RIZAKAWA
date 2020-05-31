@@ -3,6 +3,7 @@ class NoticesController < ApplicationController
   before_action :set_student
   before_action :unless_login
   before_action :day_setting, only: %i(index)
+  before_action :admin_user, only: %i(new edit)
   
   def index
     @notices = Notice.paginate(page: params[:page], per_page: 10)
