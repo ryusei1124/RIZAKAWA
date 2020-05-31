@@ -3,6 +3,8 @@ class QuestionsController < ApplicationController
   before_action :unless_question, only: :show
   before_action :logged_in_user, only: [:show, :update, :index, :destroy]
   before_action :admin_user, only: :destroy
+  before_action :mail_link_host,   only: [:create]
+
   
   def index
     if current_user.admin?
@@ -85,7 +87,8 @@ class QuestionsController < ApplicationController
         @bcc = ""
       end
       @send_user =  current_user
-      @link = "questions"
+      link = "questions"
+      @link = @url + link
       UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
     end
 end

@@ -2,6 +2,7 @@ class StudentsController < ApplicationController
   before_action :select_student, only: [:info_edit, :update_basic_info, :info_update]
   before_action :logged_in_user, only: [:show, :info_edit, :info_update]
   before_action :day_setting, only: [:info_update]
+  before_action :mail_link_host,   only: [:create]
   
   def show
     @students = Student.all
@@ -61,7 +62,8 @@ class StudentsController < ApplicationController
     @destination_user = User.find( @student.user_id )
     @bcc = current_user.email
     @send_user =  current_user
-    @link = "notices"
+    link = "notices"
+    @link = @url + link
     UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
   end
 end
