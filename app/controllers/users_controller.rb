@@ -14,8 +14,8 @@ class UsersController < ApplicationController
       @users = User.where(admin:false).order(id: "DESC").paginate(page: params[:page], per_page: 20)
       @students = Student.all
     else
-      @user = User.undercontract.where(admin:false).user_kanaorder
-      @users = @user.paginate(page: params[:page], per_page: 40)
+      @users = User.undercontract.where(admin:false).user_kanaorder
+      #@users = @user.paginate(page: params[:page], per_page: 40)
       @students = Student.under_contact
     end
     @weekday = ["月","火","水","木","金","土","日"]
