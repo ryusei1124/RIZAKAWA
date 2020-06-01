@@ -3,6 +3,7 @@ class ReservationusersController < ApplicationController
   before_action :unless_login
   before_action :unless_student,   only: [:useredit]
   before_action :weekday,   only: [:useredit]
+  before_action :mail_link_host,   only: [:reservation_create, :reservation_change_user, :reservation_delete]
   require 'date'
   
   def useredit
@@ -208,7 +209,8 @@ class ReservationusersController < ApplicationController
       @bcc = ""
     end
     @send_user =  current_user
-    @link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
+    link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
+    @link = @url + link
     UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
   end
 end

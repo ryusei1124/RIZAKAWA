@@ -4,6 +4,7 @@ class LessonsController < ApplicationController
   before_action :set_lesson
   before_action :admin_user, only: %i(lesson_detail)
   before_action :unless_login
+  before_action :mail_link_host,   only: [:cancellation]
   
   require 'date'
   include ApplicationHelper
@@ -49,6 +50,7 @@ class LessonsController < ApplicationController
       @lesson.examinee = nil
     end
     @lesson.regular = false if lesson_params[:regularkanji] == "臨時"
+    #--------------------新ループ
     #30分毎重複チェック
     @lesson_id = 0
     duplication_check
@@ -62,9 +64,9 @@ class LessonsController < ApplicationController
         #会員で該当曜日３つカラムから該当曜日の生徒抽出
         students = Student.where("fix_day =? or fix_day2 =? or fix_day3 =?",dayofweek,dayofweek,dayofweek).under_contact
         if fixtimeres=="1" #固定時間のあってる人のみ抽出し自動登録
-          students=students.where("fix_time >=? and fix_time <=?",@lesson.started_at,@lesson.finished_at)
-          .or(students.where("fix_time2 >=? and fix_time2 <=?",@lesson.started_at,@lesson.finished_at))
-          .or(students.where("fix_time3 >=? and fix_time3 <=?",@lesson.started_at,@lesson.finished_at))
+          students=students.where("fix_time >=? and fix_time < ?",@lesson.started_at,@lesson.finished_at)
+          .or(students.where("fix_time2 >=? and fix_time2 < ?",@lesson.started_at,@lesson.finished_at))
+          .or(students.where("fix_time3 >=? and fix_time3 < ?",@lesson.started_at,@lesson.finished_at))
         end
         if lesson_params[:target] == "中高生" and @lesson.examinee == true #中学生、高校生で受験生を自動登録
           rev=students.where("birthday < ? and examinee = ?" ,jrhigh(@lesson.meeting_on).to_date,true)
@@ -98,7 +100,7 @@ class LessonsController < ApplicationController
         end
       end
     else
-      flash[:warning] = "登録に失敗しました"
+    flash[:warning] = "登録に失敗しました"
     end
     redirect_to request.referrer
   end
@@ -158,7 +160,8 @@ class LessonsController < ApplicationController
        title = "授業を中止にします"
        content = "#{daydis(lesson.meeting_on)}#{timedisplayk(lesson.started_at)}からの授業を中止にします。ご了承の程お願いします"
        link = "lessons/weeklyschedule"
-       User.sendmail_all_users( title, content, link )
+       @link = @url + link
+       User.sendmail_all_users( title, content, @link )
        flash[:warning] = "中止及び全員にメール送信しました。"
       else
        flash[:success] = "授業を再開しました。"

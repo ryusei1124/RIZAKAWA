@@ -4,6 +4,7 @@ class NoticesController < ApplicationController
   before_action :unless_login
   before_action :day_setting, only: %i(index)
   before_action :admin_user, only: %i(new edit)
+  before_action :mail_link_host,   only: [:create]
   
   def index
     @notices = Notice.paginate(page: params[:page], per_page: 10)
@@ -26,7 +27,8 @@ class NoticesController < ApplicationController
       title = "タイトル名「#{@notice.notice_title}」を作成しました。"
       content = "お知らせ情報を追加しました。下記を参照下さい。"
       link = "notices"
-      User.sendmail_all_users( title, content, link )
+      @link = @url + link
+      User.sendmail_all_users( title, content, @link )
       redirect_to notices_url
     else
       render :new
