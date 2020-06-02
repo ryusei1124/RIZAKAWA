@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       @users = User.where(admin:false).order(id: "DESC").paginate(page: params[:page], per_page: 20)
       @students = Student.all
     else
-      @user = User.undercontract.where(admin:false).order(guardiankana: "ASC")
+      @user = User.undercontract.where(admin:false).user_kanaorder
       @users = @user.paginate(page: params[:page], per_page: 40)
       @students = Student.under_contact
     end
