@@ -85,4 +85,17 @@
     font-size:25px;
     font-weight: 700;
 }
+.wrapper_user {
+  width: 90%;
+  margin: auto;
+}
+
+@media screen and (max-width:1000px){
+
+.wrapper { 
+  width: 100%;
+  margin: auto;
+  }
+}
+
 

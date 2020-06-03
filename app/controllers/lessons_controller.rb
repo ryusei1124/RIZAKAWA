@@ -35,41 +35,41 @@ class LessonsController < ApplicationController
   end
   
   def create
-    @lesson = Lesson.new(lesson_params)
-    @lesson.user_id=current_user.id
     starttime = lesson_params[:starttime].to_time
     finishtime = lesson_params[:finishtime].to_time
     autoregister = lesson_params[:autoregister]
     @openday = lesson_params[:meeting_on].to_date
     fixtimeres = lesson_params[:fixtimeres]
-    @lesson.started_at = starttime+54000
-    @lesson.finished_at = finishtime+54000
+    regularkanji = lesson_params[:regularkanji]
     registration_check = lesson_params[:registration_check]
     registrations_day = lesson_params[:registrations]
     if lesson_params[:examineekanji] == "受験生"
-      @lesson.examinee = true
+      examinee = true
     elsif lesson_params[:examineekanji] == "全"
-      @lesson.examinee = nil
+      examinee = nil
     end
-    @lesson.regular = false if lesson_params[:regularkanji] == "臨時"
     #--------------------新ループ
-    if registration_check == "1" and @lesson.regular?
+    if registration_check == "1"
       last_day = registrations_day.to_date
     else
       last_day = @openday.to_date
     end
-    
     while @openday <= last_day do
+      @lesson = Lesson.new(lesson_params)
+      @lesson.user_id = current_user.id
       @lesson.meeting_on = @openday
+      @lesson.started_at = starttime + 54000
+      @lesson.finished_at = finishtime + 54000
+      @lesson.regular = false if regularkanji == "臨時"
+      @lesson.examinee = examinee
       #30分毎重複チェック
       @lesson_id = 0
       duplication_check
       #重複があれば処理を中止し週間予定表に戻る
       if @reservecounttotal >= 1
-        flash[:danger]="重複登録があります。処理を中止しました。"
+        flash[:danger]="重複登録で登録できなかった授業があります"
       elsif @lesson.save
         flash[:success]="登録に成功しました"
-        debugger
         dayofweek=weekdate(@lesson.meeting_on)
         if @lesson.regular? and autoregister == "1" #定例授業なら該当の生徒を自動で登録する
           #会員で該当曜日３つカラムから該当曜日の生徒抽出
@@ -183,6 +183,16 @@ class LessonsController < ApplicationController
       flash[:danger] = "登録に失敗しました"
     end
     redirect_to request.referrer
+  end
+
+  def destroy
+    lesson = Lesson.find(params[:id])
+    if lesson.destroy
+      flash[:success] = "削除しました。"
+    else
+      flash[:danger]  = "削除に失敗しました。"
+    end
+    redirect_to "/lessons/weeklyschedule"
   end
   
   def attendance_processing
