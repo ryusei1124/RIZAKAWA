@@ -6,9 +6,9 @@
         <% if logged_in? %>
           <li><%= link_to "お知らせ", notices_path %></li>
           <% if current_user.admin? %>
-            <li><%= link_to "保護者一覧", users_path %></li>
+            <li><%= link_to "契約一覧", users_path %></li>
           <% end %>
-          <li><%= link_to "スケジュール", lessons_weeklyschedule_path %></li>
+          <li><%= link_to "ｽｹｼﾞｭｰﾙ", lessons_weeklyschedule_path %></li>
           <li><%= link_to "問い合わせ", questions_path %></li>
           <li><%= link_to "予約履歴", reservation_logs_path %></li>
           <li class="dropdown">

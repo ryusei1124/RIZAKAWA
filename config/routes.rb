@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       get 'edit_basic_info'
       patch 'update_basic_info'
       get 'edit'
+      delete 'destroy'
       patch 'update'
     end
   end
@@ -54,6 +55,7 @@ Rails.application.routes.draw do
      patch 'lesson_discontinuation_fix'
      get 'add_student'
      patch 'add_student'
+     delete 'destroy'
    end
   end
   

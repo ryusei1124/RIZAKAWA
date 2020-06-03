@@ -95,8 +95,12 @@
                   <label for="select1a">区分:</label>　<%= f.check_box :autoregister, {:checked => true} %> 定例で生徒を予約登録　<%= f.check_box :fixtimeres, {:checked => true} %> 定例で固定時間の合う生徒だけ予約登録
                   <%= f.select :regularkanji, [["定例"],["臨時"]], {}, required: true, class: "form-control new-form" %>
                 </div>
+                <div class="form-group">
+                  <label for="select1a">定期授業週単位一括登録期限:</label>　<%= f.check_box :registration_check, {:checked => false} %> 実施する
+                  <% last_month_day = day.end_of_month %>
+                  <%= f.date_field :registrations , value: last_month_day, class: "form-control" %>
+                </div>
                 <%= f.hidden_field :meeting_on,value:day  %>
-
                 <div class="form-group">
                   備考<br>
                   <%= f.text_field :note, class: "form-control" %>

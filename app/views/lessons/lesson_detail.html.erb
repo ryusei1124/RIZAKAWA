@@ -10,13 +10,16 @@
     <div style="display: inline-block;">
     <a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">授業変更</a>
     </div>
-     <div style="display: inline-block;">
+    <div style="display: inline-block;">
      <% if @lesson.cancel == false %>
       <%= button_to "授業中止", {controller: 'lessons', action: 'cancellation'}, {method: :patch, data: { confirm: '本当に中止にしますか？' }, params: {id: @lesson.id, cancel: "Yes" },class:"btn btn-danger button_size"} %>
      <% else %>
       <%= button_to "授業再開", {controller: 'lessons', action: 'cancellation'}, {method: :patch, data: { confirm: '本当に再開しますか？' }, params: {id: @lesson.id},class:"btn btn-primary button_size"} %>
      <% end %>
-     </div>
+    </div>
+    <div style="display: inline-block;">
+      <%= button_to "授業削除", {controller: 'lessons', action: 'destroy'}, {method: :delete, data: { confirm: '本当に削除しますか？' }, params: {id: @lesson.id },class:"btn btn-danger button_size"} %>
+    </div>
   </p>
   </div>
 
