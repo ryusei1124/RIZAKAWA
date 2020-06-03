@@ -48,7 +48,6 @@ class LessonsController < ApplicationController
     elsif lesson_params[:examineekanji] == "全"
       examinee = nil
     end
-    #--------------------新ループ
     if registration_check == "1"
       last_day = registrations_day.to_date
     else
@@ -119,7 +118,6 @@ class LessonsController < ApplicationController
   end
   
   def lesson_detail
-    #@student = Student.find(params[:id])
     @lesson = Lesson.find(params[:id])
     @reservations = Reservation.where("lesson_id = ?", @lesson.id).cancel_exclusion.fix_time_order
     @reservations_cancelonly = Reservation.where("lesson_id = ?", @lesson.id).cancel_only

@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     else
       @user = User.undercontract.where(admin:false)
       @users = @user.paginate(page: params[:page], per_page: 40)
-      @students = Student.under_contact
+      @students = Student.under_contact_createorder
     end
     @weekday = ["月","火","水","木","金","土","日"]
   end
@@ -62,13 +62,11 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user.destroy
-    students = Student.where(user_id:@user.id)
-    students.each do |student|
-      reservation = Reservation.where(student_id:student.id)
-      reservation.destroy
+    if @user.destroy
+      flash[:success] = "#{@user.guardian}のデータを削除しました。"
+    else
+      flash[:danger] = "データを削除に失敗しました。"
     end
-    flash[:success] = "#{@user.guardian}のデータを削除しました。"
     redirect_to users_url
   end
   
