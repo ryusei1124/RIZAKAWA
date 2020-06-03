@@ -20,8 +20,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validate :class_hoice
-  scope :user_kanaorder, -> { order('guardiankana COLLATE "C" ASC') }
-  #scope :user_kanaorder , -> { order(guardiankana: :asc)}
+  scope :user_kanaorder , -> { order(guardiankana: :asc)}
   
   def self.maneger_kana_order
    order(admin: "desc").order(guardiankana: "ASC")

@@ -1,4 +1,3 @@
-
 User.create!(guardian: "sample",guardiankana:"サンプル",email: "sample@email.com",password: "password",password_confirmation: "password",admin: true)
 User.create!(guardian:"山田太郎",guardiankana:"ヤマダタロウ",email:"sample-1@email.com",password:"password",password_confirmation:"password")
 User.create!(guardian:"木村喜朗",guardiankana:"キムラヨシロウ",email:"sample-2@email.com",password:"password",password_confirmation:"password")
@@ -47,9 +46,3 @@ Student.create!(student_name:"多田美玖",studentkana:"タダミク",zoom:fals
 Student.create!(student_name:"上田正志",studentkana:"ウエダマサシ",zoom:false,birthday:"2009/05/24",fix_day:"木",fix_time:"16:20",user_id:16)
 Student.create!(student_name:"柳生三郎",studentkana:"ヤギュウサブロウ",zoom:true,birthday:"2009/12/24",fix_day:"火",fix_time:"16:15",user_id:17)
 Student.create!(student_name:"柳生巴",studentkana:"ヤギュウトモエ",zoom:true,birthday:"2005/05/24",fix_day:"木",fix_time:"19:10",user_id:17)
-Student.create!(student_name:"柳生正志",studentkana:"ヤギュウマサシ",zoom:true,birthday:"2010/05/24",fix_day:"金",fix_time:"16:20",user_id:17)
-
-
-                
-
-
