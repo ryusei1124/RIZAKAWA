@@ -47,6 +47,8 @@ class LessonsController < ApplicationController
       examinee = true
     elsif lesson_params[:examineekanji] == "全"
       examinee = nil
+    else
+      examinee = false
     end
     if registration_check == "1"
       last_day = registrations_day.to_date
