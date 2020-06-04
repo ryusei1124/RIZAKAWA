@@ -37,3 +37,16 @@
   margin: auto;
   }
 }
+/* 予約詳細画面レスポンシブ設定 */
+.warapper_weekly {
+  width: 70%;
+  margin: auto;
+}
+
+@media screen and (max-width: 1200px) {
+.warapper_weekly {
+  width: 90%;
+  margin: auto;
+    }
+}
+
