@@ -9,14 +9,17 @@
 <% first_time="2000-01-01 10:00".to_time %>
 <% last_time="2000-01-01 22:30".to_time %>
 <% @student=Student.find(session[:student_id]) if session[:student_id].present? %>
-<div class="warapper_weekly">
 <% if @students.count>=2 %>
+<table align="center" style="width:50%">
+<td>
 <% @students.each do |student| %>
 <div style="display: inline-block;">
   <% studentid=student.id %>
   <%= button_to student.student_name, {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changestudent:studentid,cation:"2"}} %>
   &nbsp;</div>
 <% end %>
+</td>
+</table>
 <% end %>
 <div style="text-align:center;">
   <div style="display: inline-block;"><%= button_to"←", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:datedown,cation:"1"}} %></div>
@@ -26,10 +29,10 @@
   </div>
   <div style="display: inline-block; padding-left:10px;"><h2>&nbsp;<b>&nbsp;<%=@student.student_name if @student.present? %>週間予定表(<%=first_day %>〜<%=last_day %>) </b>&nbsp;</h2></div>
 </div>
-<table border: 0px solid; style="align:center;">
+<table border: 0px solid;" align="center">
   <th>
-    <td>
-      <table border="2" class="table" style="vertical-align:top; align:center;">
+    <td">
+      <table border="2" class="table" vertical-align:top;" align="center">
         <% if current_user.admin? %>
         <tr>
           <td>登録</td>
@@ -51,7 +54,7 @@
   <% (first_day..last_day).each do |day| %>
   <th>
   <td>
-    <table border="2" class="table" style="width:100px; vertical-align:top;">
+    <table border="2" class="table" style="width:110px; vertical-align:top;">
       <% if current_user.admin==true %>
       <tr>
         <td align="center">
@@ -195,14 +198,15 @@
   <% end %>
 </table>
 <% if current_user.admin==false %>
-  〇ご契約で設定の授業は自動で予約登録されています<br>
+<table align="center" style="width:50%">
+  <td>〇ご契約で設定の授業は自動で予約登録されています<br>
   〇薄緑色の授業は、予約済です<br>
   〇黄色の授業は、明日以降新規登録可能です<br>
   〇青緑色の授業は、キャンセル待ちです<br>
   〇ピンク色の授業は、取消された授業です<br>
   〇<span class="label label-danger label-user-division">止</span>の印のあるものは中止になった授業です<br>
   〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です<br>
-  〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です<br>
+   〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です</td>
+</table>
 <% end %>
 <br /><br /><br />
-</div>
