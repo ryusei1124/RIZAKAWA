@@ -15,5 +15,21 @@
  */
 
 .container{
-  width:75%;
+  width:80%;
 }
+
+.wrapper_norml {
+  width: 90%;
+  margin: auto;
+}
+
+@media screen and (max-width:1000px){
+
+.wrapper_norml { 
+  width: 100%;
+  margin: auto;
+  }
+}
+
+
+
