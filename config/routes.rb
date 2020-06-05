@@ -48,16 +48,16 @@ Rails.application.routes.draw do
   end
   
   resources :lessons do
-   member do
-     get 'lesson_detail'
-     patch 'lesson_detail'
-     get 'lesson_discontinuation_fix'
-     patch 'lesson_discontinuation_fix'
-     get 'add_student'
-     patch 'add_student'
-     delete 'destroy'
-     put 'update'
-   end
+    member do
+      put 'update'
+      get 'lesson_detail'
+      patch 'lesson_detail'
+      get 'lesson_discontinuation_fix'
+      patch 'lesson_discontinuation_fix'
+      get 'add_student'
+      patch 'add_student'
+      delete 'destroy'
+    end
   end
   
   resources :students do
