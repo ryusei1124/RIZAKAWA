@@ -65,6 +65,7 @@ class LessonsController < ApplicationController
       @lesson.examinee = examinee
       #30分毎重複チェック
       @lesson_id = 0
+      @reservecount = 0
       @reservecounttotal = 0
       duplication_check
       #重複があれば処理を中止し週間予定表に戻る
@@ -219,21 +220,21 @@ class LessonsController < ApplicationController
   def duplication_check
     starttimec = @lesson.started_at
     finishtimec = @lesson.finished_at
-    reservecount = 0
+    meeting_on = @lesson.meeting_on
+    #@reservecount = 0
     count = 0
     lasttime = (finishtimec-starttimec) / 1800
     while starttimec <= finishtimec
       #一回目のスタートタイムが前の授業の終わりと一緒でも登録必要にてそのまま通す
-      if Lesson.where("finished_at =? AND meeting_on = ?" ,starttimec, @openday).where.not(id: @lesson_id).count >0 and count >=1 
-        reservecount = 1
-      elsif Lesson.where("started_at =? AND meeting_on = ?" ,starttimec, @openday).where.not(id: @lesson_id).count >0 and count <lasttime
-        reservecount = 1
+      if Lesson.where("finished_at =? AND meeting_on = ?" ,starttimec, meeting_on).where.not(id: @lesson_id).count >0 and count >=1 
+        @reservecount = 1
+      elsif Lesson.where("started_at =? AND meeting_on = ?" ,starttimec, meeting_on).where.not(id: @lesson_id).count >0 and count <lasttime
+        @reservecount = 1
       end  
       starttimec = starttimec + 1800
-      @reservecounttotal = @reservecounttotal + reservecount
-      reservecount = 0
+      @reservecounttotal = @reservecounttotal + @reservecount
+      @reservecount = 0
       count = count + 1
     end
   end
-
 end
