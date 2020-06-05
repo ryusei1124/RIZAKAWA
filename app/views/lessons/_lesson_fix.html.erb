@@ -6,7 +6,7 @@
         <% start_at = timedisplay( @lesson.started_at ) %>
           <% finished_at = timedisplay( @lesson.finished_at ) %>
             <table class="table-student">
-              <%= form_with(model: @lesson,url: lesson_path, method: :put, local: true) do |f| %>
+              <%= form_with(model: @lesson,url: "lessons/#{@lesson.id}/update", method: :put, local: true) do |f| %>
               <tr>
                 <th>開催日:</th>
                 <td>

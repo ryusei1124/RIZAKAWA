@@ -151,6 +151,9 @@ class LessonsController < ApplicationController
     @lesson.seats_zoom = lesson_params[:seats_zoom]
     @lesson.note = lesson_params[:note]
     @lesson.rescheduled = true
+    @reservecount = 0
+    @reservecounttotal = 0
+    duplication_check
     if @reservecounttotal >= 1 
       flash[:danger] = "重複登録があります。処理を中止します"
     elsif @lesson.save

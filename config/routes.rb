@@ -56,6 +56,7 @@ Rails.application.routes.draw do
      get 'add_student'
      patch 'add_student'
      delete 'destroy'
+     put 'update'
    end
   end
   
