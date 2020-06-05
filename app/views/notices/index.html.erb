@@ -1,6 +1,7 @@
 <% provide(:title, 'お知らせ一覧') %>
 <% require 'date' %>
 <% today=Date.today %>
+<div class="wrapper_norml">
 <h1>平川塾からのお知らせ</h1>
 <div class="col-md-12 col-md-offset-0">
   <div class="add-notice-information-btn">
@@ -71,6 +72,7 @@
   </div>
   <% end %>
   <br>
+
   
   <!-- 2.編集モーダルの配置 -->
   <% if @students.present? %>
@@ -81,10 +83,8 @@
         基本情報(確認用）</a>
     </div>
   </div>
+</div>
   <% end %>
  <!--基本情報モーダル -->
 <%= render partial: "basicstudent" %>
 <!--基本情報モーダル終了 -->
-
-
-  
