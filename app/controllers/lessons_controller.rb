@@ -65,6 +65,7 @@ class LessonsController < ApplicationController
       @lesson.examinee = examinee
       #30分毎重複チェック
       @lesson_id = 0
+      @reservecounttotal = 0
       duplication_check
       #重複があれば処理を中止し週間予定表に戻る
       if @reservecounttotal >= 1
@@ -145,8 +146,6 @@ class LessonsController < ApplicationController
     @lesson.started_at = lesson_params[:starttime]
     @lesson.finished_at = lesson_params[:finishtime]
     @openday = @lesson.meeting_on
-    #変更時の重複チェック
-    duplication_check
     @lesson.seats_real = lesson_params[:seats_real]
     @lesson.seats_zoom = lesson_params[:seats_zoom]
     @lesson.note = lesson_params[:note]
@@ -221,7 +220,6 @@ class LessonsController < ApplicationController
     starttimec = @lesson.started_at
     finishtimec = @lesson.finished_at
     reservecount = 0
-    @reservecounttotal = 0
     count = 0
     lasttime = (finishtimec-starttimec) / 1800
     while starttimec <= finishtimec
