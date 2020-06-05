@@ -212,7 +212,6 @@ class LessonsController < ApplicationController
   def duplication_check
     starttimec = @lesson.started_at
     finishtimec = @lesson.finished_at
-    reservecount = 0
     count = 0
     lasttime = (finishtimec-starttimec) / 1800
     while starttimec <= finishtimec
