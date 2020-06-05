@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   
   resources :lessons do
    member do
+     put 'update'
      get 'lesson_detail'
      patch 'lesson_detail'
      get 'lesson_discontinuation_fix'
@@ -56,7 +57,6 @@ Rails.application.routes.draw do
      get 'add_student'
      patch 'add_student'
      delete 'destroy'
-     put 'update'
    end
   end
   
