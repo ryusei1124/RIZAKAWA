@@ -15,15 +15,15 @@
  */
 
 .container{
-  width:80%;
+  width:85%;
 }
 
 .wrapper_norml {
-  width: 100%;
+  width: 90%;
   margin: auto;
 }
 
-@media screen and (max-width:1000px){
+@media screen and (max-width:1200px){
 
 .wrapper_norml { 
   width: 100%;
