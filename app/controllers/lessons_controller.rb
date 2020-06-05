@@ -240,5 +240,4 @@ class LessonsController < ApplicationController
       count = count + 1
     end
   end
-
 end
