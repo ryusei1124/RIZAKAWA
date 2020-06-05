@@ -150,6 +150,13 @@ class LessonsController < ApplicationController
     @lesson.seats_zoom = lesson_params[:seats_zoom]
     @lesson.note = lesson_params[:note]
     @lesson.rescheduled = true
+    if @reservecounttotal >= 1 
+      flash[:danger] = "重複登録があります。処理を中止します"
+    elsif @lesson.save
+      flash[:success] = "更新に成功しました"
+    else
+      flash[:danger] = "更新に失敗しました"
+    end
     redirect_to request.referrer
   end
 
@@ -212,6 +219,7 @@ class LessonsController < ApplicationController
   def duplication_check
     starttimec = @lesson.started_at
     finishtimec = @lesson.finished_at
+    reservecount = 0
     count = 0
     lasttime = (finishtimec-starttimec) / 1800
     while starttimec <= finishtimec
