@@ -3,7 +3,6 @@
 <% today=Date.today %>
 <div class="wrapper_norml">
 <h1>平川塾からのお知らせ</h1>
-<div class="wrapper_norml">
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
     <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>
@@ -74,7 +73,7 @@
 
   
   <!-- 2.編集モーダルの配置 -->
-  <% if @students.present? %>
+<% if @students.present? %>
 <div class="panel panel-success">
     <div class="panel-heading">
       <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -82,10 +81,9 @@
         基本情報(確認用）</a>
     </div>
   </div>
-</div>
-  <% end %>
+<% end %>
  <!--基本情報モーダル -->
 <%= render partial: "basicstudent" %>
 <!--基本情報モーダル終了 -->
-
+</div>
 
