@@ -51,9 +51,17 @@
 }
 
 .weekly_content_table {
-  width: 72%;
+  width: 50%;
   margin: auto;
 }
+
+@media screen and (max-width: 1200px) {
+.weekly_content_table {
+  width: 70%;
+  margin: auto;
+  }
+}
+
 
 @media screen and (max-width: 1000px) {
 .weekly_content_table {
