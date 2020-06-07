@@ -1,0 +1,78 @@
+@charset "UTF-8";
+/* 入力フォーム */
+.label-signup {
+  margin-top: 5px; }
+
+.btn-signup {
+  margin-top: 10px; }
+
+.label-user--edit {
+  margin-top: 5px; }
+
+.btn-user--edit {
+  margin-top: 10px; }
+
+.class-choice {
+  margin: 20px 0 10px 0;
+  text-align: left; }
+
+.zoom-choice {
+  margin-left: 10px; }
+
+.real-choice {
+  margin-left: 10px; }
+
+.userslist {
+  padding: 10px;
+  text-align: center; }
+
+.new-form {
+  margin-bottom: 10px; }
+
+.add-from {
+  text-align: left; }
+
+.acordion {
+  margin: 10px 0 0 0; }
+
+#table-users {
+  font-size: 15px; }
+  #table-users th {
+    vertical-align: middle; }
+  #table-users td {
+    vertical-align: middle; }
+
+/* 基本情報編集モーダルウインドウ */
+.label-basic-info {
+  margin-top: 5px; }
+
+.btn-basic-info {
+  margin: 15px 0;
+  width: 30%; }
+
+.box_mail {
+  padding: 0.5em 1em;
+  margin: auto;
+  color: #5d627b;
+  background: white;
+  border-top: solid 5px #5d627b;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+  font-size: 15px;
+  width: 90%; }
+
+.box11_mail p {
+  margin: 0;
+  padding: 0;
+  font-size: 25px;
+  font-weight: 700; }
+
+.wrapper_user {
+  width: 90%;
+  margin: auto; }
+
+@media screen and (max-width: 1000px) {
+  .wrapper {
+    width: 100%;
+    margin: auto; } }
+
+/*# sourceMappingURL=users.css.map */

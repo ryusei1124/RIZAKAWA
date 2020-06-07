@@ -17,3 +17,19 @@
 .container{
   width:85%;
 }
+
+.wrapper_norml {
+  width: 70%;
+  margin: auto;
+}
+
+@media screen and (max-width:1200px){
+
+.wrapper_norml { 
+  width: 100%;
+  margin: auto;
+  }
+}
+
+
+

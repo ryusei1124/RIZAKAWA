@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       @users = User.where(admin:false).order(id: "DESC").paginate(page: params[:page], per_page: 20)
       @students = Student.all
     else
-      @user = User.undercontract.where(admin:false)
+      @user = User.undercontract.where(admin:false).user_kanaorder
       @users = @user.paginate(page: params[:page], per_page: 40)
       @students = Student.under_contact
     end
@@ -63,7 +63,12 @@ class UsersController < ApplicationController
   
   def destroy
     @user.destroy
-    flash[:success] = "#{@user.student}のデータを削除しました。"
+    students = Student.where(user_id:@user.id)
+    students.each do |student|
+      reservation = Reservation.where(student_id:student.id)
+      reservation.destroy
+    end
+    flash[:success] = "#{@user.guardian}のデータを削除しました。"
     redirect_to users_url
   end
   

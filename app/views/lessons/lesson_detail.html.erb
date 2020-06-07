@@ -1,7 +1,7 @@
 <% provide(:title, '予約状況') %>
 
 <h1>【予約詳細】</h1>
-
+<div class="warapper_lesson_detail">
   <div class="lesson-discontinuation-fix-btn">
   <p>
     <div style="display: inline-block;">
@@ -10,13 +10,16 @@
     <div style="display: inline-block;">
     <a href="" data-toggle="modal" data-target=#modal2 class="btn btn-warning button_size">授業変更</a>
     </div>
-     <div style="display: inline-block;">
+    <div style="display: inline-block;">
      <% if @lesson.cancel == false %>
       <%= button_to "授業中止", {controller: 'lessons', action: 'cancellation'}, {method: :patch, data: { confirm: '本当に中止にしますか？' }, params: {id: @lesson.id, cancel: "Yes" },class:"btn btn-danger button_size"} %>
      <% else %>
       <%= button_to "授業再開", {controller: 'lessons', action: 'cancellation'}, {method: :patch, data: { confirm: '本当に再開しますか？' }, params: {id: @lesson.id},class:"btn btn-primary button_size"} %>
      <% end %>
-     </div>
+    </div>
+    <div style="display: inline-block;">
+      <%= button_to "授業削除", {controller: 'lessons', action: 'destroy'}, {method: :delete, data: { confirm: '本当に削除しますか？' }, params: {id: @lesson.id },class:"btn btn-danger button_size"} %>
+    </div>
   </p>
   </div>
 
@@ -69,13 +72,11 @@
            <th style = "width:50px;">振替</th>
            <th style = "width:50px;">固定時間</th>
            <th style = "width:100px;">授業方法</th>
-           <th style = "width:50px;">
-             修正
-           </th>
-           <th style = "width:100px;">出席時間</th>
-           <th style = "width:100px;">退席時間</th>
+           <th style = "width:50px;">修正</th>
+           <th style = "width:80px;">出席時間</th>
+           <th style = "width:80px;">退席時間</th>
            <th style = "width:50px;">欠席</th>
-           <th style = "width:120px;">出欠管理</th>
+           <th style = "width:100px;">出欠管理</th>
          </tr>
       <% else %>
         <th><h2>予約生徒なし</h2></th>
@@ -221,7 +222,7 @@
       <% end %>
 　</table>
 </div>
-
+</div>
 <!--モーダルウインドウ表示-->
 <!--基本情報モーダル -->
   <%= render partial: "add_student" %>

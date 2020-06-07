@@ -6,15 +6,15 @@
 &nbsp;<%= year_month(@day) %>&nbsp;
 <div style="display: inline-block;"><%= button_to "→", {controller: 'reservation_logs', action: 'index'}, {method: :get,  class: "logbotton", params: {changeday:dateup,cation:"1"}} %></div>
 </h2>
-<div class="col-md-10 col-md-offset-1">
+<div class="wrapper_norml">
 <% if @reservation_logs.present? %>
   <table class="table-bordered table-condensed table table-striped" id="reservations-info">
     <thead>
       <tr>
-        <th  class="col-md-2" style="width:15px;">授業日</th>
-        <th  class="col-md-2" style="width:15px;">授業時間</th>
-        <th  class="col-md-3" style="width:15px;">生徒名</th>
-        <th  class="col-md-3" style="width:25px;">備考</th>
+        <th style="width:130px;">授業日</th>
+        <th style="width:150px;">授業時間</th>
+        <th style="width:150px;">生徒名</th>
+        <th style="width:200px;">備考</th>
       </tr>
     </thead>
     <thead>
