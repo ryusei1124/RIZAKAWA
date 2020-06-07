@@ -27,7 +27,7 @@
             <%= f.label :password, class: "label-#{yield(:class_text)}" %>
             <%= f.password_field :password, class: "form-control" %>
 
-            <%= f.label :退会日, class: "label-#{yield(:class_text)}" %>
+            <%= f.label :退会日（全受講生が退会すれば自動登録されます）, class: "label-#{yield(:class_text)}" %>
             <%= f.date_field :withdrawal, class: "form-control" %>
             <br />
             <%= f.check_box :admin  %>&nbsp;<%= f.label :管理者, class: "label-#{yield(:class_text)}" %>
