@@ -2,3 +2,34 @@
   height: 30px;
   width: 30px;
 }
+
+.table-log {
+  border-collapse: collapse;
+  margin: 0 auto;
+  padding: 0;
+  width: 650px;
+}
+
+.table-log tr {
+  background-color: #fff;
+  border: 1px solid #bbb;
+  padding: .35em;
+}
+.table-log th,
+.table-log td {
+  padding: 1em 5px 1em 1em;
+  border-right: 1px solid #bbb;
+}
+.table-log th {
+  font-size: .85em;
+}
+.table-log thead tr{
+  background-color: #eee;
+}
+.txt{
+   text-align: left;
+   font-size: .85em;
+}
+.price{
+   text-align: right;
+}

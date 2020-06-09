@@ -1,6 +1,6 @@
 <% provide(:title, 'All users') %>
 <h2 style="font-size:30px;">契約一覧</h2>
-<div class="wrapper_norml">
+<div class="wrapper_middle">
   <div style="display: inline-block;"><%= button_to "契約者", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"1"}} %></div>
   <div style="display: inline-block;"><%= button_to "全表示", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"2"}} %></div>
   <div style="display: inline-block;"><%= button_to "登録順", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"3"}} %></div>
@@ -46,9 +46,14 @@
               <% if student.fix_day2.present? %>
                 固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>
               <% end %>
+              <% if student.fix_day3.present? %>
+                固定時間3:<%= student.fix_day3 %> <%= timedisplay(student.fix_time3) %>
+              <% end %>
               <% if student.examinee? %>
                 <span class="label label-success label-user-division">受験生</span>
               <% end %>
+            <% elsif student.withdrawal >=@today%>
+                <span class="label label-warning label-user-division">退会予定</span>
             <% else %>
                 <span class="label label-danger label-user-division">退会済</span>
             <% end %>
