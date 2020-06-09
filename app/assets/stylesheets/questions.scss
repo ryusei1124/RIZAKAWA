@@ -1,8 +1,5 @@
-#questions-info-show {
-  width: 100%;
-  th{
-    text-align: center;
-  }
+#questions-info-show th {
+  text-align: center;
 }
 
 .question-btn{
@@ -39,12 +36,6 @@
   th, td{
    text-align: center; 
   }
-  .question_title{
-    
-    overflow-x: scroll;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
 }
 
 .test{
@@ -52,3 +43,6 @@
   margin: 0 auto;
 }
 
+.datetime_vw {
+  font-size:1vw;
+}

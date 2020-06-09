@@ -203,6 +203,7 @@ ja:
     am: 午前
     formats:
       default: "%Y年%m月%d日 %H時%M分"
+      default_2: "%y年%m月%d日 %H時%M分"
       day: "%m月%d日  %H時%M分"
       jday: "%m月%d日"
       long: "%Y/%m/%d %H:%M"
