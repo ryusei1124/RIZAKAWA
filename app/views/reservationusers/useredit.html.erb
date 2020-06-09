@@ -33,8 +33,10 @@
 <tr>
   <th>予約日時</th>
   <td>
-    <%= daydis(@lesson.meeting_on) %>
-     ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
+    <%= l(@lesson.meeting_on.to_datetime, format: :jday) %>
+    <%= l(@lesson.started_at, format: :time) %>
+      〜 
+    <%= l(@lesson.finished_at, format: :time) %>
     <% if @reservation.transfer==true %>
      振替　
     <% end %>

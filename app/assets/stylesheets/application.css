@@ -19,13 +19,26 @@
 }
 
 .wrapper_norml {
-  width: 70%;
+  width: 80%;
   margin: auto;
 }
 
 @media screen and (max-width:1200px){
 
 .wrapper_norml { 
+  width: 100%;
+  margin: auto;
+  }
+}
+
+.wrapper_middle {
+  width: 90%;
+  margin: auto;
+}
+
+@media screen and (max-width:1200px){
+
+.wrapper_middle { 
   width: 100%;
   margin: auto;
   }

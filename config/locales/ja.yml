@@ -203,8 +203,9 @@ ja:
     am: 午前
     formats:
       default: "%Y年%m月%d日 %H時%M分"
-      day: "%m月%d日  %H時%M分"
-      jday: "%m月%d日"
+      day: "%y年%m月%d日"
+      day_time: "%y年%m月%d日(%a) %H時%M分"
+      jday: "%y年%m月%d日( %a )"
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
       time: "%H：%M"

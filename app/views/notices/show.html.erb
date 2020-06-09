@@ -5,32 +5,17 @@
 <div class="col-md-13 col-md-offset-0">
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
-    <P>
+    <P style="text-align: center">
       <%= link_to "お知らせ投稿", new_notice_path, class: "btn btn-primary" %>&nbsp;
       <%= link_to "お知らせ編集", edit_notice_path(@notice.id), class: "btn btn-primary" %>
     </P>
     <% end %>
   </div>
-  <table class="table-bordered table-condensed" id="notices-info-show">
-    <thead>
-      <tr>
-        <th colspan="2" class="col-md-3">送信日時</th>
-        <td colspan="4"><%= l(@notice.updated_at, format: :default) %></td>
-      </tr>
-    </thead>
-    <thead>
-      <tr>
-        <th colspan="2" class="col-md-3">タイトル</th>
-        <td colspan="4"><%= @notice.notice_title %></td>
-      </tr>
-    </thead>
-    <thead>
-      <tr>
-        <th colspan="2" class="col-md-3">内容</th>
-        <td colspan="4"><%= raw(nl2br(@notice.notice_content)) %></td>
-      </tr>
-    </thead>
-  </table>
+  <div class="box_mail">
+    <div style="font-size:25px;"><%= @notice.notice_title %></div>
+    <p><%= l(@notice.updated_at, format: :day) %></p>
+    <%= raw(nl2br(@notice.notice_content)) %>
+  </div>
   <br>
   <div style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">一覧に戻る</a></div>
 </div>
