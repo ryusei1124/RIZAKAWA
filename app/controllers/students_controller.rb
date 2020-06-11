@@ -40,6 +40,16 @@ class StudentsController < ApplicationController
     end
     redirect_to users_url
   end
+
+  def destroy
+    student = Student.find(params[:id])
+    if student.destroy
+      flash[:success] = "#{@student.student_name}のデータを削除しました。"
+    else
+      flash[:danger] = "データを削除に失敗しました。"
+    end
+    redirect_to users_url
+  end
   
   private
 

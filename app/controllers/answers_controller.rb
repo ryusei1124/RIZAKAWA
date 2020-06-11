@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(answer_params)
     @answer.user_id = current_user.id
-    @answer.student_id = current_user.id
+    @answer.student_id = Question.find(@answer.question_id).student_id
     if @answer.save
       @title = "お問い合わせの登録がありました"
       @content = "お問い合わせの登録がありました。下記リンクの確認をお願いします。"

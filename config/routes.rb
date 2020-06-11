@@ -46,26 +46,29 @@ Rails.application.routes.draw do
       get 'edit_basic_info'
       patch 'update_basic_info'
       get 'edit'
+      delete 'destroy'
       patch 'update'
     end
   end
   
   resources :lessons do
    member do
+     put 'update'
      get 'lesson_detail'
      patch 'lesson_detail'
      get 'lesson_discontinuation_fix'
      patch 'lesson_discontinuation_fix'
      get 'add_student'
      patch 'add_student'
+     delete 'destroy'
    end
   end
   
-
   resources :students do
     member do
       get 'info_edit'
       patch 'info_update'
+      delete 'destroy'
       get 'create'
     end
     collection do
