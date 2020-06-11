@@ -1,0 +1,2 @@
+module ProtectionLowHelper
+end
