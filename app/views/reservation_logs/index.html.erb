@@ -24,7 +24,7 @@
       <tr>
         <td>
         <% if current_user.admin? %>
-          <%= link_to l(log.lesson.meeting_on.to_datetime, format: :day_week),"/lessons/#{log.id}/lesson_detail" %>
+          <%= link_to l(log.lesson.meeting_on.to_datetime, format: :day_week),"/lessons/#{log.lesson_id}/lesson_detail" %>
         <% else %>
           <%= l(log.lesson.meeting_on.to_datetime, format: :day_week) %>
         <% end %>
