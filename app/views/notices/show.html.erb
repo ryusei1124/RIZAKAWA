@@ -11,26 +11,21 @@
     </P>
     <% end %>
   </div>
-  <table class="table-bordered table-condensed" id="notices-info-show">
+  <div class="box17">
+       <p><%= @notice.notice_title %></p>
     <thead>
       <tr>
-        <th colspan="2" class="col-md-3">送信日時</th>
         <td colspan="4"><%= l(@notice.updated_at, format: :default) %></td>
       </tr>
     </thead>
-    <thead>
-      <tr>
-        <th colspan="2" class="col-md-3">タイトル</th>
-        <td colspan="4"><%= @notice.notice_title %></td>
-      </tr>
-    </thead>
+    <br><br><br>
     <thead>
       <tr>
         <th colspan="2" class="col-md-3">内容</th>
         <td colspan="4"><%= raw(nl2br(@notice.notice_content)) %></td>
       </tr>
     </thead>
-  </table>
+  </div>
   <br>
   <div style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">一覧に戻る</a></div>
 </div>

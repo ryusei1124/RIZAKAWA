@@ -60,8 +60,7 @@ class QuestionsController < ApplicationController
     def unless_question
       @question = Question.find(params[:id])
       unless current_user.admin? or @question.user.id == current_user.id or @question.destination == current_user.id
-        flash[:success] = "ログインしなおして下さい"
-        redirect_to login_url
+        redirect_to questions_url
       end 
     end
     

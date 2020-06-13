@@ -177,7 +177,7 @@
           <%  elsif coursecount>1 %>
           <td bgcolor=<%=tdcolor %> style="padding-left:2px;"><%coursecount=coursecount.to_i-1 %>
           <% if (max-coursecount)==1 %>
-            <%= (Lesson.find(lesson_id).started_at).strftime("%H:%M") %>-<%= (Lesson.find(lesson_id).finished_at).strftime("%H:%M") %>
+            <%= l(Lesson.find(lesson_id).started_at, format: :time) %>-<%= l(Lesson.find(lesson_id).finished_at, format: :time) %>
           <% else %>
           &nbsp;
           <% end %>
@@ -197,10 +197,10 @@
 <% if current_user.admin==false %>
 <table  class="weekly_content_table">
   <td>〇ご契約で設定の授業は自動で予約登録されています<br>
-  〇薄緑色の授業は、予約済です<br>
-  〇黄色の授業は、明日以降新規登録可能です<br>
-  〇青緑色の授業は、キャンセル待ちです<br>
-  〇ピンク色の授業は、取消された授業です<br>
+  〇<span style="color:#c0ffc0">薄緑色</span>の授業は、予約済です<br>
+  〇<span style="color:#fffacd">黄色</span>の授業は、明日以降新規登録可能です<br>
+  〇<span style="color:#00CCCC">青緑色</span>の授業は、キャンセル待ちです<br>
+  〇<span style="color:#fff0f5">ピンク色</span>の授業は、取消された授業です<br>
   〇<span class="label label-danger label-user-division">止</span>の印のあるものは中止になった授業です<br>
   〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です<br>
    〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です</td>
