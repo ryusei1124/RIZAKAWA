@@ -141,7 +141,7 @@ module ApplicationHelper
     elsif section==2
       bgcolor="#f5f5dc"
     else
-      bgcolor="#fffafa"
+      bgcolor="#FFFFFF"
     end
     bgcolor
   end

@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :index]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :weekday, only: [:index]
+  before_action :day_setting, only: [:index]
   
   def index
     @admins = User.where(admin:true)

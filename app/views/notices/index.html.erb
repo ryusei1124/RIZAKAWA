@@ -1,7 +1,7 @@
 <% provide(:title, 'お知らせ一覧') %>
 <% require 'date' %>
 <% today=Date.today %>
-<div class="wrapper_norml">
+<div class="wrapper_normal">
 <h1>平川塾からのお知らせ</h1>
   <div class="add-notice-information-btn">
     <% if current_user.admin? %>
@@ -19,7 +19,7 @@
     <thead>
       <% @notices.each do |notice| %>
       <tr>
-        <td><%= l(notice.updated_at, format: :day) %></td>
+        <td><%= l(notice.updated_at, format: :day_time) %></td>
         <td>
           <%= link_to notice.notice_title, notice %>
           <% if current_user.admin? %>

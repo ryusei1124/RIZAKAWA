@@ -33,8 +33,8 @@
 <tr>
   <th>予約日時</th>
   <td>
-    <%= daydis(@lesson.meeting_on) %>
-     ( <%=weekdate(@lesson.meeting_on) %> ) <%=timedisplay(@lesson.started_at) %> 〜 <%=timedisplay(@lesson.finished_at) %>
+    <%= l(@lesson.meeting_on.to_datetime, format: :day_week) %>
+    <%= l(@lesson.started_at, format: :time) %>〜<%= l(@lesson.finished_at, format: :time) %>
     <% if @reservation.transfer==true %>
      振替　
     <% end %>
@@ -50,7 +50,7 @@
   <th>固定時間</th>
   <td>
   <% if @reservation.fix_time.present? %>
-      <%=timedisplay(@reservation.fix_time)  %>～
+      <%= l(@reservation.fix_time, format: :time) %>～
     <% else %>
       <span class="label label-danger">未設定</span>
     <% end %>
@@ -132,8 +132,7 @@
       <% else %>
         <%= comment.user.guardian %>
       <% end %>
-      <%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)&nbsp;
-      <%=timedisplay(comment.created_at) %><br />
+      &nbsp;<%=l(comment.created_at, format: :day_time) %>&nbsp;<br />
       <%= comment.content %><br />
       </td></tr>
       <% end %>

@@ -1,25 +1,20 @@
-<% provide(:class_text, 'info-edit') %>
-<% provide(:button_text, '更新') %>
-
-<div class="modal-dialog modal-lg modal-dialog-center">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h1 class="modal-title">基本生徒情報編集</h1>
-    </div>
-    <div class="modal-body">
-  
-          <%= form_with(model: @student, url: info_update_student_path(@student), local: true, method: :patch) do |f| %>
+<div class="modal fade" id=<%= @user_id %> tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" margin:auto;"=" margin:auto;""="margin:auto;""">
+      <div class="modal-body">
+      <h2>受講生新規登録</h2>
+      保護者：<%= User.find(@user_id).guardian %>
+      <% @student = Student.new %>
+       <%= form_with(model: @student, url: students_path, local: true, method: :post) do |f| %>
             <table class="table-student">
+            <%= f.hidden_field :user_id ,value: @user_id %>
               <tr>
                 <th>生徒名</th>
                 <td><%= f.text_field :student_name , class: "form-control", required: true %></td>
               </tr>
               <tr>
                 <th>生徒カナ</th>
-                <td><%= f.text_field :studentkana , class: "form-control", required: true %></td>
+                <td><%= f.text_field :studentkana ,  class: "form-control", required: true %></td>
               </tr>
               <tr>
                 <th>生年月日</th>
@@ -27,7 +22,7 @@
               </tr>
               <tr>
                 <th>学校名</th>
-                <td><%= f.text_field :school, class: "form-control" , required: true%></td>
+                <td><%= f.text_field :school, class: "form-control", required: true %></td>
               </tr>
               <tr>
                 <th>受講方法</th>
@@ -70,22 +65,14 @@
                 <th>備考</th>
                 <td><%= f.text_field :note, class: "form-control" %></td>
               </tr>
-              <tr>
-                <th>退会日</th>
-                <td><%= f.date_field :withdrawal, class: "form-control" %></td>
-              </tr>
               </table>
             <div class="center">
-              <%= f.submit "編集", class: "btn btn-primary" %>
+              <%= f.submit "登録", class: "btn btn-primary btn-#{yield(:class_text)}" %>
               <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">
                 キャンセル
               </button>
-              <%= link_to "削除", student_path, method: :delete, 
-              data:  { confirm: "本当に削除してよろしいですか？"},
-              class: "btn btn-danger btn-sm" %>
             </div>
           <% end %>
-        </div>
       </div>
     </div>
   </div>

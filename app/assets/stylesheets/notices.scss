@@ -93,6 +93,7 @@
     padding: 0.5em 1.5em;
     border-top: solid 2px orange;
     border-bottom: solid 2px orange;
+   
 }
 .box17:before, .box17:after{
     content: '';
@@ -110,4 +111,7 @@
     padding: 0;
     font-size: 30px;
     font-weight: 700;
+}
+.box17 td {
+  font-size: 20px;
 }
