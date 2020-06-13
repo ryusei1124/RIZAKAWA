@@ -15,10 +15,10 @@
        <div class="notice-title"><%= @notice.notice_title %></div>
     <thead>
       <tr>
-        <td colspan="4"><%= l(@notice.updated_at, format: :default) %></td>
+        <td colspan="4"><%= l(@notice.updated_at, format: :day_time) %></td>
       </tr>
     </thead>
-    <br><br><br>
+    <br><br>
     <thead>
       <tr>
         <td colspan="4"><div class="notice-content"><%= simple_format @notice.notice_content %></div></td>
