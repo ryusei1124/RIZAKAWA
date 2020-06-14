@@ -91,7 +91,18 @@
 .box17:after {
   right: 10px; }
 
+.box17 p {
+  margin: 0;
+  padding: 0;
+  font-size: 20px; }
+
 .box17 td {
+  font-size: 20px; }
+  
+.notice-title {
+  font-size: 30px; }
+  
+.notice-content {
   font-size: 20px; }
 
 /*# sourceMappingURL=notices.css.map */
