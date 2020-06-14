@@ -7,11 +7,11 @@
   <th>対象</th>
   <td>
   <%= @lesson.target %>
-  <% if @lesson.examinee==true %>
-      受験生
-  <% elsif @lesson.examinee==true %>
-    一般
-  <% end %>
+  <% if @lesson.examinee? %>
+    <span class="label label-success label-user-division">受験生</span>
+  <% elsif @lesson.examinee ==false %>
+    <span class="label label-warning label-user-division">一般</span>
+  <% end %>  
   <% if @lesson.cancel == true %>
       <span class="label label-danger label-user-division">中止になりました</span>
   <% end %>

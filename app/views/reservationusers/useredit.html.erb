@@ -5,10 +5,10 @@
   <th>対象</th>
   <td>
   <%= @lesson.target %>
-  <% if @lesson.examinee==true %>
-      受験生
-  <% elsif @lesson.examinee==true %>
-    一般
+  <% if @lesson.examinee? %>
+    <span class="label label-success label-user-division">受験生</span>
+  <% elsif @lesson.examinee ==false %>
+    <span class="label label-warning label-user-division">一般</span>
   <% end %>
   <% if @reservation.cancel? %>
       <span class="label label-danger">予約取消</span>
@@ -25,9 +25,7 @@
 <tr>
   <th>名前 学年</th>
   <td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) 
-  <% if @student.examinee? %>
-    <span class="label label-success label-user-division">受験生</span>
-  <% end %>
+  
   </td>
 </tr>
 <tr>
