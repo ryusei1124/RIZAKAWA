@@ -177,14 +177,14 @@ class ReservationusersController < ApplicationController
         realcapacity = Lesson.find(les.id).seats_real
         capacity = "〇"
         capacity = "✖" if (realcapacity - Reservation.where("lesson_id= ? and zoom=?",les.id,false).count) <= 0
-        content = capacity + les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　リアル"
+        content = capacity + l(les.meeting_on.to_datetime, format: :day_week) + l(les.started_at, format: :time)+"～"+l(les.finished_at, format: :time) + "リアル"
         @lessonlists << Listcollection.new(les.id.to_s+"-1",content,false)
         zoomcapacity = Lesson.find(les.id).seats_zoom
         capacity = "〇"
         capacity = "✖" if (zoomcapacity-Reservation.where("lesson_id = ? and zoom =?",les.id,true).count) <= 0
-        content = capacity+les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　ZOOM"
+        content = capacity + l(les.meeting_on.to_datetime, format: :day_week) + l(les.started_at, format: :time)+"～"+l(les.finished_at, format: :time) + "ZOOM"
         @lessonlists << Listcollection.new(les.id.to_s+"-2",content,true)
-       end
+      end
     end
   end
 
