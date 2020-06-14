@@ -42,6 +42,8 @@ class ReservationusersController < ApplicationController
     reservation_id = params[:reservation_id]
     transfer_day_id = params[:id]
     @reservation = Reservation.find(reservation_id)
+    @lesson = Lesson.find(@reservation.lesson_id)
+    @lesson_meeting_on = @lesson.meeting_on
     student_id = params[:student_id]
     reservationarray = transfer_day_id.split("-")
     @reservation.lesson_id = reservationarray[0].to_i
@@ -53,18 +55,17 @@ class ReservationusersController < ApplicationController
     end
     @reservation.fix_time = nil
     @reservation.transfer = true
-    @lesson = Lesson.find(@reservation.lesson_id)
-    @lesson_meeting_on = @lesson.meeting_on
+    
     if @reservation.note.present?
-      @reservation.note = @reservation.note + " " + @lesson_meeting_on.to_s + "からの振替です"
+      @reservation.note = @reservation.note + " " + l(@lesson_meeting_on.to_datetime, format: :day_week) + "分の振替です"
     else
-      @reservation.note = @lesson_meeting_on.to_s + "からの振替です"
+      @reservation.note = l(@lesson_meeting_on.to_datetime, format: :day_week)  + "分の振替です"
     end
     @reservation.save
     #キャンセル待ち登録
     waiting_registration
     if @reservation.save
-      flash[:success] = "受講日を振替しました。確認願います。"
+      flash[:success] = "受講日振替をおこない、メールを送信しました。"
       @title = "予約の振替がありました"
       @content = "予約の振替がありました。下記リンクの確認をお願いします。"
       send_mail_address

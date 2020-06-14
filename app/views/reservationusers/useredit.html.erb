@@ -35,9 +35,6 @@
   <td>
     <%= l(@lesson.meeting_on.to_datetime, format: :day_week) %>
     <%= l(@lesson.started_at, format: :time) %>〜<%= l(@lesson.finished_at, format: :time) %>
-    <% if @reservation.transfer==true %>
-     振替　
-    <% end %>
     <% if @reservation.absence? %>
       <span class="label label-danger">欠席</span>
     <% end %>
@@ -67,9 +64,11 @@
     </td>
   </tr>
   <tr>
+  <% if @reservation.note.present? %>
   <th>予約備考</th>
-    <td><%=@reservation.note %></td>
+    <td><%= @reservation.note %></td>
   </tr>
+  <% end %>
   <tr>
     <th>授業備考</th>
     <td><%=@lesson.note %></td>
