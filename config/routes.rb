@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'protection_low/index'
   #　レッスン関連
   get 'lessons/weeklyschedule'
   post 'lessons/create', to: 'lessons#create'
@@ -30,6 +31,9 @@ Rails.application.routes.draw do
   get    '/login', to: 'sessions#new'
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  
+  #個人情報保護ページ
+  get 'protection_law/index'
 
   resources :reservation_logs, only: [:index]
   

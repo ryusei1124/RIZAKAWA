@@ -30,6 +30,8 @@ class LessonsController < ApplicationController
       @student=@students.first
       session[:student_id]=Student.find(@student.id).id
     end
+    @first_time="2000-01-01 10:00".to_time
+    @last_time="2000-01-01 22:30".to_time
     @lesson=Lesson.new
     @lessons=Lesson.all
   end
@@ -70,7 +72,7 @@ class LessonsController < ApplicationController
       duplication_check
       #重複があれば処理を中止し週間予定表に戻る
       if @reservecounttotal >= 1
-        flash[:danger]="重複登録で登録できなかった授業があります"
+        flash[:danger]="重複登録や時間設定の不備で登録できなかった授業があります"
       elsif @lesson.save
         flash[:success]="登録に成功しました"
         dayofweek=weekdate(@lesson.meeting_on)
@@ -227,17 +229,21 @@ class LessonsController < ApplicationController
     #@reservecount = 0
     count = 0
     lasttime = (finishtimec-starttimec) / 1800
-    while starttimec <= finishtimec
-      #一回目のスタートタイムが前の授業の終わりと一緒でも登録必要にてそのまま通す
-      if Lesson.where("finished_at =? AND meeting_on = ?" ,starttimec, meeting_on).where.not(id: @lesson_id).count >0 and count >=1 
-        @reservecount = 1
-      elsif Lesson.where("started_at =? AND meeting_on = ?" ,starttimec, meeting_on).where.not(id: @lesson_id).count >0 and count <lasttime
-        @reservecount = 1
-      end  
-      starttimec = starttimec + 1800
-      @reservecounttotal = @reservecounttotal + @reservecount
-      @reservecount = 0
-      count = count + 1
+    if starttimec >= finishtimec
+      @reservecounttotal = 1
+    else
+      while starttimec <= finishtimec
+        #一回目のスタートタイムが前の授業の終わりと一緒でも登録必要にてそのまま通す
+        if Lesson.where("finished_at =? AND meeting_on = ?" ,starttimec, meeting_on).where.not(id: @lesson_id).count >0 and count >=1 
+          @reservecount = 1
+        elsif Lesson.where("started_at =? AND meeting_on = ?" ,starttimec, meeting_on).where.not(id: @lesson_id).count >0 and count <lasttime
+          @reservecount = 1
+        end  
+        starttimec = starttimec + 1800
+        @reservecounttotal = @reservecounttotal + @reservecount
+        @reservecount = 0
+        count = count + 1
+      end
     end
   end
 end

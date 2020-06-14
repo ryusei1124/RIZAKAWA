@@ -3,6 +3,7 @@ class Student < ApplicationRecord
    require 'date'
    validates :birthday,  presence: true
    validates :student_name,  presence: true
+   validates :school,  presence: true
    has_many :reservations, dependent: :destroy
    has_many :lessoncomments, dependent: :destroy
    attr_accessor :lesson_id
@@ -20,7 +21,6 @@ class Student < ApplicationRecord
     today = nowtime.to_date
     where("withdrawal is null or withdrawal > ?", today).order(created_at: "ASC")
    end
-   
 
    def self.gradeyear(id)
     born=Student.find(id).birthday

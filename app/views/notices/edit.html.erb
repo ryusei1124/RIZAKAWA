@@ -8,5 +8,8 @@
     <%= render 'notice_form' %>
   </div>
 </div>
-<br/>
-<div style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">詳細に戻る</a></div>
+<br />
+<p style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">詳細に戻る</a></p>
+<% if current_user.admin? %>
+    <p style="text-align:center"><a href="http://titonet384.sakura.ne.jp/linkmake/"  target="_blank">リンクはこちらで作成して貼り付けて下さい</a></p>
+<% end %>
