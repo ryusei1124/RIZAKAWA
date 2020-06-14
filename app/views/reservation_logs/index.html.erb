@@ -2,6 +2,7 @@
 <% provide(:title, '予約履歴') %>
 <% dateup = @day.end_of_month+1 %>
 <% datedown = @day.beginning_of_month-1 %>
+<div class="setting">
 <h2 class="lead">予約履歴</h2>
 <h2><div style="display: inline-block;"><%= button_to "←", {controller: 'reservation_logs', action: 'index'}, {method: :get, class: "logbotton",params: {changeday:datedown,cation:"1"}} %></div>
 &nbsp;<%= year_month(@day) %>&nbsp;
@@ -56,4 +57,5 @@
   <% else %>
     <h2>対象がありません</h2>
   <% end %>
+</div>
 </div>
