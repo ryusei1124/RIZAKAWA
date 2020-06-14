@@ -26,13 +26,13 @@
       <tr>
         <td>
         <% if current_user.admin? %>
-          <%= link_to l(log.lesson.meeting_on.to_datetime, format: :jday),"/lessons/#{log.lesson.id}/lesson_detail" %>
+          <%= link_to l(log.lesson.meeting_on.to_datetime, format: :day_week),"/lessons/#{log.lesson_id}/lesson_detail" %>
         <% else %>
-          <%= l(log.lesson.meeting_on.to_datetime, format: :day) %>
+          <%= l(log.lesson.meeting_on.to_datetime, format: :day_week) %>
         <% end %>
         </td>
         <td>
-           <%= l(log.lesson.started_at, format: :time) %> ～ <%= l(log.lesson.finished_at, format: :time)  %>
+           <%= l(log.lesson.started_at, format: :time) %>～<%= l(log.lesson.finished_at, format: :time)  %>
         </td>
         <td>
            <%= l(log.fix_time, format: :time) if log.fix_time.present? %>
