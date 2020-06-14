@@ -67,7 +67,11 @@
     </td>
   </tr>
   <tr>
-    <th>備考</th>
+  <th>予約備考</th>
+    <td><%=@reservation.note %></td>
+  </tr>
+  <tr>
+    <th>授業備考</th>
     <td><%=@lesson.note %></td>
   </tr>
   <% if current_user.admin? %>

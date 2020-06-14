@@ -55,6 +55,11 @@ class ReservationusersController < ApplicationController
     @reservation.transfer = true
     @lesson = Lesson.find(@reservation.lesson_id)
     @lesson_meeting_on = @lesson.meeting_on
+    if @reservation.note.present?
+      @reservation.note = @reservation.note + " " + @lesson_meeting_on.to_s + "からの振替です"
+    else
+      @reservation.note = @lesson_meeting_on.to_s + "からの振替です"
+    end
     @reservation.save
     #キャンセル待ち登録
     waiting_registration
