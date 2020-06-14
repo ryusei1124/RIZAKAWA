@@ -1,14 +1,14 @@
-<h2 class="lead">授業予約詳細・変更登録</h2>
+<h2 class="title-style">授業予約詳細・変更登録</h2>
 <div class="wrapper">
 <table class="table-reverb">
 <tr>
   <th>対象</th>
   <td>
   <%= @lesson.target %>
-  <% if @lesson.examinee==true %>
-      受験生
-  <% elsif @lesson.examinee==true %>
-    一般
+  <% if @lesson.examinee? %>
+    <span class="label label-success label-user-division">受験生</span>
+  <% elsif @lesson.examinee ==false %>
+    <span class="label label-warning label-user-division">一般</span>
   <% end %>
   <% if @reservation.cancel? %>
       <span class="label label-danger">予約取消</span>
@@ -25,9 +25,7 @@
 <tr>
   <th>名前 学年</th>
   <td><%= @student.student_name %>（ <%= @student.school %>　<%= Student.gradeyear(@student.id) %> ) 
-  <% if @student.examinee? %>
-    <span class="label label-success label-user-division">受験生</span>
-  <% end %>
+  
   </td>
 </tr>
 <tr>
@@ -35,9 +33,6 @@
   <td>
     <%= l(@lesson.meeting_on.to_datetime, format: :day_week) %>
     <%= l(@lesson.started_at, format: :time) %>〜<%= l(@lesson.finished_at, format: :time) %>
-    <% if @reservation.transfer==true %>
-     振替　
-    <% end %>
     <% if @reservation.absence? %>
       <span class="label label-danger">欠席</span>
     <% end %>
@@ -67,7 +62,13 @@
     </td>
   </tr>
   <tr>
-    <th>備考</th>
+  <% if @reservation.note.present? %>
+  <th>予約備考</th>
+    <td><%= @reservation.note %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th>授業備考</th>
     <td><%=@lesson.note %></td>
   </tr>
   <% if current_user.admin? %>

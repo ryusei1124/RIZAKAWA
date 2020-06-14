@@ -196,14 +196,17 @@
 </table>
 <% if current_user.admin==false %>
 <table  class="weekly_content_table">
-  <td>〇ご契約で設定の授業は自動で予約登録されています<br>
-  〇<span style="color:#c0ffc0">薄緑色</span>の授業は、予約済です<br>
-  〇<span style="color:#fffacd">黄色</span>の授業は、明日以降新規登録可能です<br>
-  〇<span style="color:#00CCCC">青緑色</span>の授業は、キャンセル待ちです<br>
-  〇<span style="color:#fff0f5">ピンク色</span>の授業は、取消された授業です<br>
+  <td><div style="font-size:20px;">
+  〇ご契約で設定の授業は自動で予約登録されています<br>
+  〇<%= image_tag 'green.png' %>薄緑色の授業は、予約済です<br>
+  〇<%= image_tag 'yellow.png' %>黄色の授業は、明日以降新規登録可能です<br>
+  〇<%= image_tag 'blue.png' %>青緑色の授業は、キャンセル待ちです<br>
+  〇<%= image_tag 'pink.png' %>ピンク色の授業は、取消された授業です<br>
   〇<span class="label label-danger label-user-division">止</span>の印のあるものは中止になった授業です<br>
   〇<span class="label label-primary label-user-division">受</span>の印のあるものは受験生専用の授業です<br>
-   〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です</td>
+   〇<span class="label label-primary label-user-division">般</span>の印のあるものは受験生以外の一般の授業です
+   </div>
+   </td>
 </table>
 <% end %>
 <br /><br /><br />
