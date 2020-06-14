@@ -91,15 +91,13 @@
 .box17:after {
   right: 10px; }
 
+.box17 td {
+  font-size: 20px; }
+  
 .notice-title {
-  margin: 0;
-  padding: 0;
-  font-size: 30px;
-  font-weight: 700; 
-}
+  font-size: 30px; }
+  
 .notice-content {
-  font-size:18px;
-}
-
+  font-size: 20px; }
 
 /*# sourceMappingURL=notices.css.map */
