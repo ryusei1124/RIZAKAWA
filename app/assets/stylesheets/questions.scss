@@ -19,12 +19,12 @@
 .answer_table .answer_left {
   position: absolute;
   left: 0;
-  margin-left: 5px;
+  margin-left: 20px;
 }
 .answer_table .answer_right {
   position: absolute;
   right: 0;
-  margin-right: 5px;
+  margin-right: 20px;
 }
 
 .question-index{
@@ -38,3 +38,17 @@
   }
 }
 
+.question-title{
+  font-size: 25px;
+}
+
+.question-content{
+  font-size: 20px;
+}
+
+.question-destination{
+  font-size: 17px;
+  span{
+    padding-left: 20px;
+  }
+}
