@@ -25,11 +25,11 @@
     <div class="question-content" style="word-wrap:break-word;"><%= raw(nl2br(@question.question_content)) %></div>
   </div>
     
-  <div>返信</div>
+  <div style="text-align:center;">〜 返信  〜</div><br>
   <%= form_with(model:@answer, url: answers_create_path,local: true) do |f| %>
     <%= f.hidden_field:question_id, value:@question.id %>
     <%= f.hidden_field:user_id, value: current_user.id %>
-    <%= f.text_area :answer_content, class: "form-control", required:true, rows: 2 %>
+    <%= f.text_area :answer_content, class: "form-control answer_form", required:true, rows: 2 %><br />
     <div class="answer-btn-1"><%= f.submit value:"返信", class:"btn-sm btn-primary answer-btn-2" %></div>
   <% end %>
     

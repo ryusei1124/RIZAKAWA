@@ -1,0 +1,48 @@
+@charset "UTF-8";
+#questions-info-show th {
+  text-align: center; }
+
+.question-btn {
+  margin-bottom: 10px; }
+
+.question-paginate .pagination {
+  margin: 10px 0 5px 0; }
+
+.answer_table {
+  /* 子要素のタイトルを aboslute 配置するため必要 */
+  position: relative; }
+
+.answer_table .answer_left {
+  position: absolute;
+  left: 0;
+  margin-left: 20px; }
+
+.answer_table .answer_right {
+  position: absolute;
+  right: 0;
+  margin-right: 20px; }
+
+.question-index {
+  text-align: center;
+  font-size: 20px; }
+
+#table-question th, #table-question td {
+  text-align: center; }
+
+.question-title {
+  font-size: 25px; }
+
+.question-content {
+  font-size: 20px; }
+
+.question-destination {
+  font-size: 17px; }
+  .question-destination span {
+    padding-left: 20px; }
+
+/* 上 | 右 | 下 | 左 */
+.answer_form {
+  width: 98%;
+  margin: auto; }
+
+/*# sourceMappingURL=questions.css.map */
