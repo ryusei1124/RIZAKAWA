@@ -7,7 +7,7 @@
     <!--タイトル-->
     <div class="question-title" style="word-wrap:break-word;"><%= @question.question_title %></div>
     <!--投稿日時-->
-    <div><%= l(@question.created_at, format: :day_time) %></div>
+    <div><%= l(@question.created_at, format: :default_2) %></div>
     <!--宛先-->
     <div class="question-destination">宛先：<%= @user_guargian %></div>
     <!--投稿者-->
@@ -39,7 +39,7 @@
       <% @answers.each do |comment| %>
         <!--文が長い場合は改行させる-->
         <div class="box17" style="word-wrap:break-word;">
-          <div class="answer_left">
+          <div class="answer_left question-destination">
             <% if comment.user.admin == false %>
               <%= comment.user.guardian %>
               <br>
@@ -48,9 +48,9 @@
               <br>
             <% end %>
             </div>
-            <div class="answer_right"><%= daydis(comment.created_at) %>(<%=weekdate(comment.created_at) %>)<%=timedisplay(comment.created_at) %></div>
+            <div class="answer_right"><%= l(comment.updated_at, format: :default_2) %></div>
             <br>
-            <div ><%= raw(nl2br(comment.answer_content)) %></div>
+            <div class="question-destination"><%= raw(nl2br(comment.answer_content)) %></div>
           </div>
       <% end %>
     </div>

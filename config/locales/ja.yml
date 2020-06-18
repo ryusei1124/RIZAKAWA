@@ -203,7 +203,7 @@ ja:
     am: 午前
     formats:
       default: "%Y年%m月%d日 %H時%M分"
-      default_2: "%y年%m月%d日 %H時%M分"
+      default_2: "%y年%m月%d日 %H:%M"
       day: "%y年%m月%d日"
       day_week: "%y年%m月%d日(%a)"
       day_time: "%y年%m月%d日(%a)%H時%M分"
