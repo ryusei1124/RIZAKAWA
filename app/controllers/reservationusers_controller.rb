@@ -42,6 +42,8 @@ class ReservationusersController < ApplicationController
     reservation_id = params[:reservation_id]
     transfer_day_id = params[:id]
     @reservation = Reservation.find(reservation_id)
+    @lesson = Lesson.find(@reservation.lesson_id)
+    @lesson_meeting_on = @lesson.meeting_on
     student_id = params[:student_id]
     reservationarray = transfer_day_id.split("-")
     @reservation.lesson_id = reservationarray[0].to_i
@@ -53,13 +55,17 @@ class ReservationusersController < ApplicationController
     end
     @reservation.fix_time = nil
     @reservation.transfer = true
-    @lesson = Lesson.find(@reservation.lesson_id)
-    @lesson_meeting_on = @lesson.meeting_on
+    
+    if @reservation.note.present?
+      @reservation.note = @reservation.note + " " + l(@lesson_meeting_on.to_datetime, format: :day_week) + "分の振替です"
+    else
+      @reservation.note = l(@lesson_meeting_on.to_datetime, format: :day_week)  + "分の振替です"
+    end
     @reservation.save
     #キャンセル待ち登録
     waiting_registration
     if @reservation.save
-      flash[:success] = "受講日を振替しました。確認願います。"
+      flash[:success] = "受講日振替をおこない、メールを送信しました。"
       @title = "予約の振替がありました"
       @content = "予約の振替がありました。下記リンクの確認をお願いします。"
       send_mail_address
@@ -177,14 +183,14 @@ class ReservationusersController < ApplicationController
         realcapacity = Lesson.find(les.id).seats_real
         capacity = "〇"
         capacity = "✖" if (realcapacity - Reservation.where("lesson_id= ? and zoom=?",les.id,false).count) <= 0
-        content = capacity + les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　リアル"
+        content = capacity + l(les.meeting_on.to_datetime, format: :day_week) + l(les.started_at, format: :time)+"～"+l(les.finished_at, format: :time) + "リアル"
         @lessonlists << Listcollection.new(les.id.to_s+"-1",content,false)
         zoomcapacity = Lesson.find(les.id).seats_zoom
         capacity = "〇"
         capacity = "✖" if (zoomcapacity-Reservation.where("lesson_id = ? and zoom =?",les.id,true).count) <= 0
-        content = capacity+les.meeting_on.to_s+"("+weekdate(les.meeting_on)+")"+timedisplay(les.started_at).to_s+"～"+timedisplay(les.finished_at).to_s+"　ZOOM"
+        content = capacity + l(les.meeting_on.to_datetime, format: :day_week) + l(les.started_at, format: :time)+"～"+l(les.finished_at, format: :time) + "ZOOM"
         @lessonlists << Listcollection.new(les.id.to_s+"-2",content,true)
-       end
+      end
     end
   end
 
