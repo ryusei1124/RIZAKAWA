@@ -5,7 +5,6 @@ class LessonsController < ApplicationController
   before_action :admin_user, only: %i(lesson_detail)
   before_action :unless_login
   before_action :mail_link_host,   only: [:cancellation]
-  
   require 'date'
   include ApplicationHelper
   
