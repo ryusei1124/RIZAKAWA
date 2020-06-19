@@ -24,7 +24,7 @@
   <div style="display: inline-block;"><%= link_to "本日","/lessons/weeklyschedule",{class:"btn btn-default btn-sm"} %></div>
   <div style="display: inline-block;"><%= button_to"→", {controller: 'lessons', action: 'weeklyschedule'}, {method: :get, params: {changeday:dateup,cation:"1"}} %>
 </div>
-  <div style="display: inline-block; padding-left:10px;"><h2>&nbsp;<b>&nbsp;<%=@student.student_name if @student.present? %>週間予定表(<%=first_day %>〜<%=last_day %>) </b>&nbsp;</h2></div>
+  <div style="display: inline-block; padding-left:10px;"><h2>&nbsp;<b>&nbsp;<%=@student.student_name if @student.present? %>&nbsp;週間予定表&nbsp;<%= l(first_day.to_datetime, format: :day_week) %>〜<%= l(last_day.to_datetime, format: :day_week) %> </b>&nbsp;</h2></div>
 </div>
 <table border: 0px solid align="center">
   <th>
@@ -64,7 +64,7 @@
           <div class="modal-content">
             <div class="modal-body" style="background-color: #C8D7E6;">
               <div>
-              <h2><%= day %>(<%= weekdate(day) %>曜日)　の授業枠登録</h2>
+              <h2><b><%= l(day.to_datetime, format: :day_week) %>の授業枠登録</b></h2>
                 <%= form_with(model: @lesson,url:lessons_create_path,local: true) do |f| %>
                 <div class="form-group">
                   <label for="select1a">学校対象:</label>

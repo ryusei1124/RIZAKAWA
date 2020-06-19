@@ -141,21 +141,18 @@ class ReservationusersController < ApplicationController
     waiting_registration
     if @reservation.save
       flash[:success] = "予約登録し、メールを送信しました"
-      @title = "予約の追加登録がありました"
-      @content = "予約の追加登録がありました。下記リンクの確認をお願いします。"
-      send_mail_address
       message = ""
       if @reservation.waiting?
-        message = "キャンセル待ちになりました。"
-        flash[:warning] = "キャンセル待ちになります" if @reservation.waiting == true
+        message = "キャンセル待ちになります。"
+        flash[:warning] = "キャンセル待ちになります。" if @reservation.waiting == true
       end
+      @title = "予約追加登録"
+      @content = "予約の追加登録をしました。#{message}下記のリンクを確認お願いします。"
+      send_mail_address
     else
       flash[:danger] = "受講日登録に失敗しました"
     end
     if current_user.admin?
-      @title = "授業枠の登録をしました"
-      @content = "授業枠の登録をしました。#{message}下記のリンクを確認お願いします"
-      send_mail_address
       redirect_to request.referrer
     else
       redirect_to "/reservationusers/useredit?lesson_id=#{@reservation.lesson_id}&student_id=#{student.id}"
@@ -220,4 +217,3 @@ class ReservationusersController < ApplicationController
     UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
   end
 end
-

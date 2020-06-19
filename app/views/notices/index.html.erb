@@ -55,9 +55,8 @@
     <div id="demo" class="collapse">
       <% @reservations.each do |reservation| %>
       <br>
-      <P>・<%= link_to reservation.lesson.meeting_on,"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
-      (<%=weekdate(reservation.lesson.meeting_on) %>)
-      <%= timedisplay(reservation.lesson.started_at) %>～<%= timedisplay(reservation.lesson.finished_at) %>
+      <P>・<%= link_to l(reservation.lesson.meeting_on.to_datetime, format: :day_week),"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
+      <%= l(reservation.lesson.started_at, format: :time) %>～<%= l(reservation.lesson.finished_at, format: :time) %>
       <%= reservation.student.student_name %>&nbsp;&nbsp;
       <%= log_personal_cancel(reservation.cancel) %>
            <%= log_waiting(reservation.waiting) %>
