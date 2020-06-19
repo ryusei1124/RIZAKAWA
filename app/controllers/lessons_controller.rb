@@ -129,7 +129,7 @@ class LessonsController < ApplicationController
     @reservations_cancelonly = Reservation.where("lesson_id = ?", @lesson.id).cancel_only
     @zooms_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,true).cancel_exclusion.count
     @reals_sum = Reservation.where("lesson_id = ? and zoom = ?", @lesson.id,false).cancel_exclusion.count
-    @students_add = Student.kanaorder
+    @students_adｃd = Student.kanaorder
     @waiting = Reservation.where("lesson_id = ? and waiting = ?", @lesson.id, true).count
     @student_lists = Array.new()
     @students = Student.kanaorder
