@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-
+  
+  #個人情報保護ページ
   get 'protection_low/index'
   #　レッスン関連
   get 'lessons/weeklyschedule'
@@ -7,8 +8,6 @@ Rails.application.routes.draw do
   #　ユーザー側予約詳細へ
   post 'reservationusers/useredit', to: 'reservationusers#useredit'
   get 'reservationusers/useredit', to: 'reservationusers#useredit'
-  post 'reservationusers/usermail', to: 'reservationusers#usermail'
-  get 'reservationusers/usermail', to: 'reservationusers#usermail'
   #　ユーザー側予約情報更新
   post 'reservationusers/userupdate', to: 'reservationusers#userupdate'
   get 'reservationusers/reservation_delete', to: 'reservationusers#reservation_delete'
@@ -32,9 +31,6 @@ Rails.application.routes.draw do
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
-  #個人情報保護ページ
-  get 'protection_law/index'
-
   resources :reservation_logs, only: [:index]
   
   # ログインボタン(管理者、生徒)
@@ -43,13 +39,13 @@ Rails.application.routes.draw do
   
   resources :users do
     member do
+      put 'update'
       get 'edit_basic_info'
       patch 'update_basic_info'
       get 'edit'
-      delete 'destroy'
-      patch 'update'
     end
   end
+  delete 'users/:id/delete', to: 'users#destroy'
   
   resources :lessons do
    member do

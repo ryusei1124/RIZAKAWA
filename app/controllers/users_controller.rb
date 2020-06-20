@@ -43,14 +43,6 @@ class UsersController < ApplicationController
     
   end
 
-
-  def destroy
-    @user.destroy
-    flash[:success] = "#{@user.student}のデータを削除しました。"
-    redirect_to users_url
-  end
-
-  
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "情報を更新しました。"
@@ -59,7 +51,6 @@ class UsersController < ApplicationController
       render :edit      
     end
     @user = User.find(params[:id])
-
   end
   
   def destroy
