@@ -54,13 +54,11 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user.destroy
-    students = Student.where(user_id:@user.id)
-    students.each do |student|
-      reservation = Reservation.where(student_id:student.id)
-      reservation.destroy
+    if @user.destroy
+      flash[:success] = "#{@user.guardian}のデータを削除しました。"
+    else
+      flash[:danger] = "#{@user.guardian}のデータ削除に失敗しました。"
     end
-    flash[:success] = "#{@user.guardian}のデータを削除しました。"
     redirect_to users_url
   end
   

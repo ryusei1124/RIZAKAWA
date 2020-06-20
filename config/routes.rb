@@ -39,10 +39,10 @@ Rails.application.routes.draw do
   
   resources :users do
     member do
-      put 'update'
       get 'edit_basic_info'
       patch 'update_basic_info'
       get 'edit'
+      put 'update'
     end
   end
   delete 'users/:id/delete', to: 'users#destroy'
@@ -72,13 +72,11 @@ Rails.application.routes.draw do
     end
   end
 
- 
   resources :notices
   
   resources :reservations, only: [:update, :destroy]
-  resources :questions
   
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :questions
   
   resources :password_resets, only: [:new, :create, :edit, :update]
 end

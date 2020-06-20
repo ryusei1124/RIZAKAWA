@@ -2,14 +2,9 @@
 <% provide(:class_text, 'signup') %>
 <% provide(:button_text, 'お知らせ投稿編集') %>
 <h1>お知らせ詳細</h1>
-
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= render 'notice_form' %>
   </div>
 </div>
-<br />
-<p style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">詳細に戻る</a></p>
-<% if current_user.admin? %>
-    <p style="text-align:center"><a href="http://titonet384.sakura.ne.jp/linkmake/"  target="_blank">リンクはこちらで作成して貼り付けて下さい</a></p>
-<% end %>
+
