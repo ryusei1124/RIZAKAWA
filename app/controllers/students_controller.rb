@@ -56,17 +56,15 @@ class StudentsController < ApplicationController
     def student_params
       params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :examinee, :school,  :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3, :note, :withdrawal)
     end
-    
-  # beforeフィルター
   
   # ログイン済みのユーザーか確認します。
-  def logged_in_user
-    unless logged_in?
-      store_location
-      flash[:danger] = "ログインしてください。"
-      redirect_to login_url
+    def logged_in_user
+      unless logged_in?
+        store_location
+        flash[:danger] = "ログインしてください。"
+        redirect_to login_url
+      end
     end
-  end
 
   def send_mail_address
     @destination_user = User.find( @student.user_id )

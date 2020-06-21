@@ -7,6 +7,10 @@
   <%= f.label :notice_content, class: "label-#{yield(:class_text)}" %>
   <%= f.text_area :notice_content, class: "form-control", rows: 10 %>
   
-  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %>
-  
+  <%= f.submit yield(:button_text), class: "btn btn-primary btn-block btn-#{yield(:class_text)}" %><br />
+  <p style="text-align:center"><a href="#" onclick="javascript:window.history.back(-1);return false;">詳細に戻る</a></p>
+  <br />
+  <% if current_user.admin? %>
+    <p style="text-align:center"><a href="http://titonet384.sakura.ne.jp/linkmake/"  target="_blank">リンクはこちらでタグ作成して貼り付けて下さい</a></p>
+  <% end %>
 <% end %>
