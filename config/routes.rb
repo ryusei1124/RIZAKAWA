@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   patch 'login', to: 'sessions#admin_login'
   put 'login', to: 'sessions#student_login'
   
+  delete 'users/:id/delete', to: 'users#destroy'
   resources :users do
     member do
       get 'edit_basic_info'
@@ -45,8 +46,6 @@ Rails.application.routes.draw do
       put 'update'
     end
   end
-  delete 'users/:id/delete', to: 'users#destroy'
-  
   
   resources :lessons do
    member do
