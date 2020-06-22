@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   end
   delete 'users/:id/delete', to: 'users#destroy'
   
+  
   resources :lessons do
    member do
      put 'update'
