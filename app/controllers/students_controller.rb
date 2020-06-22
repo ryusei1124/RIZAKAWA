@@ -43,7 +43,8 @@ class StudentsController < ApplicationController
 
   def destroy
     student = Student.find(params[:id])
-    if student.destroy
+    questions = Question.where("student_id =?" ,student.id)
+    if student.destroy and questions.destroy_all
       flash[:success] = "データを削除しました。"
     else
       flash[:danger] = "データを削除に失敗しました。"

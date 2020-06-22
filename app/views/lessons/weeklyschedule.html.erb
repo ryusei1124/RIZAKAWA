@@ -130,10 +130,10 @@
         <% lesson=Lesson.where(meeting_on:day) %>
         <% times=times-@timecol %>
         <% lesson=lesson.find_by(started_at:times) %>
-        <% if lesson.present?  %>
+        <% if lesson.present? %>
           <% if current_user.admin? %>
             <% rev = Reservation.where("lesson_id =?" ,lesson.id) %>
-          <% else %>
+          <% elsif @students.present?  %>
             <% rev = Reservation.find_by(lesson_id: lesson.id, student_id: @student.id) %>
           <% end %>
           <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
