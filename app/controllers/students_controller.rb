@@ -47,7 +47,7 @@ class StudentsController < ApplicationController
     questions.each do |quetion|
       quetion.destroy
     end
-    if student.destroy and questions.blank?
+    if student.destroy
       flash[:success] = "データを削除しました。"
     else
       flash[:danger] = "データを削除に失敗しました。"
