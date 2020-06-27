@@ -47,15 +47,16 @@ class PasswordResetsController < ApplicationController
 
     # 正しいユーザーかどうか確認する
     def valid_user
-      unless @user && @user.activated? && @user.authenticated?(:reset, params[:id])
-        redirect_to request.referer
+      unless (@user && @user.activated? &&
+              @user.authenticated?(:reset, params[:id]))
+        redirect_to root_url
       end
     end
     
     # トークンが期限切れかどうか確認する
     def check_expiration
       if @user.password_reset_expired?
-        flash[:danger] = "Password reset has expired."
+        flash[:danger] = "パスワードのリセットが終了しました。"
         redirect_to new_password_reset_url
       end
     end

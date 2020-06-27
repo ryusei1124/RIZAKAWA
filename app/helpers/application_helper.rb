@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def full_title(page_name = "")
-    base_title = "RIZAKAWA"
+    base_title = "平川塾"
     if page_name.empty?
       base_title
     else
