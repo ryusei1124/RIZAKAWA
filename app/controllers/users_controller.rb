@@ -5,9 +5,11 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :weekday, only: [:index]
   before_action :day_setting, only: [:index]
+  include ApplicationHelper
   
   def index
     @admins = User.where(admin:true)
+    @weekday = ["月","火","水","木","金","土","日"]
     if params[:cation] == "2"
       @users = User.where(admin:false).maneger_kana_order.paginate(page: params[:page], per_page: 40)
       @students = Student.all
@@ -19,7 +21,27 @@ class UsersController < ApplicationController
       @users = @user.paginate(page: params[:page], per_page: 40)
       @students = Student.under_contact
     end
-    @weekday = ["月","火","水","木","金","土","日"]
+    @students_undercontact = Student.under_contact
+    @student_ls = Array.new()
+      @students_undercontact.each do | st |
+        num = @weekday.index(st.fix_day).to_i
+        time =  timedisplay(st.fix_time)
+        ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
+        student_name = st.student_name + " (" + Student.gradeyear( st.id ) + ")" 
+        @student_ls.push([ids,st.fix_day,time, student_name])
+        if st.fix_day2.present?  
+          num = @weekday.index(st.fix_day2).to_i
+          time = timedisplay(st.fix_time2)
+          ids = (num+1)*10000 + (st.fix_time2.hour.to_i)*100 + st.fix_time2.min.to_i
+          @student_ls.push([ids,st.fix_day2,time, student_name])
+        elsif st.fix_day3.present?  
+          num = @weekday.index(st.fix_day3).to_i
+          time =  timedisplay(st.fix_time3)
+          ids = (num+1)*10000 + (st.fix_time3.hour.to_i)*100 + st.fix_time3.min.to_i
+          @student_ls.push([ids,st.fix_day3,time, student_name])
+        end
+      end
+      @student_ls = @student_ls.sort
   end
   
   def new
