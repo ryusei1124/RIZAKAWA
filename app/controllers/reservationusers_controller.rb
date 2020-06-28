@@ -55,7 +55,7 @@ class ReservationusersController < ApplicationController
     end
     @reservation.fix_time = nil
     @reservation.transfer = true
-    @reservation.cancel = true
+    @reservation.cancel = false
     if @reservation.note.present?
       @reservation.note = @reservation.note + " " + l(@lesson_meeting_on.to_datetime, format: :day_week) + "分の振替です"
     else
