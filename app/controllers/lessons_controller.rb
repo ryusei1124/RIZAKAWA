@@ -133,10 +133,10 @@ class LessonsController < ApplicationController
     @student_lists = Array.new()
     @students = Student.kanaorder
     @students.each do | st |
-    if  @reservations.find_by( student_id: st.id ).blank?
-      id = st.id
-      student_name = st.student_name + "(" + Student.gradeyear( st.id ) + ")" 
-      @student_lists << Studentlist.new( id, student_name )
+      if  @reservations.find_by( student_id: st.id ).blank?
+        id = st.id
+        student_name = st.student_name + "(" + Student.gradeyear( st.id ) + ")" 
+        @student_lists << Studentlist.new( id, student_name )
       end
     end
   end
