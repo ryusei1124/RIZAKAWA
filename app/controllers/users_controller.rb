@@ -22,14 +22,12 @@ class UsersController < ApplicationController
       @students = Student.under_contact
     end
     @students_undercontact = Student.under_contact
-    examinee = nil
     @student_ls = Array.new()
       @students_undercontact.each do | st |
         num = @weekday.index(st.fix_day).to_i
         time =  timedisplay(st.fix_time)
         ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
-        examinee = " 受験生" if st.examinee?
-        student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + ")" 
+        student_name = st.student_name + " (" + Student.gradeyear( st.id ) + ")" 
         @student_ls.push([ids,st.fix_day,time, student_name])
         if st.fix_day2.present?  
           num = @weekday.index(st.fix_day2).to_i
