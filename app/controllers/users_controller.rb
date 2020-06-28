@@ -27,7 +27,9 @@ class UsersController < ApplicationController
         num = @weekday.index(st.fix_day).to_i
         time =  timedisplay(st.fix_time)
         ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
-        student_name = st.student_name + " (" + Student.gradeyear( st.id ) + ")" 
+        examinee = ""
+        examinee = " 受験生" if st.examinee == true
+        student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + ")" 
         @student_ls.push([ids,st.fix_day,time, student_name])
         if st.fix_day2.present?  
           num = @weekday.index(st.fix_day2).to_i
