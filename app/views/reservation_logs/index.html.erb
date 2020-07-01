@@ -44,7 +44,7 @@
         <td>
           <%= Lessoncomment.where("lesson_id =? and student_id =?", log.lesson_id, log.student_id).count %>
         </td>
-        <td>
+        <td style="text-align: center;">
            <%= "済" if log.attendance_time != nil %>
         </td>
         <td style="text-align: left;">
