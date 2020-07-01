@@ -14,10 +14,11 @@
     <thead>
       <tr>
         <th style="width:110px;">授業日</th>
-        <th style="width:110px;">授業時間</th>
+        <th style="width:100px;">授業時間</th>
         <th style="width:60px;">固定時間</th>
-        <th style="width:150px;">生徒名</th>
+        <th style="width:130px;">生徒名</th>
         <th style="width:60px;">コメント</th>
+        <th style="width:25px;">出席</th>
         <th style="width:160px;">備考</th>
       </tr>
     </thead>
@@ -42,6 +43,9 @@
         </td>
         <td>
           <%= Lessoncomment.where("lesson_id =? and student_id =?", log.lesson_id, log.student_id).count %>
+        </td>
+        <td>
+           <%= "済" if log.attendance_time != nil %>
         </td>
         <td style="text-align: left;">
            <%= log_personal_cancel(log.cancel) %>
