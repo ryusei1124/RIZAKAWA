@@ -46,12 +46,12 @@
         </td>
         <td style="text-align: center;">
            <%= "済" if log.attendance_time != nil %>
+           <%= "欠席" if log.absence? %>
         </td>
         <td style="text-align: left;">
            <%= log_personal_cancel(log.cancel) %>
            <%= log_waiting(log.waiting) %>
            <%= log_transfer(log.transfer) %>
-           <%= log_absence(log.absence) %>
            <%= log_cancel(Lesson.find(log.lesson_id).cancel) %>
         </td>
       </tr>
