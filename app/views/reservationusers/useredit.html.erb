@@ -85,11 +85,6 @@
     <% modaltype1="chengesc" %><% @modaltype="newsc" %>
     <% if @lesson.meeting_on>@today or current_user.admin? %>
       <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success button_size">方法変更</a>&nbsp;
-      <% if @lesson.regular==true %>
-      <div style="display: inline-block;">
-        <a href="" data-toggle="modal" data-target=#<%=@modaltype %> class="btn btn-warning button_size">授業振替</a>&nbsp;
-      </div>
-      <% end %>
       <div style="display: inline-block;">
       <% if @reservation.cancel == false %>
         <%= button_to "授業取消", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, data: { confirm: '本当に取消しますか？' }, params: {reservation_id:@reservation.id, cancel:true },class:"btn btn-danger button_size"} %>
@@ -97,6 +92,13 @@
         <%= button_to "授業再開", {controller: 'reservationusers', action: 'reservation_delete'}, {method: :get, data: { confirm: '本当に再開しますか？' }, params: {reservation_id:@reservation.id},class:"btn btn-primary button_size"} %>
       <% end %>
       </div>&nbsp;
+    <% end %>
+    <% if @lesson.meeting_on>@today or current_user.admin? or @lesson.cancel == true %>
+       <% if @lesson.regular==true %>
+      <div style="display: inline-block;">
+        <a href="" data-toggle="modal" data-target=#<%=@modaltype %> class="btn btn-warning button_size">授業振替</a>&nbsp;
+      </div>
+      <% end %>
     <% end %>
     <div style="display: inline-block;">
       <%= link_to "ｽｹｼﾞｭｰﾙ" ,lessons_weeklyschedule_path, class:"btn btn-info button_size" %>&nbsp;
