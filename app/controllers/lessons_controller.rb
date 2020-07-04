@@ -84,6 +84,7 @@ class LessonsController < ApplicationController
             .or(students.where("fix_time3 >=? and fix_time3 < ?", @lesson.started_at,@lesson.finished_at))
             .or(students.where("fix_time4 >=? and fix_time4 < ?", @lesson.started_at,@lesson.finished_at))
           end
+          
           if lesson_params[:target] == "中高生" and @lesson.examinee == true #中学生、高校生で受験生を自動登録
             rev=students.where("birthday < ? and examinee = ?" ,jrhigh(@lesson.meeting_on).to_date,true)
           elsif lesson_params[:target] == "中高生" and @lesson.examinee == false #中学生、高校生で受験生以外を自動登録
