@@ -105,7 +105,6 @@ class UsersController < ApplicationController
   end
   
   private
-
     def user_params
       params.require(:user).permit(:guardian, :guardiankana,:student, :email,  :password, :password_confirmation, :withdrawal, :admin)
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_27_084608) do
+ActiveRecord::Schema.define(version: 2020_07_04_164312) do
 
   create_table "answers", force: :cascade do |t|
     t.text "answer_content", null: false
@@ -121,6 +121,8 @@ ActiveRecord::Schema.define(version: 2020_06_27_084608) do
     t.boolean "examinee", default: false
     t.integer "cancelnumber"
     t.text "note"
+    t.string "fix_day4"
+    t.time "fix_time4"
   end
 
   create_table "users", force: :cascade do |t|
