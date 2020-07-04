@@ -98,16 +98,18 @@ class LessonsController < ApplicationController
           elsif lesson_params[:target] == "小学生" and @lesson.examinee.nil? #小学生を自動登録
             rev=students.where("birthday >= ?", jrhigh(@lesson.meeting_on).to_date)  
           else
-          rev=students
-        end
-        rev.each do |revtion|
-          if revtion.fix_day == dayofweek
-            fixtime = revtion.fix_time
-          elsif revtion.fix_day2 == dayofweek
-            fixtime = revtion.fix_time2
-          else
-            fixtime = revtion.fix_time3
+            rev=students
           end
+          rev.each do |revtion|
+            if revtion.fix_day == dayofweek
+              fixtime = revtion.fix_time
+            elsif revtion.fix_day2 == dayofweek
+              fixtime = revtion.fix_time2
+            elsif revtion.fix_day3 == dayofweek
+              fixtime = revtion.fix_time3
+            else
+              fixtime = revtion.fix_time4
+            end
           reservation = Reservation.new(student_id:revtion.id,lesson_id:@lesson.id,zoom:revtion.zoom,user_id:revtion.user_id,fix_time:fixtime)
           if reservation.save
             flash[:warning] = "該当受講生の予約登録に成功しました。"
