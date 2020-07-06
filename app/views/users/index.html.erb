@@ -51,6 +51,9 @@
               <% if student.fix_day3.present? %>
                 固定時間3:<%= student.fix_day3 %> <%= timedisplay(student.fix_time3) %>
               <% end %>
+              <% if student.fix_day4.present? %>
+                固定時間4:<%= student.fix_day4 %> <%= timedisplay(student.fix_time4) %>
+              <% end %>
               <% if student.examinee? %>
                 <span class="label label-success label-user-division">受験生</span>
               <% end %>
