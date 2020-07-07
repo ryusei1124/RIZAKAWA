@@ -76,7 +76,7 @@ class LessonsController < ApplicationController
         flash[:success]="登録に成功しました"
         dayofweek=weekdate(@lesson.meeting_on)
         if @lesson.regular? and autoregister == "1" #定例授業なら該当の生徒を自動で登録する
-          #会員で該当曜日３つカラムから該当曜日の生徒抽出
+          #会員で該当曜日4つカラムから該当曜日の生徒抽出
           #students = Student.where("fix_day =? or fix_day2 =? or fix_day3 =? or fix_day4 =?",dayofweek,dayofweek,dayofweek,dayofweek).under_contact
           students = Student.under_contact
           if fixtimeres=="1" #固定時間のあってる人のみ抽出し自動登録
