@@ -108,7 +108,7 @@ class LessonsController < ApplicationController
               fixtime = revtion.fix_time2
             elsif revtion.fix_day3 == dayofweek
               fixtime = revtion.fix_time3
-            elsif
+            elsif revtion.fix_day4 == dayofweek
               fixtime = revtion.fix_time4
             end
           reservation = Reservation.new(student_id:revtion.id,lesson_id:@lesson.id,zoom:revtion.zoom,user_id:revtion.user_id,fix_time:fixtime)
