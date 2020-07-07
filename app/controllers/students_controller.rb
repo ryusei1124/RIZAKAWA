@@ -12,9 +12,14 @@ class StudentsController < ApplicationController
   end
   
   def info_update
-    if @student.update_attributes(student_params)
-      user = User.find( @student.user_id )
-      students = Student.where(user_id:@student.user_id)
+    
+    @studentcheck = Student.new(student_params)
+    fix_check
+    if @fix_check == 1
+      flash[:danger] = "#{@student.student_name}の更新は失敗しました。"
+    elsif @student.update_attributes(student_params)
+        user = User.find( @student.user_id )
+        students = Student.where(user_id:@student.user_id)
       if students.where(withdrawal:nil).blank? and students.present?
         user.withdrawal = students.maximum(:withdrawal)
       else
@@ -23,21 +28,25 @@ class StudentsController < ApplicationController
       user.save
       flash[:success] = "#{@student.student_name}の基本情報を更新しました。"
     else
-      flash[:danger] = "#{@student.student_name}の更新は失敗しました。<br>" + @student.errors.full_messages.join("<br>")
+      flash[:danger] = "#{@student.student_name}の更新は失敗しました。" 
     end
     redirect_to users_url
   end
 
   def create
-     @student = Student.create(student_params)
-     if @student.save
+     @studentcheck = Student.new(student_params)
+     @student = @studentcheck
+     fix_check
+     if @fix_check == 1
+       flash[:danger] = "固定時間の入力に不正あり登録に失敗しました。"
+     elsif @student.save
        @title = "受講者を登録しました。トップページの 基本情報(確認用）を確認願います。"
        @content = "下記リンクの確認をお願いします。"
        send_mail_address
        flash[:success] = "登録して対象者にメールを送信しました"
      else
-       flash[:danger] = "登録に失敗しました。"
-    end
+       flash[:danger] = "入力に不正あり登録に失敗しました。"
+     end
     redirect_to users_url
   end
 
@@ -56,7 +65,6 @@ class StudentsController < ApplicationController
   end
   
   private
-
     def student_params
       params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :examinee, :school,  :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3, :fix_day4, :fix_time4, :note, :withdrawal)
     end
@@ -70,12 +78,23 @@ class StudentsController < ApplicationController
       end
     end
 
-  def send_mail_address
-    @destination_user = User.find( @student.user_id )
-    @bcc = current_user.email
-    @send_user =  current_user
-    link = "notices"
-    @link = @url + link
-    UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
-  end
+    def send_mail_address
+      @destination_user = User.find( @student.user_id )
+      @bcc = current_user.email
+      @send_user =  current_user
+      link = "notices"
+      @link = @url + link
+      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
+    end
+    
+    def fix_check
+      @fix_check = 0
+      if ( @studentcheck.fix_day2 != "" and @studentcheck.fix_time2 == nil ) or ( @studentcheck.fix_day2 == "" and @studentcheck.fix_time2 != nil )
+        @fix_check = 1
+      elsif ( @studentcheck.fix_day3 != "" and @studentcheck.fix_time3 == nil ) or ( @studentcheck.fix_day3 == "" and @studentcheck.fix_time3 != nil )
+       @fix_check = 1
+      elsif ( @studentcheck.fix_day4 != "" and @studentcheck.fix_time4 == nil ) or ( @studentcheck.fix_day4 == "" and @studentcheck.fix_time4 != nil )
+       @fix_check = 1
+      end
+    end
 end

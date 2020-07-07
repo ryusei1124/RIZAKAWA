@@ -35,7 +35,7 @@
                       <%= student.fix_time.hour %>:<%= mindisplay(student.fix_time) %>～
                     </td>
                   </tr>
-                  <% if student.fix_day2.present? %>
+                  <% if student.fix_day2.present? and student.fix_time2.present? %>
                     <tr>
                       <th>固定時間2</th>
                       <td>
@@ -44,7 +44,7 @@
                       </td>
                     </tr>
                     <% end %>
-                      <% if student.fix_day3.present? %>
+                      <% if student.fix_day3.present? and student.fix_time3.present? %>
                         <tr>
                           <th>固定時間3</th>
                           <td>
@@ -53,7 +53,7 @@
                           </td>
                         </tr>
                         <% end %>
-                        <% if student.fix_day4.present? %>
+                        <% if student.fix_day4.present? and student.fix_time4.present? %>
                         <tr>
                           <th>固定時間4</th>
                           <td>
