@@ -82,8 +82,8 @@ class LessonsController < ApplicationController
           if fixtimeres=="1" #固定時間のあってる人のみ抽出し自動登録
             students=students.where("fix_time >=? and fix_time < ? ", @lesson.started_at,@lesson.finished_at).where("fix_day =?",dayofweek)
             .or(students.where("fix_time2 >=? and fix_time2 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day2 =?",dayofweek))
-            #.or(students.where("fix_time3 >=? and fix_time3 < ?", @lesson.started_at,@lesson.finished_at))
-            #.or(students.where("fix_time4 >=? and fix_time4 < ?", @lesson.started_at,@lesson.finished_at))
+            .or(students.where("fix_time3 >=? and fix_time3 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day3 =?",dayofweek))
+            .or(students.where("fix_time4 >=? and fix_time4 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day4 =?",dayofweek))
           end
           
           if lesson_params[:target] == "中高生" and @lesson.examinee == true #中学生、高校生で受験生を自動登録
