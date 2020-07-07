@@ -214,10 +214,6 @@ class ReservationusersController < ApplicationController
     @send_user =  current_user
     link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
     @link = @url + link
-<<<<<<< HEAD
-    UserMailer.send_mail(@destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
-=======
     #UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
->>>>>>> 81_1Student_edit
   end
 end
