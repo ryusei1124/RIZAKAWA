@@ -11,7 +11,7 @@ class ManegerStudentsController < ApplicationController
     else
       flash[:warning] = "更新に失敗しました"
     end
-      redirect_to request.referrer
+    redirect_to request.referrer
   end
 
   private
