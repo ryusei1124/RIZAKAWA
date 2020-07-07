@@ -3,6 +3,7 @@ class StudentsController < ApplicationController
   before_action :logged_in_user, only: [:show, :info_edit, :info_update]
   before_action :day_setting, only: [:info_update]
   before_action :mail_link_host,   only: [:create]
+  before_action :fix_check,   only: [:info_update,:create]
   
   def show
     @students = Student.all
@@ -12,9 +13,6 @@ class StudentsController < ApplicationController
   end
   
   def info_update
-    
-    @studentcheck = Student.new(student_params)
-    fix_check
     if @fix_check == 1
       flash[:danger] = "#{@student.student_name}の更新は失敗しました。"
     elsif @student.update_attributes(student_params)
@@ -34,9 +32,7 @@ class StudentsController < ApplicationController
   end
 
   def create
-     @studentcheck = Student.new(student_params)
-     @student = @studentcheck
-     fix_check
+     @student = Student.new(student_params)
      if @fix_check == 1
        flash[:danger] = "固定時間の入力に不正あり登録に失敗しました。"
      elsif @student.save
@@ -85,16 +81,5 @@ class StudentsController < ApplicationController
       link = "notices"
       @link = @url + link
       UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
-    end
-    
-    def fix_check
-      @fix_check = 0
-      if ( @studentcheck.fix_day2 != "" and @studentcheck.fix_time2 == nil ) or ( @studentcheck.fix_day2 == "" and @studentcheck.fix_time2 != nil )
-        @fix_check = 1
-      elsif ( @studentcheck.fix_day3 != "" and @studentcheck.fix_time3 == nil ) or ( @studentcheck.fix_day3 == "" and @studentcheck.fix_time3 != nil )
-       @fix_check = 1
-      elsif ( @studentcheck.fix_day4 != "" and @studentcheck.fix_time4 == nil ) or ( @studentcheck.fix_day4 == "" and @studentcheck.fix_time4 != nil )
-       @fix_check = 1
-      end
     end
 end

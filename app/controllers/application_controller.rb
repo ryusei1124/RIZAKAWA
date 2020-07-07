@@ -71,7 +71,6 @@ class ApplicationController < ActionController::Base
   end
   
   def fix_check
-    @student = Student.find(student_params[:id])
     @studentcheck = Student.new(student_params)
       @fix_check = 0
       if ( @studentcheck.fix_day2 != "" and @studentcheck.fix_time2 == nil ) or ( @studentcheck.fix_day2 == "" and @studentcheck.fix_time2 != nil )
