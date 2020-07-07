@@ -81,7 +81,7 @@ class LessonsController < ApplicationController
           students = Student.under_contact
           if fixtimeres=="1" #固定時間のあってる人のみ抽出し自動登録
             students=students.where("fix_time >=? and fix_time < ? ", @lesson.started_at,@lesson.finished_at).where("fix_day =?",dayofweek)
-            #.or(students.where("fix_time2 >=? and fix_time2 < ?", @lesson.started_at,@lesson.finished_at))
+            .or(students.where("fix_time2 >=? and fix_time2 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day2 =?",dayofweek))
             #.or(students.where("fix_time3 >=? and fix_time3 < ?", @lesson.started_at,@lesson.finished_at))
             #.or(students.where("fix_time4 >=? and fix_time4 < ?", @lesson.started_at,@lesson.finished_at))
           end
