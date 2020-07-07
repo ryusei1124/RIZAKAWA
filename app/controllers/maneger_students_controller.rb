@@ -1,10 +1,9 @@
 class ManegerStudentsController < ApplicationController
+  before_action :fix_check,   only: [:update]
+  
   def update
     @lesson = Lesson.find(lesson_params[:id])
     @lesson.note = lesson_params[:note]
-    @student = Student.find(student_params[:id])
-    @studentcheck = Student.new(student_params)
-    fix_check
     if @fix_check == 1
       flash[:danger] = "#{@student.student_name}の更新は失敗しました。"
     elsif @student.update(student_params) && @lesson.save
@@ -22,14 +21,5 @@ class ManegerStudentsController < ApplicationController
   def lesson_params
      params.require(:lesson).permit( :id, :note)
   end
-  def fix_check
-      @fix_check = 0
-      if ( @studentcheck.fix_day2 != "" and @studentcheck.fix_time2 == nil ) or ( @studentcheck.fix_day2 == "" and @studentcheck.fix_time2 != nil )
-        @fix_check = 1
-      elsif ( @studentcheck.fix_day3 != "" and @studentcheck.fix_time3 == nil ) or ( @studentcheck.fix_day3 == "" and @studentcheck.fix_time3 != nil )
-       @fix_check = 1
-      elsif ( @studentcheck.fix_day4 != "" and @studentcheck.fix_time4 == nil ) or ( @studentcheck.fix_day4 == "" and @studentcheck.fix_time4 != nil )
-       @fix_check = 1
-      end
-    end
+  
 end
