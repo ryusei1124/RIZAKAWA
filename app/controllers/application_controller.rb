@@ -69,4 +69,16 @@ class ApplicationController < ActionController::Base
     host = request.host
     @url = "#{ protocol }#{ host }/" #現在のurlを取得
   end
+  
+  def fix_check
+    @studentcheck = Student.new(student_params)
+      @fix_check = 0
+      if ( @studentcheck.fix_day2 != "" and @studentcheck.fix_time2 == nil ) or ( @studentcheck.fix_day2 == "" and @studentcheck.fix_time2 != nil )
+        @fix_check = 1
+      elsif ( @studentcheck.fix_day3 != "" and @studentcheck.fix_time3 == nil ) or ( @studentcheck.fix_day3 == "" and @studentcheck.fix_time3 != nil )
+       @fix_check = 1
+      elsif ( @studentcheck.fix_day4 != "" and @studentcheck.fix_time4 == nil ) or ( @studentcheck.fix_day4 == "" and @studentcheck.fix_time4 != nil )
+       @fix_check = 1
+      end
+  end
 end
