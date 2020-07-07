@@ -2,10 +2,11 @@ class ManegerStudentsController < ApplicationController
   before_action :fix_check,   only: [:update]
   
   def update
+    @student = Student.find(student_params[:id])
     @lesson = Lesson.find(lesson_params[:id])
     @lesson.note = lesson_params[:note]
     if @fix_check == 1
-      flash[:danger] = "#{@student.student_name}の更新は失敗しました。"
+      flash[:danger] = "更新は失敗しました。"
     elsif @student.update(student_params) && @lesson.save
       flash[:success] = "更新に成功しました"
     else
