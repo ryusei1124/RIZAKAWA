@@ -21,6 +21,7 @@ class LessoncommentsController < ApplicationController
       @link = @url + link
       bcc = ""
       UserMailer.send_mail( @destination_user, @send_user, bcc, title, content, @link).deliver_now
+
       flash[:success] = "コメント登録に成功し、お知らせメールを送信しました"
     else
       flash[:warning] = "登録に失敗しました"
