@@ -20,7 +20,7 @@ class LessoncommentsController < ApplicationController
       link = "reservationusers/useredit?reservation_id=#{lessoncomment.reservation_id}&student_id=#{lessoncomment.student_id}"
       @link = @url + link
       bcc = ""
-      UserMailer.send_mail( @destination_user, @send_user, bcc, title, content, @link).deliver_now
+      #UserMailer.send_mail( @destination_user, @send_user, bcc, title, content, @link).deliver_now
 
       flash[:success] = "コメント登録に成功し、お知らせメールを送信しました"
     else
