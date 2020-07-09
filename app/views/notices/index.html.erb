@@ -63,6 +63,8 @@
       <% else %>
         <span class="label label-danger">固定時間未設定</span>
       <% end %>
+      <%= comment_count = Lessoncomment.where("lesson_id =? and student_id =?", reservation.lesson_id, reservation.student_id).count %>
+      <%= "コメント:#{ comment_count } " if comment_count >0 %>
       <%= log_personal_cancel(reservation.cancel) %>
            <%= log_waiting(reservation.waiting) %>
            <%= log_transfer(reservation.transfer) %>
