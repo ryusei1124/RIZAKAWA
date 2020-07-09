@@ -49,6 +49,12 @@
         <%= f.radio_button :zoom, :false  ,{:checked => true} %> リアル(<%= @realnumber %>/<%= @realseat %>)
         <%= f.radio_button :zoom, :true %>&nbsp;Zoom(<%= @zoomnumber %>/<%= @zoomseat %>)
       <% end %>
+      <% if @real_rest_sheet < 0 %>
+        <span class='label label-danger'>リアルは満席です</span>
+      <% end %>
+      <% if @zoom_rest_sheet < 0 %>
+        <span class='label label-danger'>zoomは満席です</span>
+      <% end %>
       <%= f.hidden_field :reservation_id,value:@reservation.id %>
       <%= f.hidden_field :student_id,value:@student.id %>
       <%= f.hidden_field :lesson_id,value:@lesson.id %>
@@ -66,12 +72,12 @@
   </tr>
   <% end %>
 </table><br />
-<div class="button-area" style="text-align: center; margin-bottom:15px;">
   <% if @lesson.meeting_on>thisday and @lesson.cancel == false %>
         <%= f.submit "新規登録", class: "btn btn-primary button_size" %>&nbsp;
       <% end %>
     <% end %>
     <%= link_to "ｽｹｼﾞｭｰﾙ" ,"/lessons/weeklyschedule?cation=1&changeday=#{@lesson.meeting_on}",class:"btn btn-info button_size" %>&nbsp;
+    </p>
+    
     </div>
-  </div>
 </div>
