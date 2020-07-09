@@ -1,3 +1,4 @@
+<% require "date" %>
 <% provide(:title, '予約状況') %>
 
 <h1>【予約詳細】</h1>
@@ -22,6 +23,9 @@
     </div>
     <div style="display: inline-block;">
       <%= link_to "ｽｹｼﾞｭｰﾙ" ,"/lessons/weeklyschedule?cation=1&changeday=#{@lesson.meeting_on}",class:"btn btn-info button_size" %>&nbsp
+    </div>
+    <div style="display: inline-block;">
+      <%= link_to "予約履歴" ,"/reservation_logs?cation=1&changeday=#{@lesson.meeting_on.beginning_of_month}",class:"btn btn-warning button_size" %>&nbsp
     </div>
   </p>
   </div>
