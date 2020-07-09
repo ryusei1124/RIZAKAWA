@@ -51,13 +51,18 @@
     <% if @reservations.present? %>
     <div class="bg-warning">
     <div class="panel-heading" data-toggle="collapse" data-target="#demo">
-      <span class="glyphicon glyphicon-envelope" aria-hidden="true"> 予約授業へのコメント（遅刻等の連絡、クリックで展開）</div></span>
+      <span class="glyphicon glyphicon-envelope" aria-hidden="true"> 予約確認・コメント（クリックで展開）</div></span>
     <div id="demo" class="collapse">
       <% @reservations.each do |reservation| %>
       <br>
       <P>・<%= link_to l(reservation.lesson.meeting_on.to_datetime, format: :day_week),"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
       <%= l(reservation.lesson.started_at, format: :time) %>～<%= l(reservation.lesson.finished_at, format: :time) %>
       <%= reservation.student.student_name %>&nbsp;&nbsp;
+      <% if reservation.fix_time.present? %>
+        固定時間:<%= l( reservation.fix_time, format: :time ) %>
+      <% else %>
+        <span class="label label-danger">固定時間未設定</span>
+      <% end %>
       <%= log_personal_cancel(reservation.cancel) %>
            <%= log_waiting(reservation.waiting) %>
            <%= log_transfer(reservation.transfer) %>

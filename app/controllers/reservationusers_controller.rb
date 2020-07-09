@@ -147,7 +147,7 @@ class ReservationusersController < ApplicationController
         flash[:warning] = "キャンセル待ちになります。" if @reservation.waiting == true
       end
       @title = "予約追加登録"
-      @content = "予約の追加登録をしました。#{message}下記のリンクを確認お願いします。"
+      @content = "予約の追加登録をしました。#{message}"
       send_mail_address
     else
       flash[:danger] = "受講日登録に失敗しました"

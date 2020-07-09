@@ -14,11 +14,11 @@
     <thead>
       <tr>
         <th style="width:110px;">授業日</th>
-        <th style="width:100px;">授業時間</th>
-        <th style="width:60px;">固定時間</th>
-        <th style="width:130px;">生徒名</th>
-        <th style="width:40px;">コメント</th>
-        <th style="width:25px;">出席</th>
+        <th style="width:70px;">授業時間</th>
+        <th style="width:40px;"><div style="white-space:nowrap;">固定時間</div></th>
+        <th style="width:100px;">生徒名</th>
+        <th style="width:20px;"><div style="white-space:nowrap;">コメント</div></th>
+        <th style="width:40px;"><div style="white-space:nowrap;">出 席</div></th>
         <th style="width:160px;">備考</th>
       </tr>
     </thead>
@@ -46,7 +46,7 @@
         </td>
         <td style="text-align: center;">
            <%= "済" if log.attendance_time != nil %>
-           <%= "欠" if log.absence? %>
+           <%= "欠席" if log.absence? %>
         </td>
         <td style="text-align: left;">
            <%= log_personal_cancel(log.cancel) %>
