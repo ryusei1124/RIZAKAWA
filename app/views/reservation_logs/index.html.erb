@@ -33,7 +33,7 @@
         <% end %>
         </td>
         <td>
-           <%= l(log.lesson.started_at, format: :time) %>～<%= l(log.lesson.finished_at, format: :time)  %>
+           <div style="white-space:nowrap;"><%= l(log.lesson.started_at, format: :time) %>～<%= l(log.lesson.finished_at, format: :time)  %></ div>
         </td>
         <td>
            <%= l(log.fix_time, format: :time) if log.fix_time.present? %>
