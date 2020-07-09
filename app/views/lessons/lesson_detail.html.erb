@@ -73,8 +73,8 @@
            <th style = "width:50px;">固定時間</th>
            <th style = "width:100px;">授業方法</th>
            <th style = "width:50px;">修正</th>
-           <th style = "width:80px;">出席時間</th>
-           <th style = "width:80px;">退席時間</th>
+           <th style = "width:80px;">出席</th>
+           <th style = "width:80px;">退席</th>
            <th style = "width:50px;">欠席</th>
            <th style = "width:100px;">出欠管理</th>
          </tr>
@@ -86,9 +86,11 @@
         <% if reservation.waiting == false %>
            <tr>
             <td colspa="3" style="text-align:left;">
+              <div style="white-space:nowrap;">
               <%= link_to reservation.student.student_name,
               "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
               (<%= Student.gradeyear(reservation.student_id) %>）
+              </div>
             </td>
             <td>
               <% if reservation.transfer == true %>
@@ -117,6 +119,7 @@
               <% end %>
             </td>
             <td>
+              <div style="white-space:nowrap;">
               <% if reservation.attendance_time.nil? && reservation.absence == false %>
                 <%= link_to "出席", reservation_path(reservation, no: 1), method: :patch, class: "btn btn-primary btn-sm" %>
               <% end %>
@@ -140,6 +143,7 @@
                   data: { confirm: "欠席登録を解除してもよろしいですか？" },
                   class: "btn btn-primary btn-sm" %>
               <% end %>
+              </div>
             </td>
            </tr>
         <% end %>

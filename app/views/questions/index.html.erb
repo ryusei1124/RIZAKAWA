@@ -24,8 +24,8 @@
           <% @questions.each do |question| %>
             <tr id="question-<%= question.id %>">
               <td colspan="2" style="word-wrap:keep-all;"><%= l(question.updated_at, format: :default_2) %></td>
-              <td colspan="1"><%= question.user.guardian %></td>
-              <td colspan="1"><%= User.find(question.destination).guardian %></td>
+              <td colspan="1"><div style="white-space:nowrap;"><%= question.user.guardian %></div></td>
+              <td colspan="1"><div style="white-space:nowrap;"><%= User.find(question.destination).guardian %></div></td>
               <td colspan="3" style="word-wrap:break-word;"><%= link_to question.question_title, question %></td>
               <td colspan="1" style="word-wrap:break-word;"><%=question.answers.count %></td>
               <% if current_user.admin? %>
