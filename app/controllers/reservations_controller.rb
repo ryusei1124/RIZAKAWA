@@ -59,7 +59,7 @@ class ReservationsController < ApplicationController
         if @reservation.update_attributes(zoom: params[:reservation][:zoom])
           @reservation.update_attributes(fix_time: params[:reservation][:fix_time])
           @title = "授業時間が確定しました"
-          @content = "授業時間が確定しました。下記のリンクを確認お願いします。"
+          @content = "授業時間が確定しました。"
           send_mail_address
           flash[:success] = "固定時間と授業方法を更新し、該当ユーザーにメールを送信しました"
         else

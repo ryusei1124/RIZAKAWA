@@ -1,10 +1,10 @@
 <% provide(:title, '問い合わせ一覧') %>
 
-<div class="wrapper_normal">
+<div class="wrapper_normal2">
   <h1 id="index">問い合わせ一覧</h1>
-  
-  <div class="ol-md-12 col-md-offset-0">
+  <div class="button-area" style="text-align: center; margin-bottom:20px;">
     <%= link_to "問い合わせ投稿", new_question_path, class: "btn btn-primary question-btn" %>
+  <div class="ol-md-12 col-md-offset-0">
     <% if @questions.present? %>
       <div class="question-paginate"><%= will_paginate %></div>
       <table class="table table-bordered table-condensed" id="table-question" style="table-layout:fixed;">
@@ -24,8 +24,8 @@
           <% @questions.each do |question| %>
             <tr id="question-<%= question.id %>">
               <td colspan="2" style="word-wrap:keep-all;"><%= l(question.updated_at, format: :default_2) %></td>
-              <td colspan="1"><%= question.user.guardian %></td>
-              <td colspan="1"><%= User.find(question.destination).guardian %></td>
+              <td colspan="1"><div style="white-space:nowrap;"><%= question.user.guardian %></div></td>
+              <td colspan="1"><div style="white-space:nowrap;"><%= User.find(question.destination).guardian %></div></td>
               <td colspan="3" style="word-wrap:break-word;"><%= link_to question.question_title, question %></td>
               <td colspan="1" style="word-wrap:break-word;"><%=question.answers.count %></td>
               <% if current_user.admin? %>

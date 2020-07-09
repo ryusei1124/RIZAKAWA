@@ -26,7 +26,7 @@
 
 /* 予約詳細画面レスポンシブ設定 */
 .warapper_lesson_detail {
-  width: 90%;
+  width: 75%;
   margin: auto;
 }
 
@@ -67,4 +67,11 @@
   width: 100%;
   margin: auto;
   }
+}
+
+.h1_font_size{
+  font-size:35px;
+}
+.h1_top_margin {
+  margin-top: -5px;
 }

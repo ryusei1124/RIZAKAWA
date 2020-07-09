@@ -122,6 +122,8 @@ class ReservationusersController < ApplicationController
     @zoom=true if @student.zoom?
     @zoomseat=@lesson.seats_zoom
     @zoomnumber=Reservation.where(" lesson_id=? AND zoom  = ?" ,@lesson.id, true).cancel_exclusion.count
+    @real_rest_sheet = @realseat - @realnumber
+    @zoom_rest_sheet = @zoomseat - @zoomnumber
   end
   
   def reservation_create
@@ -147,7 +149,7 @@ class ReservationusersController < ApplicationController
         flash[:warning] = "キャンセル待ちになります。" if @reservation.waiting == true
       end
       @title = "予約追加登録"
-      @content = "予約の追加登録をしました。#{message}下記のリンクを確認お願いします。"
+      @content = "予約の追加登録をしました。#{message}"
       send_mail_address
     else
       flash[:danger] = "受講日登録に失敗しました"
@@ -188,32 +190,32 @@ class ReservationusersController < ApplicationController
         content = capacity + l(les.meeting_on.to_datetime, format: :day_week) + l(les.started_at, format: :time)+"～"+l(les.finished_at, format: :time) + "ZOOM"
         @lessonlists << Listcollection.new(les.id.to_s+"-2",content,true)
       end
+      end
     end
-  end
 
-  def waiting_registration
-    @zoom = @reservation.zoom
-    @lesson = Lesson.find(@reservation.lesson_id) 
-    if @zoom == true and @lesson.seats_zoom < Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, true).cancel_exclusion.count 
-      @reservation.waiting = true
-    elsif @lesson.seats_real < Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, false).cancel_exclusion.count
-      @reservation.waiting = true
-    else 
-      @reservation.waiting = false
+    def waiting_registration
+      @zoom = @reservation.zoom
+      @lesson = Lesson.find(@reservation.lesson_id) 
+      if @zoom == true and @lesson.seats_zoom < Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, true).cancel_exclusion.count 
+        @reservation.waiting = true
+      elsif @lesson.seats_real < Reservation.where("lesson_id = ? and zoom = ?", @lesson.id, false).cancel_exclusion.count
+        @reservation.waiting = true
+      else 
+        @reservation.waiting = false
+      end
     end
-  end
   
-  def send_mail_address
-    if current_user.admin?
-      @destination_user = User.find( @reservation.user_id )
-      @bcc = current_user.email
-    else
-      @destination_user = User.find(1)
-      @bcc = ""
+    def send_mail_address
+      if current_user.admin?
+        @destination_user = User.find( @reservation.user_id )
+        @bcc = current_user.email
+      else
+        @destination_user = User.find(1)
+        @bcc = ""
+      end
+      @send_user =  current_user
+      link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
+      @link = @url + link
+      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
     end
-    @send_user =  current_user
-    link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
-    @link = @url + link
-    UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
-  end
 end

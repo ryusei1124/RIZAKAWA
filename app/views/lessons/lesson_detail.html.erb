@@ -1,6 +1,7 @@
+<% require "date" %>
 <% provide(:title, '予約状況') %>
 
-<h1>【予約詳細】</h1>
+<h1 class = "h1_font_size">【予約詳細】</h1>
 <div class="warapper_lesson_detail">
   <div class="lesson-discontinuation-fix-btn">
   <p>
@@ -19,6 +20,12 @@
     </div>
     <div style="display: inline-block;">
       <%= button_to "授業削除", {controller: 'lessons', action: 'destroy'}, {method: :delete, data: { confirm: '本当に削除しますか？' }, params: {id: @lesson.id },class:"btn btn-danger button_size"} %>
+    </div>
+    <div style="display: inline-block;">
+      <%= link_to "ｽｹｼﾞｭｰﾙ" ,"/lessons/weeklyschedule?cation=1&changeday=#{@lesson.meeting_on}",class:"btn btn-info button_size" %>
+    </div>
+    <div style="display: inline-block;">
+      <%= link_to "予約履歴" ,"/reservation_logs?cation=1&changeday=#{@lesson.meeting_on.beginning_of_month}",class:"btn btn-warning button_size" %>
     </div>
   </p>
   </div>
@@ -64,18 +71,18 @@
   </table>
 
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h1 class="modal-title center">【予約生徒・修正&出欠管理】</h1>
+     <h1 class = "h1_font_size">【予約生徒・修正&出欠管理】</h1>
 
      <% if @reservations.present? == true %>
          <tr>
            <th style = "width:150px;">名前</th>
-           <th style = "width:50px;">振替</th>
+           <th style = "width:50px;"><div style="white-space:nowrap;">振替</div></th>
            <th style = "width:50px;">固定時間</th>
            <th style = "width:100px;">授業方法</th>
            <th style = "width:50px;">修正</th>
-           <th style = "width:80px;">出席時間</th>
-           <th style = "width:80px;">退席時間</th>
-           <th style = "width:50px;">欠席</th>
+           <th style = "width:80px;"> <div style="white-space:nowrap;">出席</div></th>
+           <th style = "width:80px;"> <div style="white-space:nowrap;">退席</div></th>
+           <th style = "width:50px;"> <div style="white-space:nowrap;">欠席</div></th>
            <th style = "width:100px;">出欠管理</th>
          </tr>
       <% else %>
@@ -86,9 +93,11 @@
         <% if reservation.waiting == false %>
            <tr>
             <td colspa="3" style="text-align:left;">
+              <div style="white-space:nowrap;">
               <%= link_to reservation.student.student_name,
               "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
               (<%= Student.gradeyear(reservation.student_id) %>）
+              </div>
             </td>
             <td>
               <% if reservation.transfer == true %>
@@ -117,6 +126,7 @@
               <% end %>
             </td>
             <td>
+              <div style="white-space:nowrap;">
               <% if reservation.attendance_time.nil? && reservation.absence == false %>
                 <%= link_to "出席", reservation_path(reservation, no: 1), method: :patch, class: "btn btn-primary btn-sm" %>
               <% end %>
@@ -140,6 +150,7 @@
                   data: { confirm: "欠席登録を解除してもよろしいですか？" },
                   class: "btn btn-primary btn-sm" %>
               <% end %>
+              </div>
             </td>
            </tr>
         <% end %>
@@ -147,7 +158,7 @@
 　</table>
 　　　　　　
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h1 class="modal-title center">【キャンセル待ち】</h1>
+     <h1 class = "h1_font_size h1_top_margin">【キャンセル待ち】</h1>
      
       <% if @waiting != 0 %>
            <tr>
@@ -164,8 +175,10 @@
         <% if reservation.waiting == true %>
            <tr>
             <td style="text-align:left;">
+            <div style="white-space:nowrap;">
               <%= link_to reservation.student.student_name, "/reservationusers/useredit?lesson_id=#{@lesson.id}&student_id=#{reservation.student_id}"  %>
               (<%= Student.gradeyear(reservation.student_id) %>)
+            </div>
             </td>
             <td><%= l(reservation.fix_time, format: :time, default: '-') %></td>
             <td>
@@ -188,7 +201,7 @@
 　</table>
 
 <table class="table table-bordered table-condensed" id="table-reservations">
-     <h1 class="modal-title center">【予約取消】</h1>
+     <h1 class = "h1_font_size h1_top_margin">【予約取消】</h1>
      
       <% if @reservations_cancelonly.present? %>
            <tr>

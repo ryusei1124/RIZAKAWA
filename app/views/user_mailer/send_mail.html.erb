@@ -1,6 +1,6 @@
 <% if @send_user.admin == false %>
   
-  <P><%= @send_user.guardian  %>様の情報があります</P>
+  <P><%= @send_user.guardian  %>　様の情報があります</P>
 　
   <p>下記リンクを確認をお願いします</p>
   
@@ -17,6 +17,8 @@
 <% end %>
 
 <p><%= link_to "こちらのリンクを参照下さい。", @link %></p>
+
+<p>こちらのメールアドレスは送信専用です。</p>
 
 
 
