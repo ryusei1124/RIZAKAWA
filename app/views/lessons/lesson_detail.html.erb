@@ -1,7 +1,7 @@
 <% require "date" %>
 <% provide(:title, '予約状況') %>
 
-<h1>【予約詳細】</h1>
+<h1 class = "h1_font_size">【予約詳細】</h1>
 <div class="warapper_lesson_detail">
   <div class="lesson-discontinuation-fix-btn">
   <p>
@@ -71,7 +71,7 @@
   </table>
 
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h1 class="modal-title center">【予約生徒・修正&出欠管理】</h1>
+     <h1 class = "h1_font_size">【予約生徒・修正&出欠管理】</h1>
 
      <% if @reservations.present? == true %>
          <tr>
@@ -80,9 +80,9 @@
            <th style = "width:50px;">固定時間</th>
            <th style = "width:100px;">授業方法</th>
            <th style = "width:50px;">修正</th>
-           <th style = "width:80px;">出席</th>
-           <th style = "width:80px;">退席</th>
-           <th style = "width:50px;">欠席</th>
+           <th style = "width:80px;"> <div style="white-space:nowrap;">出席</div></th>
+           <th style = "width:80px;"> <div style="white-space:nowrap;">退席</div></th>
+           <th style = "width:50px;"> <div style="white-space:nowrap;">欠席</div></th>
            <th style = "width:100px;">出欠管理</th>
          </tr>
       <% else %>
@@ -158,7 +158,7 @@
 　</table>
 　　　　　　
 　<table class="table table-bordered table-condensed" id="table-reservations">
-     <h1 class="modal-title center">【キャンセル待ち】</h1>
+     <h1 class = "h1_font_size h1_top_margin">【キャンセル待ち】</h1>
      
       <% if @waiting != 0 %>
            <tr>
@@ -201,7 +201,7 @@
 　</table>
 
 <table class="table table-bordered table-condensed" id="table-reservations">
-     <h1 class="modal-title center">【予約取消】</h1>
+     <h1 class = "h1_font_size h1_top_margin">【予約取消】</h1>
      
       <% if @reservations_cancelonly.present? %>
            <tr>
