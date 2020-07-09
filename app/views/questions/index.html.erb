@@ -2,9 +2,9 @@
 
 <div class="wrapper_middle">
   <h1 id="index">問い合わせ一覧</h1>
-  
-  <div class="ol-md-12 col-md-offset-0">
+  <div class="button-area" style="text-align: center; margin-bottom:15px;">
     <%= link_to "問い合わせ投稿", new_question_path, class: "btn btn-primary question-btn" %>
+  <div class="ol-md-12 col-md-offset-0">
     <% if @questions.present? %>
       <div class="question-paginate"><%= will_paginate %></div>
       <table class="table table-bordered table-condensed" id="table-question" style="table-layout:fixed;">
