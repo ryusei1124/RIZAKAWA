@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
     if @answer.save
       @title = "お問い合わせの登録がありました"
-      @content = "お問い合わせの登録がありました。下記リンクの確認をお願いします。"
+      @content = "お問い合わせの登録がありました。"
       send_mail_address
       flash[:success] = "登録に成功し、通知メールを送付しました"
     else
@@ -35,6 +35,6 @@ class AnswersController < ApplicationController
       @send_user =  current_user
       link = "questions"
       @link = @url + link
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
+      ＃UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
   end
 end

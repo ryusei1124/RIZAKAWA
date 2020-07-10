@@ -32,7 +32,7 @@ class QuestionsController < ApplicationController
     @question.user_id = current_user.id
     if @question.save
       @title = "お問い合わせの登録がありました"
-      @content = "お問い合わせの登録がありました。下記リンクの確認をお願いします。"
+      @content = "お問い合わせの登録がありました。"
       send_mail_address
       flash[:success] = "登録に成功し、通知メールを送信しました"
       redirect_to questions_url
@@ -88,6 +88,6 @@ class QuestionsController < ApplicationController
       @send_user =  current_user
       link = "questions"
       @link = @url + link
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
+      ＃UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
     end
 end

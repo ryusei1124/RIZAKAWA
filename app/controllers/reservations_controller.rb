@@ -71,7 +71,7 @@ class ReservationsController < ApplicationController
     if params[:no] == "7"
         if @reservation.update_attributes(waiting: false)
           @title = "キャンセル待ちを解除して授業枠の登録をしました"
-          @content = "キャンセル待ちを解除して授業枠の登録をしました。下記のリンクを確認お願いします"
+          @content = "キャンセル待ちを解除して授業枠の登録をしました。"
           send_mail_address
           flash[:success] = "キャンセル待ちを解除して授業枠の登録をして、該当ユーザーにメールを送信しました"
         else
@@ -97,7 +97,7 @@ class ReservationsController < ApplicationController
       @send_user = current_user
       link = "reservationusers/useredit?reservation_id=#{@reservation.id}&student_id=#{@reservation.student_id}"
       @link = @url + link
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
+      ＃UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
   end
   private
   
