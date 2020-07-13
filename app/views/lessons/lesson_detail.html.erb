@@ -35,6 +35,9 @@
     <tr>
       <th class="col-md-3">日付</th>
       <td><%= l(@lesson.meeting_on, format: :long) %>
+        <% if @lesson.regular == false %>
+            <span class="label label-danger">臨時</span>
+        <% end %>
         <% if @lesson.cancel == true %>
           <span class="label label-danger label-user-division">中止になりました</span>
         <% end %>
