@@ -71,7 +71,7 @@ class ReservationsController < ApplicationController
     if params[:no] == "7"
         if @reservation.update_attributes(waiting: false)
           @title = "キャンセル待ちを解除して授業枠の登録をしました"
-          @content = "キャンセル待ちを解除して授業枠の登録をしました。下記のリンクを確認お願いします"
+          @content = "キャンセル待ちを解除して授業枠の登録をしました。"
           send_mail_address
           flash[:success] = "キャンセル待ちを解除して授業枠の登録をして、該当ユーザーにメールを送信しました"
         else

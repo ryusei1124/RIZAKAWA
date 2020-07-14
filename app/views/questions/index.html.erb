@@ -11,10 +11,10 @@
         <thead>
           <tr>
             <th colspan="2">投稿日</th>
-            <th colspan="1">投稿者</th>
-            <th colspan="1">送信先</th>
-            <th colspan="3">タイトル</th>
-            <th colspan="1">コメント</th>
+            <th colspan="2">投稿者</th>
+            <th colspan="2">送信先</th>
+            <th colspan="3"><div style="white-space:nowrap;">タイトル</div></th>
+            <th colspan="1"><div style="white-space:nowrap;">コメント</div></th>
             <% if current_user.admin? %>
               <th colspan="1">投稿削除</th>
             <% end %>
@@ -24,8 +24,8 @@
           <% @questions.each do |question| %>
             <tr id="question-<%= question.id %>">
               <td colspan="2" style="word-wrap:keep-all;"><%= l(question.updated_at, format: :default_2) %></td>
-              <td colspan="1"><div style="white-space:nowrap;"><%= question.user.guardian %></div></td>
-              <td colspan="1"><div style="white-space:nowrap;"><%= User.find(question.destination).guardian %></div></td>
+              <td colspan="2"><div style="white-space:nowrap;"><%= question.user.guardian %></div></td>
+              <td colspan="2"><div style="white-space:nowrap;"><%= User.find(question.destination).guardian %></div></td>
               <td colspan="3" style="word-wrap:break-word;"><%= link_to question.question_title, question %></td>
               <td colspan="1" style="word-wrap:break-word;"><%=question.answers.count %></td>
               <% if current_user.admin? %>

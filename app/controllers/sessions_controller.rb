@@ -7,12 +7,20 @@ class SessionsController < ApplicationController
     user = User.undercontract
     user = user.find_by(email: params[:session][:email].downcase)
     session[:student_id]= nil if session[:student_id].present?
+    reservation_id = params[:session][:reservation_id].to_i
+    student_id = params[:session][:student_id].to_i
     if user && user.authenticate(params[:session][:password])
       log_in user
-      redirect_to notices_path
+      flash[:success] = 'ログインに成功しました'
+      if  reservation_id!=0 and student_id!=0
+        redirect_to "/reservationusers/useredit?reservation_id=#{reservation_id}&student_id=#{student_id}"
+      else  
+        redirect_to notices_path
+      end
     else
-      flash.now[:danger] = '認証に失敗しました。'
-      render :new
+      flash[:danger] = '認証に失敗しました。'
+      #render :new
+      redirect_to request.referrer
     end
   end
   

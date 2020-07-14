@@ -1,20 +1,13 @@
 class ReservationusersController < ApplicationController
   include ApplicationHelper
-  before_action :unless_login
+  #before_action :unless_login
+  before_action :unless_login_lessondetail, only: [:useredit]
   before_action :unless_student,   only: [:useredit]
   before_action :weekday,   only: [:useredit]
   before_action :mail_link_host,   only: [:reservation_create, :reservation_change_user, :reservation_delete]
   require 'date'
   
   def useredit
-    if params[:lesson_id].present?
-      @lesson_id = params[:lesson_id]
-    elsif  params[:reservation_id].present?
-      @lesson_id = Reservation.find(params[:reservation_id].to_i).lesson_id
-    else
-      flash[:warning] = "該当の授業がありません"
-      redirect_to '/'
-    end
     useredit_reserve
   end
 
@@ -28,7 +21,6 @@ class ReservationusersController < ApplicationController
     @reservation = Reservation.find(reservation_id)
     @reservation.zoom = @zoom
     @reservation.save
-    
     waiting_registration
     if @reservation.save
       flash[:success] = "受講方法を変更しました"
@@ -67,7 +59,7 @@ class ReservationusersController < ApplicationController
     if @reservation.save
       flash[:success] = "受講日振替をおこない、メールを送信しました。"
       @title = "予約の振替がありました"
-      @content = "予約の振替がありました。下記リンクの確認をお願いします。"
+      @content = "予約の振替がありました。"
       send_mail_address
       flash[:warning] = "キャンセル待ちになります。メールを送信しました" if @reservation.waiting == true
     else
@@ -91,13 +83,13 @@ class ReservationusersController < ApplicationController
     end
     if @reservation.save and @reservation.cancel?
       @title = "予約の取消しがありました"
-      @content = "予約の取消しがありました。下記リンクの確認をお願いします。"
+      @content = "予約の取消しがありました。"
       send_mail_address
       flash[:warning] = "予約取消し、メールを送信しました"
     elsif @reservation.save and @reservation.cancel == false
       flash[:success] = "予約再開しました"
       @title = "予約の再開がありました"
-      @content = "予約の再開がありました。下記リンクの確認をお願いします。"
+      @content = "予約の再開がありました。"
       send_mail_address
       #キャンセル待ち登録
       waiting_registration
@@ -176,7 +168,7 @@ class ReservationusersController < ApplicationController
       @lessoncomments = Lessoncomment.where("reservation_id = ? and student_id= ?" , @reservation.id, @student.id)
       #振替のためのコード。授業の日に該当生徒が小学生か中学生かを取得。
       gradesc = gradeschool(@student.birthday,@lesson.meeting_on)
-      lessons = Lesson.where("meeting_on> ? and regular= ? and cancel = ?", @today,true,false).where("target= ? or target= ?", gradesc,"小中高生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
+      lessons = Lesson.where("meeting_on> ?  and cancel = ?", @today, false).where("target= ? or target= ?", gradesc,"小中高生").where("examinee is null or examinee= ?",@student.examinee) .order(:meeting_on).order(:started_at)
       lessons.each do |les|
       if Reservation.where("student_id= ? and lesson_id= ?", @student.id,les.id).count == 0
         realcapacity = Lesson.find(les.id).seats_real

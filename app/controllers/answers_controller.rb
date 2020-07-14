@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
     if @answer.save
       @title = "お問い合わせの登録がありました"
-      @content = "お問い合わせの登録がありました。下記リンクの確認をお願いします。"
+      @content = "お問い合わせの登録がありました。"
       send_mail_address
       flash[:success] = "登録に成功し、通知メールを送付しました"
     else

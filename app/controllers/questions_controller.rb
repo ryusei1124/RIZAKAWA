@@ -32,7 +32,7 @@ class QuestionsController < ApplicationController
     @question.user_id = current_user.id
     if @question.save
       @title = "お問い合わせの登録がありました"
-      @content = "お問い合わせの登録がありました。下記リンクの確認をお願いします。"
+      @content = "お問い合わせの登録がありました。"
       send_mail_address
       flash[:success] = "登録に成功し、通知メールを送信しました"
       redirect_to questions_url

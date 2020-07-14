@@ -2,8 +2,8 @@
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header" style="border: none;">
-        <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span>
+        <button type="button" class="close">
+            <span aria-hidden="true"><%= link_to "✖️️", users_path %></span>
         </button>
       </div>
       <div class="modal-body">
@@ -18,7 +18,7 @@
       </table>
       <br />
       <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+          <%= link_to "閉じる", users_path ,class:"btn btn-default" %>
       </div>
     </div>
   </div>

@@ -30,6 +30,24 @@ class ApplicationController < ActionController::Base
     redirect_to "/login" if current_user.blank?
   end
   
+  def unless_login_lessondetail
+    @student_id = params[:student_id]
+    if params[:lesson_id].present?
+      @lesson_id = params[:lesson_id]
+    elsif  params[:reservation_id].present?
+      @reservation_id = params[:reservation_id]
+      @lesson_id = Reservation.find(params[:reservation_id].to_i).lesson_id
+    else
+      flash[:warning] = "該当の授業がありません"
+    end
+    if current_user.blank? and @reservation_id.present?
+      redirect_to "/login?reservation_id=#{@reservation_id}&student_id=#{@student_id}"
+    elsif current_user.blank?
+      redirect_to "/login" 
+    end
+  end
+  
+  
   #保護者でログインした時に情報がなければ一番目の子供情報を取得
   def set_student
     @students=Student.where(user_id:current_user).where(withdrawal:nil)

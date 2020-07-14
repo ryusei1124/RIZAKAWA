@@ -36,8 +36,8 @@ class StudentsController < ApplicationController
      if @fix_check == 1
        flash[:danger] = "固定時間の入力に不正あり登録に失敗しました。"
      elsif @student.save
-       @title = "受講者を登録しました。トップページの 基本情報(確認用）を確認願います。"
-       @content = "下記リンクの確認をお願いします。"
+       @title = "受講者を登録しました。"
+       @content = "トップページの 基本情報(確認用）を確認願います。"
        send_mail_address
        flash[:success] = "登録して対象者にメールを送信しました"
      else

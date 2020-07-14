@@ -8,7 +8,7 @@ class NoticesController < ApplicationController
   
   def index
     @notices = Notice.paginate(page: params[:page], per_page: 10)
-    @reservations = Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',@today,current_user.id).order(meeting_on: "ASC") 
+    @reservations = Reservation.joins(:lesson).where('lessons.meeting_on >=? and reservations.user_id=?',@today,current_user.id).order(meeting_on: "ASC") .order(fix_time: "ASC")
     @students = Student.where("user_id = ?",current_user.id).where(withdrawal: nil)
   end
   
