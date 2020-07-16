@@ -4,6 +4,7 @@
 <% datedown = @day.beginning_of_month-1 %>
 <div class="setting">
 <h2 class="lead">予約履歴</h2>
+<%= host = "#{ request.protocol }#{ request.host }/" %>
 <h2><div style="display: inline-block;"><%= button_to "←", {controller: 'reservation_logs', action: 'index'}, {method: :get, class: "logbotton",params: {changeday:datedown,cation:"1"}} %></div>
 &nbsp;<%= year_month(@day) %>&nbsp;
 <div style="display: inline-block;"><%= button_to "→", {controller: 'reservation_logs', action: 'index'}, {method: :get,  class: "logbotton", params: {changeday:dateup,cation:"1"}} %></div>
