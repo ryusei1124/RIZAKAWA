@@ -88,6 +88,6 @@ class QuestionsController < ApplicationController
       @send_user =  current_user
       link = "questions"
       @link = @url + link
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
+      #UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content,@link).deliver_now
     end
 end
