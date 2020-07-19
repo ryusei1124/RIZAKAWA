@@ -84,7 +84,7 @@ class LessonsController < ApplicationController
             .or(students.where("fix_time2 >=? and fix_time2 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day2 =?",dayofweek))
             .or(students.where("fix_time3 >=? and fix_time3 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day3 =?",dayofweek))
             .or(students.where("fix_time4 >=? and fix_time4 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day4 =?",dayofweek))
-            .or(students.where("fix_time5 >=? and fix_time4 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day5 =?",dayofweek))
+            .or(students.where("fix_time5 >=? and fix_time5 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day5 =?",dayofweek))
           else
             students = Student.where("fix_day =? or fix_day2 =? or fix_day3 =? or fix_day4 =? or fix_day5 =?",dayofweek,dayofweek,dayofweek,dayofweek,dayofweek)
           end
