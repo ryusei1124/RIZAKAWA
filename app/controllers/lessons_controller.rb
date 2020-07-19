@@ -86,7 +86,7 @@ class LessonsController < ApplicationController
             .or(students.where("fix_time4 >=? and fix_time4 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day4 =?",dayofweek))
             .or(students.where("fix_time5 >=? and fix_time4 < ?", @lesson.started_at,@lesson.finished_at).where("fix_day5 =?",dayofweek))
           else
-            students = Student.where("fix_day =? or fix_day2 =? or fix_day3 =? or fix_day4 =?",dayofweek,dayofweek,dayofweek,dayofweek)
+            students = Student.where("fix_day =? or fix_day2 =? or fix_day3 =? or fix_day4 =? or fix_day5 =?",dayofweek,dayofweek,dayofweek,dayofweek,dayofweek)
           end
           if lesson_params[:target] == "中高生" and @lesson.examinee == true #中学生、高校生で受験生を自動登録
             rev=students.where("birthday < ? and examinee = ?" ,jrhigh(@lesson.meeting_on).to_date,true)
