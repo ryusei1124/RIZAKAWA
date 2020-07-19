@@ -103,16 +103,18 @@ class LessonsController < ApplicationController
           else
             rev=students
           end
+          lesson_start = @lesson.started_at
+          lesson_finish = @lesson.finished_at
           rev.each do |revtion|
-            if revtion.fix_day == dayofweek
+            if revtion.fix_day == dayofweek and revtion.fix_time >= lesson_start  and revtion.fix_time < lesson_finish 
               fixtime = revtion.fix_time
-            elsif revtion.fix_day2 == dayofweek
+            elsif revtion.fix_day2 == dayofweek and revtion.fix_time2 >= lesson_start  and revtion.fix_time2 < lesson_finish 
               fixtime = revtion.fix_time2
-            elsif revtion.fix_day3 == dayofweek
+            elsif revtion.fix_day3 == dayofweek and revtion.fix_time3 >= lesson_start  and revtion.fix_time3 < lesson_finish 
               fixtime = revtion.fix_time3
-            elsif revtion.fix_day4 == dayofweek
+            elsif revtion.fix_day4 == dayofweek  and revtion.fix_time4 >= lesson_start  and revtion.fix_time4 < lesson_finish 
               fixtime = revtion.fix_time4
-            elsif revtion.fix_day5 == dayofweek
+            elsif revtion.fix_day5 == dayofweek  and revtion.fix_time5 >= lesson_start  and revtion.fix_time5 < lesson_finish 
               fixtime = revtion.fix_time5
             end
           reservation = Reservation.new(student_id:revtion.id,lesson_id:@lesson.id,zoom:revtion.zoom,user_id:revtion.user_id,fix_time:fixtime)
