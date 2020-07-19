@@ -51,6 +51,12 @@ class UsersController < ApplicationController
           ids = (num+1)*10000 + (st.fix_time4.hour.to_i)*100 + st.fix_time4.min.to_i
           @student_ls.push([ids,st.fix_day4,time, student_name])
         end
+        if st.fix_day5.present?  
+          num = @weekday.index(st.fix_day5).to_i
+          time =  timedisplay(st.fix_time5)
+          ids = (num+1)*10000 + (st.fix_time5.hour.to_i)*100 + st.fix_time5.min.to_i
+          @student_ls.push([ids,st.fix_day5,time, student_name])
+        end
       end
       @student_ls = @student_ls.sort
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_04_164312) do
+ActiveRecord::Schema.define(version: 2020_07_19_031533) do
 
   create_table "answers", force: :cascade do |t|
     t.text "answer_content", null: false
@@ -123,6 +123,8 @@ ActiveRecord::Schema.define(version: 2020_07_04_164312) do
     t.text "note"
     t.string "fix_day4"
     t.time "fix_time4"
+    t.string "fix_day5"
+    t.time "fix_time5"
   end
 
   create_table "users", force: :cascade do |t|

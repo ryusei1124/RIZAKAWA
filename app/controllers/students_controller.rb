@@ -62,7 +62,7 @@ class StudentsController < ApplicationController
   
   private
     def student_params
-      params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :examinee, :school,  :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3, :fix_day4, :fix_time4, :note, :withdrawal)
+      params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :examinee, :school,  :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3, :fix_day4, :fix_time4, :fix_day5, :fix_time5, :note, :withdrawal)
     end
   
   # ログイン済みのユーザーか確認します。
