@@ -51,7 +51,12 @@
             <% if student.fix_day3.present? %>
                 固定時間3:<%= student.fix_day3 %> <%= timedisplay(student.fix_time3) %>
             <% end %>
-            
+            <% if student.fix_day4.present? %>
+                固定時間3:<%= student.fix_day4 %> <%= timedisplay(student.fix_time4) %>
+            <% end %>
+            <% if student.fix_day5.present? %>
+                固定時間5:<%= student.fix_day5 %> <%= timedisplay(student.fix_time5) %>
+            <% end %>
             <% if student.zoom?  %>
               <span class="label label-warning label-user-division">zoom</span>
             <% end %>
