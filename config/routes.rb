@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   patch 'maneger_students/update', to: 'maneger_students#update'
   #管理者　授業中止
   patch '/lessons/cancellation', to: 'lessons#cancellation'
-  
   get 'sessions/new'
   root :to => 'notices#index'
   get '/signup', to: 'users#new'
