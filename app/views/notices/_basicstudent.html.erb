@@ -62,6 +62,15 @@
                           </td>
                         </tr>
                         <% end %>
+                        <% if student.fix_day5.present? and student.fix_time5.present? %>
+                        <tr>
+                          <th>固定時間5</th>
+                          <td>
+                            <%= student.fix_day5 %>曜日
+                            <%= student.fix_time5.hour %>:<%= mindisplay(student.fix_time5) %>～
+                          </td>
+                        </tr>
+                        <% end %>
                           <tr>
                             <th>学校名</th>
                             <td>

@@ -75,6 +75,14 @@
                 <td><%= f.time_field :fix_time4 , class: "form-control" %></td>
               </tr>
               <tr>
+                <th>固定曜日5</th>
+                <td><%= f.select :fix_day5, weekday, {selected:@student.fix_day5,include_blank: true}, class: "form-control new-form" %></td>
+              </tr>
+              <tr>
+                <th>固定時間5</th>
+                <td><%= f.time_field :fix_time5 , class: "form-control" %></td>
+              </tr>
+              <tr>
                 <th>備考</th>
                 <td><%= f.text_field :note, class: "form-control" %></td>
               </tr>
