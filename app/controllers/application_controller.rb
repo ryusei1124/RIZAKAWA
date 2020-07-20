@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
        @fix_check = 1
       elsif ( @studentcheck.fix_day4 != "" and @studentcheck.fix_time4 == nil ) or ( @studentcheck.fix_day4 == "" and @studentcheck.fix_time4 != nil )
        @fix_check = 1
-      elsif ( @studentcheck.fix_day5 != "" and @studentcheck.fix_time5 == nil ) or ( @studentcheck.fix_day5 == "" and @studentcheck.fix_time != nil )
+      elsif ( @studentcheck.fix_day5 != "" and @studentcheck.fix_time5 == nil ) or ( @studentcheck.fix_day5 == "" and @studentcheck.fix_time5 != nil )
        @fix_check = 1
       end
   end
