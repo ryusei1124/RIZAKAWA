@@ -14,7 +14,7 @@ class StudentsController < ApplicationController
   
   def info_update
     if @fix_check == 1
-      flash[:danger] = "#{@student.student_name}の更新は失敗しました。"
+      flash[:danger] = "#{@student.student_name}の入力に不備あり、更新は失敗しました。再度更新願います。"
     elsif @student.update_attributes(student_params)
         user = User.find( @student.user_id )
         students = Student.where(user_id:@student.user_id)
@@ -26,7 +26,7 @@ class StudentsController < ApplicationController
       user.save
       flash[:success] = "#{@student.student_name}の基本情報を更新しました。"
     else
-      flash[:danger] = "#{@student.student_name}の更新は失敗しました。" 
+      flash[:danger] = "#{@student.student_name}の入力に不備あり、更新は失敗しました。再度更新願います。" 
     end
     redirect_to users_url
   end
