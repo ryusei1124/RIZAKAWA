@@ -105,7 +105,7 @@ class LessonsController < ApplicationController
           else
             rev=students
           end
-          
+          fixfinishtime = nil
           rev.each do |revtion|
             if revtion.fix_day == dayofweek and revtion.fix_time >= lesson_start  and revtion.fix_time < lesson_finish 
               fixtime = revtion.fix_time
