@@ -5,7 +5,7 @@
       <h2>受講生新規登録</h2>
       保護者：<%= User.find(@user_id).guardian %>
       <% @student = Student.new %>
-       <%= form_with(model: @student, url: students_path, local: true, method: :post) do |f| %>
+       <%= form_with(model: @student, url: students_path, local: true, method: :post, id: "student_new_form") do |f| %>
             <table class="table-student">
             <%= f.hidden_field :user_id ,value: @user_id %>
               <tr>
@@ -42,41 +42,66 @@
                 <td><%= f.select :fix_day, weekday, {selected:@student.fix_day}, required: true, class: "form-control new-form" %></td>
               </tr>
               <tr>
-                <th>固定時間</th>
+                <th>固定開始時間</th>
                 <td><%= f.time_field :fix_time , class: "form-control", required: true %></td>
               </tr>
+              <tr>
+                <th>固定終了時間</th>
+                <td><%= f.time_field :fix_finishtime , class: "form-control" %></td>
+              </tr>
+              
               <tr>
                 <th>固定曜日2</th>
                 <td><%= f.select :fix_day2, weekday, {selected:@student.fix_day2,include_blank: true}, class: "form-control new-form" %></td>
               </tr>
               <tr>
-                <th>固定時間2</th>
+                <th>固定開始時間2</th>
                 <td><%= f.time_field :fix_time2 , class: "form-control" %></td>
               </tr>
+               <tr>
+                <th>固定終了時間2</th>
+                <td><%= f.time_field :fix_finishtime2 , class: "form-control" %></td>
+              </tr>
+              
               <tr>
                 <th>固定曜日3</th>
                 <td><%= f.select :fix_day3, weekday, {selected:@student.fix_day3,include_blank: true}, class: "form-control new-form" %></td>
               </tr>
               <tr>
-                <th>固定時間3</th>
+                <th>固定開始時間3</th>
                 <td><%= f.time_field :fix_time3 , class: "form-control" %></td>
               </tr>
+              <tr>
+                <th>固定終了時間3</th>
+                <td><%= f.time_field :fix_finishtime3 , class: "form-control" %></td>
+              </tr>
+              
               <tr>
                 <th>固定曜日4</th>
                 <td><%= f.select :fix_day4, weekday, {selected:@student.fix_day4,include_blank: true}, class: "form-control new-form" %></td>
               </tr>
               <tr>
-                <th>固定時間4</th>
+                <th>固定開始時間4</th>
                 <td><%= f.time_field :fix_time4 , class: "form-control" %></td>
               </tr>
+              <tr>
+                <th>固定終了時間4</th>
+                <td><%= f.time_field :fix_finishtime4 , class: "form-control" %></td>
+              </tr>
+              
               <tr>
                 <th>固定曜日5</th>
                 <td><%= f.select :fix_day5, weekday, {selected:@student.fix_day5,include_blank: true}, class: "form-control new-form" %></td>
               </tr>
               <tr>
-                <th>固定時間5</th>
+                <th>固定開始時間5</th>
                 <td><%= f.time_field :fix_time5 , class: "form-control" %></td>
               </tr>
+              <tr>
+                <th>固定終了時間5</th>
+                <td><%= f.time_field :fix_finishtime5 , class: "form-control" %></td>
+              </tr>
+              
               <tr>
                 <th>備考</th>
                 <td><%= f.text_field :note, class: "form-control" %></td>
@@ -87,9 +112,42 @@
               <button type="button" class="btn btn-default btn-<%= yield(:class_text) %>" data-dismiss="modal">
                 キャンセル
               </button>
+              <div id="parent"></div>
             </div>
           <% end %>
       </div>
     </div>
   </div>
 </div>
+<script>
+$("#student_new_form").submit(function(){
+  var fix = $("input[name='student[fix_time]']").val();
+  var fixfinish = $("input[name='student[fix_finishtime]']").val();
+  var fix2 = $("input[name='student[fix_time2]']").val();
+  var fixfinish2 = $("input[name='student[fix_finishtime2]']").val();
+  var fix3 = $("input[name='student[fix_time3]']").val();
+  var fixfinish3 = $("input[name='student[fix_finishtime3]']").val();
+  var fix4 = $("input[name='student[fix_time4]']").val();
+  var fixfinish4 = $("input[name='student[fix_finishtime4]']").val();
+  var fix5 = $("input[name='student[fix_time5]']").val();
+  var fixfinish5 = $("input[name='student[fix_finishtime5]']").val();
+  if (fix > fixfinish) {
+    $("#parent").text("固定時間の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  }else if (fix2 > fixfinish2) {
+    $("#parent").text("固定時間2の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  }else if (fix3 > fixfinish3) {
+    $("#parent").text("固定時間3の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  }else if (fix4 > fixfinish4) {
+    $("#parent").text("固定時間4の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  }else if (fix5 > fixfinish5) {
+    $("#parent").text("固定時間5の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  } else {
+    $("#student_new_form").submit();
+  }
+});
+</script>

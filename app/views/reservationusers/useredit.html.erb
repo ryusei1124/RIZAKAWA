@@ -45,7 +45,7 @@
   <th>固定時間</th>
   <td>
   <% if @reservation.fix_time.present? %>
-      <%= l(@reservation.fix_time, format: :time) %>～
+      <%= l(@reservation.fix_time, format: :time) %>～<%= l(@reservation.fix_finishtime, format: :time, default: '-') %>
     <% else %>
       <span class="label label-danger">未設定</span>
     <% end %>
