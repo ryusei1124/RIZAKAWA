@@ -120,7 +120,7 @@
   </div>
 </div>
 <script>
-$("#student_new_form").submit(function(){
+$("#student_new_form").submit('turbolinks:request-start', function() {
   var fix = $("input[name='student[fix_time]']").val();
   var fixfinish = $("input[name='student[fix_finishtime]']").val();
   var fix2 = $("input[name='student[fix_time2]']").val();
