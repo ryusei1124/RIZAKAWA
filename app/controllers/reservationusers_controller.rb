@@ -121,11 +121,13 @@ class ReservationusersController < ApplicationController
   def reservation_create
     student = Student.find(params[:student_id])
     @lesson = Lesson.find(params[:lesson_id])
-    fix_time = params[:fix_time]
-    fix_finishtime = params[:fix_finishtime]
+    fix_time = 0
+    fix_finishtime = 0
+    fix_time = params[:fix_time] if params[:fix_time].present?
+    fix_finishtime = params[:fix_finishtime] if params[:fix_finishtime] .present?
     zoom = tob(params[:zoom])
     user_id = student.user_id
-    if Reservation.where("lesson_id = ? and student_id = ?",@lesson.id,student.id).count > 0 or ( fix_time > fix_finishtime and fix_time!=nil )
+    if Reservation.where("lesson_id = ? and student_id = ?",@lesson.id,student.id).count > 0 or fix_time > fix_finishtime
       flash[:danger] = "登録が重複もしくは固定時間が不正です。処理を中止しました。"
       redirect_to request.referrer and return
     end
