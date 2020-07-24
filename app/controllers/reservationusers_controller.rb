@@ -124,7 +124,7 @@ class ReservationusersController < ApplicationController
     fix_time = 0
     fix_finishtime = 0
     fix_time = params[:fix_time] if params[:fix_time].present?
-    fix_finishtime = params[:fix_finishtime] if params[:fix_finishtime] .present?
+    fix_finishtime = params[:fix_finishtime] if params[:fix_finishtime].present?
     zoom = tob(params[:zoom])
     user_id = student.user_id
     if Reservation.where("lesson_id = ? and student_id = ?",@lesson.id,student.id).count > 0 or fix_time > fix_finishtime
