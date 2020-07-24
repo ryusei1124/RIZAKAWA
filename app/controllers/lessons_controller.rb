@@ -112,7 +112,7 @@ class LessonsController < ApplicationController
               fixfinishtime = revtion.fix_finishtime
             elsif revtion.fix_day2 == dayofweek and revtion.fix_time2 >= lesson_start  and revtion.fix_time2 < lesson_finish 
               fixtime = revtion.fix_time2
-              fixfinishtime = revtion.fixfinish_time2
+              fixfinishtime = revtion.fix_finishtime2
             elsif revtion.fix_day3 == dayofweek and revtion.fix_time3 >= lesson_start  and revtion.fix_time3 < lesson_finish 
               fixtime = revtion.fix_time3
               fixfinishtime = revtion.fix_finishtime3
