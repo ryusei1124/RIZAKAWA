@@ -46,6 +46,7 @@ class ReservationusersController < ApplicationController
       @reservation.zoom = true
     end
     @reservation.fix_time = nil
+    @reservation.fix_finishtime = nil
     @reservation.transfer = true
     @reservation.cancel = false
     if @reservation.note.present?
