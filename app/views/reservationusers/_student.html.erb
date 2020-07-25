@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="modal-body" style="font-size:15px">
-        <%= form_with(model: @student, url: maneger_students_update_path , method: :patch , local: true) do |f| %>
+        <%= form_with(model: @student, url: maneger_students_update_path , method: :patch , local: true,id:"edit_student") do |f| %>
         <%= f.hidden_field :id %>
         <%= fields_for :lesson, @lesson do |fi| %>
         <%= fi.hidden_field :id %>
@@ -42,22 +42,32 @@
       <%= f.select :fix_day, @weekday, { selected:@student.fix_day }, required: true, class: "form-control" %>
       <label for="text2">生徒基本固定時間1:</label>
       <%= f.time_field :fix_time , class: "form-control", required: true %>
+      <label for="text2">生徒基本固定終了時間1:</label>
+      <%= f.time_field :fix_finishtime , class: "form-control", required: true %>
       <label for="text2">生徒基本固定曜日2:</label>
       <%= f.select :fix_day2, @weekday, { include_blank: true,selected:@student.fix_day2 }, class: "form-control" %>
       <label for="text3">生徒基本固定時間2:</label>
       <%= f.time_field :fix_time2 , class: "form-control" %>
+      <label for="text3">生徒基本固定終了時間2:</label>
+      <%= f.time_field :fix_finishtime2 , class: "form-control" %>
       <label for="text4">生徒基本固定曜日3:</label>
       <%= f.select :fix_day3, @weekday, { include_blank: true,selected:@student.fix_day3 }, class: "form-control" %>
       <label for="text5">生徒基本固定時間3:</label>
       <%= f.time_field :fix_time3 , class: "form-control" %>
+      <label for="text5">生徒基本固定終了時間3:</label>
+      <%= f.time_field :fix_finishtime3 , class: "form-control" %>
       <label for="text4">生徒基本固定曜日4:</label>
       <%= f.select :fix_day4, @weekday, { include_blank: true,selected:@student.fix_day4 }, class: "form-control" %>
       <label for="text4">生徒基本固定時間4:</label>
       <%= f.time_field :fix_time4 , class: "form-control" %>
+      <label for="text4">生徒基本固定終了時間4:</label>
+      <%= f.time_field :fix_finishtime4 , class: "form-control" %>
       <label for="text5">生徒基本固定曜日5:</label>
       <%= f.select :fix_day5, @weekday, { include_blank: true,selected:@student.fix_day5 }, class: "form-control" %>
       <label for="text5">生徒基本固定時間5:</label>
       <%= f.time_field :fix_time5 , class: "form-control" %>
+      <label for="text5">生徒基本固定終了時間5:</label>
+      <%= f.time_field :fix_finishtime5 , class: "form-control" %>
       <div class="modal-footer">
         <%= f.submit "登録", class: "btn btn-primary" %>
       <% end %>&nbsp;
@@ -66,3 +76,35 @@
   </div>
 </div>
 </div>
+<script>
+$("#student_edit").submit('turbolinks:request-start', function() {
+  var fix = $("input[name='student[fix_time]']").val();
+  var fixfinish = $("input[name='student[fix_finishtime]']").val();
+  var fix2 = $("input[name='student[fix_time2]']").val();
+  var fixfinish2 = $("input[name='student[fix_finishtime2]']").val();
+  var fix3 = $("input[name='student[fix_time3]']").val();
+  var fixfinish3 = $("input[name='student[fix_finishtime3]']").val();
+  var fix4 = $("input[name='student[fix_time4]']").val();
+  var fixfinish4 = $("input[name='student[fix_finishtime4]']").val();
+  var fix5 = $("input[name='student[fix_time5]']").val();
+  var fixfinish5 = $("input[name='student[fix_finishtime5]']").val();
+  if (fix > fixfinish) {
+    $("#parent").text("固定時間の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  }else if (fix2 > fixfinish2) {
+    $("#parent").text("固定時間2の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  }else if (fix3 > fixfinish3) {
+    $("#parent").text("固定時間3の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  }else if (fix4 > fixfinish4) {
+    $("#parent").text("固定時間4の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  }else if (fix5 > fixfinish5) {
+    $("#parent").text("固定時間5の入力に誤りがあります。確認して再登録お願いします。");
+    return false;
+  } else {
+    $("#student_new_form").submit();
+  }
+});
+</script>
