@@ -69,6 +69,7 @@
       <label for="text5">生徒基本固定終了時間5:</label>
       <%= f.time_field :fix_finishtime5 , class: "form-control" %>
       <div class="modal-footer">
+        <div id="parent"></div>
         <%= f.submit "登録", class: "btn btn-primary" %>
       <% end %>&nbsp;
       <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
@@ -77,7 +78,7 @@
 </div>
 </div>
 <script>
-$("#student_edit").submit('turbolinks:request-start', function() {
+$("#edit_student").submit('turbolinks:request-start', function() {
   var fix = $("input[name='student[fix_time]']").val();
   var fixfinish = $("input[name='student[fix_finishtime]']").val();
   var fix2 = $("input[name='student[fix_time2]']").val();

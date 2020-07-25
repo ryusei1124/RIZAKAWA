@@ -14,7 +14,7 @@ class StudentsController < ApplicationController
   
   def info_update
     if @fix_check == 1
-      flash[:danger] = "#{@student.student_name}の入力に不備あり、更新は失敗しました。再度更新願います。"
+      flash[:danger] = "#{@student.student_name}の入力に不備あり、更新は失敗しました。終了時間は必須になりました。"
     elsif @student.update_attributes(student_params)
         user = User.find( @student.user_id )
         students = Student.where(user_id:@student.user_id)
@@ -34,7 +34,7 @@ class StudentsController < ApplicationController
   def create
      @student = Student.new(student_params)
      if @fix_check == 1
-       flash[:danger] = "固定時間の入力に不正あり登録に失敗しました。"
+       flash[:danger] = "固定時間の入力に不正あり登録に失敗しました。終了時間は必須になりました。"
      elsif @student.save
        @title = "受講者を登録しました。"
        @content = "トップページの 基本情報(確認用）を確認願います。"
