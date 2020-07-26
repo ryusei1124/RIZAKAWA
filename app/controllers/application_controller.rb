@@ -90,15 +90,20 @@ class ApplicationController < ActionController::Base
   
   def fix_check
     @studentcheck = Student.new(student_params)
-      @fix_check = 0
-      if ( @studentcheck.fix_day2 != "" and @studentcheck.fix_time2 == nil ) or ( @studentcheck.fix_day2 == "" and @studentcheck.fix_time2 != nil )
-        @fix_check = 1
-      elsif ( @studentcheck.fix_day3 != "" and @studentcheck.fix_time3 == nil ) or ( @studentcheck.fix_day3 == "" and @studentcheck.fix_time3 != nil )
-       @fix_check = 1
-      elsif ( @studentcheck.fix_day4 != "" and @studentcheck.fix_time4 == nil ) or ( @studentcheck.fix_day4 == "" and @studentcheck.fix_time4 != nil )
-       @fix_check = 1
-      elsif ( @studentcheck.fix_day5 != "" and @studentcheck.fix_time5 == nil ) or ( @studentcheck.fix_day5 == "" and @studentcheck.fix_time5 != nil )
-       @fix_check = 1
-      end
+    @fix_check = 0
+    @fix_check = 1 if @studentcheck.fix_time.to_i > @studentcheck.fix_finishtime.to_i
+    @fix_check = 1 if @studentcheck.fix_time2.to_i > @studentcheck.fix_finishtime2.to_i
+    @fix_check = 1 if @studentcheck.fix_time3.to_i > @studentcheck.fix_finishtime3.to_i  
+    @fix_check = 1 if @studentcheck.fix_time4.to_i > @studentcheck.fix_finishtime4.to_i  
+    @fix_check = 1 if @studentcheck.fix_time5.to_i > @studentcheck.fix_finishtime5.to_i
+    if ( @studentcheck.fix_day2 != "" and @studentcheck.fix_time2 == nil ) or ( @studentcheck.fix_day2 == "" and @studentcheck.fix_time2 != nil )
+      @fix_check = 1
+    elsif ( @studentcheck.fix_day3 != "" and @studentcheck.fix_time3 == nil ) or ( @studentcheck.fix_day3 == "" and @studentcheck.fix_time3 != nil )
+    　@fix_check = 1
+    elsif ( @studentcheck.fix_day4 != "" and @studentcheck.fix_time4 == nil ) or ( @studentcheck.fix_day4 == "" and @studentcheck.fix_time4 != nil )
+      @fix_check = 1
+    elsif ( @studentcheck.fix_day5 != "" and @studentcheck.fix_time5 == nil ) or ( @studentcheck.fix_day5 == "" and @studentcheck.fix_time5 != nil )
+      @fix_check = 1
+    end
   end
 end

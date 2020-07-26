@@ -80,7 +80,8 @@
          <tr>
            <th style = "width:150px;">名前</th>
            <th style = "width:50px;"><div style="white-space:nowrap;">振替</div></th>
-           <th style = "width:50px;">固定時間</th>
+           <th style = "width:50px;">開始時間</th>
+           <th style = "width:50px;">終了時間</th>
            <th style = "width:100px;">授業方法</th>
            <th style = "width:50px;">修正</th>
            <th style = "width:80px;"> <div style="white-space:nowrap;">出席</div></th>
@@ -114,6 +115,9 @@
             <td>
               <%= form_with(model: reservation, url: reservation_path(reservation, no: 6), method: :patch, local:true) do |f| %>
                 <%= f.time_field :fix_time %>
+            </td>
+            <td>
+                <%= f.time_field :fix_finishtime %>
             </td>
             <td><%= f.select :zoom, {"ZOOM": true, "リアル": false} %></td>
             <td>  <%= f.submit '修正', class: "btn btn-warning btn-sm" %></td>

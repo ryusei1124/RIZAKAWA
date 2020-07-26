@@ -46,6 +46,7 @@ class ReservationusersController < ApplicationController
       @reservation.zoom = true
     end
     @reservation.fix_time = nil
+    @reservation.fix_finishtime = nil
     @reservation.transfer = true
     @reservation.cancel = false
     if @reservation.note.present?
@@ -121,16 +122,19 @@ class ReservationusersController < ApplicationController
   def reservation_create
     student = Student.find(params[:student_id])
     @lesson = Lesson.find(params[:lesson_id])
-    fix_time = params[:fix_time]
+    fix_time = 0
+    fix_finishtime = 0
+    fix_time = params[:fix_time] if params[:fix_time].present?
+    fix_finishtime = params[:fix_finishtime] if params[:fix_finishtime].present?
     zoom = tob(params[:zoom])
     user_id = student.user_id
-    if Reservation.where("lesson_id = ? and student_id = ?",@lesson.id,student.id).count > 0
-      flash[:danger] = "登録が重複してます。処理を中止しました。"
+    if Reservation.where("lesson_id = ? and student_id = ?",@lesson.id,student.id).count > 0 or fix_time > fix_finishtime
+      flash[:danger] = "登録が重複もしくは固定時間が不正です。処理を中止しました。"
       redirect_to request.referrer and return
     end
     #定例授業の場合キャンセル登録ポイントマイナス１
     #student.cancelnumber=student.cancelnumber-1 if lesson.regular==true
-    @reservation = Reservation.new(student_id:student.id,lesson_id:@lesson.id,zoom:zoom,user_id:user_id,fix_time:fix_time)
+    @reservation = Reservation.new(student_id:student.id,lesson_id:@lesson.id,zoom:zoom,user_id:user_id,fix_time:fix_time,fix_finishtime:fix_finishtime)
     @reservation.save
     waiting_registration
     if @reservation.save

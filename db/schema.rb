@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_031533) do
+ActiveRecord::Schema.define(version: 2020_07_22_170713) do
 
   create_table "answers", force: :cascade do |t|
     t.text "answer_content", null: false
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2020_07_19_031533) do
     t.boolean "transfer", default: false
     t.time "fix_time"
     t.boolean "cancel", default: false
+    t.time "fix_finishtime"
     t.index ["lesson_id"], name: "index_reservations_on_lesson_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
@@ -125,6 +126,11 @@ ActiveRecord::Schema.define(version: 2020_07_19_031533) do
     t.time "fix_time4"
     t.string "fix_day5"
     t.time "fix_time5"
+    t.time "fix_finishtime"
+    t.time "fix_finishtime2"
+    t.time "fix_finishtime3"
+    t.time "fix_finishtime4"
+    t.time "fix_finishtime5"
   end
 
   create_table "users", force: :cascade do |t|

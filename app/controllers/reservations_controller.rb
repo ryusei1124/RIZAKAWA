@@ -56,8 +56,14 @@ class ReservationsController < ApplicationController
     end
     
     if params[:no] == "6"
-        if @reservation.update_attributes(zoom: params[:reservation][:zoom])
-          @reservation.update_attributes(fix_time: params[:reservation][:fix_time])
+        zoom = params[:reservation][:zoom] 
+        fixtime = params[:reservation][:fix_time]
+        fixfinishtime = params[:reservation][:fix_finishtime]
+        if fixtime >= fixfinishtime
+          flash[:danger] = "開始時間と終了時間に不正があります。更新に失敗しました。"
+        elsif @reservation.update_attributes(zoom: zoom)
+          @reservation.update_attributes(fix_time: fixtime)
+          @reservation.update_attributes(fix_finishtime: fixfinishtime)
           @title = "授業時間が確定しました"
           @content = "授業時間が確定しました。"
           send_mail_address

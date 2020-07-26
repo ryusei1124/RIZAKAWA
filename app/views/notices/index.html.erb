@@ -58,7 +58,7 @@
       <P>・<%= link_to l(reservation.lesson.meeting_on.to_datetime, format: :day_week),"/reservationusers/useredit?lesson_id=#{reservation.lesson.id}&student_id=#{reservation.student.id}" %>
       <%= l(reservation.lesson.started_at, format: :time) %>～<%= l(reservation.lesson.finished_at, format: :time) %>
       <% if reservation.fix_time.present? %>
-        固定時間:<%= l( reservation.fix_time, format: :time ) %>&nbsp;&nbsp;
+        固定時間:<%= l( reservation.fix_time, format: :time, default: '' ) %>～<%= l( reservation.fix_finishtime, format: :time, default: '' ) %>&nbsp;&nbsp;
       <% else %>
         固定時間:未設定
       <% end %>

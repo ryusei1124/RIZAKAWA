@@ -43,11 +43,11 @@
   <td>
     <%= form_with(url:reservationusers_reservation_create_path,local: true) do |f| %>
       <% if @zoom==true %>
-        <%= f.radio_button :zoom, :false %>&nbsp;リアル(<%= @realnumber %>/<%= @realseat %>)
-        <%= f.radio_button :zoom, :true  ,{:checked => true} %>&nbsp;Zoom(<%= @zoomnumber %>/<%= @zoomseat %>)
+        <%= f.radio_button :zoom, :false %>&nbsp;リアル
+        <%= f.radio_button :zoom, :true  ,{:checked => true} %>&nbsp;Zoom
       <% else %>
-        <%= f.radio_button :zoom, :false  ,{:checked => true} %> リアル(<%= @realnumber %>/<%= @realseat %>)
-        <%= f.radio_button :zoom, :true %>&nbsp;Zoom(<%= @zoomnumber %>/<%= @zoomseat %>)
+        <%= f.radio_button :zoom, :false  ,{:checked => true} %> リアル
+        <%= f.radio_button :zoom, :true %>&nbsp;Zoom
       <% end %>
       <% if @real_rest_sheet <= 0 %>
         <span class='label label-danger'>リアルは満席です</span>

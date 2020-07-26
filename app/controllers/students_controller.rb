@@ -14,7 +14,7 @@ class StudentsController < ApplicationController
   
   def info_update
     if @fix_check == 1
-      flash[:danger] = "#{@student.student_name}の更新は失敗しました。"
+      flash[:danger] = "#{@student.student_name}の入力に不備あり、更新は失敗しました。終了時間は必須になりました。"
     elsif @student.update_attributes(student_params)
         user = User.find( @student.user_id )
         students = Student.where(user_id:@student.user_id)
@@ -26,7 +26,7 @@ class StudentsController < ApplicationController
       user.save
       flash[:success] = "#{@student.student_name}の基本情報を更新しました。"
     else
-      flash[:danger] = "#{@student.student_name}の更新は失敗しました。" 
+      flash[:danger] = "#{@student.student_name}の入力に不備あり、更新は失敗しました。再度更新願います。" 
     end
     redirect_to users_url
   end
@@ -34,7 +34,7 @@ class StudentsController < ApplicationController
   def create
      @student = Student.new(student_params)
      if @fix_check == 1
-       flash[:danger] = "固定時間の入力に不正あり登録に失敗しました。"
+       flash[:danger] = "固定時間の入力に不正あり登録に失敗しました。終了時間は必須になりました。"
      elsif @student.save
        @title = "受講者を登録しました。"
        @content = "トップページの 基本情報(確認用）を確認願います。"
@@ -62,7 +62,7 @@ class StudentsController < ApplicationController
   
   private
     def student_params
-      params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :examinee, :school,  :birthday, :fix_day, :fix_time, :fix_day2, :fix_time2, :fix_day3, :fix_time3, :fix_day4, :fix_time4, :fix_day5, :fix_time5, :note, :withdrawal)
+      params.require(:student).permit(:student_name, :user_id, :studentkana,  :zoom, :examinee, :school,  :birthday, :fix_day, :fix_time, :fix_finishtime, :fix_day2, :fix_time2, :fix_finishtime2, :fix_day3, :fix_time3, :fix_finishtime3, :fix_day4, :fix_time4, :fix_finishtime4, :fix_day5, :fix_time5, :fix_finishtime5, :note, :withdrawal)
     end
   
   # ログイン済みのユーザーか確認します。

@@ -105,20 +105,25 @@ class LessonsController < ApplicationController
           else
             rev=students
           end
-          
+          fixfinishtime = nil
           rev.each do |revtion|
             if revtion.fix_day == dayofweek and revtion.fix_time >= lesson_start  and revtion.fix_time < lesson_finish 
               fixtime = revtion.fix_time
+              fixfinishtime = revtion.fix_finishtime
             elsif revtion.fix_day2 == dayofweek and revtion.fix_time2 >= lesson_start  and revtion.fix_time2 < lesson_finish 
               fixtime = revtion.fix_time2
+              fixfinishtime = revtion.fix_finishtime2
             elsif revtion.fix_day3 == dayofweek and revtion.fix_time3 >= lesson_start  and revtion.fix_time3 < lesson_finish 
               fixtime = revtion.fix_time3
+              fixfinishtime = revtion.fix_finishtime3
             elsif revtion.fix_day4 == dayofweek  and revtion.fix_time4 >= lesson_start  and revtion.fix_time4 < lesson_finish 
               fixtime = revtion.fix_time4
+              fixfinishtime = revtion.fix_finishtime4
             elsif revtion.fix_day5 == dayofweek  and revtion.fix_time5 >= lesson_start  and revtion.fix_time5 < lesson_finish 
               fixtime = revtion.fix_time5
+              fixfinishtime = revtion.fix_finishtime5
             end
-          reservation = Reservation.new(student_id:revtion.id,lesson_id:@lesson.id,zoom:revtion.zoom,user_id:revtion.user_id,fix_time:fixtime)
+          reservation = Reservation.new(student_id:revtion.id,lesson_id:@lesson.id,zoom:revtion.zoom,user_id:revtion.user_id,fix_time:fixtime,fix_finishtime:fixfinishtime)
           if reservation.save
             flash[:warning] = "該当受講生の予約登録に成功しました。"
           else
