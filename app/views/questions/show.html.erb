@@ -22,7 +22,7 @@
       </span>
     </div>
     <!--内容-->
-    <div class="question-content" style="word-wrap:break-word;"><%= raw(nl2br(@question.question_content)) %></div>
+    <div class="question-content" style="word-wrap:break-word;"><%= simple_format @question.question_content %></div>
   </div>
     
   <div style="text-align:center;">〜 返信  〜</div><br>
