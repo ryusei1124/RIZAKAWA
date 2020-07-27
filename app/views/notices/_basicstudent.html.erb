@@ -32,7 +32,7 @@
                     <th>固定時間</th>
                     <td>
                       <%= student.fix_day %>曜日
-                      <%= student.fix_time.hour %>:<%= mindisplay(student.fix_time) %>～
+                      <%= timedisplay(student.fix_time) %>～<%= timedisplay(student.fix_finishtime) %>
                     </td>
                   </tr>
                   <% if student.fix_day2.present? and student.fix_time2.present? %>
@@ -40,7 +40,7 @@
                       <th>固定時間2</th>
                       <td>
                         <%= student.fix_day2 %>曜日
-                        <%= student.fix_time2.hour %>:<%= mindisplay(student.fix_time2) %>～
+                        <%= timedisplay(student.fix_time2) %>～<%= timedisplay(student.fix_finishtime2) %>
                       </td>
                     </tr>
                     <% end %>
@@ -49,7 +49,7 @@
                           <th>固定時間3</th>
                           <td>
                             <%= student.fix_day3 %>曜日
-                            <%= student.fix_time3.hour %>:<%= mindisplay(student.fix_time3) %>～
+                            <%= timedisplay(student.fix_time3) %>～<%= timedisplay(student.fix_finishtime3) %>
                           </td>
                         </tr>
                         <% end %>
@@ -58,7 +58,7 @@
                           <th>固定時間4</th>
                           <td>
                             <%= student.fix_day4 %>曜日
-                            <%= student.fix_time4.hour %>:<%= mindisplay(student.fix_time4) %>～
+                            <%= timedisplay(student.fix_time4) %>～<%= timedisplay(student.fix_finishtime4) %>
                           </td>
                         </tr>
                         <% end %>
@@ -67,7 +67,7 @@
                           <th>固定時間5</th>
                           <td>
                             <%= student.fix_day5 %>曜日
-                            <%= student.fix_time5.hour %>:<%= mindisplay(student.fix_time5) %>～
+                            <%= timedisplay(student.fix_time5) %>～<%= timedisplay(student.fix_finishtime5) %>
                           </td>
                         </tr>
                         <% end %>
