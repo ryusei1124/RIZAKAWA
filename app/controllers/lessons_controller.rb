@@ -123,11 +123,11 @@ class LessonsController < ApplicationController
               fixtime = revtion.fix_time5
               fixfinishtime = revtion.fix_finishtime5
             end
-          reservation = Reservation.new(student_id:revtion.id,lesson_id:@lesson.id,zoom:revtion.zoom,user_id:revtion.user_id,fix_time:fixtime,fix_finishtime:fixfinishtime)
-          if reservation.save
-            flash[:warning] = "該当受講生の予約登録に成功しました。"
-          else
-            flash[:danger] = "該当受講生の予約登録に失敗しました。"
+            reservation = Reservation.new(student_id:revtion.id,lesson_id:@lesson.id,zoom:revtion.zoom,user_id:revtion.user_id,fix_time:fixtime,fix_finishtime:fixfinishtime)
+            if reservation.save
+              flash[:warning] = "該当受講生の予約登録に成功しました。"
+            else
+              flash[:danger] = "該当受講生の予約登録に失敗しました。"
           end
         end
       end
