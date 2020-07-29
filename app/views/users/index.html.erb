@@ -5,9 +5,7 @@
   <div style="display: inline-block;"><%= button_to "契約者", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"1"}} %></div>
   <div style="display: inline-block;"><%= button_to "全表示", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"2"}} %></div>
   <div style="display: inline-block;"><%= button_to "登録順", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"3"}} %></div>
-  <a href="" data-toggle="modal" data-target=#modal2>固定時間一覧</a>
-   <%#= render partial: "/students/students_time" %>
-</div><br /><br />
+  
   <table class="table table-condensed table-hover" id="table-users">
     <thead>
       <tr>
