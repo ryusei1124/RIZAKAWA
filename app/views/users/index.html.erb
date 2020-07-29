@@ -22,7 +22,12 @@
           <span class="label label-primary label-user-division">管理者</span>
           <% students = @students.where(user_id: user.id) %>
          </td>
-        <td></td> 
+        <td>
+          <% students.each do |student| %>
+           <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
+          
+          <% end %>
+        </td> 
         <td></td>
         <td></td>
       </tr>
