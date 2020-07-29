@@ -25,7 +25,7 @@
         <td>
           <% students.each do |student| %>
            <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
-          
+            (<%= Student.gradeyear(student.id) %> <%= student.school %>)
           <% end %>
         </td> 
         <td></td>
