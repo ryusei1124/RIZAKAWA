@@ -65,7 +65,7 @@ class UsersController < ApplicationController
           @student_ls.push([ids,st.fix_day5,time, student_name,finishtime])
         end
       end
-      @student_ls.sort!
+      #@student_ls.sort!
   end
   
   def new
