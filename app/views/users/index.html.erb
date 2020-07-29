@@ -43,14 +43,14 @@
             <% if student.fix_day5.present? %>
                 <%= student.fix_day5 %> <%= timedisplay(student.fix_time5) %>&nbsp; 
             <% end %>
-            <% if students.count >1 %>
-              <br>
-            <% end %>
             <% if student.zoom?  %>
               <span class="label label-warning label-user-division">zoom</span>
             <% end %>
             <% if student.examinee? %>
                 <span class="label label-success label-user-division">受験生</span>
+            <% end %>
+            <% if students.count >1 %>
+              <br>
             <% end %>
            <% end %>
         </td> 
