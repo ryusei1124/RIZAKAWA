@@ -31,6 +31,9 @@
             (<%= Student.gradeyear(student.id) %> <%= student.school %>)
                 固定時間:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>
             <% end %>
+            <% if student.fix_day2.present? %>
+                固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>
+            <% end %>
             <% if students.count >1 %>
               <br>
             <% end %>
