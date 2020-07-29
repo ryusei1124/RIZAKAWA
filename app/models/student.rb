@@ -13,13 +13,13 @@ class Student < ApplicationRecord
    def self.under_contact #カナ順
     nowtime = Time.new
     today = nowtime.to_date
-    where("withdrawal is null or withdrawal > ?", today).order(studentkana: "ASC")
+    where("withdrawal is null").order(studentkana: "ASC")
    end
 
    def self.under_contact_createorder #入会順
     nowtime = Time.new
     today = nowtime.to_date
-    where("withdrawal is null or withdrawal > ?", today).order(created_at: "ASC")
+    where("withdrawal is null", today).order(created_at: "ASC")
    end
 
    def self.gradeyear(id)
