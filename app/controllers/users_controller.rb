@@ -27,7 +27,8 @@ class UsersController < ApplicationController
         num = @weekday.index(st.fix_day).to_i
         time =  timedisplay(st.fix_time)
         finishtime =  timedisplay(st.fix_finishtime)
-        ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
+        #ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
+        ids =2
         examinee = ""
         zoom = ""
         examinee = " 受験生" if st.examinee?
