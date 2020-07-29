@@ -5,7 +5,7 @@
   <div style="display: inline-block;"><%= button_to "契約者", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"1"}} %></div>
   <div style="display: inline-block;"><%= button_to "全表示", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"2"}} %></div>
   <div style="display: inline-block;"><%= button_to "登録順", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"3"}} %></div>
-  <%= @today %>
+ 
   
   <table class="table table-condensed table-hover" id="table-users">
     <thead>
@@ -50,7 +50,7 @@
             <% if student.examinee? %>
                 <span class="label label-success label-user-division">受験生</span>
             <% end %>
-            <% if student.withdrawal != nil %>
+            <% if student.withdrawal >= @today %>
                 <span class="label label-danger label-user-division">退会済</span>
             <% end %>
             <% if students.count >1 %>
