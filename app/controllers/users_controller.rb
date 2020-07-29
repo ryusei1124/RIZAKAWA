@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   include ApplicationHelper
   
   def index
-    @admins = User.user_kanaorder
+    #@admins = User.user_kanaorder
     #@admins = User.where(admin:true)
     @weekday = ["月","火","水","木","金","土","日"]
     if params[:cation] == "2"
