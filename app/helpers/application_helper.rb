@@ -6,6 +6,7 @@ module ApplicationHelper
       @student_name = student_name
     end
   end
+  
 
   def full_title(page_name = "")
     base_title = "平川塾"
