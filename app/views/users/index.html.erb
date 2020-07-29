@@ -27,20 +27,9 @@
         <td>
           <% students.each do |student| %>
            <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
+            <% if students.count >1 %>  
             (<%= Student.gradeyear(student.id) %> <%= student.school %>)
-             <% if student.withdrawal.blank? %>
                 固定時間1:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>
-            <% if student.fix_day2.present? %>
-                固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>
-            <% end %>
-            <% if student.fix_day3.present? %>
-                固定時間3:<%= student.fix_day3 %> <%= timedisplay(student.fix_time3) %>
-            <% end %>
-            <% if student.fix_day4.present? %>
-                固定時間3:<%= student.fix_day4 %> <%= timedisplay(student.fix_time4) %>
-            <% end %>
-            <% if student.fix_day5.present? %>
-                固定時間5:<%= student.fix_day5 %> <%= timedisplay(student.fix_time5) %>
             <% end %>
           <% end %>
           <% if students.count >1 %>
