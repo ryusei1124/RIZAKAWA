@@ -29,7 +29,7 @@ class UsersController < ApplicationController
         num = @weekday.index(st.fix_day).to_i
         time =  timedisplay(st.fix_time)
         finishtime =  timedisplay(st.fix_finishtime)
-        ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
+        ids = ((num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i).to_i
         examinee = ""
         zoom = ""
         examinee = " 受験生" if st.examinee?
@@ -40,32 +40,32 @@ class UsersController < ApplicationController
           num = @weekday.index(st.fix_day2).to_i
           time = timedisplay(st.fix_time2)
           finishtime =  timedisplay(st.fix_finishtime2)
-          ids = (num+1)*10000 + (st.fix_time2.hour.to_i)*100 + st.fix_time2.min.to_i
+          ids = ((num+1)*10000 + (st.fix_time2.hour.to_i)*100 + st.fix_time2.min.to_i).to_i
           @student_ls.push([ids,st.fix_day2,time, student_name,finishtime])
         end
         if st.fix_day3.present?  
           num = @weekday.index(st.fix_day3).to_i
           time =  timedisplay(st.fix_time3)
           finishtime =  timedisplay(st.fix_finishtime3)
-          ids = (num+1)*10000 + (st.fix_time3.hour.to_i)*100 + st.fix_time3.min.to_i
+          ids = ((num+1)*10000 + (st.fix_time3.hour.to_i)*100 + st.fix_time3.min.to_i).to_i
           @student_ls.push([ids,st.fix_day3,time, student_name,finishtime])
         end
         if st.fix_day4.present?  
           num = @weekday.index(st.fix_day4).to_i
           time =  timedisplay(st.fix_time4)
           finishtime =  timedisplay(st.fix_finishtime4)
-          ids = (num+1)*10000 + (st.fix_time4.hour.to_i)*100 + st.fix_time4.min.to_i
+          ids = ((num+1)*10000 + (st.fix_time4.hour.to_i)*100 + st.fix_time4.min.to_i).to_i
           @student_ls.push([ids,st.fix_day4,time, student_name,finishtime])
         end
         if st.fix_day5.present?  
           num = @weekday.index(st.fix_day5).to_i
           time =  timedisplay(st.fix_time5)
           finishtime =  timedisplay(st.fix_finishtime5)
-          ids = (num+1)*10000 + (st.fix_time5.hour.to_i)*100 + st.fix_time5.min.to_i
+          ids = ((num+1)*10000 + (st.fix_time5.hour.to_i)*100 + st.fix_time5.min.to_i).to_i
           @student_ls.push([ids,st.fix_day5,time, student_name,finishtime])
         end
       end
-      #@student_ls=@student_ls.sort
+      @student_ls=@student_ls.sort
   end
   
   def new
