@@ -46,6 +46,12 @@
             <% if students.count >1 %>
               <br>
             <% end %>
+            <% if student.zoom?  %>
+              <span class="label label-warning label-user-division">zoom</span>
+            <% end %>
+            <% if student.examinee? %>
+                <span class="label label-success label-user-division">受験生</span>
+            <% end %>
            <% end %>
         </td> 
         <td></td>
