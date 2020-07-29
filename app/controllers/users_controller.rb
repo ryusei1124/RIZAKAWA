@@ -25,11 +25,10 @@ class UsersController < ApplicationController
     @students2= Student.under_contact
     @student_ls = Array.new()
       @students2.each do | st |
-        #num = @weekday.index(st.fix_day).to_i
-        #time =  timedisplay(st.fix_time)
-        #finishtime =  timedisplay(st.fix_finishtime)
-        #ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
-        ids =""
+        num = @weekday.index(st.fix_day).to_i
+        time =  timedisplay(st.fix_time)
+        finishtime =  timedisplay(st.fix_finishtime)
+        ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
         num =""
         time =""
         day =""
