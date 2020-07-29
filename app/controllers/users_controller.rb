@@ -29,17 +29,15 @@ class UsersController < ApplicationController
         time =  timedisplay(st.fix_time)
         finishtime =  timedisplay(st.fix_finishtime)
         ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
-        num =""
         time =""
         day =""
         student_name=""
         examinee = ""
         zoom = ""
-        finishtime = ""
-        #examinee = " 受験生" if st.examinee?
-        #zoom = " Zoom" if st.zoom?
-        #student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
-        @student_ls.push([ids,st.fix_day,time, student_name,finishtime])
+        examinee = " 受験生" if st.examinee?
+        zoom = " Zoom" if st.zoom?
+        student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
+        @student_ls.push([ids,st.fix_day,time,student_name,finishtime])
       end
       @student_ls = @student_ls.sort
   end
