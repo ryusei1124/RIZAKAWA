@@ -27,14 +27,14 @@
         <td>
           <% students.each do |student| %>
            <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
-            <% if students.count >1 %>  
+            <% if students.count >0 %>  
             (<%= Student.gradeyear(student.id) %> <%= student.school %>)
-                固定時間1:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>
+                固定時間:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>
             <% end %>
-          <% end %>
-          <% if students.count >1 %>
+            <% if students.count >1 %>
               <br>
-          <% end %>
+            <% end %>
+           <% end %>
         </td> 
         <td></td>
         <td></td>
