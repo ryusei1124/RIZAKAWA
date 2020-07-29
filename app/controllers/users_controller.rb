@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       @students = Student.under_contact
     end
     @students_undercontact = Student.under_contact
-    @students2= Student.under_contact
+    @students2= Student.under_contact.order(fix_day:"ASC")
     @student_ls = Array.new()
       
       @students2.each do | st |
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
           @student_ls.push([ids,st.fix_day5,time, student_name,finishtime])
         end
       end
-      @student_ls=@student_ls.sort
+      #@student_ls=@student_ls.sort
   end
   
   def new
