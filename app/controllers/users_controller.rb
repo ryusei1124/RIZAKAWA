@@ -8,7 +8,20 @@ class UsersController < ApplicationController
   include ApplicationHelper
   
   def index
-    @user =User.all
+    @admins = User.where(admin:true)
+    @weekday = ["月","火","水","木","金","土","日"]
+    if params[:cation] == "2"
+      @users = User.where(admin:false).maneger_kana_order.paginate(page: params[:page], per_page: 40)
+      @students = Student.all
+    elsif params[:cation] == "3"
+      @users = User.where(admin:false).order(id: "DESC").paginate(page: params[:page], per_page: 20)
+      @students = Student.all
+    else
+      @user = User.undercontract.where(admin:false).user_kanaorder
+      #@users = @user.paginate(page: params[:page], per_page: 40)
+      @students = Student.under_contact
+    end
+   
   end
   
   def new
