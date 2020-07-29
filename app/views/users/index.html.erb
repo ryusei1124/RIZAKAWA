@@ -29,13 +29,19 @@
            <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
             <% if students.count >0 %>  
             (<%= Student.gradeyear(student.id) %> <%= student.school %>)
-                固定時間:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>
+                固定時間:<%= student.fix_day %> <%= timedisplay(student.fix_time) %>&nbsp;
             <% end %>
             <% if student.fix_day2.present? %>
-                固定時間2:<%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>
+                <%= student.fix_day2 %> <%= timedisplay(student.fix_time2) %>&nbsp;
+            <% end %>
+            <% if student.fix_day3.present? %>
+                <%= student.fix_day3 %> <%= timedisplay(student.fix_time3) %>&nbsp; 
+            <% end %>
+            <% if student.fix_day4.present? %>
+                <%= student.fix_day4 %> <%= timedisplay(student.fix_time4) %>&nbsp;
             <% end %>
             <% if student.fix_day5.present? %>
-                固定時間5:<%= student.fix_day5 %> <%= timedisplay(student.fix_time5) %>
+                <%= student.fix_day5 %> <%= timedisplay(student.fix_time5) %>&nbsp; 
             <% end %>
             <% if students.count >1 %>
               <br>
