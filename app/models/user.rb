@@ -70,8 +70,6 @@ class User < ApplicationRecord
   
   #スコープ契約中の保護者一覧
   def self.undercontract
-    nowtime = Time.new
-    today = nowtime.to_date
     where("withdrawal is null")
   end
   #契約先全員へのメール

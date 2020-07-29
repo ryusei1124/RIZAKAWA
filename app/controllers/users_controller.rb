@@ -8,17 +8,17 @@ class UsersController < ApplicationController
   include ApplicationHelper
   
   def index
-    @users = User.user_kanaorder.user_kanaorder
+    @users = User.user_kanaorder.undercontract
     #@admins = User.where(admin:true)
     @weekday = ["月","火","水","木","金","土","日"]
     if params[:cation] == "2"
-      @users2 = User.maneger_kana_order
+      @users = User.maneger_kana_order
       @students = Student.all
     elsif params[:cation] == "3"
-      @users2 = User.order(id: "DESC")
+      @users = User.order(id: "DESC")
       @students = Student.all
     else
-      @users2 = User.undercontract.user_kanaorder
+      @users = User.undercontract.user_kanaorder
       @students = Student.under_contact
     end
     @students_undercontact = Student.under_contact
