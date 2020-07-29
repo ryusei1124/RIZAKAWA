@@ -29,7 +29,7 @@
   <%= form_with(model:@answer, url: answers_create_path,local: true) do |f| %>
     <%= f.hidden_field:question_id, value:@question.id %>
     <%= f.hidden_field:user_id, value: current_user.id %>
-    <%= f.text_area :answer_content, class: "form-control answer_form", required:true, rows: 2 %><br />
+    <%= f.text_area :answer_content, class: "form-control answer_form", required:true, rows: 4 %><br />
     <div class="answer-btn-1"><%= f.submit value:"返信", class:"btn-sm btn-primary answer-btn-2" %></div>
   <% end %>
     
@@ -50,7 +50,7 @@
             </div>
             <div class="answer_right"><%= l(comment.updated_at, format: :default_2) %></div>
             <br>
-            <div class="question-destination"><%= raw(nl2br(comment.answer_content)) %></div>
+            <div class="question-destination"><%= simple_format comment.answer_content %></div>
           </div>
       <% end %>
     </div>
