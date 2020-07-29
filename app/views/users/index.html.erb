@@ -50,9 +50,7 @@
             <% if student.examinee? %>
                 <span class="label label-success label-user-division">受験生</span>
             <% end %>
-            <% if student.withdrawal >= @today.to_date %>
-                <span class="label label-danger label-user-division">退会予定</span>
-            <% end %>
+            
             <% if students.count >1 %>
               <br>
             <% end %>
