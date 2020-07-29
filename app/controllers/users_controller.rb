@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       @students = Student.under_contact
     end
     @students_undercontact = Student.under_contact
-    @students2= Student.all
+    @students2= Student..under_contact
     @student_ls = Array.new()
       @students2.each do | st |
         #num = @weekday.index(st.fix_day).to_i
