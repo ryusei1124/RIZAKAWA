@@ -49,9 +49,9 @@
             <% if student.examinee? %>
                 <span class="label label-success label-user-division">受験生</span>
             <% end %>
-            <% if student.withdrawal >=@today%>
+            <% if student.withdrawal >=@today %>
                 <span class="label label-warning label-user-division">退会予定</span>
-            <% else %>
+            <% elsif student.withdrawal != nil %>
                 <span class="label label-danger label-user-division">退会済</span>
             <% end %>
             <% if students.count >1 %>
