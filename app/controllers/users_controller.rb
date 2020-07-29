@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     end
     @students_undercontact = Student.under_contact
     @student_ls = Array.new()
-      @students_undercontact.each do | st |
+      @students.each do | st |
         num = @weekday.index(st.fix_day).to_i
         time =  timedisplay(st.fix_time)
         finishtime =  timedisplay(st.fix_finishtime)
