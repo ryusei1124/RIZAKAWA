@@ -26,11 +26,11 @@
         <td></td>
       </tr>
     <% end %>   
-    <% @users.each do |user| %>
+    <%# @users.each do |user| %>
       <tr>
         <td>
-          <%= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
-          <span class="label label-success label-user-division">一般</span>
+          <%#= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
+          
         </td>
         <td>
        
@@ -41,7 +41,7 @@
          
         </td>
       </tr>
-    <% end %>
+    <%# end %>
   </table>
  
     
