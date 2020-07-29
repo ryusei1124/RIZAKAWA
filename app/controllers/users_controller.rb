@@ -30,7 +30,7 @@ class UsersController < ApplicationController
         finishtime =  timedisplay(st.fix_finishtime)
         ids = (num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i
         student_name = st.student_name
-        @student_ls.push([ids,st.fix_day,time,student_name,finishtime])
+        @student_ls.push([ids,st.fix_day])
       end
       @student_ls = @student_ls.sort
   end
