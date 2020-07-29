@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   include ApplicationHelper
   
   def index
-  
+    @user =User.all
   end
   
   def new
