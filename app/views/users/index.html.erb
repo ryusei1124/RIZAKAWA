@@ -19,7 +19,9 @@
       <tr>
         <td>
           <%= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
+          <% if user.admin %>
           <span class="label label-primary label-user-division">管理者</span>
+          <% end %>
           <% students = @students.where(user_id: user.id) %>
          </td>
         <td>
