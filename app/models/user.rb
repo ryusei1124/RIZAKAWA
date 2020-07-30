@@ -83,13 +83,13 @@ class User < ApplicationRecord
     #契約中のユーザー全員にメールを送る
     undercontracts.each do | user |
       @destination_user = find(user.id)
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content, @link ).deliver_now
+      #UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content, @link ).deliver_now
     end
     #ユーザーに何を送ったかわかるように管理者にも送る。今はひとりだが将来も考え管理者全員に送る。
     admins = where("admin = ?", true )
     admins.each do | user |
       @destination_user = find(user.id)
-      UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content, @link ).deliver_now
+      #UserMailer.send_mail( @destination_user, @send_user, @bcc, @title, @content, @link ).deliver_now
     end
   end
   
