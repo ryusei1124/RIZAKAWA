@@ -28,7 +28,7 @@ class AnswersController < ApplicationController
         @destination_user = User.find( question.user_id )
       end
       if current_user.admin?
-        @bcc = User.find(1).email
+        @bcc = current_user.email
       else
         @bcc = ""
       end
