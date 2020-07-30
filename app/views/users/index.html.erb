@@ -1,5 +1,5 @@
 <% provide(:title, 'All users') %>
-<h2 style="font-size:30px;">契約一覧</h2>
+<h2 style="font-size:30px;">契約一覧<%= @weekday[4] %></h2>
 
 <div class="wrapper_middle">
   <div style="display: inline-block;"><%= button_to "契約者", {controller: 'users', action: 'index'}, {method: :get, params: {cation:"1"}} %></div>
@@ -13,6 +13,7 @@
     <thead>
       <tr>
         <th><%= User.human_attribute_name :guardian %><%= link_to "新規登録", signup_path %></th>
+        <th></th>
         <th>受講生</th>
         <th></th>
         <th></th>
@@ -27,6 +28,12 @@
           <% end %>
           <% students = @students.where(user_id: user.id) %>
          </td>
+         <td>
+         <%= link_to "削除","users/#{user.id}/delete", method: :delete, 
+              data:  { confirm: "本当に削除してよろしいですか？該当の受講生、予約授業も併せて削除します"},
+              class: "btn btn-danger btn-sm" %>
+          <% students = @students.where(user_id: user.id) %>
+        </td>
         <td>
           <% students.each do |student| %>
            <%= link_to student.student_name, info_edit_student_path(student), remote: true %> 
@@ -69,25 +76,7 @@
         <td></td>
       </tr>
     <% end %>   
-    <%# @users.each do |user| %>
-      <tr>
-        <td>
-          <%#= link_to user.guardian, edit_basic_info_user_path(user), remote: true %>
-          
-        </td>
-        <td>
-       
-        <td>
-         
-        </td>
-        <td>
-         
-        </td>
-      </tr>
-    <%# end %>
   </table>
- 
-    
   </div>
 
 

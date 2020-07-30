@@ -80,6 +80,8 @@ class ApplicationController < ActionController::Base
   def day_setting
     nowtime = Time.new + TIMECOL
     @today = nowtime.to_date
+    @first_time="2000-01-01 10:00".to_time
+    @last_time="2000-01-01 22:30".to_time
   end
   
   def mail_link_host

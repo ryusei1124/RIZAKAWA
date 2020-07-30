@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def index
     @users = User.user_kanaorder.undercontract
     #@admins = User.where(admin:true)
-    @weekday = ["月","火","水","木","金","土","日"]
+    #@weekday = ["月","火","水","木","金","土","日"]
     if params[:cation] == "2"
       @users = User.maneger_kana_order
       @students = Student.all
@@ -24,50 +24,73 @@ class UsersController < ApplicationController
     @students_undercontact = Student.under_contact
     @students2= Student.under_contact.order(fix_day:"ASC")
     @student_ls = Array.new()
-      
-      @students2.each do | st |
-        num = @weekday.index(st.fix_day).to_i
-        time =  timedisplay(st.fix_time)
-        finishtime =  timedisplay(st.fix_finishtime)
-        ids = ((num+1)*10000 + (st.fix_time.hour.to_i)*100 + st.fix_time.min.to_i).to_i
-        examinee = ""
-        zoom = ""
-        examinee = " 受験生" if st.examinee?
-        zoom = " Zoom" if st.zoom?
-        student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
-        @student_ls.push([ids,st.fix_day,time, student_name,finishtime])
-        if st.fix_day2.present?  
-          num = @weekday.index(st.fix_day2).to_i
-          time = timedisplay(st.fix_time2)
-          finishtime =  timedisplay(st.fix_finishtime2)
-          ids = ((num+1)*10000 + (st.fix_time2.hour.to_i)*100 + st.fix_time2.min.to_i).to_i
-          @student_ls.push([ids,st.fix_day2,time, student_name,finishtime])
+    week_nubmer = 0
+    while week_nubmer <= 6 do
+      fixtime = @first_time.to_time
+      while fixtime <= @last_time do
+	     students_times= @students2.where("fix_time = ? and fix_day = ? ",fixtime,@weekday[week_nubmer])
+            .or( @students2.where("fix_time2 = ? and fix_day2 = ? ",fixtime,@weekday[week_nubmer]))
+            .or( @students2.where("fix_time3 = ? and fix_day3 = ? ",fixtime,@weekday[week_nubmer]))
+            .or( @students2.where("fix_time4 = ? and fix_day4 = ? ",fixtime,@weekday[week_nubmer]))
+            .or( @students2.where("fix_time5 = ? and fix_day5 = ? ",fixtime,@weekday[week_nubmer]))
+        if students_times.count > 0
+          students_times.each do |st|
+            if st.fix_day==@weekday[week_nubmer] and st.fix_time == fixtime
+              time =  timedisplay(st.fix_time)
+              finishtime =  timedisplay(st.fix_finishtime)
+              examinee = ""
+              zoom = ""
+              examinee = " 受験生" if st.examinee?
+              zoom = " Zoom" if st.zoom?
+              student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
+              @student_ls.push([st.fix_day,time, student_name,finishtime])
+            elsif st.fix_day2==@weekday[week_nubmer] and st.fix_time2 == fixtime
+              time =  timedisplay(st.fix_time2)
+              finishtime =  timedisplay(st.fix_finishtime2)
+              examinee = ""
+              zoom = ""
+              examinee = " 受験生" if st.examinee?
+              zoom = " Zoom" if st.zoom?
+              student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
+              @student_ls.push([st.fix_day2,time, student_name,finishtime])
+            elsif st.fix_day3==@weekday[week_nubmer] and st.fix_time3 == fixtime
+              time =  timedisplay(st.fix_time3)
+              finishtime =  timedisplay(st.fix_finishtime3)
+              examinee = ""
+              zoom = ""
+              examinee = " 受験生" if st.examinee?
+              zoom = " Zoom" if st.zoom?
+              student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
+              @student_ls.push([st.fix_day3,time, student_name,finishtime])
+            elsif st.fix_day4==@weekday[week_nubmer] and st.fix_time4 == fixtime
+              time =  timedisplay(st.fix_time4)
+              finishtime =  timedisplay(st.fix_finishtime4)
+              examinee = ""
+              zoom = ""
+              examinee = " 受験生" if st.examinee?
+              zoom = " Zoom" if st.zoom?
+              student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
+              @student_ls.push([st.fix_day4,time, student_name,finishtime])
+            elsif st.fix_day5==@weekday[week_nubmer] and st.fix_time5 == fixtime
+              time =  timedisplay(st.fix_time5)
+              finishtime =  timedisplay(st.fix_finishtime5)
+              examinee = ""
+              zoom = ""
+              examinee = " 受験生" if st.examinee?
+              zoom = " Zoom" if st.zoom?
+              student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
+              @student_ls.push([st.fix_day5,time, student_name,finishtime])
+            end
+          end
         end
-        if st.fix_day3.present?  
-          num = @weekday.index(st.fix_day3).to_i
-          time =  timedisplay(st.fix_time3)
-          finishtime =  timedisplay(st.fix_finishtime3)
-          ids = ((num+1)*10000 + (st.fix_time3.hour.to_i)*100 + st.fix_time3.min.to_i).to_i
-          @student_ls.push([ids,st.fix_day3,time, student_name,finishtime])
-        end
-        if st.fix_day4.present?  
-          num = @weekday.index(st.fix_day4).to_i
-          time =  timedisplay(st.fix_time4)
-          finishtime =  timedisplay(st.fix_finishtime4)
-          ids = ((num+1)*10000 + (st.fix_time4.hour.to_i)*100 + st.fix_time4.min.to_i).to_i
-          @student_ls.push([ids,st.fix_day4,time, student_name,finishtime])
-        end
-        if st.fix_day5.present?  
-          num = @weekday.index(st.fix_day5).to_i
-          time =  timedisplay(st.fix_time5)
-          finishtime =  timedisplay(st.fix_finishtime5)
-          ids = ((num+1)*10000 + (st.fix_time5.hour.to_i)*100 + st.fix_time5.min.to_i).to_i
-          @student_ls.push([ids,st.fix_day5,time, student_name,finishtime])
-        end
-      end
-      #@student_ls.sort!
+	      fixtime = fixtime + 1800
+	     end
+	    week_nubmer = week_nubmer +1 
+    end
+    
   end
-  
+   
+   
   def new
     @user = User.new
     @student = Student.new
@@ -146,5 +169,4 @@ class UsersController < ApplicationController
         redirect_to(root_url) unless current_user?(@user)
       end
     end
-    
 end

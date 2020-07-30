@@ -5,6 +5,7 @@ class LessonsController < ApplicationController
   before_action :admin_user, only: %i(lesson_detail)
   before_action :unless_login
   before_action :mail_link_host,   only: [:cancellation]
+  before_action :day_setting,   only: [:weeklyschedule]
   require 'date'
   include ApplicationHelper
   
@@ -29,8 +30,6 @@ class LessonsController < ApplicationController
       @student=@students.first
       session[:student_id]=Student.find(@student.id).id
     end
-    @first_time="2000-01-01 10:00".to_time
-    @last_time="2000-01-01 22:30".to_time
     @lesson=Lesson.new
     @lessons=Lesson.all
   end
