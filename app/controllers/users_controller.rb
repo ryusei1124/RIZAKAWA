@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     @student_ls = Array.new()
     week_nubmer = 0
     while week_nubmer <= 6 do
-      fixtime = @first_time.to_time
+      fixtime = @first_time.to_time-TIMECOL
       while fixtime <= @last_time do
 	     students_times= @students2.where("fix_time = ? and fix_day = ? ",fixtime,@weekday[week_nubmer])
             .or( @students2.where("fix_time2 = ? and fix_day2 = ? ",fixtime,@weekday[week_nubmer]))
@@ -84,8 +84,8 @@ class UsersController < ApplicationController
           end
         end
 	      fixtime = fixtime + 1800
-	     end
-	    week_nubmer = week_nubmer +1 
+	   end
+	  week_nubmer = week_nubmer +1 
     end
     
   end
