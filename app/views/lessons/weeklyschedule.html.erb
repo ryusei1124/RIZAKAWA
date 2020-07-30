@@ -6,7 +6,7 @@
 <% datedown=(first_day-7) %>
 <% dateup=(first_day+7) %>
 <% last_day=first_day+6 %>
-<% @student=Student.find(session[:student_id]) if session[:student_id].present? %>
+<% @student=Student.find(session[:student_id]) if session[:student_id].present?  %>
 <% if @students.count>=2 %>
 <table class="weekly_content_table">
 <td>
@@ -135,8 +135,10 @@
             <% rev = Reservation.where("lesson_id =?" ,lesson.id) %>
           <% elsif @students.present?  %>
             <% rev = Reservation.find_by(lesson_id: lesson.id, student_id: @student.id) %>
+          <% else %>
+            <% rev = nil %>
           <% end %>
-          <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false %>
+          <% gradesc=gradeschool(@student.birthday,lesson.meeting_on) if current_user.admin==false and @student.present? %>
           <% if current_user.admin? and rev.present? %>
             <% tdcolor="#c0ffc0" %>
           <% elsif current_user.admin? %>
