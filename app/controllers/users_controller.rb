@@ -21,11 +21,12 @@ class UsersController < ApplicationController
       @users = User.undercontract.user_kanaorder
       @students = Student.under_contact
     end
+    #固定時間一覧表作成
     @students_undercontact = Student.under_contact
     @students2= Student.under_contact.order(fix_day:"ASC")
     @student_ls = Array.new()
-    week_number = 0
-    while week_number <= 6 do
+    #week_number = 0
+    (0..6).each do |week_number|
       week_day = @weekday[week_number]
       fixtime = @first_time.to_time-TIMECOL
       while fixtime <= @last_time do
@@ -86,7 +87,7 @@ class UsersController < ApplicationController
         end
 	      fixtime = fixtime + 1800
 	   end
-	  week_number = week_number +1 
+	  #week_number = week_number +1 
     end
     
   end
