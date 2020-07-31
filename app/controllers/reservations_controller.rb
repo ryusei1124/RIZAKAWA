@@ -87,7 +87,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  
   def reservations_log
     @user = User.find_by(params[:id])
   end
