@@ -109,6 +109,4 @@ class ReservationsController < ApplicationController
   def reservation_params
      params.require(:reservation).permit(:zoom, :fix_time)
   end
-
-  
 end
