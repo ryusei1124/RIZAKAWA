@@ -25,19 +25,19 @@ class UsersController < ApplicationController
     @students_undercontact = Student.under_contact
     @students2= Student.under_contact.order(fix_day:"ASC")
     @student_ls = Array.new()
-    #week_number = 0
     (0..6).each do |week_number|
       week_day = @weekday[week_number]
       fixtime = @first_time.to_time-TIMECOL
       while fixtime <= @last_time do
-	     students_times= @students2.where("fix_time = ? and fix_day = ? ",fixtime,week_day)
-            .or( @students2.where("fix_time2 = ? and fix_day2 = ? ",fixtime,week_day))
-            .or( @students2.where("fix_time3 = ? and fix_day3 = ? ",fixtime,week_day))
-            .or( @students2.where("fix_time4 = ? and fix_day4 = ? ",fixtime,week_day))
-            .or( @students2.where("fix_time5 = ? and fix_day5 = ? ",fixtime,week_day))
+       fixtime2 = fixtime + 1800
+	     students_times = @students2.where("(fix_time >= ? and fix_time < ?) and fix_day = ? ",fixtime,fixtime2,week_day)
+            .or( @students2.where("(fix_time2 >= ? and  fix_time2 < ?) and fix_day2 = ? ",fixtime,fixtime2,week_day))
+            .or( @students2.where("(fix_time3 >= ? and  fix_time3 < ?) and fix_day3 = ? ",fixtime,fixtime2,week_day))
+            .or( @students2.where("(fix_time4 >= ? and  fix_time4 < ?) and fix_day4 = ? ",fixtime,fixtime2,week_day))
+            .or( @students2.where("(fix_time5 >= ? and  fix_time5 < ?) and fix_day5 = ? ",fixtime,fixtime2,week_day))
         if students_times.count > 0
           students_times.each do |st|
-            if st.fix_day==week_day and st.fix_time == fixtime
+            if st.fix_day==week_day and (st.fix_time >= fixtime and st.fix_time < fixtime2)
               time =  timedisplay(st.fix_time)
               finishtime =  timedisplay(st.fix_finishtime)
               examinee = ""
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
               zoom = " Zoom" if st.zoom?
               student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
               @student_ls.push([st.fix_day,time, student_name,finishtime])
-            elsif st.fix_day2==week_day and st.fix_time2 == fixtime
+            elsif st.fix_day2==week_day and (st.fix_time2 >= fixtime and st.fix_time2 < fixtime2)
               time =  timedisplay(st.fix_time2)
               finishtime =  timedisplay(st.fix_finishtime2)
               examinee = ""
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
               zoom = " Zoom" if st.zoom?
               student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
               @student_ls.push([st.fix_day2,time, student_name,finishtime])
-            elsif st.fix_day3==week_day and st.fix_time3 == fixtime
+            elsif st.fix_day3==week_day and (st.fix_time3 >= fixtime and st.fix_time3 < fixtime2)
               time =  timedisplay(st.fix_time3)
               finishtime =  timedisplay(st.fix_finishtime3)
               examinee = ""
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
               zoom = " Zoom" if st.zoom?
               student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
               @student_ls.push([st.fix_day3,time, student_name,finishtime])
-            elsif st.fix_day4==week_day and st.fix_time4 == fixtime
+            elsif st.fix_day4==week_day and (st.fix_time4 >= fixtime and st.fix_time4 < fixtime2)
               time =  timedisplay(st.fix_time4)
               finishtime =  timedisplay(st.fix_finishtime4)
               examinee = ""
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
               zoom = " Zoom" if st.zoom?
               student_name = st.student_name + " (" + Student.gradeyear( st.id ) + examinee + zoom + ")" 
               @student_ls.push([st.fix_day4,time, student_name,finishtime])
-            elsif st.fix_day5==week_day and st.fix_time5 == fixtime
+            elsif st.fix_day5==week_day and (st.fix_time5 >= fixtime and st.fix_time5 < fixtime2)
               time =  timedisplay(st.fix_time5)
               finishtime =  timedisplay(st.fix_finishtime5)
               examinee = ""
@@ -86,10 +86,8 @@ class UsersController < ApplicationController
           end
         end
 	      fixtime = fixtime + 1800
-	   end
-	  #week_number = week_number +1 
+	    end
     end
-    
   end
    
    
