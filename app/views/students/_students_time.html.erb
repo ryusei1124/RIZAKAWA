@@ -10,11 +10,13 @@
         <h2 style="font-size: 25px">固定時間一覧</h2>
       <table  align="center">
       <tr><td style="font-size: 20px">
-        <% @student_ls.each do |id, week ,time , name, finishtime | %>
+        <% curent = 11000 %>
+        <% @student_ls.each do | week ,time , name, finishtime | %> 
           <%= week %>
           <%= time %>-<%=finishtime %>
           <%= name %><br />
-        <% end %></td></tr>
+        <% end %>  
+        </td></tr>
       </table>
       <br />
       <div class="modal-footer">

@@ -87,7 +87,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  
   def reservations_log
     @user = User.find_by(params[:id])
   end
@@ -110,6 +109,4 @@ class ReservationsController < ApplicationController
   def reservation_params
      params.require(:reservation).permit(:zoom, :fix_time)
   end
-
-  
 end
