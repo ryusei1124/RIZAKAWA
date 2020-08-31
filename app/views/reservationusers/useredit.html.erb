@@ -29,7 +29,7 @@
   </td>
 </tr>
 <tr>
-  <th>予約日時（開始時間）</th>
+  <th>予約日時</th>
   <td>
     <%= l(@lesson.meeting_on.to_datetime, format: :day_week) %>
     <%= l(@lesson.started_at, format: :time) %>〜<%= l(@lesson.finished_at, format: :time) %>
@@ -42,7 +42,7 @@
   </td>
 </tr>
 <tr>
-  <th>固定時間　注）</th>
+  <th>固定時間　注</th>
   <td>
   <% if @reservation.fix_time.present? %>
       <%= l(@reservation.fix_time, format: :time) %>～<%= l(@reservation.fix_finishtime, format: :time, default: '') %>
@@ -82,7 +82,7 @@
     <% if current_user.admin? %>
       <div style="font-size:15px; margin-top:-17px;">＊印は管理者のみ閲覧可能</div><br>
     <% end %>
-    <div style="font-size:15px; margin-top:-17px;">注）固定時間の終了時間が予約日時より遅くなることがありますが、時間は確保されています。</div>
+    <div style="font-size:15px; margin-top:-17px;">注）固定時間の終了時間が予約日時より後ろになることがありますが、固定時間は確保されています。</div>
     <% modaltype1="chengesc" %><% @modaltype="newsc" %>
     <% if @lesson.meeting_on>@today or current_user.admin? %>
       <a href="" data-toggle="modal" data-target=#modal1 class="btn btn-success button_size">方法変更</a>&nbsp;
